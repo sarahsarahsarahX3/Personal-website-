@@ -16,10 +16,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sarah | Marketing Portfolio",
+  title: "Sarah Dawson | Marketing Portfolio",
   description: "Crafting narratives and marketing strategies that resonate.",
   openGraph: {
-    title: "Sarah | Marketing Portfolio",
+    title: "Sarah Dawson | Marketing Portfolio",
     description: "Crafting narratives and marketing strategies that resonate.",
     type: "website",
   }

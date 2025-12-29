@@ -6,7 +6,7 @@ import { Copy, Check } from "lucide-react";
 
 export default function ContactPage() {
     const [copied, setCopied] = useState(false);
-    const email = "hello@sarah-jenkins.com";
+    const email = "hello@sarah-dawson.com";
 
     const handleCopy = () => {
         navigator.clipboard.writeText(email);
@@ -33,7 +33,7 @@ export default function ContactPage() {
                     >
                         hello@
                         <br />
-                        sarah-jenkins
+                        sarah-dawson
                         <br />
                         .com
                     </motion.h1>
