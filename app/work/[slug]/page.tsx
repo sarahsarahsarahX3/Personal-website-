@@ -1,4 +1,4 @@
-"use client";
+
 
 import { getFileBySlug } from "@/app/lib/mdx";
 import { MDXRemote } from "next-mdx-remote/rsc";
