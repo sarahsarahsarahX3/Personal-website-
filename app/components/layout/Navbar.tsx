@@ -19,14 +19,14 @@ export function Navbar() {
     const pathname = usePathname();
 
     return (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-auto max-w-md">
             <motion.nav
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
                 className={cn(
-                    "flex items-center gap-2 p-2 rounded-full",
-                    "bg-surface/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50"
+                    "flex items-center justify-between md:justify-center gap-1 md:gap-2 p-2 rounded-full",
+                    "bg-surface/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 overflow-x-auto no-scrollbar"
                 )}
             >
                 {navItems.map((item) => {
@@ -38,7 +38,7 @@ export function Navbar() {
                             key={item.name}
                             href={item.href}
                             className={cn(
-                                "relative flex items-center justify-center px-4 py-3 rounded-full transition-colors duration-300 group",
+                                "relative flex items-center justify-center px-3 py-3 md:px-4 rounded-full transition-colors duration-300 group shrink-0",
                                 isActive ? "text-surface" : "text-text-secondary hover:text-text-primary"
                             )}
                         >
@@ -51,7 +51,7 @@ export function Navbar() {
                             )}
 
                             <span className="relative z-10 flex items-center gap-2 text-sm font-medium">
-                                <Icon size={16} className={cn("transition-transform group-hover:scale-110", isActive && "text-surface")} />
+                                <Icon size={18} className={cn("transition-transform group-hover:scale-110", isActive && "text-surface")} />
                                 <span className={cn("hidden md:inline-block", !isActive && "md:hidden group-hover:md:inline-block transition-all duration-300")}>
                                     {item.name}
                                 </span>
