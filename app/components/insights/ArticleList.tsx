@@ -96,33 +96,37 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                 </div>
                             </div>
                             <div className="flex items-center md:items-center justify-start md:justify-center md:pl-5">
-                                {isExternal ? (
-                                    <a
-                                        href={href}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className={cn(
-                                            "inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors",
-                                            "underline underline-offset-4 decoration-white/10 hover:decoration-accent/60"
+                                        {isExternal ? (
+                                            <a
+                                                href={href}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className={cn(
+                                                    "inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10",
+                                                    "text-xs uppercase tracking-widest text-text-secondary bg-white/5",
+                                                    "hover:bg-white/10 hover:border-white/20 hover:text-text-primary transition-colors"
+                                                )}
+                                                aria-label="Open article"
+                                            >
+                                                <span>Open</span>
+                                                <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" size={16} />
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                href={href}
+                                                className={cn(
+                                                    "inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10",
+                                                    "text-xs uppercase tracking-widest text-text-secondary bg-white/5",
+                                                    "hover:bg-white/10 hover:border-white/20 hover:text-text-primary transition-colors"
+                                                )}
+                                                aria-label="Open article"
+                                            >
+                                                <span>Open</span>
+                                                <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" size={16} />
+                                            </Link>
                                         )}
-                                    >
-                                        <span>Open</span>
-                                        <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                                    </a>
-                                ) : (
-                                    <Link
-                                        href={href}
-                                        className={cn(
-                                            "inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors",
-                                            "underline underline-offset-4 decoration-white/10 hover:decoration-accent/60"
-                                        )}
-                                    >
-                                        <span>Open</span>
-                                        <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
                     </article>
                 </motion.div>
                 );
