@@ -15,7 +15,8 @@ export default async function InsightsPage() {
         readTime: article.readTime,
         thumbnail: article.thumbnail,
         publication: article.publication,
-        link: article.link
+        link: article.link,
+        excerpt: article.excerpt
     }));
 
     return (

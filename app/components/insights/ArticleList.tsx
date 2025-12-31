@@ -15,6 +15,7 @@ interface Article {
     thumbnail?: string;
     publication?: string;
     link?: string;
+    excerpt?: string;
 }
 
 export function ArticleList({ articles }: { articles: Article[] }) {
@@ -34,14 +35,14 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                         viewport={{ once: true }}
                     >
                         <article className="group py-10 border-b border-white/10 hover:bg-white/5 transition-colors px-4">
-                            <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-6 md:items-center">
+                            <div className="grid grid-cols-1 md:grid-cols-[200px_1fr_auto] gap-6 md:items-stretch">
                             <div className="relative overflow-hidden rounded-lg bg-surface-secondary aspect-[4/3]">
                                 <Image
                                     src={article.thumbnail ?? "/images/IMG_5668_edited.jpg"}
                                     alt={`${article.title} thumbnail`}
                                     fill
                                     className="object-cover"
-                                    sizes="(min-width: 768px) 160px, 100vw"
+                                    sizes="(min-width: 768px) 200px, 100vw"
                                 />
                             </div>
 
@@ -52,7 +53,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                     <span>{article.publication ?? "Sarah Dawson"}</span>
                                 </div>
 
-                                <h3 className="mt-3 text-2xl md:text-3xl font-display">
+                                <h3 className="mt-3 text-xl md:text-2xl font-display">
                                     <Link
                                         href={internalHref}
                                         className="hover:italic transition-all duration-300"
@@ -61,45 +62,21 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                     </Link>
                                 </h3>
 
-                                <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+                                {article.excerpt ? (
+                                    <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed max-w-2xl">
+                                        {article.excerpt}
+                                    </p>
+                                ) : null}
+
+                                <div className="mt-5 flex flex-wrap items-center gap-4">
                                     {article.category ? (
                                         <span className="px-3 py-1 rounded-full border border-white/10 text-xs uppercase tracking-wider text-text-secondary">
                                             {article.category}
                                         </span>
-                                    ) : (
-                                        <span />
-                                    )}
-
-                                    <div className="flex items-center gap-4">
-                                        {article.readTime ? (
-                                            <span className="text-sm text-text-secondary">{article.readTime}</span>
-                                        ) : null}
-                                        {isExternal ? (
-                                            <a
-                                                href={href}
-                                                target="_blank"
-                                                rel="noreferrer"
-                                                className={cn(
-                                                    "inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors",
-                                                    "underline underline-offset-4 decoration-white/10 hover:decoration-accent/60"
-                                                )}
-                                            >
-                                                <span>Open</span>
-                                                <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                                            </a>
-                                        ) : (
-                                            <Link
-                                                href={href}
-                                                className={cn(
-                                                    "inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors",
-                                                    "underline underline-offset-4 decoration-white/10 hover:decoration-accent/60"
-                                                )}
-                                            >
-                                                <span>Open</span>
-                                                <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                                            </Link>
-                                        )}
-                                    </div>
+                                    ) : null}
+                                    {article.readTime ? (
+                                        <span className="text-sm text-text-secondary">{article.readTime}</span>
+                                    ) : null}
                                 </div>
 
                                 <div className="mt-3 text-xs font-mono text-text-secondary/80 truncate">
@@ -114,18 +91,42 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                             {href}
                                         </a>
                                     ) : (
-                                        <Link
-                                            href={href}
-                                            className="hover:text-text-primary transition-colors"
-                                        >
+                                        <Link href={href} className="hover:text-text-primary transition-colors">
                                             {href}
                                         </Link>
                                     )}
                                 </div>
                             </div>
+                            <div className="flex items-center md:items-center justify-start md:justify-center">
+                                {isExternal ? (
+                                    <a
+                                        href={href}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className={cn(
+                                            "inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors",
+                                            "underline underline-offset-4 decoration-white/10 hover:decoration-accent/60"
+                                        )}
+                                    >
+                                        <span>Open</span>
+                                        <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                                    </a>
+                                ) : (
+                                    <Link
+                                        href={href}
+                                        className={cn(
+                                            "inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors",
+                                            "underline underline-offset-4 decoration-white/10 hover:decoration-accent/60"
+                                        )}
+                                    >
+                                        <span>Open</span>
+                                        <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                                    </Link>
+                                )}
+                            </div>
                         </div>
-                        </article>
-                    </motion.div>
+                    </article>
+                </motion.div>
                 );
             })}
         </div>
