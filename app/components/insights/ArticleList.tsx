@@ -109,7 +109,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                     {activeTag ? (
                         <button
                             type="button"
-                            className="px-4 py-2 rounded-full border border-white/10 text-xs uppercase tracking-widest text-text-secondary bg-white/5 hover:bg-white/10 hover:border-white/20 transition-colors"
+                            className="px-4 py-2 rounded-full border border-dashed border-white/15 text-xs uppercase tracking-widest text-text-secondary bg-transparent hover:bg-white/5 hover:border-white/25 transition-colors"
                             onClick={() => setActiveTag(null)}
                         >
                             Clear tag filter
@@ -123,10 +123,10 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                             data-analytics="article_tag_filter"
                             data-tag={tag}
                             className={cn(
-                                "px-4 py-2 rounded-full border text-xs uppercase tracking-widest transition-colors",
+                                "px-4 py-2 rounded-full border border-dashed text-xs uppercase tracking-widest transition-colors",
                                 activeTag === tag
-                                    ? "border-accent/60 text-accent bg-white/5"
-                                    : "border-white/10 text-text-secondary bg-white/5 hover:bg-white/10 hover:border-white/20"
+                                    ? "border-accent/60 text-accent bg-transparent"
+                                    : "border-white/15 text-text-secondary bg-transparent hover:bg-white/5 hover:border-white/25 hover:text-text-primary"
                             )}
                             onClick={() => {
                                 setActiveTag(tag);
@@ -217,7 +217,11 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                                 <button
                                                     key={tag}
                                                     type="button"
-                                                    className="relative z-20 px-3 py-1 rounded-full border border-white/10 text-xs uppercase tracking-widest text-text-secondary bg-white/5 hover:bg-white/10 hover:border-white/20 transition-colors"
+                                                    className={cn(
+                                                        "relative z-20 px-3 py-1 rounded-full border border-dashed border-white/15",
+                                                        "text-[11px] uppercase tracking-widest text-text-secondary/80 bg-transparent",
+                                                        "hover:text-accent hover:border-accent/50 hover:bg-white/5 transition-colors"
+                                                    )}
                                                     data-analytics="article_tag_pill"
                                                     data-tag={tag}
                                                     onClick={(e) => {
