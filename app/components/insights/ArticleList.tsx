@@ -36,7 +36,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                     >
                         <article className="group py-10 border-b border-white/10 hover:bg-white/5 transition-colors px-4">
                             <div className="grid grid-cols-1 md:grid-cols-[200px_1fr_auto] gap-6 md:items-stretch">
-                            <div className="relative overflow-hidden rounded-lg bg-surface-secondary aspect-[4/3]">
+                            <div className="relative overflow-hidden rounded-lg bg-surface-secondary h-48 md:h-full shrink-0">
                                 <Image
                                     src={article.thumbnail ?? "/images/IMG_5668_edited.jpg"}
                                     alt={`${article.title} thumbnail`}
