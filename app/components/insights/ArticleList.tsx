@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { cn } from "@/app/lib/utils";
 
 interface Article {
     title: string;
@@ -10,41 +12,116 @@ interface Article {
     date: string;
     category: string;
     readTime: string;
+    thumbnail?: string;
+    publication?: string;
+    link?: string;
 }
 
 export function ArticleList({ articles }: { articles: Article[] }) {
     return (
         <div className="border-t border-white/10">
-            {articles.map((article, i) => (
-                <motion.div
-                    key={article.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    viewport={{ once: true }}
-                >
-                    <Link href={`/insights/${article.slug}`} className="group block py-12 border-b border-white/10 hover:bg-white/5 transition-colors px-4">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                            <div className="flex flex-col md:flex-row md:items-center gap-8 md:w-1/2">
-                                <span className="text-text-secondary font-mono text-sm w-32">{article.date}</span>
-                                <h3 className="text-2xl md:text-3xl font-display group-hover:italic transition-all duration-300">
-                                    {article.title}
-                                </h3>
+            {articles.map((article, i) => {
+                const internalHref = `/insights/${article.slug}`;
+                const href = article.link ?? internalHref;
+                const isExternal = href.startsWith("http://") || href.startsWith("https://");
+
+                return (
+                    <motion.div
+                        key={article.title}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        viewport={{ once: true }}
+                    >
+                        <article className="group py-10 border-b border-white/10 hover:bg-white/5 transition-colors px-4">
+                            <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-6 md:items-center">
+                            <div className="relative overflow-hidden rounded-lg bg-surface-secondary aspect-[4/3]">
+                                <Image
+                                    src={article.thumbnail ?? "/images/IMG_5668_edited.jpg"}
+                                    alt={`${article.title} thumbnail`}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(min-width: 768px) 160px, 100vw"
+                                />
                             </div>
 
-                            <div className="flex items-center justify-between md:justify-end gap-8 md:w-1/2">
-                                <span className="px-3 py-1 rounded-full border border-white/10 text-xs uppercase tracking-wider text-text-secondary">
-                                    {article.category}
-                                </span>
-                                <div className="flex items-center gap-4">
-                                    <span className="text-sm text-text-secondary">{article.readTime}</span>
-                                    <ArrowUpRight className="text-text-secondary group-hover:text-accent group-hover:-translate-y-1 group-hover:translate-x-1 transition-all" />
+                            <div className="min-w-0">
+                                <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-text-secondary font-mono text-sm">
+                                    <span>{article.date}</span>
+                                    <span className="w-1 h-1 bg-accent rounded-full" />
+                                    <span>{article.publication ?? "Sarah Dawson"}</span>
+                                </div>
+
+                                <h3 className="mt-3 text-2xl md:text-3xl font-display">
+                                    <Link
+                                        href={internalHref}
+                                        className="hover:italic transition-all duration-300"
+                                    >
+                                        {article.title}
+                                    </Link>
+                                </h3>
+
+                                <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+                                    <span className="px-3 py-1 rounded-full border border-white/10 text-xs uppercase tracking-wider text-text-secondary">
+                                        {article.category}
+                                    </span>
+
+                                    <div className="flex items-center gap-4">
+                                        <span className="text-sm text-text-secondary">{article.readTime}</span>
+                                        {isExternal ? (
+                                            <a
+                                                href={href}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className={cn(
+                                                    "inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors",
+                                                    "underline underline-offset-4 decoration-white/10 hover:decoration-accent/60"
+                                                )}
+                                            >
+                                                <span>Open</span>
+                                                <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                href={href}
+                                                className={cn(
+                                                    "inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors",
+                                                    "underline underline-offset-4 decoration-white/10 hover:decoration-accent/60"
+                                                )}
+                                            >
+                                                <span>Open</span>
+                                                <ArrowUpRight className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                                            </Link>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="mt-3 text-xs font-mono text-text-secondary/80 truncate">
+                                    <span className="sr-only">Link: </span>
+                                    {isExternal ? (
+                                        <a
+                                            href={href}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="hover:text-text-primary transition-colors"
+                                        >
+                                            {href}
+                                        </a>
+                                    ) : (
+                                        <Link
+                                            href={href}
+                                            className="hover:text-text-primary transition-colors"
+                                        >
+                                            {href}
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                         </div>
-                    </Link>
-                </motion.div>
-            ))}
+                        </article>
+                    </motion.div>
+                );
+            })}
         </div>
     );
 }

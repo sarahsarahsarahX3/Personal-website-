@@ -12,7 +12,10 @@ export default async function InsightsPage() {
         slug: article.slug,
         date: article.date,
         category: article.category,
-        readTime: article.readTime
+        readTime: article.readTime,
+        thumbnail: article.thumbnail,
+        publication: article.publication,
+        link: article.link
     }));
 
     return (
