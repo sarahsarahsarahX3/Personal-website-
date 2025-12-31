@@ -10,8 +10,8 @@ interface Article {
     title: string;
     slug: string;
     date: string;
-    category: string;
-    readTime: string;
+    category?: string;
+    readTime?: string;
     thumbnail?: string;
     publication?: string;
     link?: string;
@@ -62,12 +62,18 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                 </h3>
 
                                 <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-                                    <span className="px-3 py-1 rounded-full border border-white/10 text-xs uppercase tracking-wider text-text-secondary">
-                                        {article.category}
-                                    </span>
+                                    {article.category ? (
+                                        <span className="px-3 py-1 rounded-full border border-white/10 text-xs uppercase tracking-wider text-text-secondary">
+                                            {article.category}
+                                        </span>
+                                    ) : (
+                                        <span />
+                                    )}
 
                                     <div className="flex items-center gap-4">
-                                        <span className="text-sm text-text-secondary">{article.readTime}</span>
+                                        {article.readTime ? (
+                                            <span className="text-sm text-text-secondary">{article.readTime}</span>
+                                        ) : null}
                                         {isExternal ? (
                                             <a
                                                 href={href}

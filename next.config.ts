@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
         port: '',
       },
+      {
+        protocol: "https",
+        hostname: "content.probeautycentral.saloncentric.com",
+      },
+      {
+        protocol: "https",
+        hostname: "media.saloncentric.com",
+      },
     ],
   },
 };
