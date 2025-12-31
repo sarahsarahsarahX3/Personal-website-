@@ -20,7 +20,7 @@ export default async function InsightsPage() {
             <div className="container mx-auto">
                 <header className="mb-20">
                     <h1 className="text-6xl md:text-8xl font-display mb-6 animate-fade-in-up">
-                        Insights
+                        Articles
                     </h1>
                     <p className="text-text-secondary text-xl max-w-xl animate-fade-in-up delay-200">
                         Thoughts on marketing, culture, and the future of digital interaction.

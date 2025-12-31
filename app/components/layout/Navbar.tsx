@@ -10,7 +10,7 @@ const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Work", href: "/work", icon: Briefcase },
     { name: "About", href: "/about", icon: User },
-    { name: "Insights", href: "/insights", icon: BookOpen },
+    { name: "Articles", href: "/insights", icon: BookOpen },
     { name: "Lab", href: "/lab", icon: FlaskConical },
     { name: "Contact", href: "/contact", icon: Mail },
 ];
