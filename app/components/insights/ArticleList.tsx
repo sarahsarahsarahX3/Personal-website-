@@ -95,7 +95,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                     )}
                                 </div>
                             </div>
-                            <div className="flex items-center md:items-center justify-start md:justify-center">
+                            <div className="flex items-center md:items-center justify-start md:justify-center md:pl-5">
                                 {isExternal ? (
                                     <a
                                         href={href}
