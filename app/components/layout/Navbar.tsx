@@ -8,9 +8,9 @@ import { Home, Briefcase, BookOpen, FlaskConical, Mail, User } from "lucide-reac
 
 const navItems = [
     { name: "Home", href: "/", icon: Home },
-    { name: "Work", href: "/work", icon: Briefcase },
+    { name: "Projects", href: "/work", icon: Briefcase },
     { name: "About", href: "/about", icon: User },
-    { name: "Articles", href: "/insights", icon: BookOpen },
+    { name: "Writing", href: "/insights", icon: BookOpen },
     { name: "Lab", href: "/lab", icon: FlaskConical },
     { name: "Contact", href: "/contact", icon: Mail },
 ];
