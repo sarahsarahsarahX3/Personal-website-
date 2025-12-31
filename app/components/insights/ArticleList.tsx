@@ -18,11 +18,14 @@ interface Article {
     excerpt?: string;
 }
 
-function clampText(text: string, maxChars: number) {
-    const normalized = text.trim();
-    if (normalized.length <= maxChars) return normalized;
-    if (maxChars <= 1) return "…".slice(0, maxChars);
-    return `${normalized.slice(0, maxChars - 1).trimEnd()}…`;
+function clampWords(text: string, maxWords: number) {
+    const normalized = text.trim().replace(/\s+/g, " ");
+    if (!normalized) return "";
+    if (maxWords <= 0) return "";
+
+    const words = normalized.split(" ");
+    if (words.length <= maxWords) return normalized;
+    return `${words.slice(0, maxWords).join(" ")}…`;
 }
 
 export function ArticleList({ articles }: { articles: Article[] }) {
@@ -32,7 +35,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                 const internalHref = `/insights/${article.slug}`;
                 const href = article.link ?? internalHref;
                 const isExternal = href.startsWith("http://") || href.startsWith("https://");
-                const excerpt = article.excerpt ? clampText(article.excerpt, 30) : null;
+                const excerpt = article.excerpt ? clampWords(article.excerpt, 30) : null;
 
                 return (
                     <motion.div
