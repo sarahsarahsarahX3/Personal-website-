@@ -19,14 +19,14 @@ export function Navbar() {
     const pathname = usePathname();
 
     return (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-auto max-w-md">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-auto max-w-md md:max-w-none">
             <motion.nav
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
                 className={cn(
                     "flex items-center justify-between md:justify-center gap-1 md:gap-2 p-2 rounded-full",
-                    "bg-surface/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 overflow-x-auto no-scrollbar"
+                    "bg-surface/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 overflow-x-auto md:overflow-x-visible md:overflow-visible no-scrollbar"
                 )}
             >
                 {navItems.map((item) => {
