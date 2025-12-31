@@ -18,6 +18,13 @@ interface Article {
     excerpt?: string;
 }
 
+function clampText(text: string, maxChars: number) {
+    const normalized = text.trim();
+    if (normalized.length <= maxChars) return normalized;
+    if (maxChars <= 1) return "…".slice(0, maxChars);
+    return `${normalized.slice(0, maxChars - 1).trimEnd()}…`;
+}
+
 export function ArticleList({ articles }: { articles: Article[] }) {
     return (
         <div className="border-t border-white/10">
@@ -25,6 +32,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                 const internalHref = `/insights/${article.slug}`;
                 const href = article.link ?? internalHref;
                 const isExternal = href.startsWith("http://") || href.startsWith("https://");
+                const excerpt = article.excerpt ? clampText(article.excerpt, 30) : null;
 
                 return (
                     <motion.div
@@ -60,9 +68,9 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                     </span>
                                 </h3>
 
-                                {article.excerpt ? (
+                                {excerpt ? (
                                     <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed max-w-2xl">
-                                        {article.excerpt}
+                                        {excerpt}
                                     </p>
                                 ) : null}
 
