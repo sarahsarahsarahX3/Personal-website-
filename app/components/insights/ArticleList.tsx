@@ -55,23 +55,9 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                 </div>
 
                                 <h3 className="mt-3 text-xl md:text-2xl font-display">
-                                    {isExternal ? (
-                                        <a
-                                            href={href}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="hover:italic transition-all duration-300"
-                                        >
-                                            {article.title}
-                                        </a>
-                                    ) : (
-                                        <Link
-                                            href={internalHref}
-                                            className="hover:italic transition-all duration-300"
-                                        >
-                                            {article.title}
-                                        </Link>
-                                    )}
+                                    <span className="transition-all duration-300 group-hover:italic">
+                                        {article.title}
+                                    </span>
                                 </h3>
 
                                 {article.excerpt ? (
