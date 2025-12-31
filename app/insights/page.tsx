@@ -18,7 +18,8 @@ export default async function InsightsPage() {
         link: article.link,
         excerpt: article.excerpt,
         tags: article.tags,
-        formats: article.formats
+        formats: article.formats,
+        performance: article.performance
     }));
 
     return (

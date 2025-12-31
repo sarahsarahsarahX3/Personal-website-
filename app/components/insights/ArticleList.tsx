@@ -19,6 +19,7 @@ interface Article {
     excerpt?: string;
     tags?: string[];
     formats?: string[];
+    performance?: string[];
 }
 
 function clampWords(text: string, maxWords: number) {
@@ -82,7 +83,16 @@ function emitAnalytics(event: string, payload: Record<string, unknown>) {
 export function ArticleList({ articles }: { articles: Article[] }) {
     const [activeTag, setActiveTag] = useState<string | null>(null);
     const [activeFormat, setActiveFormat] = useState<string | null>(null);
+    const [activePerformance, setActivePerformance] = useState<string | null>(null);
     const [showBackToTop, setShowBackToTop] = useState(false);
+
+    const allPerformanceTags = useMemo(() => {
+        const tags = new Set<string>();
+        for (const article of articles) {
+            for (const tag of article.performance ?? []) tags.add(tag);
+        }
+        return Array.from(tags).sort((a, b) => a.localeCompare(b));
+    }, [articles]);
 
     const allFormats = useMemo(() => {
         const formats = new Set<string>();
@@ -104,9 +114,10 @@ export function ArticleList({ articles }: { articles: Article[] }) {
         return articles.filter((article) => {
             const matchesTag = !activeTag || (article.tags ?? []).includes(activeTag);
             const matchesFormat = !activeFormat || (article.formats ?? []).includes(activeFormat);
-            return matchesTag && matchesFormat;
+            const matchesPerformance = !activePerformance || (article.performance ?? []).includes(activePerformance);
+            return matchesTag && matchesFormat && matchesPerformance;
         });
-    }, [articles, activeTag, activeFormat]);
+    }, [articles, activeTag, activeFormat, activePerformance]);
 
     useEffect(() => {
         const onScroll = () => setShowBackToTop(window.scrollY > 600);
@@ -150,6 +161,44 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                             }}
                         >
                             {format}
+                        </button>
+                    ))}
+                </div>
+            ) : null}
+
+            {allPerformanceTags.length ? (
+                <div className="mb-6 flex flex-wrap items-center gap-3">
+                    <span className="text-xs uppercase tracking-widest text-text-secondary/70 font-mono">
+                        Performance
+                    </span>
+                    {activePerformance ? (
+                        <button
+                            type="button"
+                            className="px-3 py-1 rounded-full border border-white/10 text-xs uppercase tracking-widest text-text-secondary bg-white/5 hover:bg-white/10 hover:border-white/20 transition-colors"
+                            onClick={() => setActivePerformance(null)}
+                        >
+                            Clear
+                        </button>
+                    ) : null}
+
+                    {allPerformanceTags.map((tag) => (
+                        <button
+                            key={tag}
+                            type="button"
+                            data-analytics="article_performance_filter"
+                            data-performance={tag}
+                            className={cn(
+                                "px-3 py-1 rounded-full border text-xs uppercase tracking-widest transition-colors",
+                                activePerformance === tag
+                                    ? "border-accent/50 text-accent bg-accent/10"
+                                    : "border-white/10 text-text-secondary bg-white/5 hover:bg-white/10 hover:border-white/20 hover:text-text-primary"
+                            )}
+                            onClick={() => {
+                                setActivePerformance(tag);
+                                emitAnalytics("article_performance_filter_click", { tag });
+                            }}
+                        >
+                            {tag}
                         </button>
                     ))}
                 </div>
@@ -272,6 +321,17 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                                     data-format={format}
                                                 >
                                                     {format}
+                                                </span>
+                                            ))}
+
+                                            {(article.performance ?? []).map((tag) => (
+                                                <span
+                                                    key={tag}
+                                                    className="px-3 py-1 rounded-full border border-white/10 text-[11px] uppercase tracking-widest text-text-secondary bg-white/5"
+                                                    data-analytics="article_performance_pill"
+                                                    data-performance={tag}
+                                                >
+                                                    {tag}
                                                 </span>
                                             ))}
 
