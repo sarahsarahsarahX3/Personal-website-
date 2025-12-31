@@ -35,14 +35,14 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                         viewport={{ once: true }}
                     >
                         <article className="group py-10 border-b border-white/10 hover:bg-white/5 transition-colors px-4">
-                            <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_auto] gap-6 md:items-center">
+                            <div className="grid grid-cols-1 md:grid-cols-[240px_1fr_auto] gap-6 md:items-center">
                             <div className="relative overflow-hidden rounded-lg bg-surface-secondary aspect-[4/3] shrink-0">
                                 <Image
                                     src={article.thumbnail ?? "/images/IMG_5668_edited.jpg"}
                                     alt={`${article.title} thumbnail`}
                                     fill
                                     className="object-cover object-center"
-                                    sizes="(min-width: 768px) 320px, calc(100vw - 5rem)"
+                                    sizes="(min-width: 768px) 240px, calc(100vw - 5rem)"
                                     quality={75}
                                 />
                             </div>
