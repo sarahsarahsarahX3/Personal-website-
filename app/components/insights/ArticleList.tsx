@@ -42,7 +42,8 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                     alt={`${article.title} thumbnail`}
                                     fill
                                     className="object-cover"
-                                    sizes="(min-width: 768px) 400px, 100vw"
+                                    sizes="(min-width: 768px) 400px, calc(100vw - 5rem)"
+                                    quality={75}
                                 />
                             </div>
 
