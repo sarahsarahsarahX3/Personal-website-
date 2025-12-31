@@ -50,13 +50,16 @@ export function Navbar() {
                                 />
                             )}
 
-                            <span className="relative z-10 flex items-center gap-2 text-sm font-medium">
+                            <span className="relative z-10 flex items-center gap-2">
                                 <Icon size={18} className={cn("transition-transform group-hover:scale-110", isActive && "text-surface")} />
-                                <span className={cn("hidden md:inline-block", !isActive && "md:hidden group-hover:md:inline-block transition-all duration-300")}>
+                                <span
+                                    className={cn(
+                                        "text-sm font-medium transition-all duration-300",
+                                        isActive ? "inline-block" : "hidden md:hidden group-hover:md:inline-block"
+                                    )}
+                                >
                                     {item.name}
                                 </span>
-                                {/* Always show text for active item on desktop */}
-                                {isActive && <span className="hidden md:inline-block">{item.name}</span>}
                             </span>
                         </Link>
                     );
