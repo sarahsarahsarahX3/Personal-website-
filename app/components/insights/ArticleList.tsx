@@ -18,6 +18,7 @@ interface Article {
     link?: string;
     excerpt?: string;
     tags?: string[];
+    formats?: string[];
 }
 
 function clampWords(text: string, maxWords: number) {
@@ -80,7 +81,16 @@ function emitAnalytics(event: string, payload: Record<string, unknown>) {
 
 export function ArticleList({ articles }: { articles: Article[] }) {
     const [activeTag, setActiveTag] = useState<string | null>(null);
+    const [activeFormat, setActiveFormat] = useState<string | null>(null);
     const [showBackToTop, setShowBackToTop] = useState(false);
+
+    const allFormats = useMemo(() => {
+        const formats = new Set<string>();
+        for (const article of articles) {
+            for (const format of article.formats ?? []) formats.add(format);
+        }
+        return Array.from(formats).sort((a, b) => a.localeCompare(b));
+    }, [articles]);
 
     const allTags = useMemo(() => {
         const tags = new Set<string>();
@@ -91,9 +101,12 @@ export function ArticleList({ articles }: { articles: Article[] }) {
     }, [articles]);
 
     const filteredArticles = useMemo(() => {
-        if (!activeTag) return articles;
-        return articles.filter((a) => (a.tags ?? []).includes(activeTag));
-    }, [articles, activeTag]);
+        return articles.filter((article) => {
+            const matchesTag = !activeTag || (article.tags ?? []).includes(activeTag);
+            const matchesFormat = !activeFormat || (article.formats ?? []).includes(activeFormat);
+            return matchesTag && matchesFormat;
+        });
+    }, [articles, activeTag, activeFormat]);
 
     useEffect(() => {
         const onScroll = () => setShowBackToTop(window.scrollY > 600);
@@ -104,6 +117,44 @@ export function ArticleList({ articles }: { articles: Article[] }) {
 
     return (
         <>
+            {allFormats.length ? (
+                <div className="mb-6 flex flex-wrap items-center gap-3">
+                    <span className="text-xs uppercase tracking-widest text-text-secondary/70 font-mono">
+                        Format
+                    </span>
+                    {activeFormat ? (
+                        <button
+                            type="button"
+                            className="px-3 py-1 rounded-full border border-white/10 text-xs uppercase tracking-widest text-text-secondary bg-white/5 hover:bg-white/10 hover:border-white/20 transition-colors"
+                            onClick={() => setActiveFormat(null)}
+                        >
+                            Clear
+                        </button>
+                    ) : null}
+
+                    {allFormats.map((format) => (
+                        <button
+                            key={format}
+                            type="button"
+                            data-analytics="article_format_filter"
+                            data-format={format}
+                            className={cn(
+                                "px-3 py-1 rounded-full border text-xs uppercase tracking-widest transition-colors",
+                                activeFormat === format
+                                    ? "border-accent/50 text-accent bg-accent/10"
+                                    : "border-white/10 text-text-secondary bg-white/5 hover:bg-white/10 hover:border-white/20 hover:text-text-primary"
+                            )}
+                            onClick={() => {
+                                setActiveFormat(format);
+                                emitAnalytics("article_format_filter_click", { format });
+                            }}
+                        >
+                            {format}
+                        </button>
+                    ))}
+                </div>
+            ) : null}
+
             {allTags.length ? (
                 <div className="mb-8 flex flex-wrap items-center gap-3">
                     {activeTag ? (
@@ -213,6 +264,17 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                         ) : null}
 
                                         <div className="mt-5 flex flex-wrap items-center gap-3">
+                                            {(article.formats ?? []).map((format) => (
+                                                <span
+                                                    key={format}
+                                                    className="px-3 py-1 rounded-full border border-white/10 text-[11px] uppercase tracking-widest text-text-primary/80 bg-white/10"
+                                                    data-analytics="article_format_pill"
+                                                    data-format={format}
+                                                >
+                                                    {format}
+                                                </span>
+                                            ))}
+
                                             {(article.tags ?? []).map((tag) => (
                                                 <button
                                                     key={tag}

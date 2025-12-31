@@ -17,7 +17,8 @@ export default async function InsightsPage() {
         publication: article.publication,
         link: article.link,
         excerpt: article.excerpt,
-        tags: article.tags
+        tags: article.tags,
+        formats: article.formats
     }));
 
     return (
