@@ -12,7 +12,7 @@ export function Hero() {
     const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
     return (
-        <section className="relative min-h-screen flex flex-col justify-between pt-32 pb-8 overflow-hidden">
+        <section className="relative min-h-screen flex flex-col justify-between pt-8 pb-8 overflow-hidden">
             {/* Background Gradient Spot */}
             <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -32,7 +32,7 @@ export function Hero() {
 
                     <div className="lg:grid lg:grid-cols-[1fr_20rem] lg:items-end lg:gap-12">
                         <h1
-                            className="text-[12vw] md:text-[10vw] lg:text-[6vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
+                            className="text-[clamp(3.5rem,12vw,8.5rem)] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
                         >
