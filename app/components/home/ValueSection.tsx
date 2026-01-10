@@ -49,7 +49,7 @@ export function ValueSection() {
         </header>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {valueItems.map((item) => (
+          {valueItems.map((item, index) => (
             <div
               key={item.title}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition will-change-transform hover:-translate-y-1 hover:border-accent/40"
@@ -60,11 +60,15 @@ export function ValueSection() {
               </div>
 
               <div className="relative">
-                <div className="mb-4 flex items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-accent/80" />
-                  <span className="text-xs uppercase tracking-[0.2em] text-text-secondary/80">
-                    Core Skill
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="font-mono text-xs tracking-widest text-text-secondary/70">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-[3px] w-3 rounded-full bg-white/15 transition-colors duration-300 group-hover:bg-accent/60" />
+                    <span className="h-[3px] w-6 rounded-full bg-white/10 transition-colors duration-300 group-hover:bg-accent/40" />
+                    <span className="h-[3px] w-10 rounded-full bg-white/5 transition-all duration-300 group-hover:w-14 group-hover:bg-accent/25" />
+                  </div>
                 </div>
 
                 <h3 className="text-xl font-medium tracking-tight">{item.title}</h3>
