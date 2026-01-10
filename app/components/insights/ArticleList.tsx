@@ -107,7 +107,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
     return (
         <>
             {allTags.length ? (
-                <div className="mb-8 flex flex-wrap items-center gap-3">
+                <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
                     <span className="text-xs uppercase tracking-widest text-text-secondary/70 font-mono">
                         Tags
                     </span>
