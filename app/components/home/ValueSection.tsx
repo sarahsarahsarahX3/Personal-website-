@@ -90,7 +90,7 @@ export function ValueSection() {
           {valueItems.map((item, index) => (
             <div
               key={item.title}
-              className="group relative rounded-2xl p-[1px] transition will-change-transform hover:-translate-y-1"
+              className="group relative h-full rounded-2xl p-[1px] transition will-change-transform hover:-translate-y-1"
             >
               {/* Thin animated border/glow */}
               <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-accent/0 via-accent/35 to-accent/0 bg-[length:200%_100%] bg-[position:0%_0%] opacity-0 transition-[opacity,background-position] duration-500 group-hover:opacity-100 group-hover:bg-[position:100%_0%]" />
@@ -100,18 +100,23 @@ export function ValueSection() {
                 <div className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
               </div>
 
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition-colors duration-300 group-hover:border-accent/30">
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="font-mono text-xs tracking-widest text-text-secondary/70">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+              <div className="relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition-colors duration-300 group-hover:border-accent/30">
+                <div className="mb-4 flex items-start justify-between">
+                  <div>
+                    <div className="font-mono text-xs tracking-widest text-text-secondary/70">
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
+                    <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-text-secondary/70">
+                      Core Skill
+                    </div>
+                  </div>
                   <div className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-surface/40 transition-colors duration-300 group-hover:border-accent/40">
                     <item.Icon className="h-4 w-4 text-text-secondary/80 transition duration-300 group-hover:scale-110 group-hover:text-accent" />
                   </div>
                 </div>
 
-                <h3 className="text-xl font-medium tracking-tight">{item.title}</h3>
-                <p className="mt-3 text-text-secondary leading-relaxed">{item.description}</p>
+                <h3 className="line-clamp-1 text-xl font-medium tracking-tight">{item.title}</h3>
+                <p className="mt-3 line-clamp-3 text-text-secondary leading-relaxed">{item.description}</p>
 
                 <div className="mt-5 flex flex-wrap gap-2">
                   {item.capabilities.map((capability) => (
@@ -124,7 +129,9 @@ export function ValueSection() {
                   ))}
                 </div>
 
-                <div className="mt-6 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
+                <div className="mt-auto pt-6">
+                  <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
+                </div>
               </div>
             </div>
           ))}
