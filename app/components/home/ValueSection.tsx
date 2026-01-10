@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import {
   BarChart3,
+  ChevronDown,
   Compass,
   Kanban,
   Megaphone,
@@ -16,6 +17,7 @@ type ValueItem = {
   description: string;
   capabilities: [string, string, string];
   Icon: LucideIcon;
+  details: [string, string, string];
 };
 
 const valueItems: ValueItem[] = [
@@ -24,54 +26,63 @@ const valueItems: ValueItem[] = [
     description: "Plans content ecosystems that ladder up to business goals and earn attention across channels.",
     capabilities: ["Messaging", "Roadmaps", "Channel Mix"],
     Icon: Compass,
+    details: ["Content pillars + channel roles", "Editorial calendar + cadence", "KPIs + measurement plan"],
   },
   {
     title: "Integrated Campaigns",
     description: "Builds cohesive launches across paid, owned, and earned touchpoints—aligned, timed, and measurable.",
     capabilities: ["Paid/Owned/Earned", "Launch Planning", "Creative Systems"],
     Icon: Megaphone,
+    details: ["Campaign architecture + sequencing", "Creative briefs + asset system", "Optimization + reporting loop"],
   },
   {
     title: "SEO + Search Strategy",
     description: "Creates search-led content that answers real questions and compounds traffic over time.",
     capabilities: ["Keyword Strategy", "On-Page SEO", "Search Intent"],
     Icon: Search,
+    details: ["Intent mapping + topic clusters", "On-page structure + internal links", "Refresh strategy + updates"],
   },
   {
     title: "Copywriting + Editorial",
     description: "Writes with voice, clarity, and conversion in mind—from headlines to long-form storytelling.",
     capabilities: ["Editorial Voice", "Conversion Copy", "Narrative Arc"],
     Icon: PenLine,
+    details: ["Voice + tone guidelines", "Headlines + CTAs + flows", "Long-form features + interviews"],
   },
   {
     title: "Brand Storytelling",
     description: "Turns product truths into narratives that feel human, memorable, and culturally relevant.",
     capabilities: ["Positioning", "Brand Voice", "Concepting"],
     Icon: Sparkles,
+    details: ["Narrative territories + angles", "Messaging framework + proof points", "Launch storytelling toolkit"],
   },
   {
     title: "Performance Analytics",
     description: "Measures what matters, reads the signals, and turns data into next-step decisions.",
     capabilities: ["Dashboards", "Insights", "Testing"],
     Icon: BarChart3,
+    details: ["Dashboards + KPI definitions", "Insights cadence + recommendations", "Testing plan + learnings"],
   },
   {
     title: "Audience + Insights",
     description: "Maps audiences, behaviors, and motivations to sharpen messaging and creative direction.",
     capabilities: ["Personas", "Segmentation", "Research"],
     Icon: Users,
+    details: ["Audience segments + personas", "Journey mapping + pain points", "Insights to creative direction"],
   },
   {
     title: "Content Operations",
     description: "Designs workflows, calendars, and systems that keep production consistent and scalable.",
     capabilities: ["Calendars", "Workflow", "Governance"],
     Icon: Kanban,
+    details: ["Workflow + approvals system", "Templates + content governance", "Tooling + process optimization"],
   },
   {
     title: "Partnerships + Influence",
     description: "Activates creators, stakeholders, and partners to extend reach and credibility.",
     capabilities: ["Creator Strategy", "Partnership Ops", "Amplification"],
     Icon: Share2,
+    details: ["Partner fit + outreach", "Briefing + execution support", "Amplification + measurement"],
   },
 ];
 
@@ -128,6 +139,27 @@ export function ValueSection() {
                     </span>
                   ))}
                 </div>
+
+                <details className="mt-5 group/details">
+                  <summary className="list-none cursor-pointer select-none">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/30 px-3 py-1.5 text-xs tracking-wide text-text-secondary/90 transition-colors duration-300 group-hover/details:border-white/15 group-hover/details:bg-surface/40">
+                      <span>Expand details</span>
+                      <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-open/details:rotate-180" />
+                    </div>
+                  </summary>
+
+                  <div className="mt-4 space-y-2 text-sm text-text-secondary leading-relaxed">
+                    <div className="font-mono text-xs tracking-widest text-text-secondary/70">Includes</div>
+                    <ul className="space-y-2">
+                      {item.details.map((detail) => (
+                        <li key={detail} className="flex gap-3">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" />
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </details>
 
                 <div className="mt-auto pt-6">
                   <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />

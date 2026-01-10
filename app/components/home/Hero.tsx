@@ -102,7 +102,7 @@ export function Hero() {
                         "Editorial Leadership",
                         "Digital Content Management",
                     ]}
-                    speed={10}
+                    speed={5}
                 />
             </motion.div>
         </section>
