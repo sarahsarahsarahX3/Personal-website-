@@ -88,13 +88,23 @@ const valueItems: ValueItem[] = [
 
 export function ValueSection() {
   return (
-    <section className="border-t border-white/10 py-20">
-      <div className="container mx-auto px-6">
-        <header className="mb-12 max-w-3xl">
-          <h2 className="text-4xl md:text-5xl font-display animate-fade-in-up">Where I Create Value</h2>
-          <p className="mt-4 text-text-secondary text-lg text-balance animate-fade-in-up delay-100">
-            Core competencies that translate creative ideas into measurable growth.
-          </p>
+    <section className="relative border-t border-white/10 py-20">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[-15%] top-[-25%] h-[520px] w-[520px] rounded-full bg-accent/7 blur-3xl" />
+        <div className="absolute right-[-10%] top-[20%] h-[460px] w-[460px] rounded-full bg-white/5 blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-6 relative">
+        <header className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl">
+            <h2 className="text-4xl md:text-5xl font-display animate-fade-in-up">Where I Create Value</h2>
+            <p className="mt-4 text-text-secondary text-lg text-balance animate-fade-in-up delay-100">
+              Core competencies that translate creative ideas into measurable growth.
+            </p>
+          </div>
+          <div className="text-xs font-mono tracking-widest text-text-secondary/70 uppercase animate-fade-in-up delay-200">
+            Tap a card to expand
+          </div>
         </header>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -111,7 +121,7 @@ export function ValueSection() {
                 <div className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
               </div>
 
-              <details className="relative h-full min-h-[220px] overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 transition-colors duration-300 group-hover:border-accent/30">
+              <details className="group/details relative h-full min-h-[220px] overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 transition-colors duration-300 group-hover:border-accent/30 open:bg-surface-alt/30">
                 <summary className="list-none cursor-pointer select-none p-7">
                   <div className="flex items-start justify-between gap-6">
                     <div>
@@ -128,7 +138,7 @@ export function ValueSection() {
                       <div className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-surface/40 transition-colors duration-300 group-hover:border-accent/40">
                         <item.Icon className="h-4 w-4 text-text-secondary/80 transition duration-300 group-hover:scale-110 group-hover:text-accent" />
                       </div>
-                      <ChevronDown className="mt-1 h-4 w-4 text-text-secondary/70 transition-transform duration-300 group-open:rotate-180" />
+                      <ChevronDown className="mt-1 h-4 w-4 text-text-secondary/70 transition-transform duration-300 group-open/details:rotate-180" />
                     </div>
                   </div>
                 </summary>
@@ -138,27 +148,30 @@ export function ValueSection() {
 
                   <p className="mt-5 text-text-secondary leading-relaxed">{item.description}</p>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {item.capabilities.map((capability) => (
-                      <span
-                        key={capability}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-wide text-text-secondary/90"
-                      >
-                        {capability}
-                      </span>
-                    ))}
-                  </div>
+                  <div className="mt-6 grid gap-6 md:grid-cols-2">
+                    <div className="text-sm text-text-secondary leading-relaxed">
+                      <div className="font-mono text-xs tracking-widest text-text-secondary/70">Capabilities</div>
+                      <ul className="mt-3 space-y-2">
+                        {item.capabilities.map((capability) => (
+                          <li key={capability} className="flex gap-3">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/25" />
+                            <span>{capability}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div className="mt-5 text-sm text-text-secondary leading-relaxed">
-                    <div className="font-mono text-xs tracking-widest text-text-secondary/70">Includes</div>
-                    <ul className="mt-3 space-y-2">
-                      {item.details.map((detail) => (
-                        <li key={detail} className="flex gap-3">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" />
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="text-sm text-text-secondary leading-relaxed">
+                      <div className="font-mono text-xs tracking-widest text-text-secondary/70">Includes</div>
+                      <ul className="mt-3 space-y-2">
+                        {item.details.map((detail) => (
+                          <li key={detail} className="flex gap-3">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" />
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </details>
