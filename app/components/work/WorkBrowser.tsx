@@ -15,7 +15,7 @@ interface Project {
 
 const categories = [
     "All",
-    "Integrated Campaigns",
+    "Campaigns",
     "Content Strategy",
     "SEO & AEO",
     "Copywriting",
