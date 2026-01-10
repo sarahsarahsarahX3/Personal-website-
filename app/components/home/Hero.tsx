@@ -17,7 +17,7 @@ export function Hero() {
             <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
             {/* Main Content */}
-            <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center">
+            <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-start">
                 <motion.div style={{ y, opacity }} className="space-y-4">
                     <div className="overflow-hidden">
                         <motion.p
@@ -30,7 +30,7 @@ export function Hero() {
                         </motion.p>
                     </div>
 
-                    <div className="lg:grid lg:grid-cols-[1fr_20rem] lg:items-end lg:gap-12">
+                    <div className="lg:grid lg:grid-cols-[1fr_20rem] lg:items-start lg:gap-12">
                         <h1
                             className="text-[clamp(3.5rem,12vw,8.5rem)] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
                             onMouseEnter={() => setIsHovered(true)}
