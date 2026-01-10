@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
 import { Ticker } from "@/app/components/ui/Ticker";
@@ -26,13 +26,13 @@ export function Hero() {
                             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                             className="text-text-secondary text-lg md:text-xl font-light tracking-wide mb-4"
                         >
-                            Sarah Dawson &mdash; Marketing Strategist
+                            Sarah Dawson
                         </motion.p>
                     </div>
 
-                    <div className="relative">
+                    <div className="lg:grid lg:grid-cols-[1fr_20rem] lg:items-end lg:gap-12">
                         <h1
-                            className="text-[12vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
+                            className="text-[12vw] md:text-[10vw] lg:text-[6vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
                         >
@@ -41,20 +41,10 @@ export function Hero() {
                                     initial={{ y: "100%" }}
                                     animate={{ y: 0 }}
                                     transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                                    className="block"
-                                >
-                                    CRAFTING
-                                </motion.span>
-                            </span>
-                            <span className="block overflow-hidden">
-                                <motion.span
-                                    initial={{ y: "100%" }}
-                                    animate={{ y: 0 }}
-                                    transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                                     className="block relative"
                                 >
-                                    <span className="relative z-10 transition-colors duration-500 group-hover:text-transparent bg-clip-text">
-                                        NARRATIVES
+                                    <span className="relative z-10">
+                                        PORTFOLIO
                                     </span>
 
                                     {/* Video Reveal Hover Effect */}
@@ -70,7 +60,6 @@ export function Hero() {
                                             muted
                                             loop
                                             playsInline
-                                            // Using a reliable placeholder video (abstract ink)
                                             src="https://cdn.coverr.co/videos/coverr-abstract-colorful-ink-in-water-5282/1080p.mp4"
                                         />
                                     </motion.div>
@@ -78,19 +67,17 @@ export function Hero() {
                             </span>
                         </h1>
 
-                        {/* Decor element */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1, duration: 1 }}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:block"
+                            className="mt-10 lg:mt-0"
                         >
-                            <div className="w-64 text-sm text-text-secondary text-balance">
+                            <div className="text-sm text-text-secondary text-balance">
                                 Specializing in brand alchemy, digital growth, and storytelling that converts attention into obsession.
-                                <br /><br />
-                                <span className="flex items-center gap-2 text-white">
-                                    Scroll to explore <ArrowDownRight size={14} />
-                                </span>
+                                <div className="mt-5 flex items-center gap-2 text-white">
+                                    <span>Scroll to explore</span> <ArrowDownRight size={14} />
+                                </div>
                             </div>
                         </motion.div>
                     </div>
