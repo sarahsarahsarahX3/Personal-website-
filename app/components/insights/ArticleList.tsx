@@ -81,9 +81,21 @@ function emitAnalytics(event: string, payload: Record<string, unknown>) {
 }
 
 export function ArticleList({ articles }: { articles: Article[] }) {
+    const [activeTag, setActiveTag] = useState<string | null>(null);
     const [showBackToTop, setShowBackToTop] = useState(false);
 
-    const filteredArticles = useMemo(() => articles, [articles]);
+    const allTags = useMemo(() => {
+        const tags = new Set<string>();
+        for (const article of articles) {
+            for (const tag of article.tags ?? []) tags.add(tag);
+        }
+        return Array.from(tags).sort((a, b) => a.localeCompare(b));
+    }, [articles]);
+
+    const filteredArticles = useMemo(() => {
+        if (!activeTag) return articles;
+        return articles.filter((article) => (article.tags ?? []).includes(activeTag));
+    }, [articles, activeTag]);
 
     useEffect(() => {
         const onScroll = () => setShowBackToTop(window.scrollY > 600);
@@ -94,6 +106,52 @@ export function ArticleList({ articles }: { articles: Article[] }) {
 
     return (
         <>
+            {allTags.length ? (
+                <div className="mb-8 flex flex-wrap items-center gap-3">
+                    <span className="text-xs uppercase tracking-widest text-text-secondary/70 font-mono">
+                        Tags
+                    </span>
+                    <button
+                        type="button"
+                        className={cn(
+                            "px-4 py-2 rounded-full border border-dashed text-xs uppercase tracking-widest transition-colors",
+                            !activeTag
+                                ? "border-accent/60 text-accent bg-transparent"
+                                : "border-white/15 text-text-secondary bg-transparent hover:bg-white/5 hover:border-white/25 hover:text-text-primary"
+                        )}
+                        onClick={() => {
+                            setActiveTag(null);
+                            emitAnalytics("article_tag_filter_click", { tag: null });
+                        }}
+                        data-analytics="article_tag_filter"
+                        data-tag="all"
+                    >
+                        All
+                    </button>
+
+                    {allTags.map((tag) => (
+                        <button
+                            key={tag}
+                            type="button"
+                            className={cn(
+                                "px-4 py-2 rounded-full border border-dashed text-xs uppercase tracking-widest transition-colors",
+                                activeTag === tag
+                                    ? "border-accent/60 text-accent bg-transparent"
+                                    : "border-white/15 text-text-secondary bg-transparent hover:bg-white/5 hover:border-white/25 hover:text-text-primary"
+                            )}
+                            onClick={() => {
+                                setActiveTag(tag);
+                                emitAnalytics("article_tag_filter_click", { tag });
+                            }}
+                            data-analytics="article_tag_filter"
+                            data-tag={tag}
+                        >
+                            {tag}
+                        </button>
+                    ))}
+                </div>
+            ) : null}
+
             <div className="border-t border-white/10">
                 {filteredArticles.map((article, i) => {
                     const internalHref = `/insights/${article.slug}`;
@@ -121,7 +179,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                         href={href}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="absolute inset-0 z-10"
+                                        className="absolute inset-0 z-20"
                                         aria-label={`Open ${article.title}`}
                                         data-analytics="article_card"
                                         onClick={() => emitAnalytics("article_card_click", { title: article.title, href })}
@@ -129,7 +187,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                 ) : (
                                     <Link
                                         href={internalHref}
-                                        className="absolute inset-0 z-10"
+                                        className="absolute inset-0 z-20"
                                         aria-label={`Open ${article.title}`}
                                         data-analytics="article_card"
                                         onClick={() => emitAnalytics("article_card_click", { title: article.title, href: internalHref })}
@@ -148,7 +206,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                         />
                                     </div>
 
-                                    <div className="min-w-0 relative z-20">
+                                    <div className="min-w-0 relative z-10">
                                         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-text-secondary font-mono text-sm">
                                             <span>{dateLabel}</span>
                                             <span className="w-1 h-1 bg-accent rounded-full" />
@@ -168,6 +226,16 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                         ) : null}
 
                                         <div className="mt-5 flex flex-wrap items-center gap-3">
+                                            {(article.tags ?? []).map((tag) => (
+                                                <span
+                                                    key={tag}
+                                                    className="pointer-events-none px-3 py-1 rounded-full border border-dashed border-white/15 text-[11px] uppercase tracking-widest text-text-secondary/80 bg-transparent"
+                                                    data-analytics="article_tag_pill"
+                                                    data-tag={tag}
+                                                >
+                                                    {tag}
+                                                </span>
+                                            ))}
                                             {article.readTime ? (
                                                 <span className="text-sm text-text-secondary">{article.readTime}</span>
                                             ) : null}
@@ -175,24 +243,11 @@ export function ArticleList({ articles }: { articles: Article[] }) {
 
                                         <div className="mt-3 text-xs font-mono text-text-secondary/80 truncate">
                                             <span className="sr-only">Link: </span>
-                                            {isExternal ? (
-                                                <a
-                                                    href={href}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    className="hover:text-text-primary transition-colors"
-                                                >
-                                                    {href}
-                                                </a>
-                                            ) : (
-                                                <Link href={href} className="hover:text-text-primary transition-colors">
-                                                    {href}
-                                                </Link>
-                                            )}
+                                            <span className="select-text">{href}</span>
                                         </div>
                                     </div>
 
-                                    <div className="relative z-20 flex items-center justify-start md:justify-center md:pl-5">
+                                    <div className="relative z-30 flex items-center justify-start md:justify-center md:pl-5">
                                         {isExternal ? (
                                             <a
                                                 href={href}
