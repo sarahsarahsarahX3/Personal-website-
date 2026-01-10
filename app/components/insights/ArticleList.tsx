@@ -101,8 +101,6 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                     const isExternal = href.startsWith("http://") || href.startsWith("https://");
                     const excerpt = article.excerpt ? clampWords(article.excerpt, 30) : null;
                     const dateLabel = formatDateLabel(article.date);
-                    const format = article.formats?.[0] ?? null;
-                    const performance = article.performance?.[0] ?? null;
 
                     return (
                         <motion.div
@@ -170,26 +168,6 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                         ) : null}
 
                                         <div className="mt-5 flex flex-wrap items-center gap-3">
-                                            {format ? (
-                                                <span
-                                                    className="pointer-events-none px-3 py-1 rounded-full border border-white/10 text-[11px] uppercase tracking-widest text-text-primary/80 bg-white/10"
-                                                    data-analytics="article_format_pill"
-                                                    data-format={format}
-                                                >
-                                                    {format}
-                                                </span>
-                                            ) : null}
-
-                                            {performance ? (
-                                                <span
-                                                    className="pointer-events-none px-3 py-1 rounded-full border border-white/10 text-[11px] uppercase tracking-widest text-text-secondary bg-white/5"
-                                                    data-analytics="article_performance_pill"
-                                                    data-performance={performance}
-                                                >
-                                                    {performance}
-                                                </span>
-                                            ) : null}
-
                                             {article.readTime ? (
                                                 <span className="text-sm text-text-secondary">{article.readTime}</span>
                                             ) : null}
