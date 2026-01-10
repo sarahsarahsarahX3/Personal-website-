@@ -111,46 +111,47 @@ export function ValueSection() {
                 <div className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
               </div>
 
-              <div className="relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition-colors duration-300 group-hover:border-accent/30">
-                <div className="mb-4 flex items-start justify-between">
-                  <div>
-                    <div className="font-mono text-xs tracking-widest text-text-secondary/70">
-                      {String(index + 1).padStart(2, "0")}
+              <details className="relative h-full min-h-[220px] overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 transition-colors duration-300 group-hover:border-accent/30">
+                <summary className="list-none cursor-pointer select-none p-7">
+                  <div className="flex items-start justify-between gap-6">
+                    <div>
+                      <div className="font-mono text-xs tracking-widest text-text-secondary/70">
+                        {String(index + 1).padStart(2, "0")}
+                      </div>
+                      <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-text-secondary/70">
+                        Core Skill
+                      </div>
+                      <h3 className="mt-4 text-xl font-medium tracking-tight">{item.title}</h3>
                     </div>
-                    <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-text-secondary/70">
-                      Core Skill
+
+                    <div className="flex items-center gap-3">
+                      <div className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-surface/40 transition-colors duration-300 group-hover:border-accent/40">
+                        <item.Icon className="h-4 w-4 text-text-secondary/80 transition duration-300 group-hover:scale-110 group-hover:text-accent" />
+                      </div>
+                      <ChevronDown className="mt-1 h-4 w-4 text-text-secondary/70 transition-transform duration-300 group-open:rotate-180" />
                     </div>
                   </div>
-                  <div className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-surface/40 transition-colors duration-300 group-hover:border-accent/40">
-                    <item.Icon className="h-4 w-4 text-text-secondary/80 transition duration-300 group-hover:scale-110 group-hover:text-accent" />
+                </summary>
+
+                <div className="px-7 pb-7">
+                  <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
+
+                  <p className="mt-5 text-text-secondary leading-relaxed">{item.description}</p>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {item.capabilities.map((capability) => (
+                      <span
+                        key={capability}
+                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-wide text-text-secondary/90"
+                      >
+                        {capability}
+                      </span>
+                    ))}
                   </div>
-                </div>
 
-                <h3 className="line-clamp-1 text-xl font-medium tracking-tight">{item.title}</h3>
-                <p className="mt-3 line-clamp-3 text-text-secondary leading-relaxed">{item.description}</p>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {item.capabilities.map((capability) => (
-                    <span
-                      key={capability}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-wide text-text-secondary/90 transition-colors duration-300 group-hover:border-white/15 group-hover:bg-white/7"
-                    >
-                      {capability}
-                    </span>
-                  ))}
-                </div>
-
-                <details className="mt-5 group/details">
-                  <summary className="list-none cursor-pointer select-none">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/30 px-3 py-1.5 text-xs tracking-wide text-text-secondary/90 transition-colors duration-300 group-hover/details:border-white/15 group-hover/details:bg-surface/40">
-                      <span>Expand details</span>
-                      <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-open/details:rotate-180" />
-                    </div>
-                  </summary>
-
-                  <div className="mt-4 space-y-2 text-sm text-text-secondary leading-relaxed">
+                  <div className="mt-5 text-sm text-text-secondary leading-relaxed">
                     <div className="font-mono text-xs tracking-widest text-text-secondary/70">Includes</div>
-                    <ul className="space-y-2">
+                    <ul className="mt-3 space-y-2">
                       {item.details.map((detail) => (
                         <li key={detail} className="flex gap-3">
                           <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" />
@@ -159,12 +160,8 @@ export function ValueSection() {
                       ))}
                     </ul>
                   </div>
-                </details>
-
-                <div className="mt-auto pt-6">
-                  <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
                 </div>
-              </div>
+              </details>
             </div>
           ))}
         </div>
