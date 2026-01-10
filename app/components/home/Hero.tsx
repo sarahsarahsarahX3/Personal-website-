@@ -74,7 +74,7 @@ export function Hero() {
                             className="mt-10 lg:mt-0"
                         >
                             <div className="text-sm text-text-secondary text-balance">
-                                Specializing in brand alchemy, digital growth, and storytelling that converts attention into obsession.
+                                'Brand alchemy, digital growth, and storytelling that earns attention.
                                 <div className="mt-5 flex items-center gap-2 text-white">
                                     <span>Scroll to explore</span> <ArrowDownRight size={14} />
                                 </div>
