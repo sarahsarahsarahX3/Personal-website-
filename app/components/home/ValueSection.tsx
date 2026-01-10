@@ -81,9 +81,7 @@ export function ValueSection() {
               Core competencies that translate creative ideas into measurable growth.
             </p>
           </div>
-          <div className="text-xs font-mono tracking-widest text-text-secondary/70 uppercase animate-fade-in-up delay-200">
-            Core competencies
-          </div>
+          <div aria-hidden="true" />
         </header>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
