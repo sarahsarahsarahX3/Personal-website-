@@ -93,12 +93,13 @@ export function Hero() {
             >
                 <Ticker
                     items={[
+                        "Integrated Marketing",
+                        "Campaigns",
                         "Copywriting",
                         "SEO Strategy",
-                        "Integrated Campaigns",
+                        "Brand Storytelling",
                         "Content Creation",
                         "Editorial Leadership",
-                        "Integrated Marketing Campaigns",
                         "Digital Content Management",
                     ]}
                     speed={20}
