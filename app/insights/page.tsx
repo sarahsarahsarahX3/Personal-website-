@@ -25,7 +25,7 @@ export default async function InsightsPage() {
     return (
         <main className="min-h-screen pt-32 pb-40 px-6">
             <div className="container mx-auto">
-                <header className="mb-20">
+                <header className="mb-10">
                     <h1 className="text-6xl md:text-8xl font-display mb-6 animate-fade-in-up">
                         Articles
                     </h1>
