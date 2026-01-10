@@ -101,7 +101,7 @@ export function Hero() {
                         "Integrated Marketing Campaigns",
                         "Digital Content Management",
                     ]}
-                    speed={26}
+                    speed={20}
                 />
             </motion.div>
         </section>
