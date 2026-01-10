@@ -103,7 +103,6 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                     const dateLabel = formatDateLabel(article.date);
                     const format = article.formats?.[0] ?? null;
                     const performance = article.performance?.[0] ?? null;
-                    const category = article.category ?? article.tags?.[0] ?? null;
 
                     return (
                         <motion.div
@@ -188,16 +187,6 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                                     data-performance={performance}
                                                 >
                                                     {performance}
-                                                </span>
-                                            ) : null}
-
-                                            {category ? (
-                                                <span
-                                                    className="pointer-events-none px-3 py-1 rounded-full border border-dashed border-white/15 text-[11px] uppercase tracking-widest text-text-secondary/80 bg-transparent"
-                                                    data-analytics="article_category_pill"
-                                                    data-category={category}
-                                                >
-                                                    {category}
                                                 </span>
                                             ) : null}
 
