@@ -29,7 +29,7 @@ const valueItems: ValueItem[] = [
     Icon: Megaphone,
   },
   {
-    title: "SEO + Search Strategy",
+    title: "SEO + AEO",
     description: "Creates search-led content that answers real questions and compounds traffic over time.",
     Icon: Search,
   },
