@@ -1,4 +1,7 @@
+"use client";
+
 import type { LucideIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import {
   BarChart3,
   Compass,
@@ -67,28 +70,42 @@ const valueItems: ValueItem[] = [
 
 export function ValueSection() {
   return (
-    <section className="relative border-t border-white/10 py-20">
+    <section id="value" className="relative border-t border-white/10 py-20">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-15%] top-[-25%] h-[520px] w-[520px] rounded-full bg-accent/7 blur-3xl" />
         <div className="absolute right-[-10%] top-[20%] h-[460px] w-[460px] rounded-full bg-white/5 blur-3xl" />
       </div>
 
       <div className="container mx-auto px-6 relative">
-        <header className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <motion.header
+          className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        >
           <div className="max-w-3xl">
-            <h2 className="text-4xl md:text-5xl font-display animate-fade-in-up">Where I Create Value</h2>
-            <p className="mt-4 text-text-secondary text-lg text-balance animate-fade-in-up delay-100">
+            <h2 className="text-4xl md:text-5xl font-display">Where I Create Value</h2>
+            <p className="mt-4 text-text-secondary text-lg text-balance">
               Core competencies that translate creative ideas into measurable growth.
             </p>
           </div>
           <div aria-hidden="true" />
-        </header>
+        </motion.header>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {valueItems.map((item, index) => (
-            <div
+            <motion.div
               key={item.title}
               className="group relative h-full rounded-2xl p-[1px] transition will-change-transform hover:-translate-y-1"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{
+                duration: 0.65,
+                delay: index * 0.06,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
               {/* Thin animated border/glow */}
               <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-accent/0 via-accent/35 to-accent/0 bg-[length:200%_100%] bg-[position:0%_0%] opacity-0 transition-[opacity,background-position] duration-500 group-hover:opacity-100 group-hover:bg-[position:100%_0%]" />
@@ -120,7 +137,7 @@ export function ValueSection() {
                   <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -75,9 +75,9 @@ export function Hero() {
                         >
                             <div className="text-sm text-text-secondary text-balance">
                                 Brand alchemy, digital growth, and storytelling that earns attention.
-                                <div className="mt-5 flex items-center gap-2 text-white">
+                                <a href="#value" className="mt-5 inline-flex items-center gap-2 text-white">
                                     <span>Scroll to explore</span> <ArrowDownRight size={14} />
-                                </div>
+                                </a>
                             </div>
                         </motion.div>
                     </div>
