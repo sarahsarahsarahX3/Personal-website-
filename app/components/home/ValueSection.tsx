@@ -1,39 +1,77 @@
-const valueItems = [
+import type { LucideIcon } from "lucide-react";
+import {
+  BarChart3,
+  Compass,
+  Kanban,
+  Megaphone,
+  PenLine,
+  Search,
+  Share2,
+  Sparkles,
+  Users,
+} from "lucide-react";
+
+type ValueItem = {
+  title: string;
+  description: string;
+  capabilities: [string, string, string];
+  Icon: LucideIcon;
+};
+
+const valueItems: ValueItem[] = [
   {
     title: "Content Strategy",
     description: "Plans content ecosystems that ladder up to business goals and earn attention across channels.",
+    capabilities: ["Messaging", "Roadmaps", "Channel Mix"],
+    Icon: Compass,
   },
   {
     title: "Integrated Campaigns",
     description: "Builds cohesive launches across paid, owned, and earned touchpoints—aligned, timed, and measurable.",
+    capabilities: ["Paid/Owned/Earned", "Launch Planning", "Creative Systems"],
+    Icon: Megaphone,
   },
   {
     title: "SEO + Search Strategy",
     description: "Creates search-led content that answers real questions and compounds traffic over time.",
+    capabilities: ["Keyword Strategy", "On-Page SEO", "Search Intent"],
+    Icon: Search,
   },
   {
     title: "Copywriting + Editorial",
     description: "Writes with voice, clarity, and conversion in mind—from headlines to long-form storytelling.",
+    capabilities: ["Editorial Voice", "Conversion Copy", "Narrative Arc"],
+    Icon: PenLine,
   },
   {
     title: "Brand Storytelling",
     description: "Turns product truths into narratives that feel human, memorable, and culturally relevant.",
+    capabilities: ["Positioning", "Brand Voice", "Concepting"],
+    Icon: Sparkles,
   },
   {
     title: "Performance Analytics",
     description: "Measures what matters, reads the signals, and turns data into next-step decisions.",
+    capabilities: ["Dashboards", "Insights", "Testing"],
+    Icon: BarChart3,
   },
   {
     title: "Audience + Insights",
     description: "Maps audiences, behaviors, and motivations to sharpen messaging and creative direction.",
+    capabilities: ["Personas", "Segmentation", "Research"],
+    Icon: Users,
   },
   {
     title: "Content Operations",
     description: "Designs workflows, calendars, and systems that keep production consistent and scalable.",
+    capabilities: ["Calendars", "Workflow", "Governance"],
+    Icon: Kanban,
   },
   {
     title: "Partnerships + Influence",
     description: "Activates creators, stakeholders, and partners to extend reach and credibility.",
+    capabilities: ["Creator Strategy", "Partnership Ops", "Amplification"],
+    Icon: Share2,
   },
 ];
 
@@ -52,27 +90,39 @@ export function ValueSection() {
           {valueItems.map((item, index) => (
             <div
               key={item.title}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition will-change-transform hover:-translate-y-1 hover:border-accent/40"
+              className="group relative rounded-2xl p-[1px] transition will-change-transform hover:-translate-y-1"
             >
+              {/* Thin animated border/glow */}
+              <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-accent/0 via-accent/35 to-accent/0 bg-[length:200%_100%] bg-[position:0%_0%] opacity-0 transition-[opacity,background-position] duration-500 group-hover:opacity-100 group-hover:bg-[position:100%_0%]" />
+
               <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
                 <div className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
               </div>
 
-              <div className="relative">
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition-colors duration-300 group-hover:border-accent/30">
                 <div className="mb-4 flex items-center justify-between">
                   <span className="font-mono text-xs tracking-widest text-text-secondary/70">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-[3px] w-3 rounded-full bg-white/15 transition-colors duration-300 group-hover:bg-accent/60" />
-                    <span className="h-[3px] w-6 rounded-full bg-white/10 transition-colors duration-300 group-hover:bg-accent/40" />
-                    <span className="h-[3px] w-10 rounded-full bg-white/5 transition-all duration-300 group-hover:w-14 group-hover:bg-accent/25" />
+                  <div className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-surface/40 transition-colors duration-300 group-hover:border-accent/40">
+                    <item.Icon className="h-4 w-4 text-text-secondary/80 transition duration-300 group-hover:scale-110 group-hover:text-accent" />
                   </div>
                 </div>
 
                 <h3 className="text-xl font-medium tracking-tight">{item.title}</h3>
                 <p className="mt-3 text-text-secondary leading-relaxed">{item.description}</p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {item.capabilities.map((capability) => (
+                    <span
+                      key={capability}
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-wide text-text-secondary/90 transition-colors duration-300 group-hover:border-white/15 group-hover:bg-white/7"
+                    >
+                      {capability}
+                    </span>
+                  ))}
+                </div>
 
                 <div className="mt-6 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
               </div>
