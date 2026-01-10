@@ -25,17 +25,17 @@ export function ImpactSection() {
 
       <div className="container mx-auto px-6 relative">
         <header className="mb-12 max-w-3xl">
-          <h2 className="text-4xl md:text-5xl font-display animate-fade-in-up">Impact By The Numbers</h2>
+          <h2 className="text-4xl md:text-5xl font-display animate-fade-in-up">Impact Metrics</h2>
           <p className="mt-4 text-text-secondary text-lg text-balance animate-fade-in-up delay-100">
             Measurable outcomes across editorial, campaigns, and growth.
           </p>
         </header>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition will-change-transform hover:-translate-y-1 hover:border-accent/30"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-6 lg:p-5 transition will-change-transform hover:-translate-y-1 hover:border-accent/30"
             >
               <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
@@ -48,7 +48,7 @@ export function ImpactSection() {
                     <div className="font-mono text-xs tracking-widest text-text-secondary/70">
                       {String(index + 1).padStart(2, "0")}
                     </div>
-                    <div className="mt-4 text-5xl md:text-6xl font-mono leading-none tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-text-secondary/50">
+                    <div className="mt-4 text-5xl md:text-6xl lg:text-4xl xl:text-5xl font-mono leading-none tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-text-secondary/50">
                       {stat.value}
                     </div>
                   </div>
@@ -58,7 +58,7 @@ export function ImpactSection() {
                   </div>
                 </div>
 
-                <div className="mt-5 text-sm font-mono tracking-widest uppercase text-text-secondary/80">
+                <div className="mt-5 text-sm lg:text-xs font-mono tracking-widest uppercase text-text-secondary/80">
                   {stat.label}
                 </div>
 
@@ -75,4 +75,3 @@ export function ImpactSection() {
     </section>
   );
 }
-
