@@ -81,21 +81,9 @@ function emitAnalytics(event: string, payload: Record<string, unknown>) {
 }
 
 export function ArticleList({ articles }: { articles: Article[] }) {
-    const [activeTag, setActiveTag] = useState<string | null>(null);
     const [showBackToTop, setShowBackToTop] = useState(false);
 
-    const allTags = useMemo(() => {
-        const tags = new Set<string>();
-        for (const article of articles) {
-            for (const tag of article.tags ?? []) tags.add(tag);
-        }
-        return Array.from(tags).sort((a, b) => a.localeCompare(b));
-    }, [articles]);
-
-    const filteredArticles = useMemo(() => {
-        if (!activeTag) return articles;
-        return articles.filter((article) => (article.tags ?? []).includes(activeTag));
-    }, [articles, activeTag]);
+    const filteredArticles = useMemo(() => articles, [articles]);
 
     useEffect(() => {
         const onScroll = () => setShowBackToTop(window.scrollY > 600);
@@ -106,41 +94,6 @@ export function ArticleList({ articles }: { articles: Article[] }) {
 
     return (
         <>
-            {allTags.length ? (
-                <div className="mb-8 flex flex-wrap items-center gap-3">
-                    {activeTag ? (
-                        <button
-                            type="button"
-                            className="px-4 py-2 rounded-full border border-dashed border-white/15 text-xs uppercase tracking-widest text-text-secondary bg-transparent hover:bg-white/5 hover:border-white/25 transition-colors"
-                            onClick={() => setActiveTag(null)}
-                        >
-                            Clear tag filter
-                        </button>
-                    ) : null}
-
-                    {allTags.map((tag) => (
-                        <button
-                            key={tag}
-                            type="button"
-                            data-analytics="article_tag_filter"
-                            data-tag={tag}
-                            className={cn(
-                                "px-4 py-2 rounded-full border border-dashed text-xs uppercase tracking-widest transition-colors",
-                                activeTag === tag
-                                    ? "border-accent/60 text-accent bg-transparent"
-                                    : "border-white/15 text-text-secondary bg-transparent hover:bg-white/5 hover:border-white/25 hover:text-text-primary"
-                            )}
-                            onClick={() => {
-                                setActiveTag(tag);
-                                emitAnalytics("article_tag_filter_click", { tag });
-                            }}
-                        >
-                            {tag}
-                        </button>
-                    ))}
-                </div>
-            ) : null}
-
             <div className="border-t border-white/10">
                 {filteredArticles.map((article, i) => {
                     const internalHref = `/insights/${article.slug}`;
