@@ -93,17 +93,15 @@ export function Hero() {
             >
                 <Ticker
                     items={[
-                        "Content Strategy",
                         "Copywriting",
-                        "SEO",
+                        "SEO Strategy",
                         "Integrated Campaigns",
-                        "Digital Content Management",
-                        "Influencer Marketing",
-                        "Social Media Management",
                         "Content Creation",
                         "Editorial Leadership",
+                        "Integrated Marketing Campaigns",
+                        "Digital Content Management",
                     ]}
-                    speed={40}
+                    speed={32}
                 />
             </motion.div>
         </section>
