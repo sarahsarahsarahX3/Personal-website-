@@ -13,7 +13,15 @@ interface Project {
     slug: string;
 }
 
-const categories = ["All", "Brand Strategy", "Campaign", "Art Direction", "Digital Growth", "Rebranding"];
+const categories = [
+    "All",
+    "Integrated Campaigns",
+    "Content Strategy",
+    "SEO & AEO",
+    "Copywriting",
+    "Video Production",
+    "Brand Storytelling",
+];
 
 export function WorkBrowser({ projects }: { projects: Project[] }) {
     const [activeCategory, setActiveCategory] = useState("All");
