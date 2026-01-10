@@ -2,47 +2,38 @@ const valueItems = [
   {
     title: "Content Strategy",
     description: "Plans content ecosystems that ladder up to business goals and earn attention across channels.",
-    outcomes: "Outcomes → channel clarity, content cadence, measurable growth",
   },
   {
     title: "Integrated Campaigns",
     description: "Builds cohesive launches across paid, owned, and earned touchpoints—aligned, timed, and measurable.",
-    outcomes: "Outcomes → aligned rollout, lift in reach, stronger conversion",
   },
   {
     title: "SEO + Search Strategy",
     description: "Creates search-led content that answers real questions and compounds traffic over time.",
-    outcomes: "Outcomes → higher rankings, sustained traffic, lower CAC",
   },
   {
     title: "Copywriting + Editorial",
     description: "Writes with voice, clarity, and conversion in mind—from headlines to long-form storytelling.",
-    outcomes: "Outcomes → sharper messaging, higher CTR, stronger retention",
   },
   {
     title: "Brand Storytelling",
     description: "Turns product truths into narratives that feel human, memorable, and culturally relevant.",
-    outcomes: "Outcomes → stronger affinity, clearer positioning, shareable narratives",
   },
   {
     title: "Performance Analytics",
     description: "Measures what matters, reads the signals, and turns data into next-step decisions.",
-    outcomes: "Outcomes → actionable insights, faster iteration, better ROI",
   },
   {
     title: "Audience + Insights",
     description: "Maps audiences, behaviors, and motivations to sharpen messaging and creative direction.",
-    outcomes: "Outcomes → audience clarity, better targeting, smarter creative",
   },
   {
     title: "Content Operations",
     description: "Designs workflows, calendars, and systems that keep production consistent and scalable.",
-    outcomes: "Outcomes → faster production, fewer bottlenecks, consistent quality",
   },
   {
     title: "Partnerships + Influence",
     description: "Activates creators, stakeholders, and partners to extend reach and credibility.",
-    outcomes: "Outcomes → expanded reach, stronger trust, cultural relevance",
   },
 ];
 
@@ -80,11 +71,6 @@ export function ValueSection() {
                 <p className="mt-3 text-text-secondary leading-relaxed">{item.description}</p>
 
                 <div className="mt-6 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
-
-                <div className="mt-4 inline-flex items-center gap-2 text-sm text-text-secondary/90">
-                  <span className="h-1 w-6 rounded-full bg-accent/60 transition-all duration-300 group-hover:w-10" />
-                  <span className="font-mono">{item.outcomes}</span>
-                </div>
               </div>
             </div>
           ))}
