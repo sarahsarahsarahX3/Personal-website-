@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
 import { Ticker } from "@/app/components/ui/Ticker";
+import { Constellation } from "@/app/components/home/Constellation";
+import { SignalMeter } from "@/app/components/home/SignalMeter";
 
 export function Hero() {
     const [isHovered, setIsHovered] = useState(false);
@@ -15,6 +17,7 @@ export function Hero() {
         <section className="relative min-h-screen flex flex-col justify-between pt-32 pb-8 overflow-hidden">
             {/* Background Gradient Spot */}
             <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+            <Constellation className="opacity-50" particleCount={60} connectDistance={85} mouseRadius={170} />
 
             {/* Main Content */}
             <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center">
@@ -81,6 +84,9 @@ export function Hero() {
                                 <span className="flex items-center gap-2 text-white">
                                     Scroll to explore <ArrowDownRight size={14} />
                                 </span>
+                                <div className="mt-6 pointer-events-auto">
+                                    <SignalMeter />
+                                </div>
                             </div>
                         </motion.div>
                     </div>
