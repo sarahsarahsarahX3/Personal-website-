@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
 import { Ticker } from "@/app/components/ui/Ticker";
 import { Constellation } from "@/app/components/home/Constellation";
 
 export function Hero() {
     const [isHovered, setIsHovered] = useState(false);
+    const headlineRef = useRef<HTMLHeadingElement>(null);
+    const maskX = useMotionValue(0);
+    const maskY = useMotionValue(0);
+    const spotlightMask = useMotionTemplate`radial-gradient(circle 140px at ${maskX}px ${maskY}px, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%)`;
     const { scrollY } = useScroll();
     const y = useSpring(useTransform(scrollY, [0, 500], [0, 200]), { stiffness: 100, damping: 20 });
     const opacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -34,9 +38,16 @@ export function Hero() {
 
                     <div className="relative w-full">
                         <h1
+                            ref={headlineRef}
                             className="w-full text-center text-[11vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
+                            onMouseMove={(event) => {
+                                const rect = headlineRef.current?.getBoundingClientRect();
+                                if (!rect) return;
+                                maskX.set(event.clientX - rect.left);
+                                maskY.set(event.clientY - rect.top);
+                            }}
                         >
                             <span className="block overflow-hidden">
                                 <motion.span
@@ -45,27 +56,20 @@ export function Hero() {
                                     transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                                     className="block relative"
                                 >
-                                    <span className="relative z-10">
-                                        PORTFOLIO
-                                    </span>
-
-                                    {/* Video Reveal Hover Effect */}
-                                    <motion.div
-                                        initial={{ scaleX: 0 }}
-                                        animate={{ scaleX: isHovered ? 1 : 0 }}
-                                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                        className="absolute inset-0 bg-white/5 z-0 origin-left"
+                                    <span className="relative z-10">PORTFOLIO</span>
+                                    {/* Cursor-follow spotlight reveal */}
+                                    <motion.span
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-white via-accent to-white"
+                                        style={{
+                                            WebkitMaskImage: spotlightMask,
+                                            maskImage: spotlightMask,
+                                        }}
+                                        animate={{ opacity: isHovered ? 1 : 0 }}
+                                        transition={{ duration: 0.2 }}
                                     >
-                                        <video
-                                            className="w-full h-full object-cover opacity-60 mix-blend-multiply grayscale"
-                                            autoPlay
-                                            muted
-                                            loop
-                                            playsInline
-                                            // Using a reliable placeholder video (abstract ink)
-                                            src="https://cdn.coverr.co/videos/coverr-abstract-colorful-ink-in-water-5282/1080p.mp4"
-                                        />
-                                    </motion.div>
+                                        PORTFOLIO
+                                    </motion.span>
                                 </motion.span>
                             </span>
                         </h1>
