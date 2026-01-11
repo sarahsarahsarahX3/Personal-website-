@@ -13,7 +13,7 @@ export function Hero() {
     const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
     return (
-        <section className="relative min-h-screen flex flex-col justify-between pt-32 pb-8 overflow-hidden">
+        <section className="relative min-h-screen flex flex-col overflow-hidden">
             {/* Background Gradient Spot */}
             <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
             <Constellation className="opacity-50" particleCount={60} connectDistance={85} mouseRadius={170} />
