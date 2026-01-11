@@ -94,7 +94,7 @@ export function CoreSkillsSection() {
   };
 
   return (
-    <section aria-labelledby="where-i-create-value-title" className="py-24 md:py-28">
+    <section aria-labelledby="where-i-create-value-title" className="py-24 md:py-32 lg:py-36">
       <div className="mx-auto w-full max-w-6xl px-6">
         <header className="flex items-baseline justify-between gap-6">
           <h2
