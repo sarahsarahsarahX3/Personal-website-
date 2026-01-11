@@ -110,7 +110,7 @@ function CollaborationIcon() {
 
 export function BioSection() {
   return (
-    <section aria-labelledby="home-bio-title" className="py-20 md:py-28">
+    <section aria-labelledby="home-bio-title" className="py-24 md:py-32 lg:py-36">
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start">
           <figure className="col-span-8 sm:col-span-6 md:col-span-4 md:col-start-2 md:translate-y-6">
@@ -141,12 +141,12 @@ export function BioSection() {
 
               <ul
                 aria-label="Highlights"
-                className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4 md:gap-x-10"
+                className="mt-12 grid grid-cols-2 gap-x-10 gap-y-12"
               >
                 <li className="flex items-start gap-4 text-text-secondary">
                   <YearsIcon />
                   <div className="min-w-0">
-                    <div className="text-lg md:text-xl text-text-primary leading-none">7+</div>
+                    <div className="text-2xl md:text-3xl text-text-primary leading-none">7+</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
                       Years Experience
                     </div>
@@ -156,7 +156,7 @@ export function BioSection() {
                 <li className="flex items-start gap-4 text-text-secondary">
                   <BrandsIcon />
                   <div className="min-w-0">
-                    <div className="text-lg md:text-xl text-text-primary leading-none">3</div>
+                    <div className="text-2xl md:text-3xl text-text-primary leading-none">3</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
                       Fortune 500 Brands
                     </div>
@@ -166,7 +166,7 @@ export function BioSection() {
                 <li className="flex items-start gap-4 text-text-secondary">
                   <ViewsIcon />
                   <div className="min-w-0">
-                    <div className="text-lg md:text-xl text-text-primary leading-none">15M+</div>
+                    <div className="text-2xl md:text-3xl text-text-primary leading-none">15M+</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">Views</div>
                   </div>
                 </li>
@@ -174,7 +174,7 @@ export function BioSection() {
                 <li className="flex items-start gap-4 text-text-secondary">
                   <CollaborationIcon />
                   <div className="min-w-0">
-                    <div className="text-lg md:text-xl text-text-primary leading-none">50+</div>
+                    <div className="text-2xl md:text-3xl text-text-primary leading-none">50+</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
                       Brand Collaborations
                     </div>
