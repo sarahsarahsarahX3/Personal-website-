@@ -1,15 +1,12 @@
 import { Hero } from "@/app/components/home/Hero";
-import { ValueSection } from "@/app/components/home/ValueSection";
-import { BrandsSection } from "@/app/components/home/BrandsSection";
-import { WorkTeaserSection } from "@/app/components/home/WorkTeaserSection";
 
 export default function Home() {
   return (
-    <main className="bg-surface text-text-primary min-h-screen">
+    <main className="bg-surface text-text-primary min-h-[200vh]"> {/* Added height for scroll testing */}
       <Hero />
-      <ValueSection />
-      <BrandsSection />
-      <WorkTeaserSection />
+      <div className="h-screen flex items-center justify-center border-t border-white/10">
+        <h2 className="text-4xl font-display">Selected Work Placeholder</h2>
+      </div>
     </main>
   );
 }

@@ -11,19 +11,15 @@ interface TickerProps {
 }
 
 export function Ticker({ items, direction = "left", speed = 20, className }: TickerProps) {
-    // `speed` is a relative rate where smaller = slower.
-    // We convert it to a duration so the marquee feels consistent even when the page is busy (e.g. scrolling).
-    const duration = 225 / Math.max(1, speed);
-
     return (
         <div className={cn("relative flex overflow-hidden whitespace-nowrap mask-gradient-x", className)}>
             <motion.div
-                className="flex gap-16 py-4 transform-gpu will-change-transform"
+                className="flex gap-16 py-4"
                 animate={{ x: direction === "left" ? "-50%" : "50%" }}
                 transition={{
                     repeat: Infinity,
                     ease: "linear",
-                    duration,
+                    duration: speed,
                 }}
             >
                 {[...items, ...items, ...items, ...items].map((item, i) => ( // Repeat 4x to ensure smooth loop
