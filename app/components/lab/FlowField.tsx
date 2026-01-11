@@ -2,10 +2,31 @@
 
 import { useEffect, useRef } from "react";
 
-export function FlowField() {
+type FlowFieldProps = {
+    className?: string;
+    fixed?: boolean;
+    particleCount?: number;
+    connectDistance?: number;
+    interactionRadius?: number;
+    trailOpacity?: number;
+};
+
+export function FlowField({
+    className = "",
+    fixed = true,
+    particleCount = 200,
+    connectDistance = 100,
+    interactionRadius = 100,
+    trailOpacity = 0.05,
+}: FlowFieldProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
+        if (typeof window !== "undefined") {
+            const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+            if (prefersReducedMotion) return;
+        }
+
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -14,7 +35,6 @@ export function FlowField() {
 
         let animationFrameId: number;
         let particles: Particle[] = [];
-        const particleCount = 200; // Number of particles
         let mouse = { x: 0, y: 0 };
         let hue = 0;
 
@@ -51,7 +71,7 @@ export function FlowField() {
                 const dy = mouse.y - this.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < 100) {
+                if (distance < interactionRadius) {
                     this.speedX -= dx / 50;
                     this.speedY -= dy / 50;
                 }
@@ -86,7 +106,7 @@ export function FlowField() {
 
         const animate = () => {
             // Trail effect
-            ctx.fillStyle = "rgba(8, 8, 8, 0.05)"; // Match surface color with low opacity
+            ctx.fillStyle = `rgba(8, 8, 8, ${trailOpacity})`; // Match surface color with low opacity
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             particles.forEach((particle) => {
@@ -108,8 +128,8 @@ export function FlowField() {
                     const dy = particles[a].y - particles[b].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 100) {
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - distance / 1000})`; // Fade out line
+                    if (distance < connectDistance) {
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - distance / (connectDistance * 10)})`; // Fade out line
                         ctx.lineWidth = 0.5;
                         ctx.beginPath();
                         ctx.moveTo(particles[a].x, particles[a].y);
@@ -148,7 +168,11 @@ export function FlowField() {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 w-full h-full bg-surface pointer-events-none"
+            className={[
+                fixed ? "fixed" : "absolute",
+                "inset-0 w-full h-full bg-surface pointer-events-none",
+                className,
+            ].join(" ")}
         />
     );
 }
