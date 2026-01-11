@@ -52,11 +52,21 @@ export function Navbar() {
 
                             <span className="relative z-10 flex items-center gap-2">
                                 <Icon size={18} className={cn("transition-transform group-hover:scale-110", isActive && "text-surface")} />
-                                <span
-                                    className="text-sm font-medium transition-all duration-300 hidden md:hidden group-hover:md:inline-block"
-                                >
-                                    {item.name}
-                                </span>
+                                <span className="sr-only">{item.name}</span>
+                            </span>
+
+                            {/* Hover label (desktop) without resizing the navbar */}
+                            <span
+                                className={cn(
+                                    "pointer-events-none absolute left-full top-1/2 hidden -translate-y-1/2 md:block",
+                                    "ml-2 whitespace-nowrap rounded-full border border-white/10 bg-surface/90 px-3 py-1.5 text-xs font-medium tracking-wide",
+                                    "text-text-primary shadow-xl shadow-black/40 backdrop-blur-md",
+                                    "opacity-0 scale-95 transition duration-200",
+                                    "group-hover:opacity-100 group-hover:scale-100",
+                                    "group-focus-visible:opacity-100 group-focus-visible:scale-100"
+                                )}
+                            >
+                                {item.name}
                             </span>
                         </Link>
                     );
