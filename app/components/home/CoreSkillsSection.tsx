@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
   FileText,
@@ -75,8 +75,6 @@ const skills: Skill[] = [
 
 type PreviewState = {
   skill: Skill;
-  x: number;
-  y: number;
   side: "left" | "right";
 };
 
@@ -84,6 +82,10 @@ export function CoreSkillsSection() {
   const [activeKey, setActiveKey] = useState(skills[0]?.key ?? "");
   const [preview, setPreview] = useState<PreviewState | null>(null);
   const hidePreviewTimeoutRef = useRef<number | null>(null);
+  const previewX = useMotionValue(0);
+  const previewY = useMotionValue(0);
+  const previewXSpring = useSpring(previewX, { stiffness: 420, damping: 38, mass: 0.6 });
+  const previewYSpring = useSpring(previewY, { stiffness: 420, damping: 38, mass: 0.6 });
 
   useEffect(() => {
     const onScroll = () => setPreview(null);
@@ -91,15 +93,16 @@ export function CoreSkillsSection() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const showPreview = (skill: Skill, target: HTMLElement) => {
-    if (hidePreviewTimeoutRef.current) {
-      window.clearTimeout(hidePreviewTimeoutRef.current);
-      hidePreviewTimeoutRef.current = null;
-    }
+  useEffect(() => {
+    return () => {
+      if (hidePreviewTimeoutRef.current) window.clearTimeout(hidePreviewTimeoutRef.current);
+    };
+  }, []);
 
+  const updatePreviewPosition = (target: HTMLElement, clientY?: number) => {
     const rect = target.getBoundingClientRect();
-    const tooltipWidth = 280;
-    const tooltipHeight = 120;
+    const tooltipWidth = 296;
+    const tooltipHeight = 132;
     const offset = 12;
 
     let side: PreviewState["side"] = "right";
@@ -109,24 +112,37 @@ export function CoreSkillsSection() {
       x = rect.left - offset - tooltipWidth;
     }
 
+    const anchorY = clientY ?? rect.top + rect.height / 2;
     const y = Math.min(
       window.innerHeight - offset - tooltipHeight / 2,
-      Math.max(offset + tooltipHeight / 2, rect.top + rect.height / 2),
+      Math.max(offset + tooltipHeight / 2, anchorY),
     );
 
-    setPreview({ skill, x, y, side });
+    previewX.set(x);
+    previewY.set(y);
+    return side;
+  };
+
+  const showPreview = (skill: Skill, target: HTMLElement, clientY?: number) => {
+    if (hidePreviewTimeoutRef.current) {
+      window.clearTimeout(hidePreviewTimeoutRef.current);
+      hidePreviewTimeoutRef.current = null;
+    }
+
+    const side = updatePreviewPosition(target, clientY);
+    setPreview({ skill, side });
   };
 
   const hidePreview = () => {
-    hidePreviewTimeoutRef.current = window.setTimeout(() => setPreview(null), 60);
+    hidePreviewTimeoutRef.current = window.setTimeout(() => setPreview(null), 120);
   };
 
   return (
-    <div className="relative py-32 overflow-hidden">
+    <div className="relative py-40 md:py-44 lg:py-52 overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-18%] top-[-25%] h-[520px] w-[520px] rounded-full bg-white/5 blur-3xl" />
         <div className="absolute right-[-18%] top-[10%] h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
-        <div className="absolute inset-0 opacity-[0.12] bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:42px_42px]" />
+        <div className="absolute inset-0 opacity-[0.18] lg:opacity-[0.28] mix-blend-overlay [mask-image:radial-gradient(circle_at_50%_30%,black,transparent_72%)] lg:[mask-image:none] bg-[linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] bg-[size:38px_38px]" />
       </div>
 
       <div className="container mx-auto px-6 relative">
@@ -143,7 +159,7 @@ export function CoreSkillsSection() {
             <div className="hidden md:block font-mono text-xs tracking-widest uppercase text-text-secondary/60">
               Hover to explore
             </div>
-            </div>
+          </div>
 
           <div className="mt-16 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {skills.map((skill, index) => {
@@ -156,7 +172,12 @@ export function CoreSkillsSection() {
                   type="button"
                   onMouseEnter={(e) => {
                     setActiveKey(skill.key);
-                    showPreview(skill, e.currentTarget);
+                    showPreview(skill, e.currentTarget, e.clientY);
+                  }}
+                  onMouseMove={(e) => {
+                    if (!preview || preview.skill.key !== skill.key) return;
+                    const side = updatePreviewPosition(e.currentTarget, e.clientY);
+                    if (side !== preview.side) setPreview({ ...preview, side });
                   }}
                   onMouseLeave={hidePreview}
                   onFocus={(e) => {
@@ -170,7 +191,7 @@ export function CoreSkillsSection() {
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.55, delay: index * 0.03, ease: [0.16, 1, 0.3, 1] }}
                   className={cn(
-                    "group relative rounded-2xl border border-white/10 bg-surface-alt/10 p-5 text-left",
+                    "group relative min-h-[116px] rounded-2xl border border-white/10 bg-surface-alt/10 p-3 text-left",
                     "transition-colors duration-300",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35",
                     isActive && "border-white/15 bg-surface-alt/20",
@@ -182,19 +203,21 @@ export function CoreSkillsSection() {
                       <div className="font-mono text-xs tracking-widest text-text-secondary/70">
                         {String(index + 1).padStart(2, "0")}
                       </div>
-                      <div className="mt-3 text-lg font-medium tracking-tight">{skill.name}</div>
+                      <div className="mt-2 text-[14px] font-medium leading-snug tracking-tight text-text-primary">
+                        {skill.name}
+                      </div>
                     </div>
-                    <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 transition-colors duration-300 group-hover:border-white/15">
+                    <div className="grid h-7 w-7 place-items-center rounded-lg border border-white/10 bg-white/5 transition-colors duration-300 group-hover:border-white/15">
                       <Icon
                         className={cn(
-                          "h-4 w-4 transition-colors duration-300",
+                          "h-3.5 w-3.5 transition-colors duration-300",
                           isActive ? "text-accent/90" : "text-text-secondary/80 group-hover:text-text-primary",
                         )}
                       />
                     </div>
                   </div>
 
-                  <div className="pointer-events-none absolute left-5 right-5 bottom-5 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute left-3 right-3 bottom-3 h-px bg-gradient-to-r from-transparent via-accent/45 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <div
                     className={cn(
                       "pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300",
@@ -209,7 +232,7 @@ export function CoreSkillsSection() {
           </div>
         </motion.header>
 
-        <div className="h-10" />
+        <div className="h-14 md:h-16" />
       </div>
 
       {/* Floating skill preview */}
@@ -219,28 +242,31 @@ export function CoreSkillsSection() {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed z-50 w-[280px] pointer-events-none"
+          className="fixed z-50 w-[296px] pointer-events-none"
           style={{
-            left: preview.x,
-            top: preview.y,
-            y: "-50%",
+            left: previewXSpring,
+            top: previewYSpring,
+            translateY: "-50%",
           }}
         >
-          <div className="rounded-xl border border-white/12 bg-surface/85 backdrop-blur-md shadow-2xl shadow-black/50 p-4">
-            <div className="flex items-start justify-between gap-4">
-              <div className="text-sm font-medium tracking-tight">{preview.skill.name}</div>
-              <span className="font-mono text-[10px] tracking-widest text-text-secondary/70 uppercase">
-                Preview
-              </span>
-            </div>
-            <div className="mt-2 text-sm text-text-secondary leading-relaxed">
-              {preview.skill.blurb}
+          <div className="rounded-xl bg-gradient-to-r from-white/10 via-white/5 to-white/10 p-px shadow-2xl shadow-black/60">
+            <div className="rounded-xl border border-white/10 bg-surface/90 backdrop-blur-xl p-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="text-sm font-medium tracking-tight">{preview.skill.name}</div>
+                <span className="font-mono text-[10px] tracking-widest text-text-secondary/70 uppercase">
+                  Description
+                </span>
+              </div>
+              <div className="mt-2 text-sm text-text-secondary leading-relaxed">
+                {preview.skill.blurb}
+              </div>
+              <div className="mt-3 h-px w-full bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
             </div>
           </div>
           <div
             aria-hidden="true"
             className={cn(
-              "absolute top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border border-white/12 bg-surface/85",
+              "absolute top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border border-white/10 bg-surface/90",
               preview.side === "right" ? "-left-1.5" : "-right-1.5",
             )}
           />
