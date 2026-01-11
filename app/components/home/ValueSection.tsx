@@ -71,10 +71,13 @@ const valueItems: ValueItem[] = [
 
 export function ValueSection() {
   const [showAll, setShowAll] = useState(false);
+  const [expandedTitle, setExpandedTitle] = useState<string | null>(null);
   const visibleItems = useMemo(
     () => (showAll ? valueItems : valueItems.slice(0, 6)),
     [showAll],
   );
+
+  const signatureTitle = "Brand Storytelling";
 
   return (
     <section id="value" className="relative border-t border-white/10 py-20">
@@ -101,7 +104,10 @@ export function ValueSection() {
           {visibleItems.map((item, index) => (
             <motion.div
               key={item.title}
-              className="group relative h-full rounded-2xl p-[1px] transition will-change-transform hover:-translate-y-1"
+              className={[
+                "group relative h-full rounded-2xl p-[1px] transition will-change-transform hover:-translate-y-1",
+                item.title === signatureTitle ? "lg:col-span-2" : "",
+              ].join(" ")}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
@@ -110,6 +116,18 @@ export function ValueSection() {
                 delay: index * 0.06,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              onClick={() =>
+                setExpandedTitle((prev) => (prev === item.title ? null : item.title))
+              }
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setExpandedTitle((prev) => (prev === item.title ? null : item.title));
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-expanded={expandedTitle === item.title}
             >
               {/* Thin animated border/glow */}
               <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-accent/0 via-accent/35 to-accent/0 bg-[length:200%_100%] bg-[position:0%_0%] opacity-0 transition-[opacity,background-position] duration-500 group-hover:opacity-100 group-hover:bg-[position:100%_0%]" />
@@ -119,23 +137,67 @@ export function ValueSection() {
                 <div className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
               </div>
 
-              <div className="relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition-colors duration-300 group-hover:border-accent/30">
+              <div
+                className={[
+                  "relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition-colors duration-300 group-hover:border-accent/30",
+                  item.title === signatureTitle ? "lg:min-h-[240px]" : "",
+                ].join(" ")}
+              >
                 <div className="flex items-start justify-between gap-6">
                   <div>
                     <div className="font-mono text-xs tracking-widest text-text-secondary/70">
                       {String(index + 1).padStart(2, "0")}
                     </div>
                     <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-text-secondary/70">
-                      Core Skill
+                      {item.title === signatureTitle ? "Signature Skill" : "Core Skill"}
                     </div>
                   </div>
-                  <div className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-surface/40 transition-colors duration-300 group-hover:border-accent/40">
+                  <div className="relative grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-surface/40 transition-colors duration-300 group-hover:border-accent/40">
+                    {/* Icon orbit */}
+                    <span className="pointer-events-none absolute -inset-3 rounded-full border border-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <span className="pointer-events-none absolute -inset-3 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-hover:[animation:spin_3.2s_linear_infinite]">
+                      <span className="absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-accent/70 shadow-[0_0_12px_rgba(255,59,48,0.45)]" />
+                    </span>
                     <item.Icon className="h-4 w-4 text-text-secondary/80 transition duration-300 group-hover:scale-110 group-hover:text-accent" />
                   </div>
                 </div>
 
-                <h3 className="mt-4 text-xl font-medium tracking-tight">{item.title}</h3>
-                <p className="mt-3 line-clamp-2 text-text-secondary leading-relaxed">{item.description}</p>
+                <div className="mt-4">
+                  <h3
+                    className={[
+                      "text-xl font-medium tracking-tight",
+                      item.title === signatureTitle ? "lg:text-2xl" : "",
+                    ].join(" ")}
+                  >
+                    {item.title}
+                  </h3>
+                  <motion.div
+                    className="mt-3 h-px w-10 bg-accent/60 origin-left"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                </div>
+
+                <p className="mt-4 line-clamp-1 text-text-secondary leading-relaxed">{item.description}</p>
+
+                {/* Full description reveal on hover (desktop) or tap/click */}
+                <div
+                  className={[
+                    "pointer-events-none absolute inset-0 flex flex-col justify-end p-7 opacity-0 transition-opacity duration-250",
+                    "md:group-hover:opacity-100",
+                    expandedTitle === item.title ? "opacity-100" : "",
+                  ].join(" ")}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface/95 via-surface/60 to-transparent" />
+                  <div className="relative">
+                    <div className="font-mono text-[10px] tracking-widest uppercase text-text-secondary/70">
+                      Detail
+                    </div>
+                    <p className="mt-2 text-sm text-text-secondary leading-relaxed">{item.description}</p>
+                  </div>
+                </div>
 
                 <div className="mt-auto pt-6">
                   <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
