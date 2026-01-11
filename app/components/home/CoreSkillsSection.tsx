@@ -122,7 +122,7 @@ export function CoreSkillsSection() {
   };
 
   return (
-    <div className="relative py-28 overflow-hidden">
+    <div className="relative py-32 overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-18%] top-[-25%] h-[520px] w-[520px] rounded-full bg-white/5 blur-3xl" />
         <div className="absolute right-[-18%] top-[10%] h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
@@ -143,9 +143,9 @@ export function CoreSkillsSection() {
             <div className="hidden md:block font-mono text-xs tracking-widest uppercase text-text-secondary/60">
               Hover to explore
             </div>
-          </div>
+            </div>
 
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-16 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {skills.map((skill, index) => {
               const isActive = skill.key === activeKey;
               const Icon = skill.Icon;
