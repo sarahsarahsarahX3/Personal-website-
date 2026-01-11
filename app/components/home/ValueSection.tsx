@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import {
@@ -69,6 +70,12 @@ const valueItems: ValueItem[] = [
 ];
 
 export function ValueSection() {
+  const [showAll, setShowAll] = useState(false);
+  const visibleItems = useMemo(
+    () => (showAll ? valueItems : valueItems.slice(0, 6)),
+    [showAll],
+  );
+
   return (
     <section id="value" className="relative border-t border-white/10 py-20">
       <div className="pointer-events-none absolute inset-0">
@@ -94,7 +101,7 @@ export function ValueSection() {
         </motion.header>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {valueItems.map((item, index) => (
+          {visibleItems.map((item, index) => (
             <motion.div
               key={item.title}
               className="group relative h-full rounded-2xl p-[1px] transition will-change-transform hover:-translate-y-1"
@@ -131,7 +138,7 @@ export function ValueSection() {
                 </div>
 
                 <h3 className="mt-4 text-xl font-medium tracking-tight">{item.title}</h3>
-                <p className="mt-3 line-clamp-4 text-text-secondary leading-relaxed">{item.description}</p>
+                <p className="mt-3 line-clamp-2 text-text-secondary leading-relaxed">{item.description}</p>
 
                 <div className="mt-auto pt-6">
                   <div className="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
@@ -139,6 +146,16 @@ export function ValueSection() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            className="rounded-full border border-white/12 bg-white/5 px-5 py-2.5 text-sm tracking-wide text-text-primary transition-colors hover:border-accent/35 hover:bg-white/8"
+          >
+            {showAll ? "Show fewer skills" : "Show all skills"}
+          </button>
         </div>
       </div>
     </section>

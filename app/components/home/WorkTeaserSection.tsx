@@ -41,17 +41,8 @@ export function WorkTeaserSection() {
           </div>
 
           <div className="mt-10 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
-
-          <div className="mt-6 flex flex-wrap gap-3 text-xs font-mono tracking-widest uppercase text-text-secondary/70">
-            <span className="rounded-full border border-white/10 bg-surface/30 px-3 py-1">Campaigns</span>
-            <span className="rounded-full border border-white/10 bg-surface/30 px-3 py-1">Content strategy</span>
-            <span className="rounded-full border border-white/10 bg-surface/30 px-3 py-1">SEO + AEO</span>
-            <span className="rounded-full border border-white/10 bg-surface/30 px-3 py-1">Copywriting</span>
-            <span className="rounded-full border border-white/10 bg-surface/30 px-3 py-1">Brand storytelling</span>
-          </div>
         </motion.div>
       </div>
     </section>
   );
 }
-

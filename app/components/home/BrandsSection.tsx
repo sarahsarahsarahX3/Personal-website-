@@ -24,7 +24,7 @@ function BrandTile({ brand, index }: { brand: Brand; index: number }) {
 
   return (
     <motion.div
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-6 transition will-change-transform hover:-translate-y-1 hover:border-accent/30"
+      className="group relative overflow-hidden rounded-xl border border-white/10 bg-surface-alt/10 px-6 py-5 transition hover:border-accent/25"
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
@@ -34,12 +34,6 @@ function BrandTile({ brand, index }: { brand: Brand; index: number }) {
         ease: [0.16, 1, 0.3, 1],
       }}
     >
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
-        <div className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
-        <div className="absolute inset-0 opacity-[0.14] bg-[linear-gradient(to_bottom,rgba(255,255,255,0.12)_1px,transparent_1px)] bg-[size:100%_14px]" />
-      </div>
-
       <div className="relative flex h-16 items-center justify-center">
         {!hasError ? (
           <img
@@ -47,20 +41,15 @@ function BrandTile({ brand, index }: { brand: Brand; index: number }) {
             alt={`${brand.name} logo`}
             loading="lazy"
             decoding="async"
-            className="max-h-10 w-auto max-w-full opacity-85 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+            className="max-h-10 w-auto max-w-full opacity-80 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
             onError={() => setHasError(true)}
           />
         ) : (
           <div className="text-center">
-            <div className="text-sm font-mono tracking-widest uppercase text-text-secondary/70">
-              Brand
-            </div>
             <div className="mt-1 text-lg font-medium tracking-tight text-text-primary">{brand.name}</div>
           </div>
         )}
       </div>
-
-      <div className="mt-6 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
     </motion.div>
   );
 }
@@ -87,7 +76,7 @@ export function BrandsSection() {
           </p>
         </motion.header>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {brands.map((brand, index) => (
             <BrandTile key={brand.name} brand={brand} index={index} />
           ))}

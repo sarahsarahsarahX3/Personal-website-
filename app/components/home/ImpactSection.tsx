@@ -45,7 +45,7 @@ export function ImpactSection() {
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-6 lg:p-5 transition will-change-transform hover:-translate-y-1 hover:border-accent/30"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-5 transition will-change-transform hover:-translate-y-1 hover:border-accent/30"
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
@@ -61,30 +61,17 @@ export function ImpactSection() {
               </div>
 
               <div className="relative">
-                <div className="flex items-start justify-between gap-6">
-                  <div>
-                    <div className="font-mono text-xs tracking-widest text-text-secondary/70">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
-                    <div className="mt-4 text-5xl md:text-6xl lg:text-4xl xl:text-5xl font-mono leading-none tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-text-secondary/50">
-                      {stat.value}
-                    </div>
-                  </div>
-
-                  <div className="mt-1 h-9 w-9 rounded-full border border-white/10 bg-surface/40 transition-colors duration-300 group-hover:border-accent/40">
-                    <div className="h-full w-full rounded-full bg-[conic-gradient(from_180deg,rgba(255,59,48,0.55),rgba(255,255,255,0.12),rgba(255,59,48,0.55))] opacity-0 blur-[0.5px] transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
+                <div className="font-mono text-4xl md:text-5xl lg:text-4xl xl:text-5xl leading-none tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-text-secondary/55">
+                  {stat.value}
                 </div>
 
-                <div className="mt-5 text-sm lg:text-xs font-mono tracking-widest uppercase text-text-secondary/80">
+                <div className="mt-4 text-xs font-mono tracking-widest uppercase text-text-secondary/80">
                   {stat.label}
                 </div>
 
                 {stat.detail ? (
                   <div className="mt-3 text-text-secondary leading-relaxed">{stat.detail}</div>
                 ) : null}
-
-                <div className="mt-6 h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
               </div>
             </motion.div>
           ))}
