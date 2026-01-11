@@ -177,7 +177,10 @@ export function CoreSkillsSection() {
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-18%] top-[-25%] h-[520px] w-[520px] rounded-full bg-white/5 blur-3xl" />
         <div className="absolute right-[-18%] top-[10%] h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
-        <div className="absolute inset-0 opacity-[0.20] lg:opacity-[0.26] bg-[linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] bg-[size:38px_38px]" />
+        {/* Fine grid */}
+        <div className="absolute inset-0 opacity-[0.26] lg:opacity-[0.32] bg-[linear-gradient(to_right,rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.18)_1px,transparent_1px)] bg-[size:34px_34px]" />
+        {/* Coarse grid for desktop depth */}
+        <div className="hidden lg:block absolute inset-0 opacity-[0.16] bg-[linear-gradient(to_right,rgba(255,255,255,0.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.22)_1px,transparent_1px)] bg-[size:170px_170px]" />
       </div>
 
       <div className="mx-auto w-full max-w-5xl px-6 relative">
