@@ -95,7 +95,17 @@ export function Hero() {
                 className="w-full border-t border-white/5 pt-8"
             >
                 <Ticker
-                    items={["Strategy", "Copywriting", "Art Direction", "Social Growth", "Brand Identity", "Campaign Management"]}
+                    items={[
+                        "Storytelling",
+                        "Content Marketing",
+                        "SEO + AEO Strategy",
+                        "Integrated Campaigns",
+                        "Copywriting",
+                        "Content Creation",
+                        "Digital Publishing",
+                        "Editorial Leadership",
+                        "Communications",
+                    ]}
                     speed={40}
                 />
             </motion.div>
