@@ -72,12 +72,17 @@ const valueItems: ValueItem[] = [
 export function ValueSection() {
   const [showAll, setShowAll] = useState(false);
   const [expandedTitle, setExpandedTitle] = useState<string | null>(null);
-  const visibleItems = useMemo(
-    () => (showAll ? valueItems : valueItems.slice(0, 6)),
-    [showAll],
-  );
-
   const signatureTitle = "Brand Storytelling";
+  const orderedItems = useMemo(() => {
+    const signature = valueItems.find((item) => item.title === signatureTitle);
+    const rest = valueItems.filter((item) => item.title !== signatureTitle);
+    return signature ? [signature, ...rest] : valueItems;
+  }, []);
+
+  const visibleItems = useMemo(
+    () => (showAll ? orderedItems : orderedItems.slice(0, 5)),
+    [showAll, orderedItems],
+  );
 
   return (
     <section id="value" className="relative border-t border-white/10 py-20">
@@ -105,7 +110,7 @@ export function ValueSection() {
             <motion.div
               key={item.title}
               className={[
-                "group relative h-full rounded-2xl p-[1px] transition will-change-transform",
+                "group relative h-full rounded-2xl p-[1px] cursor-pointer transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform transform-gpu hover:-translate-y-1",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-0",
                 item.title === signatureTitle ? "lg:col-span-2" : "",
               ].join(" ")}
@@ -120,6 +125,7 @@ export function ValueSection() {
               onClick={() =>
                 setExpandedTitle((prev) => (prev === item.title ? null : item.title))
               }
+              onMouseLeave={() => setExpandedTitle(null)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
@@ -141,7 +147,6 @@ export function ValueSection() {
               <div
                 className={[
                   "relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/20 p-7 transition-colors duration-300 group-hover:border-accent/30",
-                  item.title === signatureTitle ? "lg:min-h-[240px]" : "",
                 ].join(" ")}
               >
                 <div className="flex items-start justify-between gap-6">
