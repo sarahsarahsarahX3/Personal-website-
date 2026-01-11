@@ -1,6 +1,112 @@
 "use client";
 
 import Image from "next/image";
+import styles from "./BioSection.module.css";
+
+function YearsIcon() {
+  return (
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
+      <path d="M24 14v10l7 4" className={styles.stroke} />
+      <g className={styles.orbit}>
+        <circle cx="24" cy="8" r="2.2" className={styles.accentFill} />
+      </g>
+    </svg>
+  );
+}
+
+function BrandsIcon() {
+  return (
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <rect x="12" y="12" width="24" height="24" rx="8" className={styles.strokeSoft} />
+      <rect
+        x="16"
+        y="20"
+        width="4"
+        height="14"
+        rx="2"
+        className={styles.drift}
+        style={{ ["--delay" as string]: "0s" }}
+        fill="currentColor"
+        opacity="0.55"
+      />
+      <rect
+        x="22"
+        y="16"
+        width="4"
+        height="18"
+        rx="2"
+        className={styles.drift}
+        style={{ ["--delay" as string]: "-0.6s" }}
+        fill="currentColor"
+        opacity="0.55"
+      />
+      <rect
+        x="28"
+        y="22"
+        width="4"
+        height="12"
+        rx="2"
+        className={styles.drift}
+        style={{ ["--delay" as string]: "-1.2s" }}
+        fill="currentColor"
+        opacity="0.55"
+      />
+      <path d="M18 36h12" className={styles.accentStroke} />
+    </svg>
+  );
+}
+
+function ViewsIcon() {
+  return (
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <rect x="10" y="14" width="28" height="20" rx="6" className={styles.strokeSoft} />
+      <path d="M16 20h16" className={styles.stroke} />
+      <path d="M16 24h12" className={styles.strokeSoft} />
+      <path d="M16 28h14" className={styles.strokeSoft} />
+      <g className={styles.scan}>
+        <path d="M14 19h20" className={styles.accentStroke} />
+      </g>
+    </svg>
+  );
+}
+
+function CollaborationIcon() {
+  return (
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <path d="M16 28l8-10 8 10" className={styles.strokeSoft} />
+      <path d="M16 28h16" className={styles.strokeSoft} />
+      <circle
+        cx="16"
+        cy="28"
+        r="2.6"
+        className={styles.pulse}
+        style={{ ["--delay" as string]: "0s" }}
+        fill="currentColor"
+        opacity="0.6"
+      />
+      <circle
+        cx="24"
+        cy="18"
+        r="2.6"
+        className={styles.pulse}
+        style={{ ["--delay" as string]: "-1.2s" }}
+        fill="currentColor"
+        opacity="0.6"
+      />
+      <circle
+        cx="32"
+        cy="28"
+        r="2.6"
+        className={styles.pulse}
+        style={{ ["--delay" as string]: "-2.4s" }}
+        fill="currentColor"
+        opacity="0.6"
+      />
+      <circle cx="24" cy="33" r="2.2" className={styles.accentFill} />
+    </svg>
+  );
+}
 
 export function BioSection() {
   return (
@@ -32,6 +138,49 @@ export function BioSection() {
               <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
                 I lead marketing-driven content that strengthens brand voice, grows audiences, and performs across channels.
               </p>
+
+              <ul
+                aria-label="Highlights"
+                className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4 md:gap-x-10"
+              >
+                <li className="flex items-start gap-4 text-text-secondary">
+                  <YearsIcon />
+                  <div className="min-w-0">
+                    <div className="text-lg md:text-xl text-text-primary leading-none">7+</div>
+                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
+                      Years Experience
+                    </div>
+                  </div>
+                </li>
+
+                <li className="flex items-start gap-4 text-text-secondary">
+                  <BrandsIcon />
+                  <div className="min-w-0">
+                    <div className="text-lg md:text-xl text-text-primary leading-none">3</div>
+                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
+                      Fortune 500 Brands
+                    </div>
+                  </div>
+                </li>
+
+                <li className="flex items-start gap-4 text-text-secondary">
+                  <ViewsIcon />
+                  <div className="min-w-0">
+                    <div className="text-lg md:text-xl text-text-primary leading-none">15M+</div>
+                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">Views</div>
+                  </div>
+                </li>
+
+                <li className="flex items-start gap-4 text-text-secondary">
+                  <CollaborationIcon />
+                  <div className="min-w-0">
+                    <div className="text-lg md:text-xl text-text-primary leading-none">50+</div>
+                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
+                      Brand Collaborations
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

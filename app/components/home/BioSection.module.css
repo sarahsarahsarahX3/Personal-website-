@@ -1,0 +1,124 @@
+.icon {
+  --dur: 8s;
+  width: 44px;
+  height: 44px;
+  display: block;
+}
+
+.stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.7;
+}
+
+.strokeSoft {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.35;
+}
+
+.accentStroke {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+
+.accentFill {
+  fill: var(--color-accent);
+  opacity: 0.9;
+}
+
+.orbit {
+  transform-origin: 24px 24px;
+  animation: rotate var(--dur) linear infinite;
+}
+
+.scan {
+  transform-origin: 24px 24px;
+  animation: scan var(--dur) cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.pulse {
+  transform-origin: center;
+  animation: pulse var(--dur) cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.drift {
+  transform-origin: center;
+  animation: drift var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 0.85;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.95;
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit,
+  .scan,
+  .pulse,
+  .drift {
+    animation: none;
+  }
+}
+
