@@ -17,18 +17,25 @@ export default function ContactPage() {
     };
 
     return (
-        <main className="min-h-screen pt-32 pb-40 px-6 flex flex-col justify-center">
-            <div className="container mx-auto max-w-4xl">
+        <main className="relative min-h-screen px-6 py-28 md:py-32 flex items-center">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-white/5 blur-3xl" />
+                <div className="absolute top-24 -right-24 h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            </div>
+
+            <div className="mx-auto w-full max-w-5xl relative">
                 <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-text-secondary text-lg uppercase tracking-widest mb-8"
+                    className="font-mono text-xs md:text-sm uppercase tracking-widest text-text-secondary/80 mb-10 md:mb-12"
                 >
                     LET’S CONNECT
                 </motion.p>
 
                 <div
-                    className="relative group cursor-pointer"
+                    className="relative group cursor-pointer rounded-2xl border border-transparent focus-within:border-white/10"
                     role="button"
                     tabIndex={0}
                     onClick={handleCopy}
@@ -43,7 +50,7 @@ export default function ContactPage() {
                     <motion.h1
                         initial={{ y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        className="pr-14 md:pr-0 text-4xl md:text-7xl lg:text-8xl font-display leading-none hover:text-white/80 transition-colors"
+                        className="pr-14 md:pr-0 text-4xl md:text-7xl lg:text-8xl font-display leading-[0.95] tracking-tight hover:text-white/85 transition-colors"
                     >
                         {localPart}@
                         <br />
@@ -59,7 +66,7 @@ export default function ContactPage() {
                             handleCopy();
                         }}
                         aria-label={copied ? "Copied" : "Copy email"}
-                        className="absolute top-2 right-2 md:top-1/2 md:left-full md:right-auto md:ml-6 md:-translate-y-1/2 p-3 rounded-full bg-white/10 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity backdrop-blur-md"
+                        className="absolute top-3 right-3 md:top-1/2 md:left-full md:right-auto md:ml-6 md:-translate-y-1/2 p-3 rounded-full border border-white/10 bg-surface/40 backdrop-blur-md opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                     >
@@ -87,7 +94,11 @@ export default function ContactPage() {
                     </motion.button>
                 </div>
 
-                <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="mt-16 md:mt-20">
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                </div>
+
+                <div className="mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                     {[{ label: "LinkedIn", href: "https://www.linkedin.com/in/sarah-dawsone/" }].map((social, i) => (
                         <motion.a
                             key={social.label}
@@ -97,7 +108,7 @@ export default function ContactPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 + (i * 0.1) }}
-                            className="text-lg text-text-secondary hover:text-accent transition-colors block border-t border-white/10 pt-4"
+                            className="text-base md:text-lg text-text-secondary hover:text-accent transition-colors block border-t border-white/10 pt-4"
                         >
                             {social.label}
                         </motion.a>
