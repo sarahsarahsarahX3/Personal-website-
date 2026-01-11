@@ -89,20 +89,12 @@ export function CoreSkillsSection() {
   const previewYSpring = useSpring(previewY, { stiffness: 420, damping: 38, mass: 0.6 });
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia?.("(hover: hover) and (pointer: fine)");
-    if (!mediaQuery) return;
-
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
     const update = () => setSupportsHover(mediaQuery.matches);
     update();
 
-    if ("addEventListener" in mediaQuery) {
-      mediaQuery.addEventListener("change", update);
-      return () => mediaQuery.removeEventListener("change", update);
-    }
-
-    // Safari fallback
-    mediaQuery.addListener(update);
-    return () => mediaQuery.removeListener(update);
+    mediaQuery.addEventListener("change", update);
+    return () => mediaQuery.removeEventListener("change", update);
   }, []);
 
   useEffect(() => {
