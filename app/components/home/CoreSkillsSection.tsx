@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { cn } from "@/app/lib/utils";
 import styles from "./CoreSkillsSection.module.css";
@@ -72,9 +72,9 @@ const valueAreas: ValueArea[] = [
 
 export function CoreSkillsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [openIndex, setOpenIndex] = useState(0);
 
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const activeArea = useMemo(() => valueAreas[activeIndex] ?? valueAreas[0]!, [activeIndex]);
 
   const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     const count = valueAreas.length;
@@ -105,26 +105,21 @@ export function CoreSkillsSection() {
           <h2 id="where-i-create-value-title" className="font-display text-3xl md:text-4xl tracking-tight">
             Where I Create Value
           </h2>
-          <p className="hidden md:block font-mono text-xs tracking-widest uppercase text-text-secondary/60">
-            Hover or select
-          </p>
         </header>
 
-        <div className="mt-12 grid gap-10 md:grid-cols-[320px_1fr] md:gap-14">
+        <div className="mt-12 grid gap-10 md:grid-cols-[340px_1fr] md:gap-14">
           {/* Left column: value areas */}
           <div className="md:sticky md:top-28 self-start">
-            {/* Desktop: tabs */}
             <div
               role="tablist"
               aria-label="Where I Create Value"
               aria-orientation="vertical"
-              className="hidden md:block rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm"
+              className="rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm"
             >
               <ul role="list" className="divide-y divide-white/10">
                 {valueAreas.map((area, index) => {
                   const isActive = index === activeIndex;
                   const tabId = `value-tab-${area.id}`;
-                  const panelId = `value-panel-${area.id}`;
 
                   return (
                     <li key={area.id} className="relative">
@@ -136,17 +131,18 @@ export function CoreSkillsSection() {
                         type="button"
                         role="tab"
                         aria-selected={isActive}
-                        aria-controls={panelId}
+                        aria-controls="value-detail-panel"
                         tabIndex={isActive ? 0 : -1}
                         onKeyDown={onTabKeyDown}
                         onFocus={() => setActiveIndex(index)}
                         onMouseEnter={() => setActiveIndex(index)}
                         onClick={() => setActiveIndex(index)}
                         className={cn(
-                          "group w-full text-left px-6 py-5",
+                          "group w-full text-left px-5 py-4 md:px-6 md:py-5",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-inset",
                           "transition-colors duration-200",
-                          isActive ? "bg-white/5" : "hover:bg-white/3",
+                          "border-l-2 border-l-transparent",
+                          isActive ? "bg-white/6 border-l-accent/80" : "hover:bg-white/3 hover:border-l-white/15",
                         )}
                       >
                         <div className="flex items-center justify-between gap-4">
@@ -172,85 +168,12 @@ export function CoreSkillsSection() {
                           <span
                             aria-hidden="true"
                             className={cn(
-                              "h-1.5 w-1.5 rounded-full transition-colors duration-200",
-                              isActive ? "bg-accent/80" : "bg-white/15 group-hover:bg-white/25",
+                              "h-6 w-px bg-white/10 transition-colors duration-200",
+                              isActive ? "bg-accent/55" : "bg-white/10 group-hover:bg-white/20",
                             )}
                           />
                         </div>
                       </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-
-            {/* Mobile: accordion */}
-            <div className="md:hidden rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm">
-              <ul role="list" className="divide-y divide-white/10">
-                {valueAreas.map((area, index) => {
-                  const isActive = index === activeIndex;
-                  const isOpen = index === openIndex;
-                  const triggerId = `value-mobile-trigger-${area.id}`;
-                  const regionId = `value-mobile-panel-${area.id}`;
-
-                  return (
-                    <li key={area.id} className="relative" data-value-item>
-                      <button
-                        id={triggerId}
-                        type="button"
-                        aria-expanded={isOpen}
-                        aria-controls={regionId}
-                        onClick={() => {
-                          setActiveIndex(index);
-                          setOpenIndex((prev) => (prev === index ? -1 : index));
-                        }}
-                        className={cn(
-                          "group w-full text-left px-5 py-4",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-inset",
-                          "transition-colors duration-200",
-                          isActive ? "bg-white/5" : "hover:bg-white/3",
-                        )}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-4 min-w-0">
-                            <span
-                              className={cn(
-                                "font-mono text-xs tracking-widest",
-                                isActive ? "text-accent/90" : "text-text-secondary/65 group-hover:text-text-secondary",
-                              )}
-                            >
-                              {area.index}
-                            </span>
-                            <span
-                              className={cn(
-                                "truncate text-[15px] tracking-tight",
-                                isActive ? "text-text-primary" : "text-text-secondary group-hover:text-text-primary",
-                              )}
-                            >
-                              {area.title}
-                            </span>
-                          </div>
-
-                          <span
-                            aria-hidden="true"
-                            className={cn(
-                              "h-1.5 w-1.5 rounded-full transition-colors duration-200",
-                              isActive ? "bg-accent/80" : "bg-white/15 group-hover:bg-white/25",
-                            )}
-                          />
-                        </div>
-                      </button>
-
-                      <div
-                        id={regionId}
-                        role="region"
-                        aria-labelledby={triggerId}
-                        className={cn("px-5 pb-4 -mt-1", styles.accordion, isOpen && styles.accordionOpen)}
-                      >
-                        <div className={styles.accordionInner}>
-                          <div className="pt-3 text-sm leading-relaxed text-text-secondary">{area.description}</div>
-                        </div>
-                      </div>
                     </li>
                   );
                 })}
@@ -259,45 +182,27 @@ export function CoreSkillsSection() {
           </div>
 
           {/* Right column: contextual content */}
-          <div className="hidden md:block">
-            <div className="relative min-h-[220px] rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm p-8">
-              {valueAreas.map((area, index) => {
-                const isActive = index === activeIndex;
-                return (
-                  <div
-                    key={area.id}
-                    id={`value-panel-${area.id}`}
-                    role="tabpanel"
-                    aria-labelledby={`value-tab-${area.id}`}
-                    aria-hidden={!isActive}
-                    className={cn(styles.panel, isActive && styles.panelActive)}
-                  >
-                    <div className="flex items-start justify-between gap-8">
-                      <div className="min-w-0">
-                        <div className="font-mono text-xs tracking-widest text-text-secondary/70">{area.index}</div>
-                        <h3 className="mt-3 text-2xl font-display tracking-tight">{area.title}</h3>
-                      </div>
-                      <div className="hidden lg:block font-mono text-xs tracking-widest uppercase text-text-secondary/55">
-                        Active
-                      </div>
-                    </div>
-
-                    <p className="mt-6 text-base leading-relaxed text-text-secondary max-w-2xl">
-                      {area.description}
-                    </p>
-                  </div>
-                );
-              })}
+          <div>
+            <div
+              id="value-detail-panel"
+              role="tabpanel"
+              aria-labelledby={`value-tab-${activeArea.id}`}
+              className="rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm p-7 md:p-8"
+            >
+              <div key={activeArea.id} className={styles.detailInner}>
+                <div className="font-mono text-xs tracking-widest text-text-secondary/70">{activeArea.index}</div>
+                <h3 className="mt-3 text-2xl md:text-[28px] font-display tracking-tight">
+                  {activeArea.title}
+                </h3>
+                <p className="mt-6 text-base leading-relaxed text-text-secondary max-w-2xl">
+                  {activeArea.description}
+                </p>
+              </div>
             </div>
 
-            <div className="mt-4 font-mono text-[11px] tracking-widest uppercase text-text-secondary/55">
+            <div className="mt-4 hidden md:block font-mono text-[11px] tracking-widest uppercase text-text-secondary/55">
               Use ↑/↓ to navigate
             </div>
-          </div>
-
-          {/* Mobile: a subtle hint below the list */}
-          <div className="md:hidden font-mono text-[11px] tracking-widest uppercase text-text-secondary/55">
-            Tap to expand
           </div>
         </div>
       </div>
