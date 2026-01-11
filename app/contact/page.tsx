@@ -9,7 +9,6 @@ export default function ContactPage() {
     const [copied, setCopied] = useState(false);
     const email = "dawsone.sarah@gmail.com";
     const [localPart, domain] = email.split("@");
-    const [domainName, domainTld] = domain?.split(".") ?? ["", ""];
 
     const handleCopy = () => {
         navigator.clipboard.writeText(email);
@@ -18,7 +17,7 @@ export default function ContactPage() {
     };
 
     return (
-        <main className="relative min-h-screen px-6 py-28 md:py-32 flex items-center">
+        <main className="relative min-h-screen px-6 pt-16 pb-24 md:py-32 flex items-start md:items-center">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-white/5 blur-3xl" />
                 <div className="absolute top-24 -right-24 h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
@@ -56,13 +55,11 @@ export default function ContactPage() {
                     <motion.h1
                         initial={{ y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        className="pr-14 text-4xl md:text-7xl lg:text-8xl font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
+                        className="text-4xl md:text-7xl lg:text-8xl md:pr-14 font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
                     >
                         {localPart}@
                         <br />
-                        {domainName}
-                        <br />
-                        .{domainTld}
+                        <span className="whitespace-nowrap">{domain}</span>
                     </motion.h1>
 
                     <motion.button
@@ -73,7 +70,7 @@ export default function ContactPage() {
                         }}
                         aria-label={copied ? "Copied" : "Copy email"}
                         className={cn(
-                            "absolute top-4 right-4 md:top-6 md:right-6",
+                            "mt-7 mx-auto md:mt-0 md:mx-0 md:absolute md:top-6 md:right-6",
                             "p-3 rounded-full border border-white/10 bg-surface/50 backdrop-blur-md",
                             "opacity-100 transition-colors",
                             "hover:border-white/15 hover:bg-surface/70",

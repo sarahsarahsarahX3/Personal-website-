@@ -22,6 +22,11 @@ interface Article {
     performance?: string[];
 }
 
+function isHiddenTag(tag: string) {
+    const normalized = tag.trim().toLowerCase();
+    return normalized === "thought leadership" || normalized === "though leadership";
+}
+
 function clampWords(text: string, maxWords: number) {
     const normalized = text.trim().replace(/\s+/g, " ");
     if (!normalized) return "";
@@ -87,14 +92,19 @@ export function ArticleList({ articles }: { articles: Article[] }) {
     const allTags = useMemo(() => {
         const tags = new Set<string>();
         for (const article of articles) {
-            for (const tag of article.tags ?? []) tags.add(tag);
+            for (const tag of article.tags ?? []) {
+                const trimmed = tag.trim();
+                if (!trimmed) continue;
+                if (isHiddenTag(trimmed)) continue;
+                tags.add(trimmed);
+            }
         }
         return Array.from(tags).sort((a, b) => a.localeCompare(b));
     }, [articles]);
 
     const filteredArticles = useMemo(() => {
-        if (!activeTag) return articles;
-        return articles.filter((article) => (article.tags ?? []).includes(activeTag));
+        if (!activeTag || isHiddenTag(activeTag)) return articles;
+        return articles.filter((article) => (article.tags ?? []).some((tag) => tag.trim() === activeTag));
     }, [articles, activeTag]);
 
     useEffect(() => {
@@ -226,7 +236,9 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                         ) : null}
 
                                         <div className="mt-5 flex flex-wrap items-center gap-3">
-                                            {(article.tags ?? []).map((tag) => (
+                                            {(article.tags ?? [])
+                                                .filter((tag) => !isHiddenTag(tag))
+                                                .map((tag) => (
                                                 <span
                                                     key={tag}
                                                     className="pointer-events-none px-3 py-1 rounded-full border border-dashed border-white/15 text-[11px] uppercase tracking-widest text-text-secondary/80 bg-transparent"

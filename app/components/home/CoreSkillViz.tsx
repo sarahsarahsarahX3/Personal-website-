@@ -44,6 +44,27 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
+function useScrollPaused(delayMs = 160) {
+  const [paused, setPaused] = useState(false);
+  const timeoutId = useRef<number | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setPaused(true);
+      if (timeoutId.current) window.clearTimeout(timeoutId.current);
+      timeoutId.current = window.setTimeout(() => setPaused(false), delayMs);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (timeoutId.current) window.clearTimeout(timeoutId.current);
+    };
+  }, [delayMs]);
+
+  return paused;
+}
+
 function getVariant(id: CoreSkillVizId): Variant {
   switch (id) {
     case "brand-storytelling":
@@ -680,7 +701,9 @@ function CrossFunctionalCollaborationScene({
 }
 
 export function CoreSkillViz({ id, className }: CoreSkillVizProps) {
-  const reducedMotion = usePrefersReducedMotion();
+  const reducedMotionPreference = usePrefersReducedMotion();
+  const scrollPaused = useScrollPaused();
+  const reducedMotion = reducedMotionPreference || scrollPaused;
   const variant = useMemo(() => getVariant(id), [id]);
 
   return (

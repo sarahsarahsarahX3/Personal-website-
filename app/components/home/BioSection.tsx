@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import styles from "./BioSection.module.css";
 
@@ -109,6 +110,8 @@ function CollaborationIcon() {
 }
 
 export function BioSection() {
+  const [headshotSrc, setHeadshotSrc] = useState("/images/IMG_8516_edited.jpg");
+
   return (
     <section aria-labelledby="home-bio-title" className="py-32 md:py-44 lg:py-48">
       <div className="mx-auto w-full max-w-6xl px-6">
@@ -116,12 +119,13 @@ export function BioSection() {
           <figure className="col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block">
             <div className="relative aspect-[4/5] w-full max-w-[320px]">
               <Image
-                src="/images/IMG_8516_edited.jpg"
+                src={headshotSrc}
                 alt="Headshot of Sarah Dawson"
                 fill
                 sizes="(min-width: 768px) 320px, 70vw"
                 className="object-cover rounded-3xl"
                 priority
+                onError={() => setHeadshotSrc("/images/IMG_5668_edited.jpg")}
               />
             </div>
           </figure>
@@ -158,7 +162,7 @@ export function BioSection() {
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">3</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Fortune 500 Brands
+                      Fortune 500 Companies
                     </div>
                   </div>
                 </li>

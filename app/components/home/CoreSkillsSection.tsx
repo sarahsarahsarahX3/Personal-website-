@@ -109,7 +109,7 @@ export function CoreSkillsSection() {
           {/* Left column: value areas */}
           <div className="md:sticky md:top-28 self-start">
             {/* Mobile: accordion */}
-            <div className="md:hidden rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm">
+            <div className="md:hidden rounded-2xl border border-white/10 bg-surface-alt/10">
               <ul role="list" className="divide-y divide-white/10">
                 {valueAreas.map((area, index) => {
                   const isActive = index === activeIndex;
@@ -175,7 +175,7 @@ export function CoreSkillsSection() {
                         <div className={styles.accordionInner}>
                           <div className="pt-3 text-sm leading-relaxed text-text-secondary">{area.description}</div>
                           <div className="mt-5 h-[220px] rounded-xl border border-white/10 overflow-hidden">
-                            <CoreSkillViz id={area.id} />
+                            {isOpen ? <CoreSkillViz id={area.id} /> : null}
                           </div>
                         </div>
                       </div>
