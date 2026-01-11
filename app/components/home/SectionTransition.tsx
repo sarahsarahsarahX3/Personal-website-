@@ -23,18 +23,6 @@ export function SectionTransition({ className, children }: SectionTransitionProp
     >
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        variants={{
-          hidden: { opacity: 0 },
-          show: { opacity: 1 },
-        }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/8 via-transparent to-transparent" />
-      </motion.div>
-
-      <motion.div
-        aria-hidden="true"
         className="absolute left-0 right-0 top-0 h-px origin-left bg-gradient-to-r from-transparent via-accent/60 to-transparent"
         variants={{
           hidden: { scaleX: 0, opacity: 0 },
