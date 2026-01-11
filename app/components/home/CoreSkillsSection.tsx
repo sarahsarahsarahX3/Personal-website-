@@ -153,7 +153,7 @@ export function CoreSkillsSection() {
     const placement: PreviewState["placement"] = canPlaceTop ? "top" : "bottom";
 
     previewX.set(x);
-    previewY.set(y);
+    previewY.set(y - tooltipHeight / 2);
     return placement;
   };
 
@@ -291,7 +291,6 @@ export function CoreSkillsSection() {
           style={{
             left: previewXSpring,
             top: previewYSpring,
-            translateY: "-50%",
           }}
         >
           <div className="rounded-xl bg-gradient-to-r from-white/10 via-white/5 to-white/10 p-px shadow-2xl shadow-black/60">
