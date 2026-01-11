@@ -45,7 +45,7 @@ const valueAreas: ValueArea[] = [
   {
     id: "integrated-marketing-campaigns",
     index: "05",
-    title: "Integrated Marketing Campaigns",
+    title: "Integerated Campaigns",
     description:
       "Develop content that supports brand growth, customer engagement, integrated campaigns, product launches, and seasonal initiatives.",
   },
@@ -73,6 +73,7 @@ const valueAreas: ValueArea[] = [
 
 export function CoreSkillsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(0);
 
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeArea = useMemo(() => valueAreas[activeIndex] ?? valueAreas[0]!, [activeIndex]);
@@ -104,18 +105,96 @@ export function CoreSkillsSection() {
       <div className="mx-auto w-full max-w-6xl px-6">
         <header className="flex items-baseline justify-between gap-6">
           <h2 id="where-i-create-value-title" className="font-display text-3xl md:text-4xl tracking-tight">
-            Where I Create Value
+            Core Competencies
           </h2>
         </header>
 
         <div className="mt-12 grid gap-10 md:grid-cols-[340px_minmax(0,708px)] md:gap-14">
           {/* Left column: value areas */}
           <div className="md:sticky md:top-28 self-start">
+            {/* Mobile: accordion */}
+            <div className="md:hidden rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm">
+              <ul role="list" className="divide-y divide-white/10">
+                {valueAreas.map((area, index) => {
+                  const isActive = index === activeIndex;
+                  const isOpen = index === openIndex;
+                  const triggerId = `value-acc-trigger-${area.id}`;
+                  const regionId = `value-acc-panel-${area.id}`;
+
+                  return (
+                    <li key={area.id} className="relative">
+                      <button
+                        id={triggerId}
+                        type="button"
+                        aria-expanded={isOpen}
+                        aria-controls={regionId}
+                        onClick={() => {
+                          setActiveIndex(index);
+                          setOpenIndex(index);
+                        }}
+                        className={cn(
+                          "group w-full text-left px-5 py-4",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-inset",
+                          "transition-colors duration-200",
+                          "border-l-2 border-l-transparent",
+                          isActive ? "bg-white/6 border-l-accent/80" : "hover:bg-white/3 hover:border-l-white/15",
+                        )}
+                      >
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-4 min-w-0">
+                            <span
+                              className={cn(
+                                "font-mono text-xs tracking-widest",
+                                isActive ? "text-accent/90" : "text-text-secondary/65 group-hover:text-text-secondary",
+                              )}
+                            >
+                              {area.index}
+                            </span>
+                            <span
+                              className={cn(
+                                "truncate text-[15px] tracking-tight",
+                                isActive ? "text-text-primary" : "text-text-secondary group-hover:text-text-primary",
+                              )}
+                            >
+                              {area.title}
+                            </span>
+                          </div>
+
+                          <span
+                            aria-hidden="true"
+                            className={cn(
+                              "h-6 w-px bg-white/10 transition-colors duration-200",
+                              isActive ? "bg-accent/55" : "bg-white/10 group-hover:bg-white/20",
+                            )}
+                          />
+                        </div>
+                      </button>
+
+                      <div
+                        id={regionId}
+                        role="region"
+                        aria-labelledby={triggerId}
+                        className={cn("px-5 pb-5 -mt-1", styles.accordion, isOpen && styles.accordionOpen)}
+                      >
+                        <div className={styles.accordionInner}>
+                          <div className="pt-3 text-sm leading-relaxed text-text-secondary">{area.description}</div>
+                          <div className="mt-5 h-[220px] rounded-xl border border-white/10 overflow-hidden">
+                            <CoreSkillViz id={area.id} />
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            {/* Desktop: tabs */}
             <div
               role="tablist"
               aria-label="Where I Create Value"
               aria-orientation="vertical"
-              className="rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm"
+              className="hidden md:block rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm"
             >
               <ul role="list" className="divide-y divide-white/10">
                 {valueAreas.map((area, index) => {
@@ -139,7 +218,7 @@ export function CoreSkillsSection() {
                         onMouseEnter={() => setActiveIndex(index)}
                         onClick={() => setActiveIndex(index)}
                         className={cn(
-                          "group w-full text-left px-5 py-4 md:px-6 md:py-5",
+                          "group w-full text-left px-6 py-5",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-inset",
                           "transition-colors duration-200",
                           "border-l-2 border-l-transparent",
@@ -183,7 +262,7 @@ export function CoreSkillsSection() {
           </div>
 
           {/* Right column: contextual content */}
-          <div>
+          <div className="hidden md:block">
             <div
               id="value-detail-panel"
               role="tabpanel"

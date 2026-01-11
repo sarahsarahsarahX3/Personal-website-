@@ -14,8 +14,33 @@
   animation: fadeSlideIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.accordion {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition:
+    grid-template-rows 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.accordionOpen {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.accordionInner {
+  overflow: hidden;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .detailInner {
     animation: none;
+  }
+
+  .accordion {
+    transition: none;
   }
 }
