@@ -5,14 +5,13 @@ import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
   FileText,
-  Globe2,
+  FlaskConical,
   Megaphone,
-  MessageSquareText,
   PenLine,
   Search,
   Sparkles,
   Target,
-  Waves,
+  Users,
 } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 
@@ -25,58 +24,52 @@ type Skill = {
 
 const skills: Skill[] = [
   {
-    key: "storytelling",
-    name: "Storytelling",
-    blurb: "Narratives that clarify positioning and earn attention without losing performance.",
+    key: "brand-storytelling",
+    name: "Brand Storytelling",
+    blurb: "Craft clear, compelling narratives that connect brand, audience, and purpose across marketing touchpoints.",
     Icon: Sparkles,
   },
   {
-    key: "content-marketing",
-    name: "Content Marketing",
-    blurb: "Editorial systems and channel strategy that compound over time.",
-    Icon: FileText,
-  },
-  {
-    key: "seo-aeo",
     name: "SEO + AEO Strategy",
-    blurb: "Search intent, structure, and answers that win in modern discovery.",
+    blurb: "Develop and optimize content strategies that improve discoverability, search visibility, and audience growth across traditional and AI-driven search.",
     Icon: Search,
+    key: "seo-aeo",
   },
   {
-    key: "integrated-campaigns",
-    name: "Integrated Campaigns",
-    blurb: "Launch planning across paid/owned/earned—aligned creative + measurable lift.",
+    key: "integrated-marketing-campaigns",
+    name: "Integrated Marketing Campaigns",
+    blurb: "Develop content that supports brand growth, customer engagement, integrated campaigns, product launches, and seasonal initiatives.",
     Icon: Megaphone,
   },
   {
     key: "copywriting",
     name: "Copywriting",
-    blurb: "Voice-led, conversion-aware copy across headlines, hooks, and long-form.",
+    blurb: "Write and optimize conversion-focused copy across digital channels, aligning messaging with brand strategy, audience intent, and campaign objectives.",
     Icon: PenLine,
   },
   {
-    key: "content-creation",
-    name: "Content Creation",
-    blurb: "From concept to publish-ready assets that look good and read clearly.",
+    key: "editorial-governance",
+    name: "Editorial Governance",
+    blurb: "Define editorial standards and steward brand voice to ensure consistency, quality, and clarity at scale.",
+    Icon: FileText,
+  },
+  {
+    key: "performance-marketing",
+    name: "Performance Marketing",
+    blurb: "Apply data and performance insights to optimize content, campaigns, and messaging for engagement, conversion, and measurable results.",
     Icon: Target,
   },
   {
-    key: "digital-publishing",
-    name: "Digital Publishing",
-    blurb: "CMS workflows, packaging, and distribution built for reach and retention.",
-    Icon: Globe2,
+    key: "subject-matter-expertise",
+    name: "Subject-Matter Expertise",
+    blurb: "Translate expert insight into accurate, on-brand content across beauty, health, technology, and science.",
+    Icon: FlaskConical,
   },
   {
-    key: "editorial-leadership",
-    name: "Editorial Leadership",
-    blurb: "Quality, cadence, and standards that keep teams shipping consistently.",
-    Icon: Waves,
-  },
-  {
-    key: "communications",
-    name: "Communications",
-    blurb: "Messaging and narratives that align stakeholders and land with audiences.",
-    Icon: MessageSquareText,
+    key: "cross-functional-collaboration",
+    name: "Cross-Functional Collaboration",
+    blurb: "Partner across marketing, design, product, and education teams to deliver content at scale.",
+    Icon: Users,
   },
 ];
 
