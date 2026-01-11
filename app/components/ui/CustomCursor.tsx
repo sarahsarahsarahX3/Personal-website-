@@ -49,8 +49,8 @@ export function CustomCursor() {
                 "flex items-center justify-center transition-opacity duration-300 hidden md:flex"
             )}
             style={{
-                translateX: cursorX,
-                translateY: cursorY,
+                x: cursorX,
+                y: cursorY,
             }}
             animate={{
                 scale: isHovering ? 2.5 : 1,

@@ -3,7 +3,6 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "./components/SmoothScroll";
 import { Navbar } from "@/app/components/layout/Navbar";
-import { CustomCursor } from "@/app/components/ui/CustomCursor";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
