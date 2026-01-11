@@ -60,9 +60,14 @@
 body {
   background-color: var(--color-surface);
   color: var(--color-text-primary);
-  /* Smooth scrolling will be handled by Lenis, but default to smooth for fallback */
-  scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+/* Smooth scrolling:
+   - Lenis handles smoothness when enabled (it adds the `lenis` class to <html>).
+   - Fallback to native smooth scrolling when Lenis isn't running. */
+html:not(.lenis) {
+  scroll-behavior: smooth;
 }
 
 /* Hide scrollbar for cleaner look */

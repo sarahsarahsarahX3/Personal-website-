@@ -105,7 +105,8 @@ export function ValueSection() {
             <motion.div
               key={item.title}
               className={[
-                "group relative h-full rounded-2xl p-[1px] transition will-change-transform hover:-translate-y-1",
+                "group relative h-full rounded-2xl p-[1px] transition will-change-transform",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35 focus-visible:ring-offset-0",
                 item.title === signatureTitle ? "lg:col-span-2" : "",
               ].join(" ")}
               initial={{ opacity: 0, y: 12 }}

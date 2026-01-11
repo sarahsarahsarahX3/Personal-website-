@@ -39,6 +39,7 @@ export function Navbar() {
                             href={item.href}
                             className={cn(
                                 "relative flex items-center justify-center px-3 py-3 md:px-4 rounded-full transition-colors duration-300 group shrink-0",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                                 isActive ? "text-surface" : "text-text-secondary hover:text-text-primary"
                             )}
                         >
@@ -54,8 +55,10 @@ export function Navbar() {
                                 <Icon size={18} className={cn("transition-transform group-hover:scale-110", isActive && "text-surface")} />
                                 <span
                                     className={cn(
-                                        "text-sm font-medium transition-all duration-300",
-                                        isActive ? "inline-block" : "hidden md:hidden group-hover:md:inline-block"
+                                        "text-sm font-medium transition-colors duration-300",
+                                        // Avoid layout shift/jitter by keeping labels rendered on desktop.
+                                        "hidden md:inline-block",
+                                        isActive ? "text-surface" : "text-text-secondary group-hover:text-text-primary"
                                     )}
                                 >
                                     {item.name}
