@@ -66,7 +66,7 @@ export function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.5, duration: 1 }}
-                className="w-full border-t border-white/5 pt-8"
+                className="w-full border-y border-white/5 py-5"
             >
                 <Ticker
                     items={[

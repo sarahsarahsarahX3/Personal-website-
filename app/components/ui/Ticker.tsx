@@ -14,7 +14,7 @@ export function Ticker({ items, direction = "left", speed = 20, className }: Tic
     return (
         <div className={cn("relative flex overflow-hidden whitespace-nowrap mask-gradient-x", className)}>
             <motion.div
-                className="flex items-center py-4"
+                className="flex items-center"
                 animate={{ x: direction === "left" ? "-50%" : "50%" }}
                 transition={{
                     repeat: Infinity,
