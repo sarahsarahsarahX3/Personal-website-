@@ -56,11 +56,11 @@ export function Navbar() {
                                 <span className="sr-only">{item.name}</span>
                             </span>
 
-                            {/* Tooltip label (desktop) to avoid layout-shift jitter */}
+                            {/* Hover label (desktop) without layout-shift jitter */}
                             <span
                                 className={cn(
-                                    "pointer-events-none absolute bottom-full left-1/2 hidden -translate-x-1/2 md:block",
-                                    "mb-2 rounded-full border border-white/10 bg-surface/90 px-3 py-1.5 text-xs font-medium tracking-wide",
+                                    "pointer-events-none absolute left-full top-1/2 hidden -translate-y-1/2 md:block",
+                                    "ml-2 whitespace-nowrap rounded-full border border-white/10 bg-surface/90 px-3 py-1.5 text-xs font-medium tracking-wide",
                                     "text-text-primary shadow-xl shadow-black/40 backdrop-blur-md",
                                     "opacity-0 scale-95 transition duration-200",
                                     "group-hover:opacity-100 group-hover:scale-100",
