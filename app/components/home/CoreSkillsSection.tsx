@@ -173,8 +173,8 @@ export function CoreSkillsSection() {
   };
 
   return (
-    <div className="relative py-40 md:py-44 lg:py-52 overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
+    <div className="relative isolate py-40 md:py-44 lg:py-52 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute left-[-18%] top-[-25%] h-[520px] w-[520px] rounded-full bg-white/5 blur-3xl" />
         <div className="absolute right-[-18%] top-[10%] h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
         {/* Fine grid */}
@@ -183,7 +183,10 @@ export function CoreSkillsSection() {
         <div className="hidden lg:block absolute inset-0 opacity-[0.16] bg-[linear-gradient(to_right,rgba(255,255,255,0.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.22)_1px,transparent_1px)] bg-[size:170px_170px]" />
       </div>
 
-      <div className="mx-auto w-full max-w-5xl px-6 relative">
+      {/* Overlay grid so it stays visible (including over cards) */}
+      <div className="pointer-events-none absolute inset-0 z-10 opacity-[0.12] lg:opacity-[0.18] mix-blend-overlay bg-[linear-gradient(to_right,rgba(255,255,255,0.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.22)_1px,transparent_1px)] bg-[size:34px_34px]" />
+
+      <div className="mx-auto w-full max-w-5xl px-6 relative z-20">
         <motion.header
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
