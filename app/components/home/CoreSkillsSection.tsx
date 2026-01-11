@@ -180,7 +180,7 @@ export function CoreSkillsSection() {
         <div className="absolute inset-0 opacity-[0.20] lg:opacity-[0.26] bg-[linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] bg-[size:38px_38px]" />
       </div>
 
-      <div className="container mx-auto px-6 relative">
+      <div className="mx-auto w-full max-w-5xl px-6 relative">
         <motion.header
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -196,7 +196,7 @@ export function CoreSkillsSection() {
             </div>
           </div>
 
-          <div className="mt-16 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="mt-16 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
             {skills.map((skill, index) => {
               const isActive = skill.key === activeKey;
               const Icon = skill.Icon;
