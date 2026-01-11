@@ -15,11 +15,11 @@ type ValueArea = {
 
 const valueAreas: ValueArea[] = [
   {
-    id: "brand-storytelling",
+    id: "integrated-marketing-campaigns",
     index: "01",
-    title: "Brand Storytelling",
+    title: "Integrated Campaigns",
     description:
-      "Craft clear, compelling narratives that connect brand, audience, and purpose across marketing touchpoints.",
+      "Develop content that supports brand growth, customer engagement, integrated campaigns, product launches, and seasonal initiatives.",
   },
   {
     id: "copywriting",
@@ -31,7 +31,7 @@ const valueAreas: ValueArea[] = [
   {
     id: "editorial-governance",
     index: "03",
-    title: "Editorial Governance",
+    title: "Editorial Leadership",
     description:
       "Define editorial standards and steward brand voice to ensure consistency, quality, and clarity at scale.",
   },
@@ -43,29 +43,22 @@ const valueAreas: ValueArea[] = [
       "Develop and optimize content strategies that improve discoverability, search visibility, and audience growth across traditional and AI-driven search.",
   },
   {
-    id: "integrated-marketing-campaigns",
-    index: "05",
-    title: "Integerated Campaigns",
-    description:
-      "Develop content that supports brand growth, customer engagement, integrated campaigns, product launches, and seasonal initiatives.",
-  },
-  {
     id: "performance-marketing",
-    index: "06",
+    index: "05",
     title: "Performance Marketing",
     description:
       "Apply data and performance insights to optimize content, campaigns, and messaging for engagement, conversion, and measurable results.",
   },
   {
-    id: "subject-matter-expertise",
-    index: "07",
-    title: "Subject-Matter Expertise",
+    id: "brand-storytelling",
+    index: "06",
+    title: "Brand Storytelling",
     description:
-      "Translate expert insight into accurate, on-brand content across beauty, health, technology, and science.",
+      "Craft clear, compelling narratives that connect brand, audience, and purpose across marketing touchpoints.",
   },
   {
     id: "cross-functional-collaboration",
-    index: "08",
+    index: "07",
     title: "Cross-Functional Collaboration",
     description: "Partner across marketing, design, product, and education teams to deliver content at scale.",
   },
@@ -104,7 +97,10 @@ export function CoreSkillsSection() {
     <section aria-labelledby="where-i-create-value-title" className="py-24 md:py-28">
       <div className="mx-auto w-full max-w-6xl px-6">
         <header className="flex items-baseline justify-between gap-6">
-          <h2 id="where-i-create-value-title" className="font-display text-3xl md:text-4xl tracking-tight">
+          <h2
+            id="where-i-create-value-title"
+            className="w-full font-display text-3xl md:text-4xl tracking-tight text-center md:text-left"
+          >
             Core Competencies
           </h2>
         </header>
@@ -192,7 +188,7 @@ export function CoreSkillsSection() {
             {/* Desktop: tabs */}
             <div
               role="tablist"
-              aria-label="Where I Create Value"
+              aria-label="Core Competencies"
               aria-orientation="vertical"
               className="hidden md:block rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm"
             >
