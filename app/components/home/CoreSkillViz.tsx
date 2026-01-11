@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { cn } from "@/app/lib/utils";
@@ -25,6 +25,10 @@ type Variant = {
   emissive: string;
   tilt: [number, number, number];
 };
+
+const LOOP_SECONDS = 8;
+const TAU = Math.PI * 2;
+const OMEGA = TAU / LOOP_SECONDS;
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -126,6 +130,11 @@ function materialSet(variant: Variant) {
   return { wireProps, softProps, accentProps };
 }
 
+function smoothstep(edge0: number, edge1: number, x: number) {
+  const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
+}
+
 function Link({
   from,
   to,
@@ -156,263 +165,517 @@ function Link({
   );
 }
 
-function SkillScene({ id, variant }: { id: CoreSkillVizId; variant: Variant }) {
+function SkillScene({
+  id,
+  variant,
+  reducedMotion,
+}: {
+  id: CoreSkillVizId;
+  variant: Variant;
+  reducedMotion: boolean;
+}) {
   const mats = materialSet(variant);
 
   switch (id) {
     case "brand-storytelling":
-      return (
-        <>
-          {/* Story arc / ribbon */}
-          <mesh rotation={variant.tilt}>
-            <torusKnotGeometry args={[0.68, 0.16, 200, 18]} />
-            <meshStandardMaterial {...mats.wireProps} />
-          </mesh>
-          <mesh rotation={variant.tilt} scale={0.985}>
-            <torusKnotGeometry args={[0.68, 0.16, 200, 18]} />
-            <meshStandardMaterial {...mats.softProps} />
-          </mesh>
-          {/* A small "spark" marker */}
-          <mesh position={[0.9, 0.35, 0]} rotation={[0.2, 0.4, 0]}>
-            <sphereGeometry args={[0.08, 16, 16]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-        </>
-      );
+      return <BrandStorytellingScene variant={variant} mats={mats} reducedMotion={reducedMotion} />;
 
     case "copywriting":
-      return (
-        <>
-          {/* Stacked pages */}
-          {[
-            { id: "page-1", dx: -0.06, dy: -0.06, dz: -0.0 },
-            { id: "page-2", dx: -0.03, dy: -0.03, dz: -0.04 },
-            { id: "page-3", dx: 0.0, dy: 0.0, dz: -0.08 },
-            { id: "page-4", dx: 0.03, dy: 0.03, dz: -0.12 },
-            { id: "page-5", dx: 0.06, dy: 0.06, dz: -0.16 },
-          ].map((page) => (
-            <mesh
-              key={page.id}
-              rotation={[0.15, 0.22, 0.02]}
-              position={[page.dx, page.dy, page.dz]}
-            >
-              <boxGeometry args={[1.35, 0.06, 0.95]} />
-              <meshStandardMaterial {...mats.wireProps} />
-            </mesh>
-          ))}
-          <mesh rotation={[0.15, 0.22, 0.02]} position={[0.05, 0.05, -0.22]} scale={[0.98, 0.98, 0.98]}>
-            <boxGeometry args={[1.35, 0.06, 0.95]} />
-            <meshStandardMaterial {...mats.softProps} />
-          </mesh>
-          {/* Cursor caret */}
-          <mesh position={[0.62, 0.1, 0.55]}>
-            <boxGeometry args={[0.05, 0.5, 0.05]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-        </>
-      );
+      return <CopywritingScene mats={mats} reducedMotion={reducedMotion} />;
 
     case "editorial-governance":
-      return (
-        <>
-          {/* Framework cube */}
-          <mesh rotation={variant.tilt}>
-            <boxGeometry args={[1.35, 1.0, 1.35]} />
-            <meshStandardMaterial {...mats.wireProps} />
-          </mesh>
-          <mesh rotation={variant.tilt} scale={0.985}>
-            <boxGeometry args={[1.35, 1.0, 1.35]} />
-            <meshStandardMaterial {...mats.softProps} />
-          </mesh>
-          {/* Guideline planes */}
-          <mesh rotation={[0, 0.2, 0]} position={[0, 0.05, 0]}>
-            <planeGeometry args={[1.15, 0.85]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-          <mesh rotation={[0, -0.25, 0]} position={[0, -0.05, 0.02]}>
-            <planeGeometry args={[1.0, 0.72]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-        </>
-      );
+      return <EditorialGovernanceScene variant={variant} mats={mats} reducedMotion={reducedMotion} />;
 
     case "seo-aeo":
-      return (
-        <>
-          {/* "Search radar" */}
-          <mesh rotation={[0.25, 0.1, 0]}>
-            <ringGeometry args={[0.42, 0.9, 48]} />
-            <meshStandardMaterial {...mats.wireProps} />
-          </mesh>
-          <mesh rotation={[0.1, 0.35, 0]}>
-            <icosahedronGeometry args={[0.62, 0]} />
-            <meshStandardMaterial {...mats.wireProps} />
-          </mesh>
-          <mesh rotation={[0.1, 0.35, 0]} scale={0.985}>
-            <icosahedronGeometry args={[0.62, 0]} />
-            <meshStandardMaterial {...mats.softProps} />
-          </mesh>
-          {/* Query beam */}
-          <mesh rotation={[0, 0, -0.35]} position={[0.15, 0.05, 0.0]}>
-            <cylinderGeometry args={[0.02, 0.02, 1.6, 10]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-          <mesh position={[0.55, 0.48, 0.0]}>
-            <sphereGeometry args={[0.07, 16, 16]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-        </>
-      );
+      return <SeoAeoScene variant={variant} mats={mats} reducedMotion={reducedMotion} />;
 
     case "integrated-marketing-campaigns":
-      return (
-        <>
-          {/* Central hub + orbiting channels */}
-          <mesh rotation={variant.tilt}>
-            <dodecahedronGeometry args={[0.62, 0]} />
-            <meshStandardMaterial {...mats.wireProps} />
-          </mesh>
-          <mesh rotation={variant.tilt} scale={0.985}>
-            <dodecahedronGeometry args={[0.62, 0]} />
-            <meshStandardMaterial {...mats.softProps} />
-          </mesh>
-          <mesh rotation={[Math.PI / 2, 0.2, 0]} position={[0, 0, 0]}>
-            <torusGeometry args={[0.95, 0.02, 12, 72]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-          {[
-            { key: "node-a", pos: [0.95, 0.15, 0.0] as [number, number, number] },
-            { key: "node-b", pos: [-0.35, 0.85, 0.1] as [number, number, number] },
-            { key: "node-c", pos: [-0.65, -0.65, -0.05] as [number, number, number] },
-          ].map((node) => (
-            <mesh key={node.key} position={node.pos}>
-              <sphereGeometry args={[0.085, 16, 16]} />
-              <meshStandardMaterial {...mats.accentProps} />
-            </mesh>
-          ))}
-        </>
-      );
+      return <IntegratedCampaignsScene variant={variant} mats={mats} reducedMotion={reducedMotion} />;
 
     case "performance-marketing":
-      return (
-        <>
-          {/* Bars */}
-          {[
-            { key: "bar-1", x: -0.6, h: 0.55 },
-            { key: "bar-2", x: -0.2, h: 0.8 },
-            { key: "bar-3", x: 0.2, h: 1.05 },
-            { key: "bar-4", x: 0.6, h: 1.25 },
-          ].map((b) => (
-            <mesh
-              key={b.key}
-              position={[b.x, b.h / 2 - 0.5, 0]}
-              rotation={[0.12, 0.35, 0]}
-            >
-              <boxGeometry args={[0.22, b.h, 0.22]} />
-              <meshStandardMaterial {...mats.wireProps} />
-            </mesh>
-          ))}
-          {/* Trend arrow */}
-          <mesh rotation={[0, 0, -0.35]} position={[0.1, 0.25, 0.35]}>
-            <cylinderGeometry args={[0.02, 0.02, 1.6, 10]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-          <mesh rotation={[0, 0, -0.35]} position={[0.72, 0.72, 0.35]}>
-            <coneGeometry args={[0.08, 0.2, 12]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-        </>
-      );
+      return <PerformanceMarketingScene variant={variant} mats={mats} reducedMotion={reducedMotion} />;
 
     case "subject-matter-expertise":
-      return (
-        <>
-          {/* Atom/molecule */}
-          <mesh>
-            <sphereGeometry args={[0.18, 20, 20]} />
-            <meshStandardMaterial {...mats.accentProps} />
-          </mesh>
-          <mesh rotation={[Math.PI / 2, 0.2, 0]}>
-            <torusGeometry args={[0.82, 0.02, 12, 72]} />
-            <meshStandardMaterial {...mats.wireProps} />
-          </mesh>
-          <mesh rotation={[0.2, Math.PI / 2, 0.15]}>
-            <torusGeometry args={[0.82, 0.02, 12, 72]} />
-            <meshStandardMaterial {...mats.wireProps} />
-          </mesh>
-          <mesh rotation={[0.0, 0.0, 0.35]}>
-            <torusGeometry args={[0.82, 0.02, 12, 72]} />
-            <meshStandardMaterial {...mats.wireProps} />
-          </mesh>
-          {[
-            { key: "electron-1", pos: [0.78, 0.2, 0.0] as [number, number, number] },
-            { key: "electron-2", pos: [-0.35, -0.72, 0.1] as [number, number, number] },
-            { key: "electron-3", pos: [-0.25, 0.55, -0.15] as [number, number, number] },
-          ].map((electron) => (
-            <mesh key={electron.key} position={electron.pos}>
-              <sphereGeometry args={[0.075, 16, 16]} />
-              <meshStandardMaterial {...mats.accentProps} />
-            </mesh>
-          ))}
-        </>
-      );
+      return <SubjectMatterExpertiseScene variant={variant} mats={mats} reducedMotion={reducedMotion} />;
 
-    case "cross-functional-collaboration": {
-      const nodes: Array<[number, number, number]> = [
-        [-0.7, -0.25, 0.1],
-        [-0.15, 0.55, -0.05],
-        [0.6, 0.25, 0.0],
-        [0.35, -0.55, -0.1],
-        [-0.35, 0.0, 0.25],
-      ];
-
-      const links: Array<[number, number]> = [
-        [0, 4],
-        [4, 1],
-        [1, 2],
-        [2, 3],
-        [3, 0],
-      ];
-
-      return (
-        <>
-          {links.map((l) => (
-            <Link
-              key={`${l[0]}-${l[1]}`}
-              from={nodes[l[0]!]!}
-              to={nodes[l[1]!]!}
-              color="#EAEAEA"
-            />
-          ))}
-
-          {nodes.map((p) => (
-            <mesh key={p.join(",")} position={p}>
-              <sphereGeometry args={[0.11, 18, 18]} />
-              {p === nodes[4] ? <meshStandardMaterial {...mats.accentProps} /> : <meshStandardMaterial {...mats.wireProps} />}
-            </mesh>
-          ))}
-        </>
-      );
-    }
+    case "cross-functional-collaboration":
+      return <CrossFunctionalCollaborationScene variant={variant} mats={mats} reducedMotion={reducedMotion} />;
   }
 }
 
-function Geometry({ id, variant }: { id: CoreSkillVizId; variant: Variant }) {
-  const reducedMotion = usePrefersReducedMotion();
+function Geometry({ id, variant, reducedMotion }: { id: CoreSkillVizId; variant: Variant; reducedMotion: boolean }) {
   const group = useMemo(() => new THREE.Group(), []);
-  const clockRef = useMemo(() => ({ t: 0 }), []);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (reducedMotion) return;
-    clockRef.t += delta;
-    group.rotation.y = clockRef.t * 0.2;
-    group.rotation.x = clockRef.t * 0.08;
+    const t = state.clock.getElapsedTime();
+    const phase = t * OMEGA;
+    group.rotation.y = Math.sin(phase) * 0.35;
+    group.rotation.x = Math.sin(phase + 1.2) * 0.16;
+    group.rotation.z = Math.sin(phase + 0.4) * 0.06;
   });
 
   return (
     <primitive object={group}>
-      <SkillScene id={id} variant={variant} />
+      <SkillScene id={id} variant={variant} reducedMotion={reducedMotion} />
     </primitive>
+  );
+}
+
+function BrandStorytellingScene({
+  variant,
+  mats,
+  reducedMotion,
+}: {
+  variant: Variant;
+  mats: ReturnType<typeof materialSet>;
+  reducedMotion: boolean;
+}) {
+  const strandA = useRef<THREE.Mesh>(null);
+  const strandB = useRef<THREE.Mesh>(null);
+  const marker = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (reducedMotion) return;
+    const t = state.clock.getElapsedTime();
+    const phase = t * OMEGA;
+
+    if (strandA.current) strandA.current.rotation.y = Math.sin(phase) * 0.35;
+    if (strandB.current) strandB.current.rotation.y = Math.sin(phase + 1.4) * -0.28;
+
+    if (marker.current) {
+      const r = 0.92;
+      marker.current.position.set(
+        Math.cos(phase) * r,
+        Math.sin(phase) * r * 0.55,
+        Math.sin(phase * 2) * 0.08,
+      );
+    }
+  });
+
+  return (
+    <>
+      <mesh ref={strandA} rotation={variant.tilt}>
+        <torusKnotGeometry args={[0.66, 0.14, 220, 20]} />
+        <meshStandardMaterial {...mats.wireProps} />
+      </mesh>
+      <mesh ref={strandB} rotation={[variant.tilt[0] + 0.18, variant.tilt[1] - 0.12, variant.tilt[2] + 0.05]} scale={0.98}>
+        <torusKnotGeometry args={[0.62, 0.13, 210, 18]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+      <mesh ref={marker}>
+        <sphereGeometry args={[0.075, 18, 18]} />
+        <meshStandardMaterial {...mats.accentProps} />
+      </mesh>
+    </>
+  );
+}
+
+function CopywritingScene({
+  mats,
+  reducedMotion,
+}: {
+  mats: ReturnType<typeof materialSet>;
+  reducedMotion: boolean;
+}) {
+  const blocks = useRef<Array<THREE.Mesh | null>>([]);
+
+  const targets = useMemo(
+    () => [
+      [-0.55, 0.35, 0.0],
+      [0.0, 0.35, 0.0],
+      [0.55, 0.35, 0.0],
+      [-0.55, -0.25, 0.0],
+      [0.0, -0.25, 0.0],
+      [0.55, -0.25, 0.0],
+    ] as Array<[number, number, number]>,
+    [],
+  );
+
+  const offsets = useMemo(
+    () => [
+      [-0.72, 0.42, 0.06],
+      [0.1, 0.5, -0.08],
+      [0.72, 0.28, 0.12],
+      [-0.62, -0.34, -0.08],
+      [-0.05, -0.46, 0.1],
+      [0.66, -0.16, -0.06],
+    ] as Array<[number, number, number]>,
+    [],
+  );
+
+  useFrame((state) => {
+    const w = (Math.sin(state.clock.getElapsedTime() * OMEGA) + 1) / 2;
+    const bump = smoothstep(0.12, 0.28, w) * (1 - smoothstep(0.72, 0.88, w));
+    const mix = reducedMotion ? 1 : 1 - bump * 0.32;
+    for (let i = 0; i < blocks.current.length; i++) {
+      const mesh = blocks.current[i];
+      if (!mesh) continue;
+      const from = offsets[i]!;
+      const to = targets[i]!;
+      mesh.position.set(
+        from[0] + (to[0] - from[0]) * mix,
+        from[1] + (to[1] - from[1]) * mix,
+        from[2] + (to[2] - from[2]) * mix,
+      );
+    }
+  });
+
+  return (
+    <>
+      {targets.map((_, i) => (
+        <mesh
+          key={`block-${i}`}
+          ref={(node) => {
+            blocks.current[i] = node;
+          }}
+          rotation={[0.2, 0.35, 0.02]}
+        >
+          <boxGeometry args={[0.44, 0.18, 0.06]} />
+          <meshStandardMaterial {...mats.wireProps} />
+        </mesh>
+      ))}
+      <mesh rotation={[0.2, 0.35, 0.02]} position={[0, 0.06, -0.15]} scale={[1.02, 1.02, 1.02]}>
+        <boxGeometry args={[1.55, 0.02, 1.05]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+    </>
+  );
+}
+
+function EditorialGovernanceScene({
+  variant,
+  mats,
+  reducedMotion,
+}: {
+  variant: Variant;
+  mats: ReturnType<typeof materialSet>;
+  reducedMotion: boolean;
+}) {
+  const railA = useRef<THREE.Mesh>(null);
+  const railB = useRef<THREE.Mesh>(null);
+  const railC = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (reducedMotion) return;
+    const phase = state.clock.getElapsedTime() * OMEGA;
+    const t = Math.sin(phase) * 0.08;
+    if (railA.current) railA.current.position.x = t;
+    if (railB.current) railB.current.position.y = -t;
+    if (railC.current) railC.current.position.x = -t;
+  });
+
+  return (
+    <>
+      {/* Boundary frame */}
+      <mesh rotation={variant.tilt}>
+        <boxGeometry args={[1.65, 1.2, 1.25]} />
+        <meshStandardMaterial {...mats.wireProps} />
+      </mesh>
+
+      {/* Internal constraints / guide rails */}
+      <mesh ref={railA} rotation={[0, 0.25, 0]} position={[0, 0.15, 0.02]}>
+        <boxGeometry args={[1.2, 0.02, 0.9]} />
+        <meshStandardMaterial {...mats.accentProps} />
+      </mesh>
+      <mesh ref={railB} rotation={[0, -0.18, 0]} position={[0, -0.1, -0.02]}>
+        <boxGeometry args={[1.05, 0.02, 0.8]} />
+        <meshStandardMaterial {...mats.accentProps} />
+      </mesh>
+      <mesh ref={railC} rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+        <torusGeometry args={[0.78, 0.012, 12, 92]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+    </>
+  );
+}
+
+function SeoAeoScene({
+  mats,
+  reducedMotion,
+}: {
+  variant: Variant;
+  mats: ReturnType<typeof materialSet>;
+  reducedMotion: boolean;
+}) {
+  const core = useRef<THREE.Mesh>(null);
+  const coreMaterial = useRef<THREE.MeshStandardMaterial>(null);
+
+  const nodes = useMemo(
+    () =>
+      [
+        [1.0, 0.15, 0.0],
+        [0.35, 0.92, 0.08],
+        [-0.55, 0.7, -0.06],
+        [-1.0, -0.1, 0.0],
+        [-0.35, -0.92, 0.05],
+        [0.6, -0.68, -0.08],
+      ] as Array<[number, number, number]>,
+    [],
+  );
+
+  useFrame((state) => {
+    if (reducedMotion) return;
+    const phase = state.clock.getElapsedTime() * OMEGA;
+    const pulse = 0.5 + 0.5 * Math.sin(phase);
+    if (core.current) core.current.scale.setScalar(1 + pulse * 0.06);
+    if (coreMaterial.current) coreMaterial.current.emissiveIntensity = 0.08 + pulse * 0.18;
+  });
+
+  return (
+    <>
+      {/* Central node */}
+      <mesh ref={core}>
+        <sphereGeometry args={[0.22, 20, 20]} />
+        <meshStandardMaterial ref={coreMaterial} {...mats.accentProps} />
+      </mesh>
+
+      {/* Branching connections */}
+      {nodes.map((pos) => (
+        <group key={pos.join(",")}>
+          <Link from={[0, 0, 0]} to={pos} radius={0.02} color="#EAEAEA" />
+          <mesh position={pos}>
+            <sphereGeometry args={[0.085, 16, 16]} />
+            <meshStandardMaterial {...mats.wireProps} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Discovery boundary ring */}
+      <mesh rotation={[Math.PI / 2, 0.1, 0]}>
+        <torusGeometry args={[1.18, 0.015, 12, 110]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+    </>
+  );
+}
+
+function IntegratedCampaignsScene({
+  mats,
+  reducedMotion,
+}: {
+  variant: Variant;
+  mats: ReturnType<typeof materialSet>;
+  reducedMotion: boolean;
+}) {
+  const orbiters = useRef<Array<THREE.Mesh | null>>([]);
+
+  useFrame((state) => {
+    if (reducedMotion) return;
+    const t = state.clock.getElapsedTime();
+    const phase = t * OMEGA;
+
+    const a = phase;
+    const b = phase + TAU / 3;
+    const c = phase + (TAU * 2) / 3;
+
+    const r1 = 1.0;
+    const r2 = 0.82;
+    const r3 = 0.92;
+
+    const p1: [number, number, number] = [Math.cos(a) * r1, Math.sin(a) * r1 * 0.35, Math.sin(a) * 0.18];
+    const p2: [number, number, number] = [Math.cos(b) * r2 * 0.55, Math.sin(b) * r2, Math.cos(b) * 0.12];
+    const p3: [number, number, number] = [Math.sin(c) * r3, Math.cos(c) * r3 * 0.55, Math.sin(c) * 0.12];
+
+    const positions = [p1, p2, p3];
+    for (let i = 0; i < orbiters.current.length; i++) {
+      const mesh = orbiters.current[i];
+      if (!mesh) continue;
+      const p = positions[i]!;
+      mesh.position.set(p[0], p[1], p[2]);
+    }
+  });
+
+  return (
+    <>
+      {/* Shared center */}
+      <mesh>
+        <dodecahedronGeometry args={[0.42, 0]} />
+        <meshStandardMaterial {...mats.wireProps} />
+      </mesh>
+
+      {/* Orbital paths */}
+      <mesh rotation={[Math.PI / 2, 0.15, 0]}>
+        <torusGeometry args={[1.0, 0.012, 12, 120]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+      <mesh rotation={[0.25, Math.PI / 2, 0.1]}>
+        <torusGeometry args={[0.82, 0.012, 12, 120]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+      <mesh rotation={[0.15, 0.2, Math.PI / 2]}>
+        <torusGeometry args={[0.92, 0.012, 12, 120]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+
+      {/* Orbiting channel nodes */}
+      {[0, 1, 2].map((i) => (
+        <mesh
+          key={`orbiter-${i}`}
+          ref={(node) => {
+            orbiters.current[i] = node;
+          }}
+        >
+          <sphereGeometry args={[0.085, 16, 16]} />
+          <meshStandardMaterial {...mats.accentProps} />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
+function PerformanceMarketingScene({
+  variant,
+  mats,
+  reducedMotion,
+}: {
+  variant: Variant;
+  mats: ReturnType<typeof materialSet>;
+  reducedMotion: boolean;
+}) {
+  const layers = useRef<Array<THREE.Mesh | null>>([]);
+  const base = useMemo(
+    () => [
+      { key: "layer-1", y: -0.55, z: 0.05, w: 1.55 },
+      { key: "layer-2", y: -0.28, z: 0.02, w: 1.35 },
+      { key: "layer-3", y: -0.02, z: -0.01, w: 1.15 },
+      { key: "layer-4", y: 0.26, z: -0.04, w: 0.95 },
+    ],
+    [],
+  );
+
+  useFrame((state) => {
+    if (reducedMotion) return;
+    const phase = state.clock.getElapsedTime() * OMEGA;
+    const drift = Math.sin(phase) * 0.06;
+    for (let i = 0; i < layers.current.length; i++) {
+      const mesh = layers.current[i];
+      if (!mesh) continue;
+      mesh.position.y = base[i]!.y + drift * (i + 1) * 0.35;
+    }
+  });
+
+  return (
+    <>
+      {base.map((layer, i) => (
+        <mesh
+          key={layer.key}
+          ref={(node) => {
+            layers.current[i] = node;
+          }}
+          rotation={[variant.tilt[0] + 0.18, variant.tilt[1] + 0.25, 0]}
+          position={[0, layer.y, layer.z]}
+        >
+          <boxGeometry args={[layer.w, 0.06, 0.9]} />
+          <meshStandardMaterial {...mats.wireProps} />
+        </mesh>
+      ))}
+
+      <mesh rotation={[variant.tilt[0] + 0.18, variant.tilt[1] + 0.25, 0]} position={[0, -0.62, 0.1]}>
+        <boxGeometry args={[1.7, 0.02, 1.05]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+    </>
+  );
+}
+
+function SubjectMatterExpertiseScene({
+  mats,
+  reducedMotion,
+}: {
+  variant: Variant;
+  mats: ReturnType<typeof materialSet>;
+  reducedMotion: boolean;
+}) {
+  const shellA = useRef<THREE.Mesh>(null);
+  const shellB = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (reducedMotion) return;
+    const phase = state.clock.getElapsedTime() * OMEGA;
+    if (shellA.current) shellA.current.rotation.y = Math.sin(phase) * 0.22;
+    if (shellB.current) shellB.current.rotation.y = Math.sin(phase + 1.1) * -0.18;
+  });
+
+  return (
+    <>
+      {/* Core */}
+      <mesh>
+        <icosahedronGeometry args={[0.5, 0]} />
+        <meshStandardMaterial
+          color={mats.wireProps.color}
+          emissive={mats.wireProps.emissive}
+          emissiveIntensity={0.08}
+          roughness={0.35}
+          metalness={0.35}
+        />
+      </mesh>
+
+      {/* Validation layers / shells */}
+      <mesh ref={shellA}>
+        <sphereGeometry args={[0.78, 24, 24]} />
+        <meshStandardMaterial {...mats.softProps} opacity={0.06} />
+      </mesh>
+      <mesh ref={shellB} rotation={[0.2, 0.2, 0.1]}>
+        <sphereGeometry args={[1.02, 24, 24]} />
+        <meshStandardMaterial {...mats.softProps} opacity={0.04} />
+      </mesh>
+
+      <mesh rotation={[Math.PI / 2, 0.15, 0]}>
+        <torusGeometry args={[0.95, 0.012, 12, 110]} />
+        <meshStandardMaterial {...mats.wireProps} />
+      </mesh>
+    </>
+  );
+}
+
+function CrossFunctionalCollaborationScene({
+  mats,
+  reducedMotion,
+}: {
+  variant: Variant;
+  mats: ReturnType<typeof materialSet>;
+  reducedMotion: boolean;
+}) {
+  const ringA = useRef<THREE.Mesh>(null);
+  const ringB = useRef<THREE.Mesh>(null);
+  const ringC = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (reducedMotion) return;
+    const phase = state.clock.getElapsedTime() * OMEGA;
+    const bob = Math.sin(phase) * 0.04;
+    if (ringA.current) ringA.current.position.y = bob;
+    if (ringB.current) ringB.current.position.y = -bob;
+    if (ringC.current) ringC.current.position.x = bob;
+  });
+
+  return (
+    <>
+      {/* Interlocking components (balanced; no single "hero" part) */}
+      <mesh ref={ringA} rotation={[Math.PI / 2, 0.2, 0]} position={[-0.25, 0, 0]}>
+        <torusGeometry args={[0.62, 0.06, 18, 90]} />
+        <meshStandardMaterial {...mats.wireProps} />
+      </mesh>
+      <mesh ref={ringB} rotation={[0.2, Math.PI / 2, 0.15]} position={[0.25, 0, 0]}>
+        <torusGeometry args={[0.62, 0.06, 18, 90]} />
+        <meshStandardMaterial {...mats.wireProps} />
+      </mesh>
+      <mesh ref={ringC} rotation={[0.15, 0.35, Math.PI / 2]} position={[0, 0.05, 0]}>
+        <torusGeometry args={[0.62, 0.06, 18, 90]} />
+        <meshStandardMaterial {...mats.wireProps} />
+      </mesh>
+
+      {/* Subtle connective rails */}
+      <mesh rotation={[0.2, 0.35, 0]} position={[0, -0.55, 0.0]}>
+        <boxGeometry args={[1.3, 0.02, 0.6]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+      <mesh rotation={[0.2, 0.35, 0]} position={[0, 0.55, 0.0]}>
+        <boxGeometry args={[1.1, 0.02, 0.5]} />
+        <meshStandardMaterial {...mats.softProps} />
+      </mesh>
+    </>
   );
 }
 
@@ -440,7 +703,7 @@ export function CoreSkillViz({ id, className }: CoreSkillVizProps) {
         <directionalLight position={[2.8, 3.2, 2.6]} intensity={0.9} />
         <directionalLight position={[-2.8, -1.2, 2.2]} intensity={0.45} />
         <group>
-          <Geometry id={id} variant={variant} />
+          <Geometry id={id} variant={variant} reducedMotion={reducedMotion} />
         </group>
       </Canvas>
     </div>
