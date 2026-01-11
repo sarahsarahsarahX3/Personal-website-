@@ -110,10 +110,10 @@ function CollaborationIcon() {
 
 export function BioSection() {
   return (
-    <section aria-labelledby="home-bio-title" className="py-24 md:py-32 lg:py-36">
+    <section aria-labelledby="home-bio-title" className="py-28 md:py-36 lg:py-40">
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
-          <figure className="col-span-8 sm:col-span-6 md:col-span-4 md:col-start-2">
+          <figure className="col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block">
             <div className="relative aspect-[4/5] w-full max-w-[320px]">
               <Image
                 src="/images/IMG_5668_edited.jpg"
@@ -127,7 +127,7 @@ export function BioSection() {
           </figure>
 
           <div className="col-span-12 md:col-span-7 md:col-start-6">
-            <div className="relative max-w-[60ch]">
+            <div className="relative max-w-[60ch] mx-auto text-center md:mx-0 md:text-left">
               <div aria-hidden="true" className="hidden md:block absolute -left-10 top-3 h-px w-10 bg-white/10" />
               <h2 id="home-bio-title" className="sr-only">
                 About
@@ -136,12 +136,12 @@ export function BioSection() {
                 Hi, I’m Sarah Dawson.
               </p>
               <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
-                I specialize in creating marketing-driven content that strengthens brand voice, grows audiences, and performs across channels.
+                I specialize in creating marketing-led content that strengthens brand voice, grows audiences, and performs across channels.
               </p>
 
               <ul
                 aria-label="Highlights"
-                className="mt-12 grid grid-cols-2 gap-x-10 gap-y-12"
+                className="mt-12 grid grid-cols-2 gap-x-10 gap-y-12 justify-items-center md:justify-items-start"
               >
                 <li className="flex items-start gap-4 text-text-secondary">
                   <YearsIcon />
