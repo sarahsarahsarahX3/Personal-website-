@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function BioSection() {
   return (
-    <section aria-labelledby="home-bio-title" className="py-16 md:py-20">
+    <section aria-labelledby="home-bio-title" className="py-20 md:py-28">
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start">
           <figure className="col-span-8 sm:col-span-6 md:col-span-4 md:col-start-2 md:translate-y-6">
@@ -27,10 +27,10 @@ export function BioSection() {
                 About
               </h2>
               <p className="text-xl md:text-2xl leading-snug tracking-tight text-text-primary">
-                I’m Sarah Dawson, a marketing strategist who builds content and campaign systems that earn attention.
+                Hi, I’m Sarah Dawson.
               </p>
               <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
-                I lead editorial and SEO + AEO strategy, shaping copy and messaging that move audiences from discovery to action.
+                I lead marketing-driven content that strengthens brand voice, grows audiences, and performs across channels.
               </p>
             </div>
           </div>
@@ -39,4 +39,3 @@ export function BioSection() {
     </section>
   );
 }
-
