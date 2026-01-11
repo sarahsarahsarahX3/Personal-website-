@@ -71,9 +71,6 @@ export function BrandsSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2 className="text-4xl md:text-5xl font-display">Working With Industry Leaders</h2>
-          <p className="mt-4 text-text-secondary text-lg text-balance">
-            A selection of brands and platforms I’ve supported across entertainment, beauty, and retail.
-          </p>
         </motion.header>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

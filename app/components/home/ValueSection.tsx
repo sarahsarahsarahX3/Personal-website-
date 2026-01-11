@@ -93,9 +93,6 @@ export function ValueSection() {
         >
           <div className="max-w-3xl">
             <h2 className="text-4xl md:text-5xl font-display">Where I Create Value</h2>
-            <p className="mt-4 text-text-secondary text-lg text-balance">
-              Core competencies that translate creative ideas into measurable growth.
-            </p>
           </div>
           <div aria-hidden="true" />
         </motion.header>
