@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
 import { Ticker } from "@/app/components/ui/Ticker";
 import { Constellation } from "@/app/components/home/Constellation";
-import { SignalMeter } from "@/app/components/home/SignalMeter";
 
 export function Hero() {
     const [isHovered, setIsHovered] = useState(false);
@@ -84,9 +83,6 @@ export function Hero() {
                                 <span className="flex items-center gap-2 text-white">
                                     Scroll to explore <ArrowDownRight size={14} />
                                 </span>
-                                <div className="mt-6 pointer-events-auto">
-                                    <SignalMeter />
-                                </div>
                             </div>
                         </motion.div>
                     </div>
