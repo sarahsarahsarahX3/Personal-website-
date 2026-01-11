@@ -4,9 +4,10 @@ import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { cn } from "@/app/lib/utils";
 import styles from "./CoreSkillsSection.module.css";
+import { CoreSkillViz, type CoreSkillVizId } from "@/app/components/home/CoreSkillViz";
 
 type ValueArea = {
-  id: string;
+  id: CoreSkillVizId;
   index: string;
   title: string;
   description: string;
@@ -107,7 +108,7 @@ export function CoreSkillsSection() {
           </h2>
         </header>
 
-        <div className="mt-12 grid gap-10 md:grid-cols-[340px_1fr] md:gap-14">
+        <div className="mt-12 grid gap-10 md:grid-cols-[340px_minmax(0,708px)] md:gap-14">
           {/* Left column: value areas */}
           <div className="md:sticky md:top-28 self-start">
             <div
@@ -187,16 +188,23 @@ export function CoreSkillsSection() {
               id="value-detail-panel"
               role="tabpanel"
               aria-labelledby={`value-tab-${activeArea.id}`}
-              className="rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm p-7 md:p-8"
+              className="rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm p-7 md:p-8 md:h-[521px]"
             >
-              <div key={activeArea.id} className={styles.detailInner}>
+              <div key={activeArea.id} className={cn("flex h-full flex-col", styles.detailInner)}>
                 <div className="font-mono text-xs tracking-widest text-text-secondary/70">{activeArea.index}</div>
                 <h3 className="mt-3 text-2xl md:text-[28px] font-display tracking-tight">
                   {activeArea.title}
                 </h3>
+
                 <p className="mt-6 text-base leading-relaxed text-text-secondary max-w-2xl">
                   {activeArea.description}
                 </p>
+
+                <div className="mt-auto pt-8">
+                  <div className="h-[220px] md:h-[260px] rounded-xl border border-white/10 overflow-hidden">
+                    <CoreSkillViz id={activeArea.id} />
+                  </div>
+                </div>
               </div>
             </div>
 
