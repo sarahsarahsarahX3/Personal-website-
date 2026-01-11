@@ -34,7 +34,7 @@ export function Hero() {
 
                     <div className="relative inline-block">
                         <h1
-                            className="text-[12vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
+                            className="text-[11vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
                         >
