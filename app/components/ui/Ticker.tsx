@@ -14,7 +14,7 @@ export function Ticker({ items, direction = "left", speed = 20, className }: Tic
     return (
         <div className={cn("relative flex overflow-hidden whitespace-nowrap mask-gradient-x", className)}>
             <motion.div
-                className="flex gap-16 py-4"
+                className="flex items-center py-4"
                 animate={{ x: direction === "left" ? "-50%" : "50%" }}
                 transition={{
                     repeat: Infinity,
@@ -23,7 +23,10 @@ export function Ticker({ items, direction = "left", speed = 20, className }: Tic
                 }}
             >
                 {[...items, ...items, ...items, ...items].map((item, i) => ( // Repeat 4x to ensure smooth loop
-                    <span key={i} className="text-sm font-light tracking-widest uppercase text-text-secondary/60">
+                    <span
+                        key={i}
+                        className="text-sm font-light tracking-widest uppercase text-text-secondary/60 px-6 after:inline-block after:align-middle after:ml-6 after:content-['•'] after:text-text-secondary/25"
+                    >
                         {item}
                     </span>
                 ))}
