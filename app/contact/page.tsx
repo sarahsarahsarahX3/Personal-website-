@@ -31,7 +31,7 @@ export default function ContactPage() {
                     <motion.h1
                         initial={{ y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        className="text-5xl md:text-8xl lg:text-9xl font-display leading-none hover:text-white/80 transition-colors"
+                        className="text-4xl md:text-7xl lg:text-8xl font-display leading-none hover:text-white/80 transition-colors"
                     >
                         {localPart}@
                         <br />
