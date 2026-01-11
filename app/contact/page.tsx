@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, ArrowUpRight } from "lucide-react";
+import { cn } from "@/app/lib/utils";
 
 export default function ContactPage() {
     const [copied, setCopied] = useState(false);
@@ -35,7 +36,12 @@ export default function ContactPage() {
                 </motion.p>
 
                 <div
-                    className="relative group cursor-pointer rounded-2xl border border-transparent focus-within:border-white/10"
+                    className={cn(
+                        "relative group cursor-pointer rounded-3xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm",
+                        "p-6 md:p-10",
+                        "transition-colors duration-200 hover:border-white/15 hover:bg-surface-alt/15",
+                        "focus-within:border-white/15",
+                    )}
                     role="button"
                     tabIndex={0}
                     onClick={handleCopy}
@@ -50,7 +56,7 @@ export default function ContactPage() {
                     <motion.h1
                         initial={{ y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        className="pr-14 md:pr-0 text-4xl md:text-7xl lg:text-8xl font-display leading-[0.95] tracking-tight hover:text-white/85 transition-colors"
+                        className="pr-14 text-4xl md:text-7xl lg:text-8xl font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
                     >
                         {localPart}@
                         <br />
@@ -66,7 +72,13 @@ export default function ContactPage() {
                             handleCopy();
                         }}
                         aria-label={copied ? "Copied" : "Copy email"}
-                        className="absolute top-3 right-3 md:top-1/2 md:left-full md:right-auto md:ml-6 md:-translate-y-1/2 p-3 rounded-full border border-white/10 bg-surface/40 backdrop-blur-md opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                        className={cn(
+                            "absolute top-4 right-4 md:top-6 md:right-6",
+                            "p-3 rounded-full border border-white/10 bg-surface/50 backdrop-blur-md",
+                            "opacity-100 transition-colors",
+                            "hover:border-white/15 hover:bg-surface/70",
+                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                        )}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                     >
@@ -92,13 +104,11 @@ export default function ContactPage() {
                             )}
                         </AnimatePresence>
                     </motion.button>
+
+                    <div className="mt-8 md:mt-10 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                 </div>
 
-                <div className="mt-16 md:mt-20">
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                </div>
-
-                <div className="mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <div className="mt-10 md:mt-12">
                     {[{ label: "LinkedIn", href: "https://www.linkedin.com/in/sarah-dawsone/" }].map((social, i) => (
                         <motion.a
                             key={social.label}
@@ -108,9 +118,17 @@ export default function ContactPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 + (i * 0.1) }}
-                            className="text-base md:text-lg text-text-secondary hover:text-accent transition-colors block border-t border-white/10 pt-4"
+                            className={cn(
+                                "inline-flex items-center justify-between gap-4",
+                                "w-full max-w-sm",
+                                "rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4",
+                                "text-base md:text-lg text-text-secondary transition-colors",
+                                "hover:text-text-primary hover:border-white/15 hover:bg-surface-alt/15",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                            )}
                         >
-                            {social.label}
+                            <span>{social.label}</span>
+                            <ArrowUpRight className="h-4 w-4 text-text-secondary/70" />
                         </motion.a>
                     ))}
                 </div>
