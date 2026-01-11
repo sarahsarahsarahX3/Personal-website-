@@ -143,7 +143,7 @@ export function BioSection() {
                 aria-label="Highlights"
                 className="mt-12 grid grid-cols-2 gap-x-10 gap-y-12 justify-items-center md:justify-items-start"
               >
-                <li className="flex items-start gap-4 text-text-secondary">
+                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
                   <YearsIcon />
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">7+</div>
@@ -153,7 +153,7 @@ export function BioSection() {
                   </div>
                 </li>
 
-                <li className="flex items-start gap-4 text-text-secondary">
+                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
                   <BrandsIcon />
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">3</div>
@@ -163,7 +163,7 @@ export function BioSection() {
                   </div>
                 </li>
 
-                <li className="flex items-start gap-4 text-text-secondary">
+                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
                   <ViewsIcon />
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">15M+</div>
@@ -171,7 +171,7 @@ export function BioSection() {
                   </div>
                 </li>
 
-                <li className="flex items-start gap-4 text-text-secondary">
+                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
                   <CollaborationIcon />
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">50+</div>
