@@ -6,7 +6,9 @@ import { Copy, Check } from "lucide-react";
 
 export default function ContactPage() {
     const [copied, setCopied] = useState(false);
-    const email = "hello@sarah-dawson.com";
+    const email = "dawsone.sarah@gmail.com";
+    const [localPart, domain] = email.split("@");
+    const [domainName, domainTld] = domain?.split(".") ?? ["", ""];
 
     const handleCopy = () => {
         navigator.clipboard.writeText(email);
@@ -22,7 +24,7 @@ export default function ContactPage() {
                     animate={{ opacity: 1 }}
                     className="text-text-secondary text-lg uppercase tracking-widest mb-8"
                 >
-                    Let's start a conversation
+                    LET’S CONNECT
                 </motion.p>
 
                 <div className="relative group cursor-pointer" onClick={handleCopy}>
@@ -31,11 +33,11 @@ export default function ContactPage() {
                         animate={{ y: 0, opacity: 1 }}
                         className="text-5xl md:text-8xl lg:text-9xl font-display leading-none hover:text-white/80 transition-colors"
                     >
-                        hello@
+                        {localPart}@
                         <br />
-                        sarah-dawson
+                        {domainName}
                         <br />
-                        .com
+                        .{domainTld}
                     </motion.h1>
 
                     <motion.div
@@ -68,16 +70,18 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
-                    {["LinkedIn", "Twitter", "Instagram", "Dribbble"].map((social, i) => (
+                    {[{ label: "LinkedIn", href: "https://www.linkedin.com/in/sarah-dawsone/" }].map((social, i) => (
                         <motion.a
-                            key={social}
-                            href="#"
+                            key={social.label}
+                            href={social.href}
+                            target="_blank"
+                            rel="noreferrer"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 + (i * 0.1) }}
                             className="text-lg text-text-secondary hover:text-accent transition-colors block border-t border-white/10 pt-4"
                         >
-                            {social}
+                            {social.label}
                         </motion.a>
                     ))}
                 </div>
