@@ -132,7 +132,6 @@ export function BioSection() {
 
           <div className="col-span-12 md:col-span-7 md:col-start-6">
             <div className="relative max-w-[60ch] mx-auto text-center md:mx-0 md:text-left">
-              <div aria-hidden="true" className="hidden md:block absolute -left-10 top-3 h-px w-10 bg-white/10" />
               <h2 id="home-bio-title" className="sr-only">
                 About
               </h2>

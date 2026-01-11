@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { cn } from "@/app/lib/utils";
 import styles from "./CoreSkillsSection.module.css";
@@ -67,9 +67,25 @@ const valueAreas: ValueArea[] = [
 export function CoreSkillsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [openIndex, setOpenIndex] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
 
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const scrollTimeout = useRef<number | null>(null);
   const activeArea = useMemo(() => valueAreas[activeIndex] ?? valueAreas[0]!, [activeIndex]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolling(true);
+      if (scrollTimeout.current) window.clearTimeout(scrollTimeout.current);
+      scrollTimeout.current = window.setTimeout(() => setIsScrolling(false), 140);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (scrollTimeout.current) window.clearTimeout(scrollTimeout.current);
+    };
+  }, []);
 
   const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     const count = valueAreas.length;
@@ -190,7 +206,7 @@ export function CoreSkillsSection() {
               role="tablist"
               aria-label="Core Competencies"
               aria-orientation="vertical"
-              className="hidden md:block rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm"
+              className="hidden md:block rounded-2xl border border-white/10 bg-surface-alt/10"
             >
               <ul role="list" className="divide-y divide-white/10">
                 {valueAreas.map((area, index) => {
@@ -211,7 +227,10 @@ export function CoreSkillsSection() {
                         tabIndex={isActive ? 0 : -1}
                         onKeyDown={onTabKeyDown}
                         onFocus={() => setActiveIndex(index)}
-                        onMouseEnter={() => setActiveIndex(index)}
+                        onMouseEnter={() => {
+                          if (isScrolling) return;
+                          setActiveIndex(index);
+                        }}
                         onClick={() => setActiveIndex(index)}
                         className={cn(
                           "group w-full text-left px-6 py-5",
@@ -263,7 +282,7 @@ export function CoreSkillsSection() {
               id="value-detail-panel"
               role="tabpanel"
               aria-labelledby={`value-tab-${activeArea.id}`}
-              className="rounded-2xl border border-white/10 bg-surface-alt/10 backdrop-blur-sm p-7 md:p-8 md:h-[521px]"
+              className="rounded-2xl border border-white/10 bg-surface-alt/10 p-7 md:p-8 md:h-[521px]"
             >
               <div key={activeArea.id} className={cn("flex h-full flex-col", styles.detailInner)}>
                 <div className="font-mono text-xs tracking-widest text-text-secondary/70">{activeArea.index}</div>

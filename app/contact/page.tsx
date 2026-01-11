@@ -8,7 +8,6 @@ import { cn } from "@/app/lib/utils";
 export default function ContactPage() {
     const [copied, setCopied] = useState(false);
     const email = "dawsone.sarah@gmail.com";
-    const [localPart, domain] = email.split("@");
 
     const handleCopy = () => {
         navigator.clipboard.writeText(email);
@@ -55,11 +54,9 @@ export default function ContactPage() {
                     <motion.h1
                         initial={{ y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        className="text-4xl md:text-7xl lg:text-8xl md:pr-14 font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
+                        className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl md:pr-14 whitespace-nowrap font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
                     >
-                        {localPart}@
-                        <br />
-                        <span className="whitespace-nowrap">{domain}</span>
+                        {email}
                     </motion.h1>
 
                     <motion.button
