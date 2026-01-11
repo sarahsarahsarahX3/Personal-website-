@@ -27,11 +27,23 @@ export default function ContactPage() {
                     LET’S CONNECT
                 </motion.p>
 
-                <div className="relative group cursor-pointer" onClick={handleCopy}>
+                <div
+                    className="relative group cursor-pointer"
+                    role="button"
+                    tabIndex={0}
+                    onClick={handleCopy}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            handleCopy();
+                        }
+                    }}
+                    aria-label="Copy email address"
+                >
                     <motion.h1
                         initial={{ y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        className="text-4xl md:text-7xl lg:text-8xl font-display leading-none hover:text-white/80 transition-colors"
+                        className="pr-14 md:pr-0 text-4xl md:text-7xl lg:text-8xl font-display leading-none hover:text-white/80 transition-colors"
                     >
                         {localPart}@
                         <br />
@@ -40,8 +52,14 @@ export default function ContactPage() {
                         .{domainTld}
                     </motion.h1>
 
-                    <motion.div
-                        className="absolute top-0 right-0 md:top-1/2 md:-right-20 p-4 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md"
+                    <motion.button
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopy();
+                        }}
+                        aria-label={copied ? "Copied" : "Copy email"}
+                        className="absolute top-2 right-2 md:top-1/2 md:left-full md:right-auto md:ml-6 md:-translate-y-1/2 p-3 rounded-full bg-white/10 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity backdrop-blur-md"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                     >
@@ -66,7 +84,7 @@ export default function ContactPage() {
                                 </motion.div>
                             )}
                         </AnimatePresence>
-                    </motion.div>
+                    </motion.button>
                 </div>
 
                 <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
