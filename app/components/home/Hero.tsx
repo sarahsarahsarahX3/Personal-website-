@@ -19,20 +19,20 @@ export function Hero() {
             <Constellation className="opacity-50" particleCount={60} connectDistance={85} mouseRadius={170} />
 
             {/* Main Content */}
-            <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center">
-                <motion.div style={{ y, opacity }} className="space-y-4">
+            <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center">
+                <motion.div style={{ y, opacity }} className="space-y-6 max-w-4xl">
                     <div className="overflow-hidden">
                         <motion.p
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
                             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                            className="text-text-secondary text-lg md:text-xl font-light tracking-wide mb-4"
+                            className="text-text-secondary text-lg md:text-xl font-light tracking-wide"
                         >
                             Sarah Dawson
                         </motion.p>
                     </div>
 
-                    <div className="relative">
+                    <div className="relative inline-block">
                         <h1
                             className="text-[12vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
                             onMouseEnter={() => setIsHovered(true)}
@@ -54,7 +54,7 @@ export function Hero() {
                                         initial={{ scaleX: 0 }}
                                         animate={{ scaleX: isHovered ? 1 : 0 }}
                                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                        className="absolute inset-0 bg-accent z-0 origin-left"
+                                        className="absolute inset-0 bg-white/5 z-0 origin-left"
                                     >
                                         <video
                                             className="w-full h-full object-cover opacity-60 mix-blend-multiply grayscale"
@@ -69,23 +69,19 @@ export function Hero() {
                                 </motion.span>
                             </span>
                         </h1>
-
-                        {/* Decor element */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 1, duration: 1 }}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:block"
-                        >
-                            <div className="w-64 text-sm text-text-secondary text-balance">
-                                Strategy. Storytelling. Growth.
-                                <br /><br />
-                                <span className="flex items-center gap-2 text-white">
-                                    Scroll to explore <ArrowDownRight size={14} />
-                                </span>
-                            </div>
-                        </motion.div>
                     </div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1, duration: 1 }}
+                        className="text-text-secondary text-lg md:text-xl text-balance"
+                    >
+                        Strategy. Storytelling. Growth.
+                        <div className="mt-6 flex items-center justify-center gap-2 text-white text-sm">
+                            <span>Scroll to explore</span> <ArrowDownRight size={14} />
+                        </div>
+                    </motion.div>
                 </motion.div>
             </div>
 
