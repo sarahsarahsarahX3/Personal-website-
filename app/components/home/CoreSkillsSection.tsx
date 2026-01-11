@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -73,9 +73,54 @@ const skills: Skill[] = [
   },
 ];
 
+type PreviewState = {
+  skill: Skill;
+  x: number;
+  y: number;
+  side: "left" | "right";
+};
+
 export function CoreSkillsSection() {
   const [activeKey, setActiveKey] = useState(skills[0]?.key ?? "");
   const active = useMemo(() => skills.find((s) => s.key === activeKey) ?? skills[0]!, [activeKey]);
+  const [preview, setPreview] = useState<PreviewState | null>(null);
+  const hidePreviewTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => setPreview(null);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const showPreview = (skill: Skill, target: HTMLElement) => {
+    if (hidePreviewTimeoutRef.current) {
+      window.clearTimeout(hidePreviewTimeoutRef.current);
+      hidePreviewTimeoutRef.current = null;
+    }
+
+    const rect = target.getBoundingClientRect();
+    const tooltipWidth = 280;
+    const tooltipHeight = 120;
+    const offset = 12;
+
+    let side: PreviewState["side"] = "right";
+    let x = rect.right + offset;
+    if (x + tooltipWidth > window.innerWidth - offset) {
+      side = "left";
+      x = rect.left - offset - tooltipWidth;
+    }
+
+    const y = Math.min(
+      window.innerHeight - offset - tooltipHeight / 2,
+      Math.max(offset + tooltipHeight / 2, rect.top + rect.height / 2),
+    );
+
+    setPreview({ skill, x, y, side });
+  };
+
+  const hidePreview = () => {
+    hidePreviewTimeoutRef.current = window.setTimeout(() => setPreview(null), 60);
+  };
 
   return (
     <div className="relative py-28 overflow-hidden">
@@ -141,8 +186,16 @@ export function CoreSkillsSection() {
                   <motion.button
                     key={skill.key}
                     type="button"
-                    onMouseEnter={() => setActiveKey(skill.key)}
-                    onFocus={() => setActiveKey(skill.key)}
+                    onMouseEnter={(e) => {
+                      setActiveKey(skill.key);
+                      showPreview(skill, e.currentTarget);
+                    }}
+                    onMouseLeave={hidePreview}
+                    onFocus={(e) => {
+                      setActiveKey(skill.key);
+                      showPreview(skill, e.currentTarget);
+                    }}
+                    onBlur={hidePreview}
                     onClick={() => setActiveKey(skill.key)}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -181,6 +234,41 @@ export function CoreSkillsSection() {
 
         <div className="h-10" />
       </div>
+
+      {/* Floating skill preview */}
+      {preview ? (
+        <motion.div
+          key={preview.skill.key}
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed z-50 w-[280px] pointer-events-none"
+          style={{
+            left: preview.x,
+            top: preview.y,
+            y: "-50%",
+          }}
+        >
+          <div className="rounded-xl border border-white/12 bg-surface/85 backdrop-blur-md shadow-2xl shadow-black/50 p-4">
+            <div className="flex items-start justify-between gap-4">
+              <div className="text-sm font-medium tracking-tight">{preview.skill.name}</div>
+              <span className="font-mono text-[10px] tracking-widest text-text-secondary/70 uppercase">
+                Preview
+              </span>
+            </div>
+            <div className="mt-2 text-sm text-text-secondary leading-relaxed">
+              {preview.skill.blurb}
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            className={cn(
+              "absolute top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border border-white/12 bg-surface/85",
+              preview.side === "right" ? "-left-1.5" : "-right-1.5",
+            )}
+          />
+        </motion.div>
+      ) : null}
     </div>
   );
 }
