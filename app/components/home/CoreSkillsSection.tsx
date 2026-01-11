@@ -101,10 +101,7 @@ export function CoreSkillsSection() {
         >
           <div className="flex items-end justify-between gap-8">
             <div>
-              <h2 className="text-4xl md:text-5xl font-display">Where I Create Value</h2>
-              <div className="mt-4 text-text-secondary text-lg text-balance">
-                Capabilities, refined.
-              </div>
+              <h2 className="text-3xl md:text-4xl font-display">Where I Create Value</h2>
             </div>
             <div className="hidden md:block font-mono text-xs tracking-widest uppercase text-text-secondary/60">
               Hover to explore
