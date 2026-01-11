@@ -20,7 +20,7 @@ export function Hero() {
 
             {/* Main Content */}
             <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center">
-                <motion.div style={{ y, opacity }} className="space-y-6 max-w-4xl">
+                <motion.div style={{ y, opacity }} className="w-full max-w-4xl space-y-6">
                     <div className="overflow-hidden">
                         <motion.p
                             initial={{ y: "100%" }}
@@ -32,9 +32,9 @@ export function Hero() {
                         </motion.p>
                     </div>
 
-                    <div className="relative inline-block">
+                    <div className="relative w-full">
                         <h1
-                            className="text-[11vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
+                            className="w-full text-center text-[11vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
                         >
