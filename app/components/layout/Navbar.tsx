@@ -53,16 +53,21 @@ export function Navbar() {
 
                             <span className="relative z-10 flex items-center gap-2">
                                 <Icon size={18} className={cn("transition-transform group-hover:scale-110", isActive && "text-surface")} />
-                                <span
-                                    className={cn(
-                                        "text-sm font-medium transition-colors duration-300",
-                                        // Avoid layout shift/jitter by keeping labels rendered on desktop.
-                                        "hidden md:inline-block",
-                                        isActive ? "text-surface" : "text-text-secondary group-hover:text-text-primary"
-                                    )}
-                                >
-                                    {item.name}
-                                </span>
+                                <span className="sr-only">{item.name}</span>
+                            </span>
+
+                            {/* Tooltip label (desktop) to avoid layout-shift jitter */}
+                            <span
+                                className={cn(
+                                    "pointer-events-none absolute bottom-full left-1/2 hidden -translate-x-1/2 md:block",
+                                    "mb-2 rounded-full border border-white/10 bg-surface/90 px-3 py-1.5 text-xs font-medium tracking-wide",
+                                    "text-text-primary shadow-xl shadow-black/40 backdrop-blur-md",
+                                    "opacity-0 scale-95 transition duration-200",
+                                    "group-hover:opacity-100 group-hover:scale-100",
+                                    "group-focus-visible:opacity-100 group-focus-visible:scale-100"
+                                )}
+                            >
+                                {item.name}
                             </span>
                         </Link>
                     );
