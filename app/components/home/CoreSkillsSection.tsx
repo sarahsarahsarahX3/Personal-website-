@@ -75,17 +75,35 @@ const skills: Skill[] = [
 
 type PreviewState = {
   skill: Skill;
-  side: "left" | "right";
+  placement: "top" | "bottom";
 };
 
 export function CoreSkillsSection() {
   const [activeKey, setActiveKey] = useState(skills[0]?.key ?? "");
   const [preview, setPreview] = useState<PreviewState | null>(null);
+  const [supportsHover, setSupportsHover] = useState(true);
   const hidePreviewTimeoutRef = useRef<number | null>(null);
   const previewX = useMotionValue(0);
   const previewY = useMotionValue(0);
   const previewXSpring = useSpring(previewX, { stiffness: 420, damping: 38, mass: 0.6 });
   const previewYSpring = useSpring(previewY, { stiffness: 420, damping: 38, mass: 0.6 });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia?.("(hover: hover) and (pointer: fine)");
+    if (!mediaQuery) return;
+
+    const update = () => setSupportsHover(mediaQuery.matches);
+    update();
+
+    if ("addEventListener" in mediaQuery) {
+      mediaQuery.addEventListener("change", update);
+      return () => mediaQuery.removeEventListener("change", update);
+    }
+
+    // Safari fallback
+    mediaQuery.addListener(update);
+    return () => mediaQuery.removeListener(update);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setPreview(null);
@@ -99,41 +117,58 @@ export function CoreSkillsSection() {
     };
   }, []);
 
-  const updatePreviewPosition = (target: HTMLElement, clientY?: number) => {
+  useEffect(() => {
+    if (!preview || supportsHover) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest("[data-core-skill]")) return;
+      setPreview(null);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [preview, supportsHover]);
+
+  const updatePreviewPosition = (target: HTMLElement) => {
     const rect = target.getBoundingClientRect();
     const tooltipWidth = 296;
     const tooltipHeight = 132;
     const offset = 12;
 
-    let side: PreviewState["side"] = "right";
-    let x = rect.right + offset;
-    if (x + tooltipWidth > window.innerWidth - offset) {
-      side = "left";
-      x = rect.left - offset - tooltipWidth;
-    }
+    const xMin = offset;
+    const xMax = window.innerWidth - offset - tooltipWidth;
+    const x = Math.min(xMax, Math.max(xMin, rect.left + rect.width / 2 - tooltipWidth / 2));
 
-    const anchorY = clientY ?? rect.top + rect.height / 2;
-    const y = Math.min(
-      window.innerHeight - offset - tooltipHeight / 2,
-      Math.max(offset + tooltipHeight / 2, anchorY),
-    );
+    const yMin = offset + tooltipHeight / 2;
+    const yMax = window.innerHeight - offset - tooltipHeight / 2;
+
+    const canPlaceTop = rect.top - offset - tooltipHeight >= offset;
+    const preferredCenterY = canPlaceTop
+      ? rect.top - offset - tooltipHeight / 2
+      : rect.bottom + offset + tooltipHeight / 2;
+    const y = Math.min(yMax, Math.max(yMin, preferredCenterY));
+
+    const placement: PreviewState["placement"] = canPlaceTop ? "top" : "bottom";
 
     previewX.set(x);
     previewY.set(y);
-    return side;
+    return placement;
   };
 
-  const showPreview = (skill: Skill, target: HTMLElement, clientY?: number) => {
+  const showPreview = (skill: Skill, target: HTMLElement) => {
     if (hidePreviewTimeoutRef.current) {
       window.clearTimeout(hidePreviewTimeoutRef.current);
       hidePreviewTimeoutRef.current = null;
     }
 
-    const side = updatePreviewPosition(target, clientY);
-    setPreview({ skill, side });
+    const placement = updatePreviewPosition(target);
+    setPreview({ skill, placement });
   };
 
   const hidePreview = () => {
+    if (!supportsHover) return;
     hidePreviewTimeoutRef.current = window.setTimeout(() => setPreview(null), 120);
   };
 
@@ -142,7 +177,7 @@ export function CoreSkillsSection() {
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-18%] top-[-25%] h-[520px] w-[520px] rounded-full bg-white/5 blur-3xl" />
         <div className="absolute right-[-18%] top-[10%] h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
-        <div className="absolute inset-0 opacity-[0.18] lg:opacity-[0.28] mix-blend-overlay [mask-image:radial-gradient(circle_at_50%_30%,black,transparent_72%)] lg:[mask-image:none] bg-[linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] bg-[size:38px_38px]" />
+        <div className="absolute inset-0 opacity-[0.20] lg:opacity-[0.26] bg-[linear-gradient(to_right,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.14)_1px,transparent_1px)] bg-[size:38px_38px]" />
       </div>
 
       <div className="container mx-auto px-6 relative">
@@ -170,14 +205,10 @@ export function CoreSkillsSection() {
                 <motion.button
                   key={skill.key}
                   type="button"
+                  data-core-skill
                   onMouseEnter={(e) => {
                     setActiveKey(skill.key);
-                    showPreview(skill, e.currentTarget, e.clientY);
-                  }}
-                  onMouseMove={(e) => {
-                    if (!preview || preview.skill.key !== skill.key) return;
-                    const side = updatePreviewPosition(e.currentTarget, e.clientY);
-                    if (side !== preview.side) setPreview({ ...preview, side });
+                    if (supportsHover) showPreview(skill, e.currentTarget);
                   }}
                   onMouseLeave={hidePreview}
                   onFocus={(e) => {
@@ -185,7 +216,15 @@ export function CoreSkillsSection() {
                     showPreview(skill, e.currentTarget);
                   }}
                   onBlur={hidePreview}
-                  onClick={() => setActiveKey(skill.key)}
+                  onClick={(e) => {
+                    setActiveKey(skill.key);
+                    if (supportsHover) return;
+                    if (preview?.skill.key === skill.key) {
+                      setPreview(null);
+                      return;
+                    }
+                    showPreview(skill, e.currentTarget);
+                  }}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
@@ -267,7 +306,8 @@ export function CoreSkillsSection() {
             aria-hidden="true"
             className={cn(
               "absolute top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border border-white/10 bg-surface/90",
-              preview.side === "right" ? "-left-1.5" : "-right-1.5",
+              "left-1/2 -translate-x-1/2",
+              preview.placement === "top" ? "-bottom-1.5" : "-top-1.5",
             )}
           />
         </motion.div>
