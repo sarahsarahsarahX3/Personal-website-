@@ -85,7 +85,7 @@ export function CoreSkillsSection() {
   const active = useMemo(() => skills.find((s) => s.key === activeKey) ?? skills[0]!, [activeKey]);
 
   return (
-    <div className="relative py-20 overflow-hidden">
+    <div className="relative py-28 overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-18%] top-[-25%] h-[520px] w-[520px] rounded-full bg-white/5 blur-3xl" />
         <div className="absolute right-[-18%] top-[10%] h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
@@ -101,7 +101,7 @@ export function CoreSkillsSection() {
         >
           <div className="flex items-end justify-between gap-8">
             <div>
-              <h2 className="text-4xl md:text-5xl font-display">Core Skills</h2>
+              <h2 className="text-4xl md:text-5xl font-display">Where I Create Value</h2>
               <div className="mt-4 text-text-secondary text-lg text-balance">
                 Capabilities, refined.
               </div>
@@ -111,11 +111,11 @@ export function CoreSkillsSection() {
             </div>
           </div>
 
-          <div className="mt-10 grid gap-8 lg:grid-cols-[22rem_1fr] lg:items-start">
+          <div className="mt-14 grid gap-8 lg:grid-cols-[22rem_1fr] lg:items-start">
             <div className="rounded-2xl border border-white/10 bg-surface/40 backdrop-blur-md p-6">
               <div className="flex items-center justify-between gap-4">
                 <div className="font-mono text-xs tracking-widest uppercase text-text-secondary/70">
-                  Active
+                  Core Skills
                 </div>
                 <div className="h-px flex-1 bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
               </div>
@@ -188,6 +188,8 @@ export function CoreSkillsSection() {
             </div>
           </div>
         </motion.header>
+
+        <div className="h-10" />
       </div>
     </div>
   );
