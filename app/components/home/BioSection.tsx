@@ -116,7 +116,7 @@ export function BioSection() {
           <figure className="col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block">
             <div className="relative aspect-[4/5] w-full max-w-[320px]">
               <Image
-                src="/images/IMG_5668_edited.jpg"
+                src="/images/IMG_8516_edited.jpg"
                 alt="Headshot of Sarah Dawson"
                 fill
                 sizes="(min-width: 768px) 320px, 70vw"
