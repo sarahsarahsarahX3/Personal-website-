@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -82,7 +82,6 @@ type PreviewState = {
 
 export function CoreSkillsSection() {
   const [activeKey, setActiveKey] = useState(skills[0]?.key ?? "");
-  const active = useMemo(() => skills.find((s) => s.key === activeKey) ?? skills[0]!, [activeKey]);
   const [preview, setPreview] = useState<PreviewState | null>(null);
   const hidePreviewTimeoutRef = useRef<number | null>(null);
 
@@ -146,89 +145,67 @@ export function CoreSkillsSection() {
             </div>
           </div>
 
-          <div className="mt-14 grid gap-8 lg:grid-cols-[22rem_1fr] lg:items-start">
-            <div className="rounded-2xl border border-white/10 bg-surface/40 backdrop-blur-md p-6">
-              <div className="flex items-center justify-between gap-4">
-                <div className="font-mono text-xs tracking-widest uppercase text-text-secondary/70">
-                  Core Skills
-                </div>
-                <div className="h-px flex-1 bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
-              </div>
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {skills.map((skill, index) => {
+              const isActive = skill.key === activeKey;
+              const Icon = skill.Icon;
 
-              <div className="mt-6 flex items-start gap-4">
-                <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5">
-                  <active.Icon className="h-5 w-5 text-accent/90" />
-                </div>
-                <div>
-                  <div className="text-xl font-medium tracking-tight">{active.name}</div>
-                  <div className="mt-2 text-text-secondary leading-relaxed">{active.blurb}</div>
-                </div>
-              </div>
+              return (
+                <motion.button
+                  key={skill.key}
+                  type="button"
+                  onMouseEnter={(e) => {
+                    setActiveKey(skill.key);
+                    showPreview(skill, e.currentTarget);
+                  }}
+                  onMouseLeave={hidePreview}
+                  onFocus={(e) => {
+                    setActiveKey(skill.key);
+                    showPreview(skill, e.currentTarget);
+                  }}
+                  onBlur={hidePreview}
+                  onClick={() => setActiveKey(skill.key)}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.55, delay: index * 0.03, ease: [0.16, 1, 0.3, 1] }}
+                  className={cn(
+                    "group relative rounded-2xl border border-white/10 bg-surface-alt/10 p-5 text-left",
+                    "transition-colors duration-300",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35",
+                    isActive && "border-white/15 bg-surface-alt/20",
+                    !isActive && "hover:border-white/15 hover:bg-surface-alt/15",
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="font-mono text-xs tracking-widest text-text-secondary/70">
+                        {String(index + 1).padStart(2, "0")}
+                      </div>
+                      <div className="mt-3 text-lg font-medium tracking-tight">{skill.name}</div>
+                    </div>
+                    <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 transition-colors duration-300 group-hover:border-white/15">
+                      <Icon
+                        className={cn(
+                          "h-4 w-4 transition-colors duration-300",
+                          isActive ? "text-accent/90" : "text-text-secondary/80 group-hover:text-text-primary",
+                        )}
+                      />
+                    </div>
+                  </div>
 
-              <div className="mt-8">
-                <div className="h-[2px] w-full bg-white/10 overflow-hidden rounded-full">
+                  <div className="pointer-events-none absolute left-5 right-5 bottom-5 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <div
-                    className="h-full bg-gradient-to-r from-accent/70 via-white/25 to-accent/70"
-                    style={{
-                      width: `${Math.min(100, 18 + skills.findIndex((s) => s.key === activeKey) * 9)}%`,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {skills.map((skill, index) => {
-                const isActive = skill.key === activeKey;
-                const Icon = skill.Icon;
-
-                return (
-                  <motion.button
-                    key={skill.key}
-                    type="button"
-                    onMouseEnter={(e) => {
-                      setActiveKey(skill.key);
-                      showPreview(skill, e.currentTarget);
-                    }}
-                    onMouseLeave={hidePreview}
-                    onFocus={(e) => {
-                      setActiveKey(skill.key);
-                      showPreview(skill, e.currentTarget);
-                    }}
-                    onBlur={hidePreview}
-                    onClick={() => setActiveKey(skill.key)}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.55, delay: index * 0.03, ease: [0.16, 1, 0.3, 1] }}
                     className={cn(
-                      "group relative rounded-2xl border border-white/10 bg-surface-alt/10 p-5 text-left",
-                      "transition-colors duration-300",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/35",
-                      isActive && "border-white/15 bg-surface-alt/20",
-                      !isActive && "hover:border-white/15 hover:bg-surface-alt/15",
+                      "pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300",
+                      isActive && "opacity-100",
                     )}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="font-mono text-xs tracking-widest text-text-secondary/70">
-                          {String(index + 1).padStart(2, "0")}
-                        </div>
-                        <div className="mt-3 text-lg font-medium tracking-tight">{skill.name}</div>
-                      </div>
-                      <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 transition-colors duration-300 group-hover:border-white/15">
-                        <Icon className={cn("h-4 w-4 transition-colors duration-300", isActive ? "text-accent/90" : "text-text-secondary/80 group-hover:text-text-primary")} />
-                      </div>
-                    </div>
-
-                    <div className="pointer-events-none absolute left-5 right-5 bottom-5 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className={cn("pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300", isActive && "opacity-100")}>
-                      <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-accent/10 blur-2xl" />
-                    </div>
-                  </motion.button>
-                );
-              })}
-            </div>
+                    <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-accent/10 blur-2xl" />
+                  </div>
+                </motion.button>
+              );
+            })}
           </div>
         </motion.header>
 
