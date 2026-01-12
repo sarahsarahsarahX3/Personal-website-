@@ -8,14 +8,14 @@ type Brand = {
 };
 
 const brands: Brand[] = [
-  { name: "Discovery Channel", logoSrc: "/images/brands/discovery-channel.svg" },
-  { name: "USA Network", logoSrc: "/images/brands/usa-network.svg" },
-  { name: "Bell Media", logoSrc: "/images/brands/bell-media.svg" },
-  { name: "L’Oréal", logoSrc: "/images/brands/loreal.svg" },
-  { name: "SalonCentric", logoSrc: "/images/brands/saloncentric.svg" },
-  { name: "New York Fashion Week", logoSrc: "/images/brands/new-york-fashion-week.svg" },
+  { name: "Discovery Channel", logoSrc: "/images/Discovery%20Channel.png" },
+  { name: "USA Network", logoSrc: "/images/USA%20Network.png" },
+  { name: "Bell Media", logoSrc: "/images/Bell%20Media.png" },
+  { name: "L’Oréal", logoSrc: "/images/L%27OREAL.png" },
+  { name: "SalonCentric", logoSrc: "/images/SalonCentric.png" },
+  { name: "New York Fashion Week", logoSrc: "/images/New%20York%20Fashion%20Week.png" },
   { name: "P&G", logoSrc: "/images/brands/pg.svg" },
-  { name: "P&G Beauty", logoSrc: "/images/brands/pg-beauty.svg" },
+  { name: "P&G Beauty", logoSrc: "/images/P%26G%20Beauty.png" },
 ];
 
 function BrandMark({ brand }: { brand: Brand }) {
@@ -25,7 +25,7 @@ function BrandMark({ brand }: { brand: Brand }) {
         role="img"
         aria-label={`${brand.name} logo`}
         className={styles.logoMask}
-        style={{ ["--logo-url" as string]: `url(${brand.logoSrc})` }}
+        style={{ ["--logo-url" as string]: `url("${brand.logoSrc}")` }}
       />
       <img
         src={brand.logoSrc}
