@@ -117,13 +117,13 @@ export function BioSection() {
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
           <figure className="col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block">
-            <div className="relative aspect-[4/5] w-full max-w-[320px]">
+            <div className="relative aspect-[4/5] w-full max-w-[320px] rounded-3xl ring-1 ring-inset ring-white/15 overflow-hidden">
               <Image
                 src={headshotSrc}
                 alt="Headshot of Sarah Dawson"
                 fill
                 sizes="(min-width: 768px) 320px, 70vw"
-                className="object-cover rounded-3xl ring-1 ring-inset ring-white/10"
+                className="object-cover"
                 priority
                 onError={() => setHeadshotSrc("/images/IMG_5668_edited.jpg")}
               />

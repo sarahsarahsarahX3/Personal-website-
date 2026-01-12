@@ -14,7 +14,7 @@ export function Hero() {
         <section className="relative min-h-screen flex flex-col overflow-hidden">
             {/* Background Gradient Spot */}
             <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
-            <Constellation className="opacity-50" particleCount={60} connectDistance={85} mouseRadius={170} />
+            <Constellation className="opacity-70" particleCount={60} connectDistance={85} mouseRadius={170} />
 
             {/* Main Content */}
             <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center">
