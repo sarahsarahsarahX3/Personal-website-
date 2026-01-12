@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import styles from "./BrandsSection.module.css";
 
 type Brand = {
   name: string;
@@ -19,63 +18,40 @@ const brands: Brand[] = [
   { name: "P&G Beauty", logoSrc: "/images/brands/pg-beauty.svg" },
 ];
 
-function BrandTile({ brand, index }: { brand: Brand; index: number }) {
-  const [hasError, setHasError] = useState(false);
-
+function BrandMark({ brand }: { brand: Brand }) {
   return (
-    <motion.div
-      className="group relative overflow-hidden rounded-xl border border-white/10 bg-surface-alt/10 px-6 py-5 transition hover:border-accent/25"
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{
-        duration: 0.65,
-        delay: index * 0.05,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-    >
-      <div className="relative flex h-16 items-center justify-center">
-        {!hasError ? (
-          <img
-            src={brand.logoSrc}
-            alt={`${brand.name} logo`}
-            loading="lazy"
-            decoding="async"
-            className="max-h-10 w-auto max-w-full opacity-80 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
-            onError={() => setHasError(true)}
-          />
-        ) : (
-          <div className="text-center">
-            <div className="mt-1 text-lg font-medium tracking-tight text-text-primary">{brand.name}</div>
-          </div>
-        )}
-      </div>
-    </motion.div>
+    <div className={styles.cell}>
+      <span
+        role="img"
+        aria-label={`${brand.name} logo`}
+        className={styles.logoMask}
+        style={{ ["--logo-url" as string]: `url(${brand.logoSrc})` }}
+      />
+      <img
+        src={brand.logoSrc}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className={styles.logoImg}
+      />
+    </div>
   );
 }
 
 export function BrandsSection() {
   return (
-    <section id="brands" className="relative border-t border-white/10 py-20">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-[-12%] top-[10%] h-[520px] w-[520px] rounded-full bg-white/5 blur-3xl" />
-        <div className="absolute right-[-15%] top-[-20%] h-[560px] w-[560px] rounded-full bg-accent/8 blur-3xl" />
-      </div>
+    <section id="brands" aria-labelledby="brands-title" className="py-24 md:py-32 lg:py-36">
+      <div className="mx-auto w-full max-w-6xl px-6">
+        <header className="max-w-3xl">
+          <h2 id="brands-title" className="text-3xl md:text-4xl font-display tracking-tight">
+            Working With Industry Leaders
+          </h2>
+        </header>
 
-      <div className="container mx-auto px-6 relative">
-        <motion.header
-          className="mb-12 max-w-3xl"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <h2 className="text-4xl md:text-5xl font-display">Working With Industry Leaders</h2>
-        </motion.header>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {brands.map((brand, index) => (
-            <BrandTile key={brand.name} brand={brand} index={index} />
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12 items-center">
+          {brands.map((brand) => (
+            <BrandMark key={brand.name} brand={brand} />
           ))}
         </div>
       </div>
