@@ -18,13 +18,15 @@ const brands: Brand[] = [
 
 function BrandMark({ brand }: { brand: Brand }) {
   return (
+    <li className="flex w-full items-center justify-center px-6 py-6">
       <img
         src={brand.logoSrc}
         alt={`${brand.name} logo`}
         loading="lazy"
         decoding="async"
-        className="block h-10 md:h-12 w-auto max-w-[180px] object-contain opacity-75 hover:opacity-100 transition-opacity duration-200"
+        className="block h-10 md:h-12 w-auto max-w-full object-contain"
       />
+    </li>
   );
 }
 
@@ -41,10 +43,12 @@ export function BrandsSection() {
           </h2>
         </header>
 
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12 items-center justify-items-center">
-          {brands.map((brand) => (
-            <BrandMark key={brand.name} brand={brand} />
-          ))}
+        <div className="mt-12 rounded-3xl border border-black/10 bg-[#fafafa] px-6 py-8 md:px-10 md:py-10">
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-10 gap-y-10 items-center justify-items-center">
+            {brands.map((brand) => (
+              <BrandMark key={brand.name} brand={brand} />
+            ))}
+          </ul>
         </div>
       </div>
     </section>
