@@ -44,7 +44,7 @@ export function BrandsSection() {
     <section id="brands" aria-labelledby="brands-title" className="py-24 md:py-32 lg:py-36">
       <div className="mx-auto w-full max-w-6xl px-6">
         <header className="max-w-3xl">
-          <h2 id="brands-title" className="text-3xl md:text-4xl font-display tracking-tight">
+          <h2 id="brands-title" className="text-2xl md:text-3xl font-display tracking-tight text-text-secondary">
             Working With Industry Leaders
           </h2>
         </header>
