@@ -11,13 +11,13 @@ export function Hero() {
     const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
     return (
-        <section className="relative min-h-screen flex flex-col overflow-hidden">
+        <section className="relative min-h-[100svh] md:min-h-screen flex flex-col overflow-hidden">
             {/* Background Gradient Spot */}
             <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
             <Constellation className="opacity-70" particleCount={60} connectDistance={85} mouseRadius={170} />
 
             {/* Main Content */}
-            <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center pt-14 md:pt-0">
+            <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center pb-24 md:pb-0">
                 <motion.div style={{ y, opacity }} className="w-full max-w-4xl space-y-6">
                     <div className="overflow-hidden">
                         <motion.p
