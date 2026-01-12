@@ -125,7 +125,7 @@ export function CoreSkillsSection() {
             id="where-i-create-value-title"
             className="w-full font-display text-3xl md:text-4xl tracking-tight text-center md:text-left"
           >
-            Core Competencies
+            Where I Create Value
           </h2>
         </header>
 
@@ -217,7 +217,7 @@ export function CoreSkillsSection() {
             {/* Desktop: tabs */}
             <div
               role="tablist"
-              aria-label="Core Competencies"
+              aria-label="Where I Create Value"
               aria-orientation="vertical"
               className="hidden md:block rounded-2xl border border-white/10 bg-surface-alt/10"
             >
@@ -295,7 +295,10 @@ export function CoreSkillsSection() {
               className="rounded-2xl border border-white/10 bg-surface-alt/10 p-7 md:p-8 md:h-[521px]"
             >
               <div key={activeArea.id} className={cn("flex h-full flex-col", styles.detailInner)}>
-                <div className="font-mono text-xs tracking-widest text-text-secondary/70">{activeArea.index}</div>
+                <div className="flex items-center gap-3 font-mono text-xs tracking-widest text-text-secondary/70">
+                  <span>{activeArea.index}</span>
+                  <span className="text-accent">Core Skill</span>
+                </div>
                 <h3 className="mt-3 text-2xl md:text-[28px] font-display tracking-tight">
                   {activeArea.title}
                 </h3>
