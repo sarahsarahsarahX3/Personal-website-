@@ -123,7 +123,7 @@ export function BioSection() {
                 alt="Headshot of Sarah Dawson"
                 fill
                 sizes="(min-width: 768px) 320px, 70vw"
-                className="object-cover rounded-3xl"
+                className="object-cover rounded-3xl ring-1 ring-inset ring-white/10"
                 priority
                 onError={() => setHeadshotSrc("/images/IMG_5668_edited.jpg")}
               />

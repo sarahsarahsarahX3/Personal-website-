@@ -73,6 +73,12 @@ export function Constellation({
       init();
     };
 
+    const onPointerMove = (event: PointerEvent) => {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+      mouse.active = true;
+    };
+
     const onMouseMove = (event: MouseEvent) => {
       mouse.x = event.clientX;
       mouse.y = event.clientY;
@@ -155,15 +161,25 @@ export function Constellation({
     init();
     step();
 
+    const supportsPointerEvents = "PointerEvent" in window;
+
     window.addEventListener("resize", handleResize);
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    if (supportsPointerEvents) {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+    } else {
+      window.addEventListener("mousemove", onMouseMove, { passive: true });
+      window.addEventListener("touchmove", onTouchMove, { passive: true });
+    }
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("touchmove", onTouchMove);
+      if (supportsPointerEvents) {
+        window.removeEventListener("pointermove", onPointerMove);
+      } else {
+        window.removeEventListener("mousemove", onMouseMove);
+        window.removeEventListener("touchmove", onTouchMove);
+      }
     };
   }, [connectDistance, mouseRadius, particleCount, particleSpeed]);
 
