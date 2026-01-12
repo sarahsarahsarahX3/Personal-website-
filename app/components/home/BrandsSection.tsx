@@ -9,7 +9,7 @@ type Brand = {
 
 const brands: Brand[] = [
   { name: "Discovery Channel", logoSrc: "/images/Discovery%20Channel.png" },
-  { name: "USA Network", logoSrc: "/images/USA%20Network.png" },
+  { name: "USA Network", logoSrc: "/images/brands/usa-network.svg" },
   { name: "Bell Media", logoSrc: "/images/Bell%20Media.png" },
   { name: "L’Oréal", logoSrc: "/images/L%27OREAL.png" },
   { name: "SalonCentric", logoSrc: "/images/SalonCentric.png" },
