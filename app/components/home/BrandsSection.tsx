@@ -1,7 +1,5 @@
 "use client";
 
-import styles from "./BrandsSection.module.css";
-
 type Brand = {
   name: string;
   logoSrc: string;
@@ -9,33 +7,24 @@ type Brand = {
 
 const brands: Brand[] = [
   { name: "Discovery Channel", logoSrc: "/images/Discovery%20Channel.png" },
-  { name: "USA Network", logoSrc: "/images/brands/usa-network.svg" },
+  { name: "USA Network", logoSrc: "/images/USA%20Network.png" },
   { name: "Bell Media", logoSrc: "/images/Bell%20Media.png" },
   { name: "L’Oréal", logoSrc: "/images/L%27OREAL.png" },
   { name: "SalonCentric", logoSrc: "/images/SalonCentric.png" },
   { name: "New York Fashion Week", logoSrc: "/images/New%20York%20Fashion%20Week.png" },
-  { name: "P&G", logoSrc: "/images/brands/pg.svg" },
+  { name: "P&G", logoSrc: "/images/P%26G.jpg" },
   { name: "P&G Beauty", logoSrc: "/images/P%26G%20Beauty.png" },
 ];
 
 function BrandMark({ brand }: { brand: Brand }) {
   return (
-    <div className={styles.cell}>
-      <span
-        role="img"
-        aria-label={`${brand.name} logo`}
-        className={styles.logoMask}
-        style={{ ["--logo-url" as string]: `url("${brand.logoSrc}")` }}
-      />
       <img
         src={brand.logoSrc}
-        alt=""
-        aria-hidden="true"
+        alt={`${brand.name} logo`}
         loading="lazy"
         decoding="async"
-        className={styles.logoImg}
+        className="block h-10 md:h-12 w-auto max-w-[180px] object-contain opacity-75 hover:opacity-100 transition-opacity duration-200"
       />
-    </div>
   );
 }
 
@@ -49,7 +38,7 @@ export function BrandsSection() {
           </h2>
         </header>
 
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12 items-center">
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-12 gap-y-12 items-center justify-items-center">
           {brands.map((brand) => (
             <BrandMark key={brand.name} brand={brand} />
           ))}
