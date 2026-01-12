@@ -17,8 +17,8 @@ export function Hero() {
             <Constellation className="opacity-70" particleCount={60} connectDistance={85} mouseRadius={170} />
 
             {/* Main Content */}
-            <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center">
-            <motion.div style={{ y, opacity }} className="w-full max-w-4xl space-y-6">
+            <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center pt-14 md:pt-0">
+                <motion.div style={{ y, opacity }} className="w-full max-w-4xl space-y-6">
                     <div className="overflow-hidden">
                         <motion.p
                             initial={{ y: "100%" }}
