@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import { cn } from "@/app/lib/utils";
 import styles from "./CoreSkillsSection.module.css";
@@ -67,31 +67,11 @@ const valueAreas: ValueArea[] = [
 export function CoreSkillsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [openIndex, setOpenIndex] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
 
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const scrollTimeout = useRef<number | null>(null);
   const pressStart = useRef<{ x: number; y: number } | null>(null);
   const pressMoved = useRef(false);
   const activeArea = useMemo(() => valueAreas[activeIndex] ?? valueAreas[0]!, [activeIndex]);
-
-  useEffect(() => {
-    const onScrollIntent = () => {
-      setIsScrolling(true);
-      if (scrollTimeout.current) window.clearTimeout(scrollTimeout.current);
-      scrollTimeout.current = window.setTimeout(() => setIsScrolling(false), 140);
-    };
-
-    window.addEventListener("scroll", onScrollIntent, { passive: true });
-    window.addEventListener("wheel", onScrollIntent, { passive: true });
-    window.addEventListener("touchmove", onScrollIntent, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScrollIntent);
-      window.removeEventListener("wheel", onScrollIntent);
-      window.removeEventListener("touchmove", onScrollIntent);
-      if (scrollTimeout.current) window.clearTimeout(scrollTimeout.current);
-    };
-  }, []);
 
   const onAccordionPointerDown = (event: ReactPointerEvent<HTMLButtonElement>) => {
     pressStart.current = { x: event.clientX, y: event.clientY };
@@ -110,7 +90,7 @@ export function CoreSkillsSection() {
   };
 
   const shouldIgnoreAccordionActivate = () => {
-    const ignore = pressMoved.current || isScrolling;
+    const ignore = pressMoved.current;
     pressMoved.current = false;
     return ignore;
   };
@@ -151,7 +131,7 @@ export function CoreSkillsSection() {
 
         <div className="mt-12 grid gap-10 md:grid-cols-[340px_minmax(0,708px)] md:gap-14">
           {/* Left column: value areas */}
-          <div className="md:sticky md:top-28 self-start">
+          <div className="self-start">
             {/* Mobile: accordion */}
             <div className="md:hidden rounded-2xl border border-white/10 bg-surface-alt/10">
               <ul role="list" className="divide-y divide-white/10">
@@ -260,10 +240,7 @@ export function CoreSkillsSection() {
                         tabIndex={isActive ? 0 : -1}
                         onKeyDown={onTabKeyDown}
                         onFocus={() => setActiveIndex(index)}
-                        onMouseEnter={() => {
-                          if (isScrolling) return;
-                          setActiveIndex(index);
-                        }}
+                        onMouseMove={() => setActiveIndex(index)}
                         onClick={() => setActiveIndex(index)}
                         className={cn(
                           "group w-full text-left px-6 py-5",
