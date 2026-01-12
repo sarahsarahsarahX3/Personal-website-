@@ -51,11 +51,11 @@ export default function ContactPage() {
                     }}
                     aria-label="Copy email address"
                 >
-                    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4 md:gap-8">
+                    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 md:items-start md:gap-8">
                         <motion.h1
                             initial={{ y: 50, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            className="min-w-0 break-words text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
+                            className="min-w-0 truncate text-lg sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
                         >
                             {email}
                         </motion.h1>
@@ -68,8 +68,8 @@ export default function ContactPage() {
                             }}
                             aria-label={copied ? "Copied" : "Copy email"}
                             className={cn(
-                                "justify-self-end self-start mt-1 md:mt-2",
-                                "p-3 rounded-full border border-white/10 bg-surface/50 backdrop-blur-md",
+                                "justify-self-end self-center md:self-start md:mt-2",
+                                "p-2 md:p-3 rounded-full border border-white/10 bg-surface/50 backdrop-blur-md",
                                 "opacity-100 transition-colors",
                                 "hover:border-white/15 hover:bg-surface/70",
                                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
@@ -85,7 +85,7 @@ export default function ContactPage() {
                                         animate={{ scale: 1 }}
                                         exit={{ scale: 0 }}
                                     >
-                                        <Check className="text-green-400" size={24} />
+                                        <Check className="h-5 w-5 md:h-6 md:w-6 text-green-400" />
                                     </motion.div>
                                 ) : (
                                     <motion.div
@@ -94,7 +94,7 @@ export default function ContactPage() {
                                         animate={{ scale: 1 }}
                                         exit={{ scale: 0 }}
                                     >
-                                        <Copy className="text-white" size={24} />
+                                        <Copy className="h-5 w-5 md:h-6 md:w-6 text-white" />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
