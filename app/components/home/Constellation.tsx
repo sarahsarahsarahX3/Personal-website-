@@ -31,6 +31,8 @@ export function Constellation({
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
     if (prefersReducedMotion) return;
 
+    const alwaysConnect = window.matchMedia?.("(hover: hover) and (pointer: fine)")?.matches ?? false;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -110,33 +112,44 @@ export function Constellation({
         ctx.fill();
       }
 
-      if (mouse.active) {
-        // Connections only near cursor
+      const shouldDrawConnections = alwaysConnect || mouse.active;
+      if (shouldDrawConnections) {
         for (let i = 0; i < particles.length; i++) {
           const a = particles[i]!;
           const amx = a.x - mouse.x;
           const amy = a.y - mouse.y;
-          const distToMouseA = Math.sqrt(amx * amx + amy * amy);
-          if (distToMouseA > mouseRadius) continue;
+          const distToMouseA = mouse.active ? Math.sqrt(amx * amx + amy * amy) : Infinity;
+
+          if (!alwaysConnect && distToMouseA > mouseRadius) continue;
 
           for (let j = i + 1; j < particles.length; j++) {
             const b = particles[j]!;
-            const bmx = b.x - mouse.x;
-            const bmy = b.y - mouse.y;
-            const distToMouseB = Math.sqrt(bmx * bmx + bmy * bmy);
-            if (distToMouseB > mouseRadius) continue;
-
             const dx = a.x - b.x;
             const dy = a.y - b.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist > connectDistance) continue;
 
             const proximity = 1 - dist / connectDistance;
-            const mouseProximity = 1 - Math.max(distToMouseA, distToMouseB) / mouseRadius;
-            const alpha = Math.max(0, 0.44 * proximity * mouseProximity);
+            let alpha = 0;
+
+            if (alwaysConnect) {
+              alpha += 0.18 * proximity * proximity;
+            }
+
+            if (mouse.active) {
+              const bmx = b.x - mouse.x;
+              const bmy = b.y - mouse.y;
+              const distToMouseB = Math.sqrt(bmx * bmx + bmy * bmy);
+              if (distToMouseA <= mouseRadius && distToMouseB <= mouseRadius) {
+                const mouseProximity = 1 - Math.max(distToMouseA, distToMouseB) / mouseRadius;
+                alpha += 0.44 * proximity * mouseProximity;
+              }
+            }
+
+            if (alpha <= 0.001) continue;
 
             ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
-            ctx.lineWidth = 1.1;
+            ctx.lineWidth = mouse.active ? 1.1 : 0.9;
             ctx.lineCap = "round";
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -144,7 +157,9 @@ export function Constellation({
             ctx.stroke();
           }
         }
+      }
 
+      if (mouse.active) {
         // Cursor glow
         const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, mouseRadius);
         gradient.addColorStop(0, "rgba(255,59,48,0.08)");
