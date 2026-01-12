@@ -55,7 +55,7 @@ export default function ContactPage() {
                         <motion.h1
                             initial={{ y: 50, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            className="min-w-0 truncate text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-tight sm:leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
+                            className="min-w-0 truncate text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-[1.1] tracking-tight text-white/95 group-hover:text-white transition-colors"
                         >
                             {email}
                         </motion.h1>
