@@ -98,7 +98,7 @@ export function Constellation({
         if (particle.x < 0 || particle.x > width) particle.vx *= -1;
         if (particle.y < 0 || particle.y > height) particle.vy *= -1;
 
-        ctx.fillStyle = "rgba(255,255,255,0.35)";
+        ctx.fillStyle = "rgba(255,255,255,0.42)";
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, 1.2, 0, Math.PI * 2);
         ctx.fill();
@@ -127,10 +127,10 @@ export function Constellation({
 
             const proximity = 1 - dist / connectDistance;
             const mouseProximity = 1 - Math.max(distToMouseA, distToMouseB) / mouseRadius;
-            const alpha = Math.max(0, 0.28 * proximity * mouseProximity);
+            const alpha = Math.max(0, 0.36 * proximity * mouseProximity);
 
             ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
