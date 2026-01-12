@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { KeyboardEvent } from "react";
+import type { KeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import { cn } from "@/app/lib/utils";
 import styles from "./CoreSkillsSection.module.css";
 import { CoreSkillViz, type CoreSkillVizId } from "@/app/components/home/CoreSkillViz";
@@ -71,21 +71,49 @@ export function CoreSkillsSection() {
 
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const scrollTimeout = useRef<number | null>(null);
+  const pressStart = useRef<{ x: number; y: number } | null>(null);
+  const pressMoved = useRef(false);
   const activeArea = useMemo(() => valueAreas[activeIndex] ?? valueAreas[0]!, [activeIndex]);
 
   useEffect(() => {
-    const onScroll = () => {
+    const onScrollIntent = () => {
       setIsScrolling(true);
       if (scrollTimeout.current) window.clearTimeout(scrollTimeout.current);
       scrollTimeout.current = window.setTimeout(() => setIsScrolling(false), 140);
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", onScrollIntent, { passive: true });
+    window.addEventListener("wheel", onScrollIntent, { passive: true });
+    window.addEventListener("touchmove", onScrollIntent, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", onScrollIntent);
+      window.removeEventListener("wheel", onScrollIntent);
+      window.removeEventListener("touchmove", onScrollIntent);
       if (scrollTimeout.current) window.clearTimeout(scrollTimeout.current);
     };
   }, []);
+
+  const onAccordionPointerDown = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    pressStart.current = { x: event.clientX, y: event.clientY };
+    pressMoved.current = false;
+  };
+
+  const onAccordionPointerMove = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    if (!pressStart.current) return;
+    const dx = Math.abs(event.clientX - pressStart.current.x);
+    const dy = Math.abs(event.clientY - pressStart.current.y);
+    if (dx + dy > 10) pressMoved.current = true;
+  };
+
+  const onAccordionPointerEnd = () => {
+    pressStart.current = null;
+  };
+
+  const shouldIgnoreAccordionActivate = () => {
+    const ignore = pressMoved.current || isScrolling;
+    pressMoved.current = false;
+    return ignore;
+  };
 
   const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     const count = valueAreas.length;
@@ -140,12 +168,17 @@ export function CoreSkillsSection() {
                         type="button"
                         aria-expanded={isOpen}
                         aria-controls={regionId}
+                        onPointerDown={onAccordionPointerDown}
+                        onPointerMove={onAccordionPointerMove}
+                        onPointerUp={onAccordionPointerEnd}
+                        onPointerCancel={onAccordionPointerEnd}
                         onClick={() => {
+                          if (shouldIgnoreAccordionActivate()) return;
                           setActiveIndex(index);
                           setOpenIndex(index);
                         }}
                         className={cn(
-                          "group w-full text-left px-5 py-4",
+                          "group w-full text-left px-5 py-4 touch-pan-y",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-inset",
                           "transition-colors duration-200",
                           "border-l-2 border-l-transparent",

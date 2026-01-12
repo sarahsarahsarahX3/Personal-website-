@@ -51,53 +51,55 @@ export default function ContactPage() {
                     }}
                     aria-label="Copy email address"
                 >
-                    <motion.h1
-                        initial={{ y: 50, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl md:pr-14 whitespace-nowrap font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
-                    >
-                        {email}
-                    </motion.h1>
+                    <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                        <motion.h1
+                            initial={{ y: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            className="min-w-0 text-2xl sm:text-3xl md:text-6xl lg:text-7xl xl:text-8xl whitespace-nowrap font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
+                        >
+                            {email}
+                        </motion.h1>
 
-                    <motion.button
-                        type="button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleCopy();
-                        }}
-                        aria-label={copied ? "Copied" : "Copy email"}
-                        className={cn(
-                            "mt-7 mx-auto md:mt-0 md:mx-0 md:absolute md:top-6 md:right-6",
-                            "p-3 rounded-full border border-white/10 bg-surface/50 backdrop-blur-md",
-                            "opacity-100 transition-colors",
-                            "hover:border-white/15 hover:bg-surface/70",
-                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                        )}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                    >
-                        <AnimatePresence mode="wait">
-                            {copied ? (
-                                <motion.div
-                                    key="check"
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    exit={{ scale: 0 }}
-                                >
-                                    <Check className="text-green-400" size={24} />
-                                </motion.div>
-                            ) : (
-                                <motion.div
-                                    key="copy"
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    exit={{ scale: 0 }}
-                                >
-                                    <Copy className="text-white" size={24} />
-                                </motion.div>
+                        <motion.button
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleCopy();
+                            }}
+                            aria-label={copied ? "Copied" : "Copy email"}
+                            className={cn(
+                                "self-center md:self-start md:mt-2",
+                                "p-3 rounded-full border border-white/10 bg-surface/50 backdrop-blur-md",
+                                "opacity-100 transition-colors",
+                                "hover:border-white/15 hover:bg-surface/70",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                             )}
-                        </AnimatePresence>
-                    </motion.button>
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                        >
+                            <AnimatePresence mode="wait">
+                                {copied ? (
+                                    <motion.div
+                                        key="check"
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        exit={{ scale: 0 }}
+                                    >
+                                        <Check className="text-green-400" size={24} />
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="copy"
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        exit={{ scale: 0 }}
+                                    >
+                                        <Copy className="text-white" size={24} />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.button>
+                    </div>
 
                     <div className="mt-8 md:mt-10 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                 </div>

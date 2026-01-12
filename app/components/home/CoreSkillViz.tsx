@@ -49,15 +49,19 @@ function useScrollPaused(delayMs = 160) {
   const timeoutId = useRef<number | null>(null);
 
   useEffect(() => {
-    const onScroll = () => {
+    const onScrollIntent = () => {
       setPaused(true);
       if (timeoutId.current) window.clearTimeout(timeoutId.current);
       timeoutId.current = window.setTimeout(() => setPaused(false), delayMs);
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", onScrollIntent, { passive: true });
+    window.addEventListener("wheel", onScrollIntent, { passive: true });
+    window.addEventListener("touchmove", onScrollIntent, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", onScrollIntent);
+      window.removeEventListener("wheel", onScrollIntent);
+      window.removeEventListener("touchmove", onScrollIntent);
       if (timeoutId.current) window.clearTimeout(timeoutId.current);
     };
   }, [delayMs]);
