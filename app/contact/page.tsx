@@ -55,7 +55,7 @@ export default function ContactPage() {
                         <motion.h1
                             initial={{ y: 50, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            className="min-w-0 truncate text-lg sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
+                            className="min-w-0 truncate text-xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-tight sm:leading-[0.95] tracking-tight text-white/95 group-hover:text-white transition-colors"
                         >
                             {email}
                         </motion.h1>
@@ -85,7 +85,7 @@ export default function ContactPage() {
                                         animate={{ scale: 1 }}
                                         exit={{ scale: 0 }}
                                     >
-                                        <Check className="h-5 w-5 md:h-6 md:w-6 text-green-400" />
+                                        <Check className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-green-400" />
                                     </motion.div>
                                 ) : (
                                     <motion.div
@@ -94,11 +94,11 @@ export default function ContactPage() {
                                         animate={{ scale: 1 }}
                                         exit={{ scale: 0 }}
                                     >
-                                        <Copy className="h-5 w-5 md:h-6 md:w-6 text-white" />
+                                        <Copy className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
                                     </motion.div>
                                 )}
-                            </AnimatePresence>
-                        </motion.button>
+                                </AnimatePresence>
+                            </motion.button>
                     </div>
 
                     <div className="mt-8 md:mt-10 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
