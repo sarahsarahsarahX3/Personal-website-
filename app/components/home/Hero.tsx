@@ -18,7 +18,7 @@ export function Hero() {
 
             {/* Main Content */}
             <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center">
-                <motion.div style={{ y, opacity }} className="w-full max-w-4xl space-y-6">
+            <motion.div style={{ y, opacity }} className="w-full max-w-4xl space-y-6">
                     <div className="overflow-hidden">
                         <motion.p
                             initial={{ y: "100%" }}
@@ -53,7 +53,6 @@ export function Hero() {
                         transition={{ delay: 1, duration: 1 }}
                         className="text-text-secondary text-lg md:text-xl text-balance"
                     >
-                        Strategy. Storytelling. Growth.
                         <div className="mt-6 flex items-center justify-center gap-2 text-white text-sm">
                             <span>Scroll to explore</span> <ArrowDownRight size={14} />
                         </div>
@@ -70,15 +69,9 @@ export function Hero() {
             >
                 <Ticker
                     items={[
+                        "Strategy",
                         "Storytelling",
-                        "Content Marketing",
-                        "SEO + AEO Strategy",
-                        "Integrated Campaigns",
-                        "Copywriting",
-                        "Content Creation",
-                        "Digital Publishing",
-                        "Editorial Leadership",
-                        "Marketing Communication",
+                        "Growth",
                     ]}
                     speed={90}
                 />

@@ -51,7 +51,7 @@ export default function ContactPage() {
                     }}
                     aria-label="Copy email address"
                 >
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-8">
+                    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4 md:gap-8">
                         <motion.h1
                             initial={{ y: 50, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
@@ -68,7 +68,7 @@ export default function ContactPage() {
                             }}
                             aria-label={copied ? "Copied" : "Copy email"}
                             className={cn(
-                                "justify-self-center md:justify-self-end md:mt-2",
+                                "justify-self-end self-start mt-1 md:mt-2",
                                 "p-3 rounded-full border border-white/10 bg-surface/50 backdrop-blur-md",
                                 "opacity-100 transition-colors",
                                 "hover:border-white/15 hover:bg-surface/70",

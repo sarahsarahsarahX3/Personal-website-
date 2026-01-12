@@ -123,7 +123,7 @@ export function CoreSkillsSection() {
         <header className="flex items-baseline justify-between gap-6">
           <h2
             id="where-i-create-value-title"
-            className="w-full font-display text-3xl md:text-4xl tracking-tight text-center md:text-left"
+            className="w-full font-display text-3xl md:text-4xl tracking-tight text-center md:text-left text-text-secondary/80"
           >
             Where I Create Value
           </h2>

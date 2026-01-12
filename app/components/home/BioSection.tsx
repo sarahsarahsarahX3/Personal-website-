@@ -136,7 +136,7 @@ export function BioSection() {
                 About
               </h2>
               <p className="text-xl md:text-2xl leading-snug tracking-tight text-text-primary">
-                Hi, I’m Sarah Dawson.
+                Hello, I’m Sarah Dawson.
               </p>
               <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
                 I specialize in creating marketing-led content that strengthens brand voice, grows audiences, and performs across channels.

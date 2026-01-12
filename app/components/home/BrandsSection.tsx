@@ -37,7 +37,7 @@ export function BrandsSection() {
         <header className="max-w-3xl mx-auto text-center">
           <h2
             id="brands-title"
-            className="text-xl md:text-2xl font-display tracking-tight text-text-secondary/80"
+            className="text-xl md:text-2xl font-display tracking-tight text-text-secondary/60"
           >
             Working With Industry Leaders
           </h2>
