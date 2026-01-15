@@ -1,45 +1,145 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/app/lib/utils";
 
-type TocItem = {
+type SectionLink = { id: string; label: string };
+
+type MediaItem = {
   id: string;
-  label: string;
+  title: string;
+  imageSrc?: string;
 };
 
 type Metric = {
+  id: string;
   label: string;
   value: string;
   detail?: string;
 };
 
-type SectionLink = {
-  id: string;
-  label: string;
-};
+const project = {
+  title: "Procter & Gamble Beauty Content Hub",
+  subtitle: "SEO-Driven Editorial Content Program",
+  overview:
+    "This project focused on developing and optimizing SEO-driven editorial content for Procter & Gamble’s consumer-facing content hub to improve organic traffic and search visibility across beauty, health, and wellness topics.",
+  role: "Copywriter & Content Strategist",
+  objective:
+    "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
+  strategyIntro: "I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility.",
+  strategyBullets: [
+    "Mapping topics to high-intent user queries and audience needs",
+    "Structuring content for clarity, scannability, and discoverability",
+    "Optimizing for SEO, AEO, and GEO to support traditional and generative search",
+    "Embedding subject-matter expert validation into the editorial workflow",
+    "Designing evergreen content built to compound in performance",
+  ],
+  executionBullets: [
+    "Wrote and published 50+ long-form, consumer-facing articles",
+    "Conducted keyword research and SERP analysis to guide topic selection",
+    "Optimized headlines, content structure, internal linking, and metadata",
+    "Collaborated with scientists and subject-matter experts to validate claims",
+    "Refreshed existing content based on performance insights",
+    "Tracked and analyzed results using SEMrush and Google Analytics",
+  ],
+  resultsBullets: [
+    "Increased monthly organic users from 110K to 250K (+126%) in four months",
+    "Achieved 17.6% average month-over-month organic growth",
+    "Generated 139.78K+ new organic sessions per month",
+    "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains",
+    "Improved rankings and visibility across high-intent, evergreen content categories",
+  ],
+  toolsAndCapabilities:
+    "SEO & AEO Strategy · Editorial Planning · Long-Form Writing · Search Intent Analysis · SEMrush · Google Analytics · Performance Optimization · Expert Collaboration",
+  tools: [
+    "SEO & AEO Strategy",
+    "Editorial Planning",
+    "Long-Form Writing",
+    "Search Intent Analysis",
+    "SEMrush",
+    "Google Analytics",
+    "Performance Optimization",
+    "Expert Collaboration",
+  ],
+} as const;
 
-type MediaItem = {
-  id: string;
-  title: string;
-  description?: string;
-  imageSrc?: string;
-};
+const metrics: Metric[] = [
+  { id: "users", label: "Monthly organic users", value: "110K → 250K" },
+  { id: "growth", label: "Organic growth", value: "+126%", detail: "in four months" },
+  { id: "mom", label: "Average MoM organic growth", value: "17.6%" },
+  { id: "sessions", label: "New organic sessions per month", value: "139.78K+" },
+  { id: "authority", label: "Authority and backlinks", value: "DA 44", detail: "4.52K backlinks · 788 referring domains" },
+];
+
+const sectionLinks: SectionLink[] = [
+  { id: "brief", label: "Brief" },
+  { id: "overview", label: "Overview" },
+  { id: "strategy", label: "Strategy" },
+  { id: "execution", label: "Execution" },
+  { id: "results", label: "Results" },
+  { id: "articles", label: "Articles" },
+  { id: "performance", label: "Performance" },
+  { id: "tools", label: "Tools" },
+];
+
+const articleMedia: MediaItem[] = [
+  { id: "a1", title: "Digital article screenshot 01" },
+  { id: "a2", title: "Digital article screenshot 02" },
+  { id: "a3", title: "Digital article screenshot 03" },
+  { id: "a4", title: "Digital article screenshot 04" },
+  { id: "a5", title: "Digital article screenshot 05" },
+  { id: "a6", title: "Digital article screenshot 06" },
+];
+
+const chartMedia: MediaItem[] = [
+  { id: "c1", title: "Performance chart 01" },
+  { id: "c2", title: "Performance chart 02" },
+];
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    if (!mediaQuery) return;
-    const update = () => setReduced(mediaQuery.matches);
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+    const update = () => setReduced(mq.matches);
     update();
-    mediaQuery.addEventListener("change", update);
-    return () => mediaQuery.removeEventListener("change", update);
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
 
   return reduced;
+}
+
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      const doc = document.documentElement;
+      const scrollTop = window.scrollY || doc.scrollTop || 0;
+      const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      setProgress(Math.max(0, Math.min(1, scrollTop / max)));
+    };
+
+    const onScroll = () => {
+      window.cancelAnimationFrame(raf);
+      raf = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  return progress;
 }
 
 function useActiveSection(ids: string[]) {
@@ -57,11 +157,10 @@ function useActiveSection(ids: string[]) {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => (a.boundingClientRect.top ?? 0) - (b.boundingClientRect.top ?? 0));
-        if (!visible.length) return;
         const id = (visible[0]?.target as HTMLElement | undefined)?.id;
         if (id) setActiveId(id);
       },
-      { rootMargin: "-20% 0px -70% 0px", threshold: [0, 0.1, 0.25] },
+      { rootMargin: "-25% 0px -65% 0px", threshold: [0, 0.1, 0.25] },
     );
 
     for (const el of elements) observer.observe(el);
@@ -77,9 +176,228 @@ function scrollToId(id: string, behavior: ScrollBehavior) {
   node.scrollIntoView({ behavior, block: "start" });
 }
 
+function Pill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-white/10 bg-surface-alt/10 px-3 py-1 text-[11px] font-mono uppercase tracking-widest text-text-secondary">
+      {children}
+    </span>
+  );
+}
+
+function Section({
+  id,
+  eyebrow,
+  title,
+  children,
+}: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16">
+      <header className="max-w-3xl">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{eyebrow}</p>
+        <h2 id={`${id}-title`} className="mt-3 font-display text-3xl md:text-4xl tracking-tight text-text-primary">
+          {title}
+        </h2>
+      </header>
+      <div className="mt-8">{children}</div>
+    </section>
+  );
+}
+
+function MobileJumpBar({
+  items,
+  activeId,
+  onNavigate,
+}: {
+  items: SectionLink[];
+  activeId: string;
+  onNavigate: (id: string) => void;
+}) {
+  return (
+    <nav aria-label="Jump to section" className="md:hidden sticky top-[76px] z-20 -mx-6 px-6 py-3 bg-surface/75 backdrop-blur-md border-y border-white/10">
+      <div className="flex gap-2 overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]">
+        {items.map((item) => {
+          const isActive = item.id === activeId;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => onNavigate(item.id)}
+              className={cn(
+                "shrink-0 rounded-full border px-4 py-2 text-[11px] font-mono uppercase tracking-widest transition-colors",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                isActive
+                  ? "bg-white/5 border-white/20 text-text-primary"
+                  : "bg-surface-alt/10 border-white/10 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5",
+              )}
+            >
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+
+function DesktopRail({
+  items,
+  activeId,
+  progress,
+  onNavigate,
+}: {
+  items: SectionLink[];
+  activeId: string;
+  progress: number;
+  onNavigate: (id: string) => void;
+}) {
+  return (
+    <aside className="hidden xl:block sticky top-14 self-start">
+      <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
+            {Math.round(progress * 100)}%
+          </p>
+        </div>
+
+        <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden">
+          <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
+        </div>
+
+        <ul className="mt-4 space-y-1.5">
+          {items.map((item) => {
+            const isActive = item.id === activeId;
+            return (
+              <li key={item.id}>
+                <button
+                  type="button"
+                  onClick={() => onNavigate(item.id)}
+                  className={cn(
+                    "w-full rounded-lg px-3 py-2 text-left transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                    isActive
+                      ? "bg-white/5 border border-white/15 text-text-primary"
+                      : "border border-transparent text-text-secondary hover:text-text-primary hover:bg-white/5 hover:border-white/10",
+                  )}
+                >
+                  <span className="text-sm tracking-tight">{item.label}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </aside>
+  );
+}
+
+function MetricTabs({
+  metrics,
+  highlights,
+}: {
+  metrics: Metric[];
+  highlights: Record<string, string>;
+}) {
+  const [active, setActive] = useState(metrics[0]?.id ?? "");
+  const activeMetric = metrics.find((m) => m.id === active) ?? metrics[0]!;
+
+  return (
+    <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
+      <div>
+        <div role="tablist" aria-label="Result metrics" className="grid gap-2">
+          {metrics.map((metric) => {
+            const selected = metric.id === active;
+            return (
+              <button
+                key={metric.id}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                aria-controls={`metric-panel-${metric.id}`}
+                id={`metric-tab-${metric.id}`}
+                onClick={() => setActive(metric.id)}
+                className={cn(
+                  "rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  selected ? "border-white/25 bg-white/5" : "border-white/10 hover:bg-white/5 hover:border-white/20",
+                )}
+              >
+                <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
+                <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                  {metric.label}
+                  {metric.detail ? ` · ${metric.detail}` : ""}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div
+        role="tabpanel"
+        id={`metric-panel-${activeMetric.id}`}
+        aria-labelledby={`metric-tab-${activeMetric.id}`}
+        className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8"
+      >
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
+        <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.label}</h3>
+        <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
+          {highlights[activeMetric.id] ?? ""}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ExecutionStepper({ steps }: { steps: string[] }) {
+  const [active, setActive] = useState(0);
+  const activeStep = steps[active] ?? steps[0]!;
+
+  return (
+    <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
+      <ol className="grid gap-2">
+        {steps.map((step, index) => {
+          const selected = index === active;
+          return (
+            <li key={step}>
+              <button
+                type="button"
+                onClick={() => setActive(index)}
+                className={cn(
+                  "w-full rounded-2xl border px-5 py-4 text-left transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  selected ? "border-white/25 bg-white/5" : "border-white/10 bg-surface-alt/10 hover:bg-white/5 hover:border-white/20",
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-sm tracking-tight text-text-primary line-clamp-2">{step}</span>
+                </div>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+
+      <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Active step</p>
+        <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{activeStep}</p>
+      </div>
+    </div>
+  );
+}
+
 function useModal() {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -90,9 +408,15 @@ function useModal() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    closeButtonRef.current?.focus();
+  }, [open]);
+
   return {
     open,
     activeId,
+    closeButtonRef,
     openWith: (id: string) => {
       setActiveId(id);
       setOpen(true);
@@ -101,225 +425,36 @@ function useModal() {
   };
 }
 
-function MobileJumpBar({
-  items,
-  onNavigate,
-}: {
-  items: Array<SectionLink>;
-  onNavigate: (id: string) => void;
-}) {
+function MediaGrid({ items, onOpen }: { items: MediaItem[]; onOpen: (id: string) => void }) {
   return (
-    <nav aria-label="Jump to section" className="mt-8 md:hidden">
-      <div className="flex gap-2 overflow-x-auto pb-2 [-webkit-overflow-scrolling:touch]">
-        {items.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            onClick={() => onNavigate(item.id)}
-            className={cn(
-              "shrink-0 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
-              "text-[11px] font-mono uppercase tracking-widest text-text-secondary",
-              "hover:bg-white/5 hover:text-text-primary hover:border-white/20 transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-            )}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
-    </nav>
-  );
-}
-
-function Section({
-  id,
-  title,
-  eyebrow,
-  children,
-  className,
-}: {
-  id: string;
-  title: string;
-  eyebrow?: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <section id={id} className={cn("scroll-mt-12 md:scroll-mt-16", className)} aria-labelledby={`${id}-title`}>
-      <header className="max-w-3xl">
-        {eyebrow ? (
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{eyebrow}</p>
-        ) : null}
-        <h2
-          id={`${id}-title`}
-          className="mt-3 font-display text-3xl md:text-4xl tracking-tight text-text-primary"
-        >
-          {title}
-        </h2>
-      </header>
-      <div className="mt-8">{children}</div>
-    </section>
-  );
-}
-
-function SectionNav({
-  prev,
-  next,
-  onNavigate,
-}: {
-  prev?: SectionLink;
-  next?: SectionLink;
-  onNavigate: (id: string) => void;
-}) {
-  if (!prev && !next) return null;
-
-  return (
-    <div className="mt-10 flex flex-wrap items-center justify-between gap-3">
-      {prev ? (
-        <button
-          type="button"
-          onClick={() => onNavigate(prev.id)}
-          className={cn(
-            "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
-            "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-          )}
-        >
-          <span aria-hidden="true">←</span>
-          <span>{prev.label}</span>
-        </button>
-      ) : (
-        <span />
-      )}
-
-      {next ? (
-        <button
-          type="button"
-          onClick={() => onNavigate(next.id)}
-          className={cn(
-            "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
-            "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-          )}
-        >
-          <span>{next.label}</span>
-          <span aria-hidden="true">→</span>
-        </button>
-      ) : null}
-    </div>
-  );
-}
-
-function Chip({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-white/10 bg-surface-alt/10 px-3 py-1 text-[11px] uppercase tracking-widest text-text-secondary">
-      {children}
-    </span>
-  );
-}
-
-function ButtonLink({
-  href,
-  variant = "primary",
-  children,
-  onClick,
-}: {
-  href: string;
-  variant?: "primary" | "secondary";
-  children: React.ReactNode;
-  onClick?: () => void;
-}) {
-  const base =
-    "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm uppercase tracking-widest font-mono transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40";
-  const styles =
-    variant === "primary"
-      ? "bg-text-primary text-surface hover:bg-white"
-      : "border border-white/10 bg-transparent text-text-secondary hover:border-white/20 hover:text-text-primary hover:bg-white/5";
-  return (
-    <a href={href} onClick={onClick} className={cn(base, styles)}>
-      {children}
-    </a>
-  );
-}
-
-function MetricCard({
-  metric,
-  isActive,
-  onClick,
-}: {
-  metric: Metric;
-  isActive?: boolean;
-  onClick?: () => void;
-}) {
-  const base =
-    "rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-6 transition-colors duration-200 hover:bg-white/5";
-
-  const content = (
-    <>
-      <p className="text-3xl md:text-4xl font-display leading-none text-text-primary">{metric.value}</p>
-      <p className="mt-3 text-xs font-mono uppercase tracking-widest text-text-secondary/80">{metric.label}</p>
-      {metric.detail ? <p className="mt-4 text-sm text-text-secondary leading-relaxed">{metric.detail}</p> : null}
-    </>
-  );
-
-  if (!onClick) return <div className={base}>{content}</div>;
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={isActive}
-      className={cn(
-        base,
-        "text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-        isActive ? "bg-white/5 border-white/20" : "border-white/10",
-      )}
-    >
-      {content}
-    </button>
-  );
-}
-
-function MediaGrid({
-  items,
-  onOpen,
-  kindLabel,
-}: {
-  items: MediaItem[];
-  kindLabel: string;
-  onOpen: (id: string) => void;
-}) {
-  return (
-    <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-label={kindLabel}>
+    <ul role="list" className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
       {items.map((item) => (
         <li key={item.id}>
           <button
             type="button"
             onClick={() => onOpen(item.id)}
             className={cn(
-              "group w-full rounded-2xl border border-white/10 bg-surface-alt/10 p-4 text-left",
-              "hover:bg-white/5 transition-colors duration-200",
+              "group w-full overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10",
+              "hover:bg-white/5 hover:border-white/20 transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
             )}
           >
-            <div className="aspect-[16/10] w-full overflow-hidden rounded-xl border border-white/10 bg-surface/40">
+            <div className="aspect-[4/3] bg-surface/40">
               {item.imageSrc ? (
                 <img
                   src={item.imageSrc}
                   alt={item.title}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                   loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                <div className="flex h-full w-full items-center justify-center px-4 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
                   Add image
                 </div>
               )}
             </div>
-
-            <div className="mt-4">
-              <p className="text-sm tracking-tight text-text-primary">{item.title}</p>
-              {item.description ? <p className="mt-2 text-sm leading-relaxed text-text-secondary">{item.description}</p> : null}
+            <div className="px-4 py-3">
+              <p className="text-sm tracking-tight text-text-primary line-clamp-2">{item.title}</p>
             </div>
           </button>
         </li>
@@ -331,213 +466,86 @@ function MediaGrid({
 function Modal({
   open,
   title,
-  description,
-  children,
+  imageSrc,
   onClose,
+  closeButtonRef,
 }: {
   open: boolean;
   title: string;
-  description?: string;
-  children: React.ReactNode;
+  imageSrc?: string;
   onClose: () => void;
+  closeButtonRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   if (!open) return null;
 
   return (
-    <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-50 grid place-items-center px-6 py-10">
+    <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-50 grid place-items-center p-6">
       <button type="button" aria-label="Close modal" onClick={onClose} className="absolute inset-0 bg-black/70" />
-      <div className="relative w-full max-w-4xl rounded-3xl border border-white/10 bg-surface p-5 shadow-2xl">
-        <div className="flex items-start justify-between gap-6">
-          <div className="min-w-0">
-            <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Preview</p>
-            <h3 className="mt-2 font-display text-2xl tracking-tight">{title}</h3>
-            {description ? <p className="mt-3 text-sm text-text-secondary">{description}</p> : null}
-          </div>
+      <div className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-surface">
+        <div className="flex items-center justify-between gap-6 border-b border-white/10 px-5 py-4">
+          <p className="text-sm tracking-tight text-text-primary">{title}</p>
           <button
             type="button"
+            ref={closeButtonRef}
             onClick={onClose}
             className={cn(
-              "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
+              "inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
               "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
             )}
+            aria-label="Close"
           >
             ×
           </button>
         </div>
-
-        <div className="mt-6">{children}</div>
+        <div className="bg-surface-alt/10">
+          <div className="aspect-[16/10] w-full">
+            {imageSrc ? (
+              <img src={imageSrc} alt={title} className="h-full w-full object-contain" />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                Add an imageSrc for this item
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-function TOC({
-  items,
-  activeId,
-  onNavigate,
-}: {
-  items: TocItem[];
-  activeId: string;
-  onNavigate: (id: string) => void;
-}) {
-  return (
-    <nav aria-label="On this page" className="hidden lg:block sticky top-12 self-start">
-      <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
-      <ul className="mt-4 space-y-2">
-        {items.map((item) => {
-          const isActive = item.id === activeId;
-          return (
-            <li key={item.id}>
-              <button
-                type="button"
-                onClick={() => onNavigate(item.id)}
-                className={cn(
-                  "w-full text-left rounded-lg px-3 py-2 transition-colors duration-200",
-                  "border border-transparent hover:bg-white/5 hover:border-white/10",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                  isActive ? "bg-white/5 border-white/10 text-text-primary" : "text-text-secondary",
-                )}
-              >
-                <span className="text-sm tracking-tight">{item.label}</span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
-  );
-}
-
 export default function PAndGBeautyContentHubProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const progress = useScrollProgress();
+  const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
+  const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
 
-  const tocItems: TocItem[] = useMemo(
-    () => [
-      { id: "hero", label: "Hero" },
-      { id: "results", label: "Results" },
-      { id: "strategy", label: "Strategy" },
-      { id: "execution", label: "Execution" },
-      { id: "articles", label: "Article Proof" },
-      { id: "performance", label: "Performance" },
-      { id: "tools", label: "Tools" },
-    ],
+  const highlights = useMemo<Record<string, string>>(
+    () => ({
+      users: "Increased monthly organic users from 110K to 250K (+126%) in four months",
+      growth: "Increased monthly organic users from 110K to 250K (+126%) in four months",
+      mom: "Achieved 17.6% average month-over-month organic growth",
+      sessions: "Generated 139.78K+ new organic sessions per month",
+      authority: "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains",
+    }),
     [],
   );
 
-  const activeId = useActiveSection(tocItems.map((item) => item.id));
-
-  const metrics: Metric[] = [
-    { label: "Monthly organic users", value: "110K → 250K" },
-    { label: "Organic growth", value: "+126%", detail: "In four months" },
-    { label: "Average MoM organic growth", value: "17.6%" },
-    { label: "New organic sessions per month", value: "139.78K+" },
-    { label: "Domain authority", value: "44", detail: "4.52K backlinks, 788 referring domains" },
-    { label: "Long-form articles", value: "50+" },
-  ];
-
-  const metricNotesByLabel = useMemo(
-    () =>
-      new Map<string, string>([
-        ["Monthly organic users", "Increased monthly organic users from 110K to 250K (+126%) in four months"],
-        ["Organic growth", "Increased monthly organic users from 110K to 250K (+126%) in four months"],
-        ["Average MoM organic growth", "Achieved 17.6% average month-over-month organic growth"],
-        ["New organic sessions per month", "Generated 139.78K+ new organic sessions per month"],
-        ["Domain authority", "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains"],
-        ["Long-form articles", "Wrote and published 50+ long-form, consumer-facing articles"],
-      ]),
-    [],
-  );
-
-  const [activeMetricLabel, setActiveMetricLabel] = useState(metrics[0]?.label ?? "");
-
-  const strategyBullets = [
-    "Mapping topics to high-intent user queries and audience needs",
-    "Structuring content for clarity, scannability, and discoverability",
-    "Optimizing for SEO, AEO, and GEO to support traditional and generative search",
-    "Embedding subject-matter expert validation into the editorial workflow",
-    "Designing evergreen content built to compound in performance",
-  ];
-
-  const resultsBullets = [
-    "Increased monthly organic users from 110K to 250K (+126%) in four months",
-    "Achieved 17.6% average month-over-month organic growth",
-    "Generated 139.78K+ new organic sessions per month",
-    "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains",
-    "Improved rankings and visibility across high-intent, evergreen content categories",
-  ];
-
-  const tools = [
-    "SEO & AEO Strategy",
-    "Editorial Planning",
-    "Long-Form Writing",
-    "Search Intent Analysis",
-    "SEMrush",
-    "Google Analytics",
-    "Performance Optimization",
-    "Expert Collaboration",
-  ];
-
-  const onNavigate = (id: string) => scrollToId(id, prefersReducedMotion ? "auto" : "smooth");
-
-  const jumpItems: Array<SectionLink> = useMemo(
-    () => [
-      { id: "results", label: "Results" },
-      { id: "strategy", label: "Strategy" },
-      { id: "execution", label: "Execution" },
-      { id: "articles", label: "Articles" },
-      { id: "performance", label: "Performance" },
-      { id: "tools", label: "Tools" },
-    ],
-    [],
-  );
-
-  const executionBullets = [
-    "Wrote and published 50+ long-form, consumer-facing articles",
-    "Conducted keyword research and SERP analysis to guide topic selection",
-    "Optimized headlines, content structure, internal linking, and metadata",
-    "Collaborated with scientists and subject-matter experts to validate claims",
-    "Refreshed existing content based on performance insights",
-    "Tracked and analyzed results using SEMrush and Google Analytics",
-  ];
-
-  const articleImages: MediaItem[] = useMemo(
-    () => [
-      { id: "article-1", title: "Digital article screenshot 01" },
-      { id: "article-2", title: "Digital article screenshot 02" },
-      { id: "article-3", title: "Digital article screenshot 03" },
-      { id: "article-4", title: "Digital article screenshot 04" },
-      { id: "article-5", title: "Digital article screenshot 05" },
-      { id: "article-6", title: "Digital article screenshot 06" },
-    ],
-    [],
-  );
-
-  const charts: MediaItem[] = useMemo(
-    () => [
-      {
-        id: "chart-1",
-        title: "Organic growth chart",
-        description: "Replace with a chart image showing the 110K → 250K increase over four months.",
-      },
-      {
-        id: "chart-2",
-        title: "Authority and backlinks chart",
-        description: "Replace with a chart image showing DA 44 and link growth.",
-      },
-    ],
-    [],
-  );
-
-  const { open, activeId: modalActiveId, openWith, close } = useModal();
+  const { open, activeId, closeButtonRef, openWith, close } = useModal();
   const activeMedia = useMemo(() => {
-    const all = [...articleImages, ...charts];
-    return all.find((item) => item.id === modalActiveId) ?? all[0]!;
-  }, [articleImages, charts, modalActiveId]);
+    const all = [...articleMedia, ...chartMedia];
+    return all.find((item) => item.id === activeId) ?? all[0]!;
+  }, [activeId]);
 
   return (
     <main className="min-h-screen bg-surface text-text-primary">
-      <div className="mx-auto w-full max-w-6xl px-6 pt-14 md:pt-20 pb-28 md:pb-40">
+      <MobileJumpBar
+        items={sectionLinks}
+        activeId={activeSection}
+        onNavigate={(id) => scrollToId(id, scrollBehavior)}
+      />
+
+      <div className="mx-auto w-full max-w-6xl px-6 pt-10 md:pt-16 pb-24 md:pb-32">
         <header className="flex items-center justify-between">
           <Link
             href="/work"
@@ -552,219 +560,197 @@ export default function PAndGBeautyContentHubProjectPage() {
           </Link>
 
           <div className="hidden md:flex items-center gap-2">
-            <Chip>SEO &amp; AEO</Chip>
-            <Chip>Content Strategy</Chip>
-            <Chip>Copywriting</Chip>
-            <Chip>Brand Storytelling</Chip>
+            <Pill>SEO &amp; AEO</Pill>
+            <Pill>Content Strategy</Pill>
+            <Pill>Copywriting</Pill>
+            <Pill>Brand Storytelling</Pill>
           </div>
         </header>
 
-        <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_260px]">
+        <div className="mt-10 grid gap-10 xl:grid-cols-[1fr_280px]">
           <div className="min-w-0">
-            <section id="hero" className="scroll-mt-12 md:scroll-mt-16">
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Procter &amp; Gamble</p>
-              <h1 className="mt-4 font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.02]">
-                Procter &amp; Gamble Beauty Content Hub
+            <section id="brief" className="scroll-mt-16">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Project</p>
+              <h1 className="mt-3 font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.03]">
+                {project.title}
               </h1>
-              <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">
-                SEO-Driven Editorial Content Program
-              </p>
+              <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
-              <div className="mt-8 grid gap-6 max-w-3xl">
-                <p className="text-base md:text-lg leading-relaxed text-text-secondary">
-                  This project focused on developing and optimizing SEO-driven editorial content for Procter &amp;
-                  Gamble’s consumer-facing content hub to improve organic traffic and search visibility across beauty,
-                  health, and wellness topics.
-                </p>
-                <p className="text-base md:text-lg leading-relaxed text-text-secondary">
-                  Increase monthly organic traffic and search visibility for P&amp;G Beauty’s owned content platform
-                  while delivering clear, expert-validated educational content designed to perform sustainably over
-                  time.
-                </p>
+              <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+                <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
+                  <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
+
+                  <div className="mt-8 flex flex-wrap gap-2">
+                    <Pill>Role</Pill>
+                    <span className="text-sm text-text-secondary">{project.role}</span>
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Quick results</p>
+                  <div className="mt-5 grid gap-4">
+                    <div>
+                      <p className="font-display text-3xl leading-none">110K → 250K</p>
+                      <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                        Monthly organic users
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-display text-3xl leading-none">+126%</p>
+                      <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                        Organic growth · in four months
+                      </p>
+                    </div>
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={() => scrollToId("results", scrollBehavior)}
+                        className={cn(
+                          "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest",
+                          "bg-text-primary text-surface hover:bg-white transition-colors",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                        )}
+                      >
+                        View Results
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <ButtonLink href="#results" onClick={() => onNavigate("results")}>
-                  View Results
-                </ButtonLink>
-                <ButtonLink href="#strategy" variant="secondary" onClick={() => onNavigate("strategy")}>
-                  View Strategy
-                </ButtonLink>
-              </div>
-
-              <div className="mt-10 flex flex-wrap gap-2 md:gap-3">
-                <Chip>Role: Copywriter &amp; Content Strategist</Chip>
-                <Chip>Focus: Beauty, Health, Wellness</Chip>
-                <Chip>Duration: 4 months</Chip>
-                <Chip>Objective: Organic traffic and visibility</Chip>
-                <Chip>Tools: SEMrush, Google Analytics</Chip>
-              </div>
-
-              <MobileJumpBar items={jumpItems} onNavigate={onNavigate} />
             </section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="results" title="Results" eyebrow="Outcomes" className="mt-16">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {metrics.map((metric) => (
-                  <MetricCard
-                    key={metric.label}
-                    metric={metric}
-                    isActive={activeMetricLabel === metric.label}
-                    onClick={() => setActiveMetricLabel(metric.label)}
-                  />
+            <Section id="overview" eyebrow="Overview" title="Overview">
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="strategy" eyebrow="Strategy" title="Strategy">
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.strategyIntro}</p>
+              <ul className="mt-10 grid gap-3 md:grid-cols-2 max-w-4xl text-sm md:text-base text-text-secondary">
+                {project.strategyBullets.map((bullet) => (
+                  <li key={bullet} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
+                    {bullet}
+                  </li>
                 ))}
+              </ul>
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="execution" eyebrow="Execution" title="Execution">
+              <div className="hidden lg:block">
+                <ExecutionStepper steps={project.executionBullets as unknown as string[]} />
               </div>
 
-              <div className="mt-8 rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-6">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Selected highlight</p>
-                <p className="mt-3 text-base leading-relaxed text-text-secondary">
-                  {metricNotesByLabel.get(activeMetricLabel) ?? resultsBullets[0]}
-                </p>
+              <div className="lg:hidden">
+                <ol className="grid gap-3">
+                  {(project.executionBullets as unknown as string[]).map((step, index) => (
+                    <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
+                      <div className="flex items-start gap-3">
+                        <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <p className="text-sm leading-relaxed text-text-secondary">{step}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
               </div>
+            </Section>
 
-              <div className="mt-8 grid gap-3 max-w-3xl text-sm md:text-base text-text-secondary">
-                {resultsBullets.map((line) => (
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="results" eyebrow="Results" title="Results">
+              <MetricTabs metrics={metrics} highlights={highlights} />
+              <div className="mt-10 grid gap-3 max-w-3xl text-sm md:text-base text-text-secondary">
+                {project.resultsBullets.map((line) => (
                   <p key={line} className="leading-relaxed">
                     {line}
                   </p>
                 ))}
               </div>
-
-              <SectionNav next={{ id: "strategy", label: "Strategy" }} onNavigate={onNavigate} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="strategy" title="Strategy" eyebrow="Approach" className="mt-16">
-              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">
-                I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility.
-              </p>
-
-              <p className="mt-6 max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">
-                The approach focused on:
-              </p>
-
-              <ul className="mt-10 grid gap-3 md:grid-cols-2 text-sm md:text-base text-text-secondary">
-                {strategyBullets.map((bullet) => (
-                  <li key={bullet} className="rounded-xl border border-white/10 bg-surface-alt/10 px-5 py-4">
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-
-              <SectionNav
-                prev={{ id: "results", label: "Results" }}
-                next={{ id: "execution", label: "Execution" }}
-                onNavigate={onNavigate}
-              />
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="execution" title="Execution" eyebrow="Workflow" className="mt-16">
-              <ol className="relative max-w-3xl space-y-6 border-l border-white/10 pl-6">
-                {executionBullets.map((step, index) => (
-                  <li key={step} className="relative">
-                    <span
-                      aria-hidden="true"
-                      className="absolute -left-[13px] top-0 inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-surface/70 text-[11px] font-mono text-text-secondary"
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <p className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</p>
-                  </li>
-                ))}
-              </ol>
-
-              <SectionNav
-                prev={{ id: "strategy", label: "Strategy" }}
-                next={{ id: "articles", label: "Article Proof" }}
-                onNavigate={onNavigate}
-              />
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="articles" title="Article Proof" eyebrow="Digital articles" className="mt-16">
+            <Section id="articles" eyebrow="Digital Articles" title="Published article visuals">
               <p className="max-w-3xl text-sm md:text-base leading-relaxed text-text-secondary">
-                Select a tile to preview.
+                Add screenshots of digital articles here.
               </p>
-
               <div className="mt-8">
-                <MediaGrid items={articleImages} kindLabel="Digital article screenshots" onOpen={openWith} />
+                <MediaGrid items={articleMedia} onOpen={openWith} />
               </div>
-
-              <SectionNav
-                prev={{ id: "execution", label: "Execution" }}
-                next={{ id: "performance", label: "Performance" }}
-                onNavigate={onNavigate}
-              />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="performance" title="Performance" eyebrow="Charts" className="mt-16">
+            <Section id="performance" eyebrow="Performance" title="Performance graphs">
+              <p className="max-w-3xl text-sm md:text-base leading-relaxed text-text-secondary">
+                Add two performance graphs or charts here.
+              </p>
               <div className="mt-8">
-                <MediaGrid items={charts} kindLabel="Performance charts" onOpen={openWith} />
+                <MediaGrid items={chartMedia} onOpen={openWith} />
               </div>
-
-              <SectionNav prev={{ id: "articles", label: "Article Proof" }} next={{ id: "tools", label: "Tools" }} onNavigate={onNavigate} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="tools" title="Tools & Capabilities" eyebrow="Toolkit" className="mt-16">
+            <Section id="tools" eyebrow="Tools & Capabilities" title="Tools & Capabilities">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">
-                SEO &amp; AEO Strategy · Editorial Planning · Long-Form Writing · Search Intent Analysis · SEMrush ·
-                Google Analytics · Performance Optimization · Expert Collaboration
+                {project.toolsAndCapabilities}
               </p>
-
               <div className="mt-8 flex flex-wrap gap-2">
-                {tools.map((tag) => (
-                  <Chip key={tag}>{tag}</Chip>
+                {project.tools.map((tool) => (
+                  <Pill key={tool}>{tool}</Pill>
                 ))}
               </div>
-
-              <SectionNav prev={{ id: "performance", label: "Performance" }} onNavigate={onNavigate} />
             </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <footer className="pt-2">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <button
+                  type="button"
+                  onClick={() => scrollToId("brief", scrollBehavior)}
+                  className={cn(
+                    "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                    "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                >
+                  <span aria-hidden="true">↑</span>
+                  <span>Back to top</span>
+                </button>
+
+                <div className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
+                  {Math.round(progress * 100)}% read
+                </div>
+              </div>
+            </footer>
           </div>
 
-          <div className="min-w-0">
-            <TOC items={tocItems} activeId={activeId} onNavigate={onNavigate} />
-          </div>
+          <DesktopRail
+            items={sectionLinks}
+            activeId={activeSection}
+            progress={progress}
+            onNavigate={(id) => scrollToId(id, scrollBehavior)}
+          />
         </div>
       </div>
 
-      <a
-        href="#hero"
-        onClick={(event) => {
-          event.preventDefault();
-          scrollToId("hero", prefersReducedMotion ? "auto" : "smooth");
-        }}
-        className={cn(
-          "fixed bottom-24 right-6 hidden md:inline-flex items-center justify-center",
-          "h-10 w-10 rounded-full border border-white/10 bg-surface/70 backdrop-blur-md",
-          "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-surface/80 transition-colors",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-        )}
-        aria-label="Back to top"
-      >
-        ↑
-      </a>
-
-      <Modal open={open} title={activeMedia?.title ?? "Preview"} description={activeMedia?.description} onClose={close}>
-        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
-          {activeMedia?.imageSrc ? (
-            <img src={activeMedia.imageSrc} alt={activeMedia.title} className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-              Add an imageSrc for this item
-            </div>
-          )}
-        </div>
-      </Modal>
+      <Modal
+        open={open}
+        title={activeMedia?.title ?? "Preview"}
+        imageSrc={activeMedia?.imageSrc}
+        onClose={close}
+        closeButtonRef={closeButtonRef}
+      />
     </main>
   );
 }
+
