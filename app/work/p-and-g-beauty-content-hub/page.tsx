@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/app/lib/utils";
 
 type TocItem = {
@@ -15,9 +15,9 @@ type Metric = {
   detail?: string;
 };
 
-type Pillar = {
-  title: string;
-  description: string;
+type SectionLink = {
+  id: string;
+  label: string;
 };
 
 function usePrefersReducedMotion() {
@@ -70,6 +70,36 @@ function scrollToId(id: string, behavior: ScrollBehavior) {
   node.scrollIntoView({ behavior, block: "start" });
 }
 
+function MobileJumpBar({
+  items,
+  onNavigate,
+}: {
+  items: Array<SectionLink>;
+  onNavigate: (id: string) => void;
+}) {
+  return (
+    <nav aria-label="Jump to section" className="mt-8 md:hidden">
+      <div className="flex gap-2 overflow-x-auto pb-2 [-webkit-overflow-scrolling:touch]">
+        {items.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => onNavigate(item.id)}
+            className={cn(
+              "shrink-0 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+              "text-[11px] font-mono uppercase tracking-widest text-text-secondary",
+              "hover:bg-white/5 hover:text-text-primary hover:border-white/20 transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+            )}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
 function Section({
   id,
   title,
@@ -98,6 +128,54 @@ function Section({
       </header>
       <div className="mt-8">{children}</div>
     </section>
+  );
+}
+
+function SectionNav({
+  prev,
+  next,
+  onNavigate,
+}: {
+  prev?: SectionLink;
+  next?: SectionLink;
+  onNavigate: (id: string) => void;
+}) {
+  if (!prev && !next) return null;
+
+  return (
+    <div className="mt-10 flex flex-wrap items-center justify-between gap-3">
+      {prev ? (
+        <button
+          type="button"
+          onClick={() => onNavigate(prev.id)}
+          className={cn(
+            "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+            "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+          )}
+        >
+          <span aria-hidden="true">←</span>
+          <span>{prev.label}</span>
+        </button>
+      ) : (
+        <span />
+      )}
+
+      {next ? (
+        <button
+          type="button"
+          onClick={() => onNavigate(next.id)}
+          className={cn(
+            "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+            "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+          )}
+        >
+          <span>{next.label}</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      ) : null}
+    </div>
   );
 }
 
@@ -133,41 +211,12 @@ function ButtonLink({
   );
 }
 
-function StatGrid({
-  items,
-  className,
-}: {
-  items: Array<{ label: string; value: string; hint?: string }>;
-  className?: string;
-}) {
-  return (
-    <dl className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4", className)}>
-      {items.map((item) => (
-        <div key={item.label} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-6">
-          <dt className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.label}</dt>
-          <dd className="mt-3 text-lg md:text-xl text-text-primary leading-snug">{item.value}</dd>
-          {item.hint ? <p className="mt-3 text-sm text-text-secondary">{item.hint}</p> : null}
-        </div>
-      ))}
-    </dl>
-  );
-}
-
 function MetricCard({ metric }: { metric: Metric }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-6 transition-colors duration-200 hover:bg-white/5">
       <p className="text-3xl md:text-4xl font-display leading-none text-text-primary">{metric.value}</p>
       <p className="mt-3 text-xs font-mono uppercase tracking-widest text-text-secondary/80">{metric.label}</p>
       {metric.detail ? <p className="mt-4 text-sm text-text-secondary leading-relaxed">{metric.detail}</p> : null}
-    </div>
-  );
-}
-
-function PillarCard({ pillar }: { pillar: Pillar }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-6 transition-colors duration-200 hover:bg-white/5">
-      <h3 className="font-display text-xl tracking-tight text-text-primary">{pillar.title}</h3>
-      <p className="mt-3 text-sm md:text-base leading-relaxed text-text-secondary">{pillar.description}</p>
     </div>
   );
 }
@@ -231,6 +280,8 @@ export default function PAndGBeautyContentHubProjectPage() {
       { id: "strategy", label: "Strategy" },
       { id: "execution", label: "Execution" },
       { id: "impact", label: "Impact" },
+      { id: "tools", label: "Tools" },
+      { id: "why", label: "Why It Matters" },
     ],
     [],
   );
@@ -244,27 +295,18 @@ export default function PAndGBeautyContentHubProjectPage() {
     { label: "Long-form articles published", value: "50+" },
   ];
 
-  const pillars: Pillar[] = [
-    {
-      title: "Search intent mapping",
-      description: "Map topics to high-intent search queries and user needs to earn visibility where it matters.",
-    },
-    {
-      title: "Editorial clarity",
-      description: "Structure content for clarity, scannability, and discoverability across competitive categories.",
-    },
-    {
-      title: "SEO, AEO, and GEO",
-      description: "Optimise for traditional and generative search, including AI-driven discovery surfaces.",
-    },
-    {
-      title: "Expert validation",
-      description: "Embed expert validation into the editorial workflow to protect credibility and compliance.",
-    },
-    {
-      title: "Compounding value",
-      description: "Design content to compound long-term, not spike and fade, through durable evergreen coverage.",
-    },
+  const strategyBullets = [
+    "Map topics to high-intent search queries and user needs",
+    "Structure content for clarity, scannability, and discoverability",
+    "Optimise for SEO, AEO, and GEO for traditional + generative search",
+    "Embed expert validation into the editorial workflow",
+    "Design content to compound long-term, not spike and fade",
+  ];
+
+  const resultsBullets = [
+    "Increased monthly organic users from 110K to 250K (+126%) in four months",
+    "Sustained 17.6% average month-over-month growth in organic traffic",
+    "Improved rankings and visibility across high-intent, evergreen content categories",
   ];
 
   const tools = [
@@ -280,6 +322,17 @@ export default function PAndGBeautyContentHubProjectPage() {
   ];
 
   const onNavigate = (id: string) => scrollToId(id, prefersReducedMotion ? "auto" : "smooth");
+
+  const jumpItems: Array<SectionLink> = useMemo(
+    () => [
+      { id: "results", label: "Results" },
+      { id: "challenge", label: "Challenge" },
+      { id: "strategy", label: "Strategy" },
+      { id: "execution", label: "Execution" },
+      { id: "impact", label: "Impact" },
+    ],
+    [],
+  );
 
   return (
     <main className="min-h-screen bg-surface text-text-primary">
@@ -339,28 +392,11 @@ export default function PAndGBeautyContentHubProjectPage() {
                 <Chip>Focus: Beauty, Health, Wellness</Chip>
                 <Chip>Duration: 4 months</Chip>
                 <Chip>Primary Goal: Organic visibility</Chip>
+                <Chip>Tools: SEMrush, Google Analytics</Chip>
               </div>
+
+              <MobileJumpBar items={jumpItems} onNavigate={onNavigate} />
             </section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="at-a-glance" title="At a Glance" eyebrow="Snapshot" className="mt-16">
-              <StatGrid
-                items={[
-                  { label: "Role", value: "Editorial Copywriter & SEO Content Strategist (Contract)" },
-                  { label: "Focus", value: "SEO-driven editorial content for beauty, health, and wellness education" },
-                  { label: "Primary Goal", value: "Increase organic visibility in competitive search categories" },
-                  { label: "Duration", value: "4 months" },
-                ]}
-              />
-
-              <div className="mt-8 rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-6">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Tools Used</p>
-                <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
-                  SEMrush and Google Analytics.
-                </p>
-              </div>
-            </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
@@ -371,22 +407,37 @@ export default function PAndGBeautyContentHubProjectPage() {
                 ))}
               </div>
 
-              <p className="mt-8 max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">
-                Increased monthly organic users from 110K to 250K (+126%) in four months, with sustained 17.6% average
-                month-over-month growth in organic traffic and improved rankings across high-intent evergreen content
-                categories.
-              </p>
-
-              <div className="mt-10 grid gap-6 md:grid-cols-2">
-                <VisualPlaceholder
-                  title="Performance Chart Placeholder"
-                  subtitle="Add a simple time-series visualization to show sustained growth."
-                />
-                <VisualPlaceholder
-                  title="SERP Snapshot Placeholder"
-                  subtitle="Add a before/after view of ranking positions for key evergreen topics."
-                />
+              <div className="mt-8 grid gap-3 max-w-3xl text-sm md:text-base text-text-secondary">
+                {resultsBullets.map((line) => (
+                  <p key={line} className="leading-relaxed">
+                    {line}
+                  </p>
+                ))}
               </div>
+
+              <details className="mt-10 rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-6">
+                <summary
+                  className={cn(
+                    "cursor-pointer list-none",
+                    "text-xs font-mono uppercase tracking-widest text-text-secondary/70",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 rounded-lg",
+                  )}
+                >
+                  Optional visuals
+                </summary>
+                <div className="mt-6 grid gap-6 md:grid-cols-2">
+                  <VisualPlaceholder
+                    title="Performance Chart Placeholder"
+                    subtitle="Add a simple time-series visualization to show sustained growth."
+                  />
+                  <VisualPlaceholder
+                    title="SERP Snapshot Placeholder"
+                    subtitle="Add a before/after view of ranking positions for key evergreen topics."
+                  />
+                </div>
+              </details>
+
+              <SectionNav next={{ id: "challenge", label: "Challenge" }} onNavigate={onNavigate} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -412,6 +463,12 @@ export default function PAndGBeautyContentHubProjectPage() {
                   Ensuring expert validation and compliance across all published content
                 </li>
               </ul>
+
+              <SectionNav
+                prev={{ id: "results", label: "Results" }}
+                next={{ id: "strategy", label: "Strategy" }}
+                onNavigate={onNavigate}
+              />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -422,17 +479,25 @@ export default function PAndGBeautyContentHubProjectPage() {
                 need, structured for scannability, and validated for accuracy to build durable search performance.
               </p>
 
-              <div className="mt-10 grid gap-4 md:grid-cols-2">
-                {pillars.map((pillar) => (
-                  <PillarCard key={pillar.title} pillar={pillar} />
+              <ul className="mt-10 grid gap-3 md:grid-cols-2 text-sm md:text-base text-text-secondary">
+                {strategyBullets.map((bullet) => (
+                  <li key={bullet} className="rounded-xl border border-white/10 bg-surface-alt/10 px-5 py-4">
+                    {bullet}
+                  </li>
                 ))}
-              </div>
+              </ul>
+
+              <SectionNav
+                prev={{ id: "challenge", label: "Challenge" }}
+                next={{ id: "execution", label: "Execution" }}
+                onNavigate={onNavigate}
+              />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="execution" title="Execution" eyebrow="Workflow" className="mt-16">
-              <ol className="grid gap-4 max-w-3xl">
+              <ol className="relative max-w-3xl space-y-6 border-l border-white/10 pl-6">
                 {[
                   "Wrote and published 50+ long-form, consumer-facing articles",
                   "Conducted keyword research and SERP analysis to guide topic selection",
@@ -441,19 +506,23 @@ export default function PAndGBeautyContentHubProjectPage() {
                   "Refreshed existing content based on performance insights",
                   "Tracked results using SEMrush and Google Analytics",
                 ].map((step, index) => (
-                  <li
-                    key={step}
-                    className="relative rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-5"
-                  >
-                    <div className="flex items-start gap-4">
-                      <span className="mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-xs font-mono text-text-secondary">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <p className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</p>
-                    </div>
+                  <li key={step} className="relative">
+                    <span
+                      aria-hidden="true"
+                      className="absolute -left-[13px] top-0 inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-surface/70 text-[11px] font-mono text-text-secondary"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</p>
                   </li>
                 ))}
               </ol>
+
+              <SectionNav
+                prev={{ id: "strategy", label: "Strategy" }}
+                next={{ id: "impact", label: "Impact" }}
+                onNavigate={onNavigate}
+              />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -464,6 +533,8 @@ export default function PAndGBeautyContentHubProjectPage() {
                 growth at scale. The work supported immediate performance gains while establishing a durable content
                 foundation for long-term organic visibility.
               </p>
+
+              <SectionNav prev={{ id: "execution", label: "Execution" }} next={{ id: "tools", label: "Tools" }} onNavigate={onNavigate} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -474,11 +545,13 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <Chip key={tag}>{tag}</Chip>
                 ))}
               </div>
+
+              <SectionNav prev={{ id: "impact", label: "Impact" }} next={{ id: "why", label: "Why It Matters" }} onNavigate={onNavigate} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <section aria-labelledby="why-this-matters-title" className="mt-16">
+            <section id="why" aria-labelledby="why-this-matters-title" className="mt-16 scroll-mt-12 md:scroll-mt-16">
               <div className="rounded-2xl border border-white/10 bg-surface-alt/10 px-6 py-8">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
                   Why This Project Matters
@@ -491,6 +564,8 @@ export default function PAndGBeautyContentHubProjectPage() {
                   performance analysis to deliver measurable business impact for a Fortune-level brand.
                 </p>
               </div>
+
+              <SectionNav prev={{ id: "tools", label: "Tools" }} onNavigate={onNavigate} />
             </section>
 
             <footer className="mt-16">
@@ -529,4 +604,3 @@ export default function PAndGBeautyContentHubProjectPage() {
     </main>
   );
 }
-
