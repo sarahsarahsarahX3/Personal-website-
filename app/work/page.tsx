@@ -1,12 +1,5 @@
 import { getAllFilesFrontMatter } from "@/app/lib/mdx";
 import { WorkBrowser } from "@/app/components/work/WorkBrowser";
-import { motion } from "framer-motion";
-// Note: Can't use motion in server component directly for exit animations usually, 
-// but we just need standard HTML for the header here, or use a client wrapper for the header if we want animation.
-// Actually, let's just make the whole header static for now or client component if needed. 
-// For simplicity, I'll move the header INTO the WorkBrowser or keep it separate as a client component.
-// Let's Import a client-side Header wrapper if we really need the animation, 
-// OR just move the whole Header into WorkBrowser. Moving it into WorkBrowser is cleaner for layout animations.
 
 export default async function WorkPage() {
     const workFiles = await getAllFilesFrontMatter("work");
@@ -20,6 +13,15 @@ export default async function WorkPage() {
         slug: file.slug,
         tags: file.tags,
     }));
+
+    projects.unshift({
+        title: "Procter & Gamble Beauty Content Hub",
+        category: "SEO & AEO",
+        image: "/images/P%26G.jpg",
+        size: "large",
+        slug: "p-and-g-beauty-content-hub",
+        tags: ["SEO & AEO", "Content Strategy", "Copywriting", "Brand Storytelling"],
+    });
 
     return (
         <main className="min-h-screen pt-32 pb-40 px-6">
