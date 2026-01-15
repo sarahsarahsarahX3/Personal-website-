@@ -17,7 +17,8 @@ export default async function WorkPage() {
         category: file.category,
         image: file.heroImage,
         size: file.size || "small",
-        slug: file.slug
+        slug: file.slug,
+        tags: file.tags,
     }));
 
     return (

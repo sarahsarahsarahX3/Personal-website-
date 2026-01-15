@@ -11,14 +11,12 @@ interface ProjectCardProps {
     category: string;
     image: string;
     index: number;
+    slug: string;
     size?: "large" | "small" | "tall";
     className?: string; // Add className prop
 }
 
-export function ProjectCard({ title, category, image, index, size = "small", className }: ProjectCardProps) {
-    // Simple slug generation for demo purposes
-    const slug = title.toLowerCase().replace(/\s+/g, '-');
-
+export function ProjectCard({ title, category, image, index, slug, size = "small", className }: ProjectCardProps) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -11,6 +11,7 @@ interface Project {
     image: string; // mapped from heroImage
     size?: "large" | "small" | "tall";
     slug: string;
+    tags?: string[];
 }
 
 const categories = [
@@ -27,7 +28,9 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
     const [activeCategory, setActiveCategory] = useState("All");
 
     const filteredProjects = projects.filter(project =>
-        activeCategory === "All" || project.category === activeCategory
+        activeCategory === "All" ||
+        project.category === activeCategory ||
+        (project.tags ?? []).includes(activeCategory)
     );
 
     return (
@@ -73,6 +76,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                                 image={project.image}
                                 title={project.title}
                                 category={project.category}
+                                slug={project.slug}
                                 size={project.size}
                                 className="h-full"
                             />
