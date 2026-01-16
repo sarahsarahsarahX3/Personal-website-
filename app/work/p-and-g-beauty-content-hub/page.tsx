@@ -21,13 +21,14 @@ type Metric = {
 
 const project = {
   title: "Procter & Gamble Beauty Content Hub",
-  subtitle: "SEO-Driven Editorial Content Program",
+  subtitle: "Growth Marketing and Content Strategy",
   overview:
     "This project focused on developing and optimizing SEO-driven editorial content for Procter & Gamble’s consumer-facing content hub to improve organic traffic and search visibility across beauty, health, and wellness topics.",
   role: "Copywriter & Content Strategist",
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
-  strategyIntro: "I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility.",
+  strategyIntro:
+    "I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility. The approach focused on:",
   strategyBullets: [
     "Mapping topics to high-intent user queries and audience needs",
     "Structuring content for clarity, scannability, and discoverability",
@@ -50,8 +51,6 @@ const project = {
     "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains",
     "Improved rankings and visibility across high-intent, evergreen content categories",
   ],
-  toolsAndCapabilities:
-    "SEO & AEO Strategy · Editorial Planning · Long-Form Writing · Search Intent Analysis · SEMrush · Google Analytics · Performance Optimization · Expert Collaboration",
   tools: [
     "SEO & AEO Strategy",
     "Editorial Planning",
@@ -65,15 +64,14 @@ const project = {
 } as const;
 
 const metrics: Metric[] = [
-  { id: "users", label: "Monthly organic users", value: "110K → 250K" },
-  { id: "growth", label: "Organic growth", value: "+126%", detail: "in four months" },
+  { id: "users", label: "Monthly organic search traffic", value: "110K → 250K" },
+  { id: "growth", label: "Organic growth within four months", value: "+126%" },
   { id: "mom", label: "Average MoM organic growth", value: "17.6%" },
   { id: "sessions", label: "New organic sessions per month", value: "139.78K+" },
   { id: "authority", label: "Authority and backlinks", value: "DA 44", detail: "4.52K backlinks · 788 referring domains" },
 ];
 
 const sectionLinks: SectionLink[] = [
-  { id: "brief", label: "Brief" },
   { id: "overview", label: "Overview" },
   { id: "strategy", label: "Strategy" },
   { id: "execution", label: "Execution" },
@@ -186,20 +184,17 @@ function Pill({ children }: { children: React.ReactNode }) {
 
 function Section({
   id,
-  eyebrow,
   title,
   children,
 }: {
   id: string;
-  eyebrow: string;
   title: string;
   children: React.ReactNode;
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16">
       <header className="max-w-3xl">
-        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{eyebrow}</p>
-        <h2 id={`${id}-title`} className="mt-3 font-display text-3xl md:text-4xl tracking-tight text-text-primary">
+        <h2 id={`${id}-title`} className="font-display text-3xl md:text-4xl tracking-tight text-text-primary">
           {title}
         </h2>
       </header>
@@ -257,40 +252,56 @@ function DesktopRail({
 }) {
   return (
     <aside className="hidden xl:block sticky top-14 self-start">
-      <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
-            {Math.round(progress * 100)}%
+      <div className="grid gap-3">
+        <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
+            <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
+              {Math.round(progress * 100)}%
+            </p>
+          </div>
+
+          <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden">
+            <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
+          </div>
+
+          <ul className="mt-4 space-y-1.5">
+            {items.map((item) => {
+              const isActive = item.id === activeId;
+              return (
+                <li key={item.id}>
+                  <button
+                    type="button"
+                    onClick={() => onNavigate(item.id)}
+                    className={cn(
+                      "w-full rounded-lg px-3 py-2 text-left transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      isActive
+                        ? "bg-white/5 border border-white/15 text-text-primary"
+                        : "border border-transparent text-text-secondary hover:text-text-primary hover:bg-white/5 hover:border-white/10",
+                    )}
+                  >
+                    <span className="text-sm tracking-tight">{item.label}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <div
+          key={activeId}
+          className={cn(
+            "rounded-2xl border border-white/10 bg-surface-alt/10 p-4",
+            "transition-opacity duration-300",
+          )}
+        >
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key Takeaway</p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            This case study highlights my ability to combine editorial judgement, growth strategy, and performance
+            analysis to deliver measurable business impact for a Fortune-level brand.
           </p>
         </div>
-
-        <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden">
-          <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
-        </div>
-
-        <ul className="mt-4 space-y-1.5">
-          {items.map((item) => {
-            const isActive = item.id === activeId;
-            return (
-              <li key={item.id}>
-                <button
-                  type="button"
-                  onClick={() => onNavigate(item.id)}
-                  className={cn(
-                    "w-full rounded-lg px-3 py-2 text-left transition-colors",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                    isActive
-                      ? "bg-white/5 border border-white/15 text-text-primary"
-                      : "border border-transparent text-text-secondary hover:text-text-primary hover:bg-white/5 hover:border-white/10",
-                  )}
-                >
-                  <span className="text-sm tracking-tight">{item.label}</span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
       </div>
     </aside>
   );
@@ -349,46 +360,6 @@ function MetricTabs({
         <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
           {highlights[activeMetric.id] ?? ""}
         </p>
-      </div>
-    </div>
-  );
-}
-
-function ExecutionStepper({ steps }: { steps: string[] }) {
-  const [active, setActive] = useState(0);
-  const activeStep = steps[active] ?? steps[0]!;
-
-  return (
-    <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-      <ol className="grid gap-2">
-        {steps.map((step, index) => {
-          const selected = index === active;
-          return (
-            <li key={step}>
-              <button
-                type="button"
-                onClick={() => setActive(index)}
-                className={cn(
-                  "w-full rounded-2xl border px-5 py-4 text-left transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                  selected ? "border-white/25 bg-white/5" : "border-white/10 bg-surface-alt/10 hover:bg-white/5 hover:border-white/20",
-                )}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-sm tracking-tight text-text-primary line-clamp-2">{step}</span>
-                </div>
-              </button>
-            </li>
-          );
-        })}
-      </ol>
-
-      <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
-        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Active step</p>
-        <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{activeStep}</p>
       </div>
     </div>
   );
@@ -546,7 +517,7 @@ export default function PAndGBeautyContentHubProjectPage() {
       />
 
       <div className="mx-auto w-full max-w-6xl px-6 pt-10 md:pt-16 pb-24 md:pb-32">
-        <header className="flex items-center justify-between">
+        <header className="flex items-center">
           <Link
             href="/work"
             className={cn(
@@ -558,32 +529,30 @@ export default function PAndGBeautyContentHubProjectPage() {
             <span aria-hidden="true">←</span>
             <span>Back to Projects</span>
           </Link>
-
-          <div className="hidden md:flex items-center gap-2">
-            <Pill>SEO &amp; AEO</Pill>
-            <Pill>Content Strategy</Pill>
-            <Pill>Copywriting</Pill>
-            <Pill>Brand Storytelling</Pill>
-          </div>
         </header>
 
         <div className="mt-10 grid gap-10 xl:grid-cols-[1fr_280px]">
           <div className="min-w-0">
-            <section id="brief" className="scroll-mt-16">
+            <section id="overview" className="scroll-mt-16">
               <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Project</p>
               <h1 className="mt-3 font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.03]">
                 {project.title}
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
-              <div className="mt-10 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+              <div className="mt-10 max-w-3xl">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
+                <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
+              </div>
+
+              <div className="mt-12 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
                 <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
 
-                  <div className="mt-8 flex flex-wrap gap-2">
-                    <Pill>Role</Pill>
-                    <span className="text-sm text-text-secondary">{project.role}</span>
+                  <div className="mt-8 flex items-baseline gap-3">
+                    <span className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</span>
+                    <span className="text-sm md:text-base text-text-secondary">{project.role}</span>
                   </div>
                 </div>
 
@@ -593,13 +562,13 @@ export default function PAndGBeautyContentHubProjectPage() {
                     <div>
                       <p className="font-display text-3xl leading-none">110K → 250K</p>
                       <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                        Monthly organic users
+                        Monthly organic search traffic
                       </p>
                     </div>
                     <div>
                       <p className="font-display text-3xl leading-none">+126%</p>
                       <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                        Organic growth · in four months
+                        Organic growth within four months
                       </p>
                     </div>
                     <div className="pt-2">
@@ -622,18 +591,19 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="overview" eyebrow="Overview" title="Overview">
-              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="strategy" eyebrow="Strategy" title="Strategy">
+            <Section id="strategy" title="Strategy">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.strategyIntro}</p>
               <ul className="mt-10 grid gap-3 md:grid-cols-2 max-w-4xl text-sm md:text-base text-text-secondary">
                 {project.strategyBullets.map((bullet) => (
-                  <li key={bullet} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
-                    {bullet}
+                  <li
+                    key={bullet}
+                    className="flex gap-3 rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-[6px] inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-accent/80"
+                    />
+                    <span className="leading-relaxed">{bullet}</span>
                   </li>
                 ))}
               </ul>
@@ -641,30 +611,24 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="execution" eyebrow="Execution" title="Execution">
-              <div className="hidden lg:block">
-                <ExecutionStepper steps={project.executionBullets as unknown as string[]} />
-              </div>
-
-              <div className="lg:hidden">
-                <ol className="grid gap-3">
-                  {(project.executionBullets as unknown as string[]).map((step, index) => (
-                    <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
-                      <div className="flex items-start gap-3">
-                        <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <p className="text-sm leading-relaxed text-text-secondary">{step}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
+            <Section id="execution" title="Execution">
+              <ol className="grid gap-3 md:grid-cols-2">
+                {(project.executionBullets as unknown as string[]).map((step, index) => (
+                  <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
+                    <div className="flex items-start gap-3">
+                      <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <p className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="results" eyebrow="Results" title="Results">
+            <Section id="results" title="Results">
               <MetricTabs metrics={metrics} highlights={highlights} />
               <div className="mt-10 grid gap-3 max-w-3xl text-sm md:text-base text-text-secondary">
                 {project.resultsBullets.map((line) => (
@@ -677,7 +641,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="articles" eyebrow="Digital Articles" title="Published article visuals">
+            <Section id="articles" title="Published article visuals">
               <p className="max-w-3xl text-sm md:text-base leading-relaxed text-text-secondary">
                 Add screenshots of digital articles here.
               </p>
@@ -688,7 +652,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="performance" eyebrow="Performance" title="Performance graphs">
+            <Section id="performance" title="Performance graphs">
               <p className="max-w-3xl text-sm md:text-base leading-relaxed text-text-secondary">
                 Add two performance graphs or charts here.
               </p>
@@ -699,11 +663,8 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="tools" eyebrow="Tools & Capabilities" title="Tools & Capabilities">
-              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">
-                {project.toolsAndCapabilities}
-              </p>
-              <div className="mt-8 flex flex-wrap gap-2">
+            <Section id="tools" title="Tools & Capabilities">
+              <div className="flex flex-wrap gap-2">
                 {project.tools.map((tool) => (
                   <Pill key={tool}>{tool}</Pill>
                 ))}
@@ -716,7 +677,7 @@ export default function PAndGBeautyContentHubProjectPage() {
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <button
                   type="button"
-                  onClick={() => scrollToId("brief", scrollBehavior)}
+                  onClick={() => scrollToId("overview", scrollBehavior)}
                   className={cn(
                     "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
                     "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
@@ -753,4 +714,3 @@ export default function PAndGBeautyContentHubProjectPage() {
     </main>
   );
 }
-
