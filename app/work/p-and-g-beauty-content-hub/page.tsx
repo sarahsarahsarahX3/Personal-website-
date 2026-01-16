@@ -1054,7 +1054,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="strategy" title="Strategy" contentClassName="mt-5">
+            <Section id="strategy" title="Strategy">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.strategyIntro}</p>
 
               <div className="mt-10">
@@ -1107,13 +1107,17 @@ export default function PAndGBeautyContentHubProjectPage() {
 
               <ol className="mt-6 grid gap-3">
                 {(project.executionBullets as unknown as string[]).map((step, index) => (
-                  <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
-                    <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
-                      <span className="mt-[0.35rem] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
-                        {String(index + 1).padStart(2, "0")}
+                  <li key={step}>
+                    <div className="w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4 text-left">
+                      <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
+                        <span className="relative justify-self-center mt-[0.35rem]" aria-hidden="true">
+                          <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                        </span>
+                        <span className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</span>
                       </span>
-                      <span className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</span>
-                    </span>
+                    </div>
                   </li>
                 ))}
               </ol>
