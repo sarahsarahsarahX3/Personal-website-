@@ -636,7 +636,7 @@ export default function PAndGBeautyContentHubProjectPage() {
         <div className="mt-10 grid gap-10 xl:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             <section id="overview" className="scroll-mt-16">
-              <p className="text-xs font-mono uppercase tracking-widest text-accent">Project 1</p>
+              <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #1</p>
               <h1 className="mt-3 font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.03]">
                 {project.title}
               </h1>
@@ -647,9 +647,9 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
 
-                  <div className="mt-8 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xs font-mono tracking-widest text-text-secondary">
-                    <span className="uppercase text-text-secondary/70">My Role:</span>
-                    <span>Copywriter and Content Strategist</span>
+                  <div className="mt-8 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <span className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role:</span>
+                    <span className="text-sm md:text-base text-text-secondary">Copywriter and Content Strategist</span>
                   </div>
                 </div>
 
@@ -658,13 +658,13 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <div className="mt-5 grid gap-4">
                     <div>
                       <p className="font-display text-3xl leading-none">110K → 250K</p>
-                      <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                      <p className="mt-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                         Monthly organic search traffic
                       </p>
                     </div>
                     <div>
                       <p className="font-display text-3xl leading-none">+126%</p>
-                      <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                      <p className="mt-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                         Organic growth in four months
                       </p>
                     </div>
