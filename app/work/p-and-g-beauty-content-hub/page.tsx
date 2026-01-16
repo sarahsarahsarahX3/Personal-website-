@@ -557,9 +557,11 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
 
-                  <div className="mt-8 flex items-baseline gap-3">
-                    <span className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</span>
-                    <span className="text-sm md:text-base text-text-secondary">{project.role}</span>
+                  <div className="mt-8 text-sm md:text-base text-text-secondary">
+                    <span className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                      My Role:
+                    </span>{" "}
+                    <span>Copywriter and Content Strategist</span>
                   </div>
                 </div>
 
@@ -575,7 +577,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                     <div>
                       <p className="font-display text-3xl leading-none">+126%</p>
                       <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                        Organic growth within four months
+                        Organic growth in four months
                       </p>
                     </div>
                     <div className="pt-2">
