@@ -467,8 +467,9 @@ function MetricTabs({
   return (
     <>
       <div className="grid gap-3 lg:hidden">
-        {metrics.map((metric) => {
+        {metrics.map((metric, index) => {
           const isOpen = metric.id === active;
+          const ordinal = String(index + 1).padStart(2, "0");
           return (
             <div
               key={metric.id}
@@ -484,15 +485,26 @@ function MetricTabs({
                 aria-controls={`metric-accordion-panel-${metric.id}`}
                 onClick={() => setActive(metric.id)}
                 className={cn(
-                  "w-full px-5 py-4 text-left",
+                  "group w-full px-5 py-4 text-left",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                 )}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
-                      {metric.listTitle}
-                    </p>
+                    <div className="flex items-start gap-3">
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          "mt-0.5 text-[11px] font-mono tracking-widest",
+                          isOpen ? "text-accent" : "text-text-secondary/55",
+                        )}
+                      >
+                        {ordinal}
+                      </span>
+                      <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
+                        {metric.listTitle}
+                      </p>
+                    </div>
                   </div>
                   <span
                     aria-hidden="true"
@@ -567,8 +579,9 @@ function MetricTabs({
       <div className="hidden lg:grid gap-6 lg:grid-cols-[320px_1fr]">
         <div>
           <div role="tablist" aria-label="Result metrics" className="grid gap-2">
-            {metrics.map((metric) => {
+            {metrics.map((metric, index) => {
               const selected = metric.id === active;
+              const ordinal = String(index + 1).padStart(2, "0");
               return (
                 <button
                   key={metric.id}
@@ -579,16 +592,28 @@ function MetricTabs({
                   id={`metric-tab-${metric.id}`}
                   onClick={() => setActive(metric.id)}
                   className={cn(
-                    "rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
+                    "group relative overflow-hidden rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
+                    "before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:rounded-full before:transition-colors before:duration-200",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                     selected
-                      ? "border-white/25 bg-white/5"
-                      : "border-white/10 hover:bg-white/5 hover:border-white/20",
+                      ? "border-white/25 bg-white/5 before:bg-accent/70"
+                      : "border-white/10 before:bg-white/10 hover:bg-white/5 hover:border-white/20 hover:before:bg-white/20",
                   )}
                 >
-                  <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
-                    {metric.listTitle}
-                  </p>
+                  <div className="flex items-start gap-3">
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "mt-0.5 text-[11px] font-mono tracking-widest transition-colors",
+                        selected ? "text-accent" : "text-text-secondary/55 group-hover:text-text-secondary/70",
+                      )}
+                    >
+                      {ordinal}
+                    </span>
+                    <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
+                      {metric.listTitle}
+                    </p>
+                  </div>
                 </button>
               );
             })}
