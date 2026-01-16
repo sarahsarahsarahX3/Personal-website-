@@ -28,7 +28,7 @@ const project = {
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
   strategyIntro:
-    "I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility.\nThe approach focused on:",
+    "I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility. The approach focused on:",
   strategyBullets: [
     "Mapping topics to high-intent user queries and audience needs",
     "Structuring content for clarity, scannability, and discoverability",
@@ -370,6 +370,66 @@ function MetricTabs({
   );
 }
 
+function DiagramCard({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-7">
+      <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{title}</p>
+      {subtitle ? <p className="mt-3 text-sm text-text-secondary">{subtitle}</p> : null}
+      <div className="mt-6">{children}</div>
+    </div>
+  );
+}
+
+function NodeDiagram({
+  nodes,
+  activeIndex,
+}: {
+  nodes: Array<{ x: number; y: number }>;
+  activeIndex: number;
+}) {
+  const path = nodes
+    .map((node, index) => `${index === 0 ? "M" : "L"} ${node.x} ${node.y}`)
+    .join(" ");
+
+  return (
+    <svg viewBox="0 0 100 100" role="img" aria-label="Process diagram" className="w-full h-auto">
+      <path d={path} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.5" strokeLinecap="round" />
+
+      {nodes.map((node, index) => {
+        const isActive = index === activeIndex;
+        return (
+          <g key={`${node.x}-${node.y}`}>
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r={7.5}
+              fill="rgba(255,255,255,0.03)"
+              stroke={isActive ? "rgba(255,59,48,0.9)" : "rgba(255,255,255,0.18)"}
+              strokeWidth={isActive ? 2 : 1.25}
+              style={{ transition: "stroke 200ms ease, stroke-width 200ms ease" }}
+            />
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r={3.25}
+              fill={isActive ? "rgba(255,59,48,0.95)" : "rgba(255,255,255,0.28)"}
+              style={{ transition: "fill 200ms ease" }}
+            />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 function useModal() {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -495,6 +555,8 @@ export default function PAndGBeautyContentHubProjectPage() {
   const progress = useScrollProgress();
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+  const [activeStrategyIndex, setActiveStrategyIndex] = useState(0);
+  const [activeExecutionIndex, setActiveExecutionIndex] = useState(0);
 
   const highlights = useMemo<Record<string, string>>(
     () => ({
@@ -592,40 +654,102 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="strategy" title="Strategy">
-              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary whitespace-pre-line">
-                {project.strategyIntro}
-              </p>
-              <ul className="mt-10 grid gap-3 max-w-4xl text-sm md:text-base text-text-secondary">
-                {project.strategyBullets.map((bullet) => (
-                  <li
-                    key={bullet}
-                    className="flex gap-3 rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-accent/80 translate-y-[0.45em]"
-                    />
-                    <span className="leading-relaxed">{bullet}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.strategyIntro}</p>
+
+              <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_360px]">
+                <ul className="grid gap-3 text-sm md:text-base text-text-secondary">
+                  {project.strategyBullets.map((bullet, index) => {
+                    const isActive = index === activeStrategyIndex;
+                    return (
+                      <li key={bullet}>
+                        <button
+                          type="button"
+                          onClick={() => setActiveStrategyIndex(index)}
+                          onMouseEnter={() => setActiveStrategyIndex(index)}
+                          onFocus={() => setActiveStrategyIndex(index)}
+                          className={cn(
+                            "group w-full rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
+                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                            isActive ? "border-white/20 bg-white/5" : "border-white/10 hover:border-white/20 hover:bg-white/5",
+                          )}
+                        >
+                          <span className="flex gap-3">
+                            <span
+                              aria-hidden="true"
+                              className={cn(
+                                "inline-flex h-2.5 w-2.5 shrink-0 rounded-full translate-y-[0.45em]",
+                                isActive ? "bg-accent" : "bg-accent/70 group-hover:bg-accent/90",
+                              )}
+                            />
+                            <span className="leading-relaxed">{bullet}</span>
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <DiagramCard title="Strategy map" subtitle="Hover or tap a pillar to highlight.">
+                  <NodeDiagram
+                    activeIndex={activeStrategyIndex}
+                    nodes={[
+                      { x: 18, y: 18 },
+                      { x: 78, y: 28 },
+                      { x: 26, y: 52 },
+                      { x: 74, y: 64 },
+                      { x: 34, y: 84 },
+                    ]}
+                  />
+                </DiagramCard>
+              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="execution" title="Execution">
-              <ol className="grid gap-3">
-                {(project.executionBullets as unknown as string[]).map((step, index) => (
-                  <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
-                    <div className="flex items-start gap-3">
-                      <span className="mt-[2px] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <p className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+                <ol className="grid gap-3">
+                  {(project.executionBullets as unknown as string[]).map((step, index) => {
+                    const isActive = index === activeExecutionIndex;
+                    return (
+                      <li key={step}>
+                        <button
+                          type="button"
+                          onClick={() => setActiveExecutionIndex(index)}
+                          onMouseEnter={() => setActiveExecutionIndex(index)}
+                          onFocus={() => setActiveExecutionIndex(index)}
+                          className={cn(
+                            "group w-full rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
+                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                            isActive ? "border-white/20 bg-white/5" : "border-white/10 hover:border-white/20 hover:bg-white/5",
+                          )}
+                        >
+                          <span className="flex items-start gap-3">
+                            <span className="mt-[2px] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <span className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</span>
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ol>
+
+                <DiagramCard title="Execution flow" subtitle="A single workflow, tuned over time.">
+                  <NodeDiagram
+                    activeIndex={activeExecutionIndex}
+                    nodes={[
+                      { x: 22, y: 14 },
+                      { x: 78, y: 26 },
+                      { x: 28, y: 44 },
+                      { x: 74, y: 58 },
+                      { x: 30, y: 74 },
+                      { x: 70, y: 88 },
+                    ]}
+                  />
+                </DiagramCard>
+              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
