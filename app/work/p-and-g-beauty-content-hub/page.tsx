@@ -19,6 +19,8 @@ type Metric = {
   category: string;
   listTitle: string;
   description: string;
+  screenshotSrc?: string;
+  screenshotAlt?: string;
 };
 
 const project = {
@@ -65,6 +67,8 @@ const metrics: Metric[] = [
     value: "250K+",
     listTitle: "250K+ Monthly Organic Traffic",
     description: "Scaled monthly organic traffic to 250K+ visits through SEO-led editorial growth.",
+    screenshotSrc: "/images/semrush/traffic-trends-and-value.png",
+    screenshotAlt: "SEMrush traffic trends and value chart for HairCode.com.",
   },
   {
     id: "growth-rate",
@@ -72,6 +76,8 @@ const metrics: Metric[] = [
     value: "+126%",
     listTitle: "+126% Organic Growth",
     description: "Increased organic traffic by 126% in four months, growing from ~110K to 250K monthly visits.",
+    screenshotSrc: "/images/semrush/traffic-trends-and-value.png",
+    screenshotAlt: "SEMrush traffic trends chart showing organic growth for HairCode.com.",
   },
   {
     id: "search-footprint",
@@ -79,6 +85,8 @@ const metrics: Metric[] = [
     value: "47K",
     listTitle: "47K Organic Keywords Ranked",
     description: "Expanded the site’s search footprint to 47K ranking organic keywords.",
+    screenshotSrc: "/images/semrush/position-tracking.png",
+    screenshotAlt: "SEMrush position tracking snapshot for HairCode.com.",
   },
   {
     id: "domain-authority",
@@ -86,6 +94,8 @@ const metrics: Metric[] = [
     value: "44",
     listTitle: "Authority Score: 44",
     description: "Built a domain authority score of 44 supported by 947 referring domains.",
+    screenshotSrc: "/images/semrush/domain-overview.png",
+    screenshotAlt: "SEMrush domain overview showing authority score and referring domains for HairCode.com.",
   },
   {
     id: "organic-media-value",
@@ -93,6 +103,8 @@ const metrics: Metric[] = [
     value: "$72K+",
     listTitle: "$72K+ Organic Traffic Value",
     description: "Generated $72K+ in estimated monthly organic traffic value, based on paid media equivalents.",
+    screenshotSrc: "/images/semrush/traffic-trends-and-value.png",
+    screenshotAlt: "SEMrush traffic value card for HairCode.com.",
   },
   {
     id: "content-engagement",
@@ -107,6 +119,8 @@ const metrics: Metric[] = [
     value: "984",
     listTitle: "984 AI Search Mentions + 738 AI-Cited Pages",
     description: "Earned 984 AI search mentions with 738 pages cited in AI-generated search results.",
+    screenshotSrc: "/images/semrush/domain-overview.png",
+    screenshotAlt: "SEMrush AI search snapshot for HairCode.com showing mentions and cited pages.",
   },
 ];
 
@@ -172,19 +186,8 @@ const articlePdfs: PdfItem[] = [
   },
 ];
 
-const semrushSnapshot = {
-  trafficSeries: [
-    { label: "May 2025", valueK: 110.88 },
-    { label: "Oct 2025", valueK: 250.66 },
-  ],
-  trafficValueK: 72.22,
-  organicKeywords: 47000,
-  authorityScore: 44,
-  referringDomains: 947,
-  aiMentions: 984,
-  aiCitedPages: 738,
-  topPositions: { top3: 8, top10: 9, top20: 10, top100: 10 },
-} as const;
+const SEMRUSH_SCREENSHOT_NOTE =
+  "Add SEMrush screenshots to /public/images/semrush and match the filenames used in the metrics array.";
 
 function getPdfHref(item: PdfItem) {
   return item.href ?? (item.fileName ? `/images/${encodeURIComponent(item.fileName)}` : undefined);
@@ -303,286 +306,53 @@ function SquiggleMark({ className }: { className?: string }) {
   );
 }
 
-function formatNumber(value: number) {
-  return new Intl.NumberFormat("en-US").format(value);
-}
-
-function MiniLineChart({
-  points,
-  ariaLabel,
+function ScreenshotFrame({
+  src,
+  alt,
+  label = "SEMrush screenshot",
 }: {
-  points: { label: string; valueK: number }[];
-  ariaLabel: string;
+  src?: string;
+  alt?: string;
+  label?: string;
 }) {
-  const width = 320;
-  const height = 120;
-  const paddingX = 8;
-  const paddingY = 12;
-  const innerWidth = width - paddingX * 2;
-  const innerHeight = height - paddingY * 2;
-
-  const values = points.map((p) => p.valueK);
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const range = Math.max(1, max - min);
-
-  const toX = (index: number) => paddingX + (points.length <= 1 ? 0 : (index / (points.length - 1)) * innerWidth);
-  const toY = (value: number) => paddingY + (1 - (value - min) / range) * innerHeight;
-
-  const path = points
-    .map((point, index) => `${index === 0 ? "M" : "L"} ${toX(index).toFixed(2)} ${toY(point.valueK).toFixed(2)}`)
-    .join(" ");
-
   return (
-    <svg
-      role="img"
-      aria-label={ariaLabel}
-      viewBox={`0 0 ${width} ${height}`}
-      className="h-32 w-full"
-    >
-      <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
-        <line x1="0" y1="24" x2={width} y2="24" />
-        <line x1="0" y1="60" x2={width} y2="60" />
-        <line x1="0" y1="96" x2={width} y2="96" />
-      </g>
+    <figure className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+      <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className="h-2 w-2 rounded-full bg-[#ff5f57]/90" />
+          <span className="h-2 w-2 rounded-full bg-[#ffbd2e]/90" />
+          <span className="h-2 w-2 rounded-full bg-[#28c840]/90" />
+        </div>
+        <p className="text-[10px] font-mono uppercase tracking-widest text-text-secondary/70">{label}</p>
+        <span aria-hidden="true" className="text-text-secondary/50">
+          ⌄
+        </span>
+      </div>
 
-      <path d={path} fill="none" stroke="rgba(255,59,48,0.9)" strokeWidth="2.25" strokeLinecap="round" />
-
-      {points.map((point, index) => {
-        const x = toX(index);
-        const y = toY(point.valueK);
-        return (
-          <g key={point.label}>
-            <circle cx={x} cy={y} r="3.2" fill="rgba(255,59,48,0.95)" />
-          </g>
-        );
-      })}
-
-      {points.length >= 2 ? (
-        <>
-          <text x={paddingX} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)">
-            {points[0]!.label}
-          </text>
-          <text x={width - paddingX} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)" textAnchor="end">
-            {points[points.length - 1]!.label}
-          </text>
-
-          <text x={paddingX} y={14} fontSize="10" fill="rgba(255,255,255,0.70)">
-            {points[0]!.valueK.toFixed(2)}K
-          </text>
-          <text x={width - paddingX} y={14} fontSize="10" fill="rgba(255,255,255,0.70)" textAnchor="end">
-            {points[points.length - 1]!.valueK.toFixed(2)}K
-          </text>
-        </>
-      ) : null}
-    </svg>
+      <div className="bg-surface/30">
+        <div className="aspect-[16/9] w-full">
+          {src ? (
+            <img
+              src={src}
+              alt={alt ?? "SEMrush screenshot"}
+              className="h-full w-full object-contain"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center px-6 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+              {SEMRUSH_SCREENSHOT_NOTE}
+            </div>
+          )}
+        </div>
+      </div>
+      <figcaption className="sr-only">{label}</figcaption>
+    </figure>
   );
 }
 
-function MiniBars({
-  items,
-  ariaLabel,
-}: {
-  items: { label: string; value: number }[];
-  ariaLabel: string;
-}) {
-  const width = 320;
-  const height = 120;
-  const paddingX = 10;
-  const paddingY = 14;
-  const innerHeight = height - paddingY * 2;
-  const max = Math.max(1, ...items.map((i) => i.value));
-  const gap = 10;
-  const barWidth = (width - paddingX * 2 - gap * (items.length - 1)) / items.length;
-
-  return (
-    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${width} ${height}`} className="h-32 w-full">
-      <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
-        <line x1="0" y1="24" x2={width} y2="24" />
-        <line x1="0" y1="60" x2={width} y2="60" />
-        <line x1="0" y1="96" x2={width} y2="96" />
-      </g>
-
-      {items.map((item, index) => {
-        const x = paddingX + index * (barWidth + gap);
-        const h = (item.value / max) * innerHeight;
-        const y = height - paddingY - h;
-        return (
-          <g key={item.label}>
-            <rect x={x} y={y} width={barWidth} height={h} rx="10" fill="rgba(255,59,48,0.38)" />
-            <rect x={x} y={y} width={barWidth} height={2.25} rx="10" fill="rgba(255,59,48,0.9)" />
-            <text x={x + barWidth / 2} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)" textAnchor="middle">
-              {item.label}
-            </text>
-            <text x={x + barWidth / 2} y={Math.max(14, y - 4)} fontSize="10" fill="rgba(255,255,255,0.70)" textAnchor="middle">
-              {formatNumber(item.value)}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
-
-function Gauge({
-  value,
-  max,
-  ariaLabel,
-}: {
-  value: number;
-  max: number;
-  ariaLabel: string;
-}) {
-  const size = 132;
-  const stroke = 10;
-  const r = (size - stroke) / 2;
-  const c = 2 * Math.PI * r;
-  const pct = Math.max(0, Math.min(1, value / max));
-  const dash = c * pct;
-
-  return (
-    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${size} ${size}`} className="h-[132px] w-[132px]">
-      <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,0.10)" strokeWidth={stroke} fill="none" />
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        stroke="rgba(255,59,48,0.95)"
-        strokeWidth={stroke}
-        fill="none"
-        strokeLinecap="round"
-        strokeDasharray={`${dash} ${c}`}
-        transform={`rotate(-90 ${size / 2} ${size / 2})`}
-      />
-      <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" fontSize="28" fill="rgba(255,255,255,0.92)">
-        {value}
-      </text>
-      <text x="50%" y="72%" textAnchor="middle" dominantBaseline="middle" fontSize="10" fill="rgba(255,255,255,0.55)">
-        / {max}
-      </text>
-    </svg>
-  );
-}
-
-function MetricChart({ metricId }: { metricId: Metric["id"] }) {
-  const wrapperClassName = cn("mt-8 rounded-2xl border border-white/10 bg-surface/40 p-4 md:p-5");
-
-  switch (metricId) {
-    case "monthly-organic-visits":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Traffic trend</p>
-          <div className="mt-3">
-            <MiniLineChart
-              ariaLabel="Organic traffic trend from May 2025 to October 2025"
-              points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
-            />
-          </div>
-        </div>
-      );
-    case "growth-rate":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Growth curve</p>
-          <div className="mt-3">
-            <MiniLineChart
-              ariaLabel="Organic traffic growth from May 2025 to October 2025"
-              points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
-            />
-          </div>
-        </div>
-      );
-    case "search-footprint":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Keywords and top positions</p>
-          <div className="mt-4 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
-            <div>
-              <p className="font-display text-3xl leading-none">{formatNumber(semrushSnapshot.organicKeywords)}</p>
-              <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">Ranking organic keywords</p>
-            </div>
-            <div className="justify-self-start md:justify-self-end">
-              <MiniBars
-                ariaLabel="Top position keyword counts snapshot"
-                items={[
-                  { label: "Top 3", value: semrushSnapshot.topPositions.top3 },
-                  { label: "Top 10", value: semrushSnapshot.topPositions.top10 },
-                  { label: "Top 20", value: semrushSnapshot.topPositions.top20 },
-                  { label: "Top 100", value: semrushSnapshot.topPositions.top100 },
-                ]}
-              />
-            </div>
-          </div>
-        </div>
-      );
-    case "domain-authority":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Authority and links</p>
-          <div className="mt-4 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
-            <Gauge ariaLabel="Authority score gauge" value={semrushSnapshot.authorityScore} max={100} />
-            <div className="grid gap-3">
-              <div className="rounded-xl border border-white/10 bg-surface-alt/10 p-4">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Referring domains</p>
-                <p className="mt-2 font-display text-2xl leading-none">{formatNumber(semrushSnapshot.referringDomains)}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    case "organic-media-value":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Estimated value</p>
-          <div className="mt-4">
-            <div className="flex items-baseline justify-between gap-4">
-              <p className="font-display text-3xl leading-none">${semrushSnapshot.trafficValueK.toFixed(2)}K</p>
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">Monthly traffic value</p>
-            </div>
-            <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
-              <div
-                className="h-full bg-accent/80"
-                style={{ width: `${Math.max(0, Math.min(1, semrushSnapshot.trafficValueK / 100)) * 100}%` }}
-              />
-            </div>
-            <p className="mt-3 text-xs text-text-secondary/70">Scaled to a 0–100K visual range.</p>
-          </div>
-        </div>
-      );
-    case "content-engagement":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Session depth</p>
-          <div className="mt-4">
-            <div className="flex items-baseline justify-between gap-4">
-              <p className="font-display text-3xl leading-none">5:48</p>
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">Average visit duration</p>
-            </div>
-            <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
-              <div className="h-full bg-accent/80" style={{ width: `${(348 / 600) * 100}%` }} />
-            </div>
-            <p className="mt-3 text-xs text-text-secondary/70">Scaled to a 0–10 minute visual range.</p>
-          </div>
-        </div>
-      );
-    case "ai-search-visibility":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">AI citations</p>
-          <div className="mt-3">
-            <MiniBars
-              ariaLabel="AI search mentions and cited pages"
-              items={[
-                { label: "Mentions", value: semrushSnapshot.aiMentions },
-                { label: "Cited pages", value: semrushSnapshot.aiCitedPages },
-              ]}
-            />
-          </div>
-        </div>
-      );
-    default:
-      return null;
-  }
+function MetricChart({ metric }: { metric: Metric }) {
+  return <ScreenshotFrame src={metric.screenshotSrc} alt={metric.screenshotAlt} label="SEMrush snapshot" />;
 }
 
 function Section({
@@ -813,7 +583,7 @@ function MetricTabs({
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key performance indicator:</p>
                   <h4 className="mt-3 font-display text-xl tracking-tight text-text-primary">{metric.category}</h4>
                   <p className="mt-3 text-sm leading-relaxed text-text-secondary">{metric.description}</p>
-                  <MetricChart metricId={metric.id} />
+                  <MetricChart metric={metric} />
                 </div>
               </div>
             </div>
@@ -866,7 +636,7 @@ function MetricTabs({
           <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
             {activeMetric.description}
           </p>
-          <MetricChart metricId={activeMetric.id} />
+          <MetricChart metric={activeMetric} />
         </div>
       </div>
     </>
