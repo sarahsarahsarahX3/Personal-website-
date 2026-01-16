@@ -173,9 +173,18 @@ function scrollToId(id: string, behavior: ScrollBehavior) {
 }
 
 function Pill({ children }: { children: React.ReactNode }) {
+  const title = typeof children === "string" ? children : undefined;
   return (
-    <span className="inline-flex items-center rounded-full border border-white/10 bg-surface-alt/10 px-3 py-1 text-[11px] font-mono uppercase tracking-widest text-text-secondary">
-      {children}
+    <span
+      title={title}
+      className={cn(
+        "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
+        "px-2.5 py-1.5 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
+        "overflow-hidden",
+        "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest",
+      )}
+    >
+      <span className="truncate">{children}</span>
     </span>
   );
 }
@@ -243,26 +252,36 @@ function MobileJumpBar({
       )}
     >
       <div className="mx-auto w-full max-w-6xl px-6 py-3">
-        <div className="flex gap-2 overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]">
-        {items.map((item) => {
-          const isActive = item.id === activeId;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => onNavigate(item.id)}
+        <div className="flex items-center gap-3">
+          <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+            On this page
+          </p>
+
+          <div className="relative min-w-0 flex-1">
+            <select
+              value={activeId}
+              onChange={(event) => onNavigate(event.target.value)}
               className={cn(
-                "shrink-0 rounded-full border px-4 py-2 text-[11px] font-mono uppercase tracking-widest transition-colors",
+                "w-full appearance-none rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2 pr-10",
+                "text-[11px] font-mono uppercase tracking-widest text-text-primary",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                isActive
-                  ? "bg-white/5 border-white/20 text-text-primary"
-                  : "bg-surface-alt/10 border-white/10 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5",
               )}
+              aria-label="Select section"
             >
-              {item.label}
-            </button>
-          );
-        })}
+              {items.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary"
+            >
+              ▾
+            </span>
+          </div>
         </div>
       </div>
     </nav>
@@ -942,7 +961,7 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="tools" title="Tools & Skills">
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
                 {project.tools.map((tool) => (
                   <Pill key={tool}>{tool}</Pill>
                 ))}
