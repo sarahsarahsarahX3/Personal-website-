@@ -194,7 +194,7 @@ function Section({
       <header className="max-w-3xl">
         <h2
           id={`${id}-title`}
-          className="font-display text-2xl md:text-3xl tracking-tight text-text-secondary/85"
+          className="font-display text-xl md:text-2xl tracking-tight text-text-secondary/85"
         >
           {title}
         </h2>
@@ -303,7 +303,14 @@ function DesktopRail({
           className={cn("rounded-2xl border border-white/10 bg-surface-alt/10 p-4", "transition-opacity duration-300")}
         >
           <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            <span
+              className={cn("glitchText", "relative inline-block", "text-text-secondary")}
+              data-text={project.overview}
+            >
+              {project.overview}
+            </span>
+          </p>
         </div>
       </div>
     </aside>
@@ -648,7 +655,9 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
 
                   <div className="mt-8 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                    <span className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role:</span>
+                    <span className="text-sm md:text-base font-mono uppercase tracking-widest text-text-secondary/70">
+                      My Role:
+                    </span>
                     <span className="text-sm md:text-base text-text-secondary">Copywriter and Content Strategist</span>
                   </div>
                 </div>
@@ -657,15 +666,21 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Quick results</p>
                   <div className="mt-5 grid gap-4">
                     <div>
-                      <p className="font-display text-3xl leading-none">110K → 250K</p>
-                      <p className="mt-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                        Monthly organic search traffic
+                      <p className="font-display text-3xl leading-none">+126%</p>
+                      <p className="mt-2 flex items-center gap-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                        <span aria-hidden="true" className="text-accent/90">
+                          ◆
+                        </span>
+                        Organic growth in four months
                       </p>
                     </div>
                     <div>
-                      <p className="font-display text-3xl leading-none">+126%</p>
-                      <p className="mt-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                        Organic growth in four months
+                      <p className="font-display text-3xl leading-none">110K → 250K</p>
+                      <p className="mt-2 flex items-center gap-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                        <span aria-hidden="true" className="text-accent/90">
+                          ◆
+                        </span>
+                        Monthly organic search traffic
                       </p>
                     </div>
                     <div className="pt-2">
@@ -673,7 +688,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                         type="button"
                         onClick={() => scrollToId("results", scrollBehavior)}
                         className={cn(
-                          "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest",
+                          "inline-flex items-center justify-center rounded-full px-4 py-2 text-xs font-mono uppercase tracking-widest",
                           "bg-text-primary text-surface hover:bg-white transition-colors",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                         )}
@@ -863,6 +878,79 @@ export default function PAndGBeautyContentHubProjectPage() {
         onClose={close}
         closeButtonRef={closeButtonRef}
       />
+
+      <style jsx>{`
+        .glitchText {
+          text-shadow: 0 0 12px rgba(255, 59, 48, 0.12);
+        }
+
+        .glitchText::before,
+        .glitchText::after {
+          content: attr(data-text);
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          pointer-events: none;
+          opacity: 0.18;
+          color: rgba(255, 59, 48, 0.75);
+          filter: blur(0.35px);
+          mix-blend-mode: lighten;
+        }
+
+        .glitchText::before {
+          transform: translate(0.6px, -0.2px);
+          clip-path: inset(0 0 62% 0);
+          animation: glitchTop 4.5s ease-in-out infinite;
+        }
+
+        .glitchText::after {
+          transform: translate(-0.5px, 0.25px);
+          clip-path: inset(60% 0 0 0);
+          animation: glitchBottom 5.4s ease-in-out infinite;
+        }
+
+        @keyframes glitchTop {
+          0%,
+          86%,
+          100% {
+            opacity: 0.12;
+            transform: translate(0.6px, -0.2px);
+          }
+          88% {
+            opacity: 0.22;
+            transform: translate(1.2px, -0.6px);
+          }
+          90% {
+            opacity: 0.14;
+            transform: translate(0.4px, -0.1px);
+          }
+        }
+
+        @keyframes glitchBottom {
+          0%,
+          78%,
+          100% {
+            opacity: 0.10;
+            transform: translate(-0.5px, 0.25px);
+          }
+          80% {
+            opacity: 0.20;
+            transform: translate(-1.2px, 0.8px);
+          }
+          82% {
+            opacity: 0.12;
+            transform: translate(-0.4px, 0.15px);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .glitchText::before,
+          .glitchText::after {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
