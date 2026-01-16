@@ -35,7 +35,7 @@ export function FlowField({
 
         let animationFrameId: number;
         let particles: Particle[] = [];
-        let mouse = { x: 0, y: 0 };
+        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         let hue = 0;
 
         // Set canvas size
@@ -140,27 +140,28 @@ export function FlowField({
             }
         }
 
-        const handleMouseMove = (e: MouseEvent) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
+        const setPointer = (clientX: number, clientY: number) => {
+            mouse.x = clientX;
+            mouse.y = clientY;
         };
 
-        const handleTouchMove = (e: TouchEvent) => {
-            mouse.x = e.touches[0].clientX;
-            mouse.y = e.touches[0].clientY;
-        };
+        const handlePointerMove = (e: PointerEvent) => setPointer(e.clientX, e.clientY);
+        const handlePointerDown = (e: PointerEvent) => setPointer(e.clientX, e.clientY);
+        const handleMouseMoveFallback = (e: MouseEvent) => setPointer(e.clientX, e.clientY);
 
         window.addEventListener("resize", resize);
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("touchmove", handleTouchMove);
+        window.addEventListener("pointermove", handlePointerMove, { passive: true });
+        window.addEventListener("pointerdown", handlePointerDown, { passive: true });
+        window.addEventListener("mousemove", handleMouseMoveFallback, { passive: true });
 
         resize();
         animate();
 
         return () => {
             window.removeEventListener("resize", resize);
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("touchmove", handleTouchMove);
+            window.removeEventListener("pointermove", handlePointerMove);
+            window.removeEventListener("pointerdown", handlePointerDown);
+            window.removeEventListener("mousemove", handleMouseMoveFallback);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);

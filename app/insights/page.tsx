@@ -30,7 +30,7 @@ export default async function InsightsPage() {
                         Articles
                     </h1>
                     <p className="text-text-secondary text-xl max-w-xl animate-fade-in-up delay-200">
-                        Explore my published articles and editorial features.
+                        Explore my published articles, brand communications, and editorial features.
                     </p>
                 </header>
 

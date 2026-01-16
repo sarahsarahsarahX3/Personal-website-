@@ -21,7 +21,7 @@ type Metric = {
 
 const project = {
   title: "Procter & Gamble Beauty Content Hub",
-  subtitle: "Growth Marketing and Content Strategy",
+  subtitle: "Content Strategy and Growth Marketing",
   overview:
     "This project focused on developing and optimizing SEO-driven editorial content for Procter & Gamble’s consumer-facing content hub to improve organic traffic and search visibility across beauty, health, and wellness topics.",
   role: "Copywriter & Content Strategist",
@@ -343,14 +343,7 @@ function DesktopRail({
           className={cn("rounded-2xl border border-white/10 bg-surface-alt/10 p-4", "transition-opacity duration-300")}
         >
           <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            <span
-              className={cn("glitchText", "relative inline-block", "text-text-secondary")}
-              data-text={project.overview}
-            >
-              {project.overview}
-            </span>
-          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
         </div>
       </div>
     </aside>
@@ -836,11 +829,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
               <div className="mt-8 lg:hidden rounded-3xl border border-white/10 bg-surface-alt/10 p-6">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
-                <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-                  <span className={cn("glitchText", "relative inline-block")} data-text={project.overview}>
-                    {project.overview}
-                  </span>
-                </p>
+                <p className="mt-4 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
               </div>
             </section>
 
@@ -1009,96 +998,6 @@ export default function PAndGBeautyContentHubProjectPage() {
         closeButtonRef={closeButtonRef}
       />
 
-      <style jsx>{`
-        .glitchText {
-          text-shadow: 0 0 22px rgba(255, 59, 48, 0.32), 0 0 1px rgba(255, 59, 48, 0.38);
-          animation: glowFlicker 2.9s ease-in-out infinite;
-        }
-
-        .glitchText::before,
-        .glitchText::after {
-          content: attr(data-text);
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          pointer-events: none;
-          opacity: 0.5;
-          color: rgba(255, 59, 48, 0.92);
-          filter: blur(0.15px);
-        }
-
-        .glitchText::before {
-          transform: translate(0.9px, -0.3px);
-          clip-path: inset(0 0 62% 0);
-          animation: glitchTop 2.1s ease-in-out infinite;
-        }
-
-        .glitchText::after {
-          transform: translate(-0.8px, 0.3px);
-          clip-path: inset(60% 0 0 0);
-          animation: glitchBottom 2.5s ease-in-out infinite;
-        }
-
-        @keyframes glowFlicker {
-          0%,
-          84%,
-          100% {
-            text-shadow: 0 0 22px rgba(255, 59, 48, 0.24), 0 0 1px rgba(255, 59, 48, 0.3);
-          }
-          86% {
-            text-shadow: 0 0 30px rgba(255, 59, 48, 0.38), 0 0 2px rgba(255, 59, 48, 0.42);
-          }
-          88% {
-            text-shadow: 0 0 26px rgba(255, 59, 48, 0.3), 0 0 1px rgba(255, 59, 48, 0.34);
-          }
-        }
-
-        @keyframes glitchTop {
-          0%,
-          76%,
-          100% {
-            opacity: 0.18;
-            transform: translate(0.9px, -0.3px);
-          }
-          78% {
-            opacity: 0.34;
-            transform: translate(1.8px, -0.9px);
-          }
-          82% {
-            opacity: 0.22;
-            transform: translate(0.6px, -0.2px);
-          }
-        }
-
-        @keyframes glitchBottom {
-          0%,
-          70%,
-          100% {
-            opacity: 0.16;
-            transform: translate(-0.8px, 0.3px);
-          }
-          72% {
-            opacity: 0.32;
-            transform: translate(-1.6px, 1px);
-          }
-          76% {
-            opacity: 0.20;
-            transform: translate(-0.6px, 0.2px);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .glitchText::before,
-          .glitchText::after {
-            animation: none !important;
-          }
-
-          .glitchText {
-            animation: none !important;
-          }
-        }
-      `}</style>
     </main>
   );
 }
