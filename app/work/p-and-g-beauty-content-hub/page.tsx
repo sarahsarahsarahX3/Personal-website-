@@ -180,6 +180,25 @@ function Pill({ children }: { children: React.ReactNode }) {
   );
 }
 
+function SquiggleMark({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 10"
+      className={cn("h-2.5 w-5 shrink-0 text-accent/90", className)}
+    >
+      <path
+        d="M1 6 C4 1 8 9 12 4 C16 -1 20 9 23 4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function Section({
   id,
   title,
@@ -661,26 +680,22 @@ export default function PAndGBeautyContentHubProjectPage() {
 
                 <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Quick results</p>
-                  <div className="mt-5 grid gap-4">
+                  <div className="mt-5 grid gap-5">
                     <div>
                       <p className="font-display text-3xl leading-none">+126%</p>
                       <p className="mt-2 flex items-center gap-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                        <span aria-hidden="true" className="text-accent/90">
-                          ◆
-                        </span>
+                        <SquiggleMark />
                         Organic growth in four months
                       </p>
                     </div>
                     <div>
                       <p className="font-display text-3xl leading-none">110K → 250K</p>
                       <p className="mt-2 flex items-center gap-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                        <span aria-hidden="true" className="text-accent/90">
-                          ◆
-                        </span>
+                        <SquiggleMark />
                         Monthly organic search traffic
                       </p>
                     </div>
-                    <div className="pt-2">
+                    <div className="pt-4 border-t border-white/10">
                       <button
                         type="button"
                         onClick={() => scrollToId("results", scrollBehavior)}
@@ -820,7 +835,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="tools" title="Tools & Capabilities">
+            <Section id="tools" title="Tools & Skills">
               <div className="flex flex-wrap gap-2">
                 {project.tools.map((tool) => (
                   <Pill key={tool}>{tool}</Pill>
@@ -871,7 +886,8 @@ export default function PAndGBeautyContentHubProjectPage() {
 
       <style jsx>{`
         .glitchText {
-          text-shadow: 0 0 12px rgba(255, 59, 48, 0.12);
+          text-shadow: 0 0 18px rgba(255, 59, 48, 0.22), 0 0 1px rgba(255, 59, 48, 0.28);
+          animation: glowFlicker 3.6s ease-in-out infinite;
         }
 
         .glitchText::before,
@@ -882,61 +898,78 @@ export default function PAndGBeautyContentHubProjectPage() {
           top: 0;
           width: 100%;
           pointer-events: none;
-          opacity: 0.18;
-          color: rgba(255, 59, 48, 0.75);
-          filter: blur(0.35px);
-          mix-blend-mode: lighten;
+          opacity: 0.32;
+          color: rgba(255, 59, 48, 0.92);
+          filter: blur(0.2px);
         }
 
         .glitchText::before {
-          transform: translate(0.6px, -0.2px);
+          transform: translate(0.9px, -0.3px);
           clip-path: inset(0 0 62% 0);
-          animation: glitchTop 4.5s ease-in-out infinite;
+          animation: glitchTop 2.8s ease-in-out infinite;
         }
 
         .glitchText::after {
-          transform: translate(-0.5px, 0.25px);
+          transform: translate(-0.8px, 0.3px);
           clip-path: inset(60% 0 0 0);
-          animation: glitchBottom 5.4s ease-in-out infinite;
+          animation: glitchBottom 3.2s ease-in-out infinite;
+        }
+
+        @keyframes glowFlicker {
+          0%,
+          84%,
+          100% {
+            text-shadow: 0 0 18px rgba(255, 59, 48, 0.18), 0 0 1px rgba(255, 59, 48, 0.22);
+          }
+          86% {
+            text-shadow: 0 0 24px rgba(255, 59, 48, 0.28), 0 0 2px rgba(255, 59, 48, 0.32);
+          }
+          88% {
+            text-shadow: 0 0 20px rgba(255, 59, 48, 0.22), 0 0 1px rgba(255, 59, 48, 0.24);
+          }
         }
 
         @keyframes glitchTop {
           0%,
-          86%,
+          76%,
           100% {
-            opacity: 0.12;
-            transform: translate(0.6px, -0.2px);
+            opacity: 0.18;
+            transform: translate(0.9px, -0.3px);
           }
-          88% {
+          78% {
+            opacity: 0.34;
+            transform: translate(1.8px, -0.9px);
+          }
+          82% {
             opacity: 0.22;
-            transform: translate(1.2px, -0.6px);
-          }
-          90% {
-            opacity: 0.14;
-            transform: translate(0.4px, -0.1px);
+            transform: translate(0.6px, -0.2px);
           }
         }
 
         @keyframes glitchBottom {
           0%,
-          78%,
+          70%,
           100% {
-            opacity: 0.10;
-            transform: translate(-0.5px, 0.25px);
+            opacity: 0.16;
+            transform: translate(-0.8px, 0.3px);
           }
-          80% {
+          72% {
+            opacity: 0.32;
+            transform: translate(-1.6px, 1px);
+          }
+          76% {
             opacity: 0.20;
-            transform: translate(-1.2px, 0.8px);
-          }
-          82% {
-            opacity: 0.12;
-            transform: translate(-0.4px, 0.15px);
+            transform: translate(-0.6px, 0.2px);
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
           .glitchText::before,
           .glitchText::after {
+            animation: none !important;
+          }
+
+          .glitchText {
             animation: none !important;
           }
         }
