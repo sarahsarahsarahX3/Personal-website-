@@ -21,9 +21,10 @@ type PdfItem = {
 
 type Metric = {
   id: string;
-  label: string;
   value: string;
-  detail?: string;
+  category: string;
+  stat: string;
+  description: string;
 };
 
 const project = {
@@ -51,13 +52,6 @@ const project = {
     "Refreshed existing content based on performance insights.",
     "Tracked and analyzed results using SEMrush and Google Analytics.",
   ],
-  resultsBullets: [
-    "Increased monthly organic users from 110K to 250K (+126%) in four months",
-    "Achieved 17.6% average month-over-month organic growth",
-    "Generated 139.78K+ new organic sessions per month",
-    "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains",
-    "Improved rankings and visibility across high-intent, evergreen content categories",
-  ],
   tools: [
     "SEO & AEO Strategy",
     "Editorial Planning",
@@ -71,11 +65,48 @@ const project = {
 } as const;
 
 const metrics: Metric[] = [
-  { id: "users", label: "Monthly organic search traffic", value: "110K → 250K" },
-  { id: "growth", label: "Organic growth within four months", value: "+126%" },
-  { id: "mom", label: "Average MoM organic growth", value: "17.6%" },
-  { id: "sessions", label: "New organic sessions per month", value: "139.78K+" },
-  { id: "authority", label: "Authority and backlinks", value: "DA 44", detail: "4.52K backlinks · 788 referring domains" },
+  {
+    id: "growth-rate",
+    category: "Growth Rate",
+    value: "+126%",
+    stat: "Organic Growth in 4 Months",
+    description: "Increased monthly organic traffic from ~110K to 250K in four months.",
+  },
+  {
+    id: "search-footprint",
+    category: "Search Footprint",
+    value: "47K",
+    stat: "Organic Keywords Ranked",
+    description: "Expanded keyword footprint across high-intent beauty and wellness topics.",
+  },
+  {
+    id: "domain-authority",
+    category: "Domain Authority",
+    value: "44",
+    stat: "Authority Score 44 · 947 Referring Domains",
+    description: "Established strong domain authority and earned editorial backlinks in competitive categories.",
+  },
+  {
+    id: "organic-media-value",
+    category: "Organic Media Value",
+    value: "$72K+",
+    stat: "Estimated Monthly Traffic Value",
+    description: "Estimated organic traffic value based on equivalent paid media cost.",
+  },
+  {
+    id: "content-engagement",
+    category: "Content Engagement",
+    value: "5:48",
+    stat: "Average Visit Duration",
+    description: "Demonstrated strong engagement with long-form, educational content.",
+  },
+  {
+    id: "ai-search-visibility",
+    category: "AI Search Visibility",
+    value: "984",
+    stat: "AI Mentions · 738 AI-Cited Pages",
+    description: "Content referenced across AI-powered search experiences and cited in AI-generated results.",
+  },
 ];
 
 const sectionLinks: SectionLink[] = [
@@ -416,12 +447,10 @@ function DesktopRail({
 
 function MetricTabs({
   metrics,
-  highlights,
   charts,
   onOpenChart,
 }: {
   metrics: Metric[];
-  highlights: Record<string, string>;
   charts: MediaItem[];
   onOpenChart: (id: string) => void;
 }) {
@@ -456,9 +485,9 @@ function MetricTabs({
                   <div>
                     <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
                     <p className="mt-2 text-[11px] font-mono uppercase tracking-widest text-text-secondary/80">
-                      {metric.label}
-                      {metric.detail ? ` · ${metric.detail}` : ""}
+                      {metric.category}
                     </p>
+                    <p className="mt-2 text-sm leading-snug text-text-secondary">{metric.stat}</p>
                   </div>
                   <span
                     aria-hidden="true"
@@ -484,8 +513,11 @@ function MetricTabs({
                 )}
               >
                 <div className="px-5 pb-5">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
-                  <p className="mt-3 text-sm leading-relaxed text-text-secondary">{highlights[metric.id] ?? ""}</p>
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
+                <p className="mt-3 text-sm font-mono uppercase tracking-widest text-text-secondary/70">
+                  {metric.stat}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-text-secondary">{metric.description}</p>
 
                   <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {charts.map((item) => (
@@ -550,9 +582,9 @@ function MetricTabs({
                 >
                   <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
                   <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                    {metric.label}
-                    {metric.detail ? ` · ${metric.detail}` : ""}
+                    {metric.category}
                   </p>
+                  <p className="mt-2 text-sm leading-snug text-text-secondary line-clamp-2">{metric.stat}</p>
                 </button>
               );
             })}
@@ -566,9 +598,12 @@ function MetricTabs({
           className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8"
         >
           <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
-          <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.label}</h3>
+          <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.category}</h3>
+          <p className="mt-3 text-sm font-mono uppercase tracking-widest text-text-secondary/70">
+            {activeMetric.stat}
+          </p>
           <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
-            {highlights[activeMetric.id] ?? ""}
+            {activeMetric.description}
           </p>
 
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -943,17 +978,6 @@ export default function PAndGBeautyContentHubProjectPage() {
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
   const [activeExecutionIndex, setActiveExecutionIndex] = useState(0);
 
-  const highlights = useMemo<Record<string, string>>(
-    () => ({
-      users: "Increased monthly organic users from 110K to 250K (+126%) in four months",
-      growth: "Increased monthly organic users from 110K to 250K (+126%) in four months",
-      mom: "Achieved 17.6% average month-over-month organic growth",
-      sessions: "Generated 139.78K+ new organic sessions per month",
-      authority: "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains",
-    }),
-    [],
-  );
-
   const { open, activeId, closeButtonRef, openWith, close } = useModal();
   const activeMedia = useMemo(() => {
     const all = [...chartMedia];
@@ -1157,14 +1181,7 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="results" title="Results">
-              <MetricTabs metrics={metrics} highlights={highlights} charts={chartMedia} onOpenChart={openWith} />
-              <div className="mt-10 grid gap-3 max-w-3xl text-sm md:text-base text-text-secondary">
-                {project.resultsBullets.map((line) => (
-                  <p key={line} className="leading-relaxed">
-                    {line}
-                  </p>
-                ))}
-              </div>
+              <MetricTabs metrics={metrics} charts={chartMedia} onOpenChart={openWith} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
