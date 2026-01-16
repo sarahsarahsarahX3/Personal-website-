@@ -90,14 +90,14 @@ const metrics: Metric[] = [
     id: "domain-authority",
     category: "Domain Authority",
     value: "44",
-    listTitle: "Authority Score: 44 · 947 Referring Domains",
+    listTitle: "Authority Score: 44",
     description: "Built a domain authority score of 44 supported by 947 referring domains.",
   },
   {
     id: "organic-media-value",
     category: "Organic Media Value",
     value: "$72K+",
-    listTitle: "$72K+ Estimated Monthly Organic Traffic Value",
+    listTitle: "$72K+ Organic Traffic Value",
     description: "Generated $72K+ in estimated monthly organic traffic value, based on paid media equivalents.",
   },
   {
@@ -111,7 +111,7 @@ const metrics: Metric[] = [
     id: "ai-search-visibility",
     category: "AI Search Visibility",
     value: "984",
-    listTitle: "984 AI Search Mentions · 738 AI-Cited Pages",
+    listTitle: "984 AI Search Mentions & 738 AI-Cited Pages",
     description: "Earned 984 AI search mentions with 738 pages cited in AI-generated search results.",
   },
 ];
