@@ -539,16 +539,11 @@ export default function PAndGBeautyContentHubProjectPage() {
         <div className="mt-10 grid gap-10 xl:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             <section id="overview" className="scroll-mt-16">
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Project</p>
+              <p className="text-xs font-mono uppercase tracking-widest text-accent">Project 1</p>
               <h1 className="mt-3 font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.03]">
                 {project.title}
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
-
-              <div className="mt-10 max-w-3xl">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
-                <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
-              </div>
 
               <div className="mt-12 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
                 <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
