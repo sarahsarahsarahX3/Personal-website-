@@ -28,7 +28,7 @@ const project = {
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
   strategyIntro:
-    "I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility. The approach focused on:",
+    "I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility.\nThe approach focused on:",
   strategyBullets: [
     "Mapping topics to high-intent user queries and audience needs",
     "Structuring content for clarity, scannability, and discoverability",
@@ -192,7 +192,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16">
+    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16 pt-10">
       <header className="max-w-3xl">
         <h2 id={`${id}-title`} className="font-display text-3xl md:text-4xl tracking-tight text-text-primary">
           {title}
@@ -213,8 +213,15 @@ function MobileJumpBar({
   onNavigate: (id: string) => void;
 }) {
   return (
-    <nav aria-label="Jump to section" className="md:hidden sticky top-[76px] z-20 -mx-6 px-6 py-3 bg-surface/75 backdrop-blur-md border-y border-white/10">
-      <div className="flex gap-2 overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]">
+    <nav
+      aria-label="Jump to section"
+      className={cn(
+        "md:hidden sticky top-0 z-20",
+        "bg-surface/85 backdrop-blur-md border-b border-white/10",
+      )}
+    >
+      <div className="mx-auto w-full max-w-6xl px-6 py-3">
+        <div className="flex gap-2 overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]">
         {items.map((item) => {
           const isActive = item.id === activeId;
           return (
@@ -234,6 +241,7 @@ function MobileJumpBar({
             </button>
           );
         })}
+        </div>
       </div>
     </nav>
   );
@@ -296,10 +304,9 @@ function DesktopRail({
             "transition-opacity duration-300",
           )}
         >
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key Takeaway</p>
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            This case study highlights my ability to combine editorial judgement, growth strategy, and performance
-            analysis to deliver measurable business impact for a Fortune-level brand.
+            {project.objective}
           </p>
         </div>
       </div>
@@ -592,8 +599,10 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="strategy" title="Strategy">
-              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.strategyIntro}</p>
-              <ul className="mt-10 grid gap-3 md:grid-cols-2 max-w-4xl text-sm md:text-base text-text-secondary">
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary whitespace-pre-line">
+                {project.strategyIntro}
+              </p>
+              <ul className="mt-10 grid gap-3 max-w-4xl text-sm md:text-base text-text-secondary">
                 {project.strategyBullets.map((bullet) => (
                   <li
                     key={bullet}
@@ -612,7 +621,7 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="execution" title="Execution">
-              <ol className="grid gap-3 md:grid-cols-2">
+              <ol className="grid gap-3">
                 {(project.executionBullets as unknown as string[]).map((step, index) => (
                   <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
                     <div className="flex items-start gap-3">
