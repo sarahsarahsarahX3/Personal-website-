@@ -788,7 +788,7 @@ function PdfSlideshow({
   const activeIndex = useMemo(() => items.findIndex((i) => i.id === activeId), [items, activeId]);
   const active = items.find((i) => i.id === activeId) ?? items[0];
   const href = active ? getPdfHref(active) : undefined;
-  const iframeSrc = href ? `${href}#view=Fit` : undefined;
+  const iframeSrc = href ? `${href}#view=Fit&zoom=page-fit` : undefined;
 
   const goPrev = () => {
     if (!items.length) return;
@@ -975,7 +975,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
                   <div className="mt-8">
                     <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
-                    <p className="mt-2 text-sm md:text-base text-text-secondary">Copywriter and Content Strategist (Contract)</p>
+                    <p className="mt-2 text-base md:text-base text-text-secondary">Copywriter and Content Strategist (Contract)</p>
                   </div>
                 </div>
 
