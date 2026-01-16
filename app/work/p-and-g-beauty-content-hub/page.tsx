@@ -28,7 +28,7 @@ const project = {
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
   strategyIntro:
-    "I implemented an SEO-led editorial strategy grounded in search intent, content structure, and credibility. The approach focused on:",
+    "Implement an SEO-driven editorial strategy grounded in search intent, content structure, and credibility. The approach focused on:",
   strategyBullets: [
     "Mapping topics to high-intent user queries and audience needs",
     "Structuring content for clarity, scannability, and discoverability",
@@ -72,7 +72,7 @@ const metrics: Metric[] = [
 ];
 
 const sectionLinks: SectionLink[] = [
-  { id: "overview", label: "Overview" },
+  { id: "overview", label: "Objective" },
   { id: "strategy", label: "Strategy" },
   { id: "execution", label: "Execution" },
   { id: "results", label: "Results" },
