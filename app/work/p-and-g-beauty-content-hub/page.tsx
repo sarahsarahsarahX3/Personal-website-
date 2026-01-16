@@ -307,10 +307,48 @@ function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
+function KpiVizFrame({
+  eyebrow,
+  meta,
+  children,
+}: {
+  eyebrow: string;
+  meta?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className={cn(
+        "mt-8 relative overflow-hidden rounded-2xl border border-white/10 bg-surface/40 p-4 md:p-5",
+        "transition-colors duration-300 hover:border-white/20",
+        "before:absolute before:inset-0 before:pointer-events-none before:opacity-[0.55]",
+        "before:bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)]",
+        "before:bg-[size:26px_26px]",
+        "after:absolute after:-right-24 after:-top-24 after:h-64 after:w-64 after:rounded-full after:bg-accent/10 after:blur-3xl after:pointer-events-none",
+      )}
+    >
+      <div className="relative flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">{eyebrow}</p>
+          {meta ? <p className="mt-1 text-xs text-text-secondary/70">{meta}</p> : null}
+        </div>
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className="h-2 w-2 rounded-full bg-accent/70" />
+          <span className="h-2 w-2 rounded-full bg-white/10" />
+          <span className="h-2 w-2 rounded-full bg-white/10" />
+        </div>
+      </div>
+      <div className="relative mt-4">{children}</div>
+    </div>
+  );
+}
+
 function MiniLineChart({
+  idPrefix,
   points,
   ariaLabel,
 }: {
+  idPrefix: string;
   points: { label: string; valueK: number }[];
   ariaLabel: string;
 }) {
@@ -332,41 +370,103 @@ function MiniLineChart({
   const path = points
     .map((point, index) => `${index === 0 ? "M" : "L"} ${toX(index).toFixed(2)} ${toY(point.valueK).toFixed(2)}`)
     .join(" ");
+  const baselineY = height - paddingY;
+  const areaPath =
+    `${path} L ${toX(points.length - 1).toFixed(2)} ${baselineY.toFixed(2)}` +
+    ` L ${toX(0).toFixed(2)} ${baselineY.toFixed(2)} Z`;
+
+  const left = points[0]!;
+  const right = points[points.length - 1]!;
+
+  const clamp = (value: number, minValue: number, maxValue: number) => Math.max(minValue, Math.min(maxValue, value));
+
+  const leftX = toX(0);
+  const leftY = toY(left.valueK);
+  const rightX = toX(points.length - 1);
+  const rightY = toY(right.valueK);
+
+  const pill = (x: number, y: number, text: string, anchor: "start" | "end") => {
+    const padX = 8;
+    const padY = 5;
+    const estCharW = 6.2;
+    const w = padX * 2 + text.length * estCharW;
+    const h = 20;
+    const rectX = anchor === "start" ? x + 10 : x - 10 - w;
+    const rectY = y - 10 - h;
+    const safeX = clamp(rectX, 6, width - w - 6);
+    const safeY = clamp(rectY, 6, height - h - 6);
+    const textX = anchor === "start" ? safeX + padX : safeX + w - padX;
+    return (
+      <g>
+        <rect x={safeX} y={safeY} width={w} height={h} rx="10" fill="rgba(10,10,12,0.75)" stroke="rgba(255,255,255,0.14)" />
+        <text
+          x={textX}
+          y={safeY + padY + 9}
+          fontSize="11"
+          fill="rgba(255,255,255,0.82)"
+          textAnchor={anchor === "start" ? "start" : "end"}
+          fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+        >
+          {text}
+        </text>
+      </g>
+    );
+  };
 
   return (
-    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${width} ${height}`} className="h-32 w-full">
-      <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
+    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${width} ${height}`} className="h-36 w-full">
+      <defs>
+        <linearGradient id={`${idPrefix}-area`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255,59,48,0.32)" />
+          <stop offset="75%" stopColor="rgba(255,59,48,0.06)" />
+          <stop offset="100%" stopColor="rgba(255,59,48,0)" />
+        </linearGradient>
+        <filter id={`${idPrefix}-glow`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="2.5" result="blur" />
+          <feColorMatrix
+            in="blur"
+            type="matrix"
+            values="1 0 0 0 0  0 0.25 0 0 0  0 0 0.25 0 0  0 0 0 0.8 0"
+            result="colored"
+          />
+          <feMerge>
+            <feMergeNode in="colored" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      <g stroke="rgba(255,255,255,0.10)" strokeWidth="1">
         <line x1="0" y1="24" x2={width} y2="24" />
         <line x1="0" y1="60" x2={width} y2="60" />
         <line x1="0" y1="96" x2={width} y2="96" />
       </g>
 
-      <path d={path} fill="none" stroke="rgba(255,59,48,0.9)" strokeWidth="2.25" strokeLinecap="round" />
+      <path d={areaPath} fill={`url(#${idPrefix}-area)`} />
+
+      <path d={path} fill="none" stroke="rgba(255,59,48,0.92)" strokeWidth="2.5" strokeLinecap="round" />
 
       {points.map((point, index) => {
         const x = toX(index);
         const y = toY(point.valueK);
         return (
           <g key={point.label}>
-            <circle cx={x} cy={y} r="3.2" fill="rgba(255,59,48,0.95)" />
+            <circle cx={x} cy={y} r="5.2" fill="rgba(255,59,48,0.15)" filter={`url(#${idPrefix}-glow)`} />
+            <circle cx={x} cy={y} r="3.1" fill="rgba(255,59,48,0.95)" />
           </g>
         );
       })}
 
       {points.length >= 2 ? (
         <>
+          {pill(leftX, leftY, `${left.valueK.toFixed(2)}K`, "start")}
+          {pill(rightX, rightY, `${right.valueK.toFixed(2)}K`, "end")}
+
           <text x={paddingX} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)">
-            {points[0]!.label}
+            {left.label}
           </text>
           <text x={width - paddingX} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)" textAnchor="end">
-            {points[points.length - 1]!.label}
-          </text>
-
-          <text x={paddingX} y={14} fontSize="10" fill="rgba(255,255,255,0.70)">
-            {points[0]!.valueK.toFixed(2)}K
-          </text>
-          <text x={width - paddingX} y={14} fontSize="10" fill="rgba(255,255,255,0.70)" textAnchor="end">
-            {points[points.length - 1]!.valueK.toFixed(2)}K
+            {right.label}
           </text>
         </>
       ) : null}
@@ -375,9 +475,11 @@ function MiniLineChart({
 }
 
 function MiniBars({
+  idPrefix,
   items,
   ariaLabel,
 }: {
+  idPrefix: string;
   items: { label: string; value: number }[];
   ariaLabel: string;
 }) {
@@ -391,8 +493,18 @@ function MiniBars({
   const barWidth = (width - paddingX * 2 - gap * (items.length - 1)) / items.length;
 
   return (
-    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${width} ${height}`} className="h-32 w-full">
-      <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
+    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${width} ${height}`} className="h-36 w-full">
+      <defs>
+        <linearGradient id={`${idPrefix}-bar`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255,59,48,0.55)" />
+          <stop offset="100%" stopColor="rgba(255,59,48,0.18)" />
+        </linearGradient>
+        <pattern id={`${idPrefix}-hatch`} patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(28)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+        </pattern>
+      </defs>
+
+      <g stroke="rgba(255,255,255,0.10)" strokeWidth="1">
         <line x1="0" y1="24" x2={width} y2="24" />
         <line x1="0" y1="60" x2={width} y2="60" />
         <line x1="0" y1="96" x2={width} y2="96" />
@@ -404,8 +516,9 @@ function MiniBars({
         const y = height - paddingY - h;
         return (
           <g key={item.label}>
-            <rect x={x} y={y} width={barWidth} height={h} rx="10" fill="rgba(255,59,48,0.38)" />
-            <rect x={x} y={y} width={barWidth} height={2.25} rx="10" fill="rgba(255,59,48,0.9)" />
+            <rect x={x} y={y} width={barWidth} height={h} rx="12" fill={`url(#${idPrefix}-bar)`} />
+            <rect x={x} y={y} width={barWidth} height={h} rx="12" fill={`url(#${idPrefix}-hatch)`} opacity="0.15" />
+            <rect x={x} y={y} width={barWidth} height={2.4} rx="12" fill="rgba(255,59,48,0.95)" />
             <text x={x + barWidth / 2} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)" textAnchor="middle">
               {item.label}
             </text>
@@ -434,20 +547,36 @@ function Gauge({
   const c = 2 * Math.PI * r;
   const pct = Math.max(0, Math.min(1, value / max));
   const dash = c * pct;
+  const cx = size / 2;
+  const cy = size / 2;
+  const tickCount = 24;
+  const tickLen = 6;
+  const tickInner = r - stroke / 2 - tickLen;
+  const tickOuter = r - stroke / 2;
 
   return (
     <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${size} ${size}`} className="h-[132px] w-[132px]">
-      <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,0.10)" strokeWidth={stroke} fill="none" />
+      <circle cx={cx} cy={cy} r={r} stroke="rgba(255,255,255,0.10)" strokeWidth={stroke} fill="none" />
+
+      {Array.from({ length: tickCount }).map((_, index) => {
+        const a = (index / tickCount) * Math.PI * 2 - Math.PI / 2;
+        const x1 = cx + Math.cos(a) * tickInner;
+        const y1 = cy + Math.sin(a) * tickInner;
+        const x2 = cx + Math.cos(a) * tickOuter;
+        const y2 = cy + Math.sin(a) * tickOuter;
+        return <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.10)" strokeWidth="1" />;
+      })}
+
       <circle
-        cx={size / 2}
-        cy={size / 2}
+        cx={cx}
+        cy={cy}
         r={r}
         stroke="rgba(255,59,48,0.95)"
         strokeWidth={stroke}
         fill="none"
         strokeLinecap="round"
         strokeDasharray={`${dash} ${c}`}
-        transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        transform={`rotate(-90 ${cx} ${cy})`}
       />
       <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" fontSize="28" fill="rgba(255,255,255,0.92)">
         {value}
@@ -460,120 +589,148 @@ function Gauge({
 }
 
 function MetricChart({ metricId }: { metricId: Metric["id"] }) {
-  const wrapperClassName = cn("mt-8 rounded-2xl border border-white/10 bg-surface/40 p-4 md:p-5");
+  const trafficMeta = "May–Oct 2025 · SEMrush trend";
+  const keywordsMeta = "Last 90 days · Position tracking";
+  const snapshotMeta = "Jan 2026 · Domain overview";
 
   switch (metricId) {
     case "monthly-organic-visits":
       return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Traffic trend</p>
-          <div className="mt-3">
-            <MiniLineChart
-              ariaLabel="Organic traffic trend from May 2025 to October 2025"
-              points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
-            />
-          </div>
-        </div>
+        <KpiVizFrame eyebrow="Traffic trend" meta={trafficMeta}>
+          <MiniLineChart
+            idPrefix="traffic"
+            ariaLabel="Organic traffic trend from May 2025 to October 2025"
+            points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
+          />
+        </KpiVizFrame>
       );
     case "growth-rate":
       return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Growth curve</p>
-          <div className="mt-3">
-            <MiniLineChart
-              ariaLabel="Organic traffic growth from May 2025 to October 2025"
-              points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
-            />
-          </div>
-        </div>
+        <KpiVizFrame eyebrow="Growth curve" meta={trafficMeta}>
+          <MiniLineChart
+            idPrefix="growth"
+            ariaLabel="Organic traffic growth from May 2025 to October 2025"
+            points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
+          />
+        </KpiVizFrame>
       );
     case "search-footprint":
       return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Keywords and top positions</p>
-          <div className="mt-4 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
-            <div>
-              <p className="font-display text-3xl leading-none">{formatNumber(semrushSnapshot.organicKeywords)}</p>
-              <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">Ranking organic keywords</p>
+        <KpiVizFrame eyebrow="Keywords and top positions" meta={keywordsMeta}>
+          <div className="grid gap-5 md:grid-cols-[1fr_1.25fr] md:items-center">
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Organic keywords</p>
+              <p className="mt-2 font-display text-4xl leading-none">{formatNumber(semrushSnapshot.organicKeywords)}</p>
+              <p className="mt-3 text-xs text-text-secondary/70">Ranking footprint snapshot.</p>
             </div>
-            <div className="justify-self-start md:justify-self-end">
-              <MiniBars
-                ariaLabel="Top position keyword counts snapshot"
-                items={[
-                  { label: "Top 3", value: semrushSnapshot.topPositions.top3 },
-                  { label: "Top 10", value: semrushSnapshot.topPositions.top10 },
-                  { label: "Top 20", value: semrushSnapshot.topPositions.top20 },
-                  { label: "Top 100", value: semrushSnapshot.topPositions.top100 },
-                ]}
-              />
-            </div>
-          </div>
-        </div>
-      );
-    case "domain-authority":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Authority and links</p>
-          <div className="mt-4 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
-            <Gauge ariaLabel="Authority score gauge" value={semrushSnapshot.authorityScore} max={100} />
-            <div className="grid gap-3">
-              <div className="rounded-xl border border-white/10 bg-surface-alt/10 p-4">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Referring domains</p>
-                <p className="mt-2 font-display text-2xl leading-none">{formatNumber(semrushSnapshot.referringDomains)}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    case "organic-media-value":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Estimated value</p>
-          <div className="mt-4">
-            <div className="flex items-baseline justify-between gap-4">
-              <p className="font-display text-3xl leading-none">${semrushSnapshot.trafficValueK.toFixed(2)}K</p>
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">Monthly traffic value</p>
-            </div>
-            <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
-              <div
-                className="h-full bg-accent/80"
-                style={{ width: `${Math.max(0, Math.min(1, semrushSnapshot.trafficValueK / 100)) * 100}%` }}
-              />
-            </div>
-            <p className="mt-3 text-xs text-text-secondary/70">Scaled to a 0–100K visual range.</p>
-          </div>
-        </div>
-      );
-    case "content-engagement":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Session depth</p>
-          <div className="mt-4">
-            <div className="flex items-baseline justify-between gap-4">
-              <p className="font-display text-3xl leading-none">5:48</p>
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">Average visit duration</p>
-            </div>
-            <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
-              <div className="h-full bg-accent/80" style={{ width: `${(348 / 600) * 100}%` }} />
-            </div>
-            <p className="mt-3 text-xs text-text-secondary/70">Scaled to a 0–10 minute visual range.</p>
-          </div>
-        </div>
-      );
-    case "ai-search-visibility":
-      return (
-        <div className={wrapperClassName}>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">AI citations</p>
-          <div className="mt-3">
             <MiniBars
-              ariaLabel="AI search mentions and cited pages"
+              idPrefix="positions"
+              ariaLabel="Top position keyword counts snapshot"
               items={[
-                { label: "Mentions", value: semrushSnapshot.aiMentions },
-                { label: "Cited pages", value: semrushSnapshot.aiCitedPages },
+                { label: "Top 3", value: semrushSnapshot.topPositions.top3 },
+                { label: "Top 10", value: semrushSnapshot.topPositions.top10 },
+                { label: "Top 20", value: semrushSnapshot.topPositions.top20 },
+                { label: "Top 100", value: semrushSnapshot.topPositions.top100 },
               ]}
             />
           </div>
-        </div>
+        </KpiVizFrame>
+      );
+    case "domain-authority":
+      return (
+        <KpiVizFrame eyebrow="Authority and links" meta={snapshotMeta}>
+          <div className="grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <Gauge ariaLabel="Authority score gauge" value={semrushSnapshot.authorityScore} max={100} />
+              <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70 text-center">
+                Authority score
+              </p>
+            </div>
+            <div className="grid gap-3">
+              <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Referring domains</p>
+                <p className="mt-2 font-display text-3xl leading-none">{formatNumber(semrushSnapshot.referringDomains)}</p>
+                <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+                  <div className="h-full bg-accent/75" style={{ width: `${Math.min(100, (semrushSnapshot.referringDomains / 1200) * 100)}%` }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </KpiVizFrame>
+      );
+    case "organic-media-value":
+      return (
+        <KpiVizFrame eyebrow="Estimated value" meta={trafficMeta}>
+          <div className="grid gap-5 md:grid-cols-[1fr_1fr] md:items-center">
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Monthly traffic value</p>
+              <p className="mt-2 font-display text-4xl leading-none">${semrushSnapshot.trafficValueK.toFixed(2)}K</p>
+              <p className="mt-3 text-xs text-text-secondary/70">Estimated paid media equivalent.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Value meter</p>
+              <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+                <div
+                  className="h-full bg-accent/85"
+                  style={{ width: `${Math.max(0, Math.min(1, semrushSnapshot.trafficValueK / 100)) * 100}%` }}
+                />
+              </div>
+              <div className="mt-4 grid grid-cols-10 gap-1" aria-hidden="true">
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <span
+                    key={index}
+                    className={cn(
+                      "h-2 rounded-full border border-white/10",
+                      index < Math.round((semrushSnapshot.trafficValueK / 100) * 10) ? "bg-accent/40" : "bg-white/5",
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </KpiVizFrame>
+      );
+    case "content-engagement":
+      return (
+        <KpiVizFrame eyebrow="Session depth" meta="Engagement · Analytics snapshot">
+          <div className="grid gap-5 md:grid-cols-[1fr_1fr] md:items-center">
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Avg visit duration</p>
+              <p className="mt-2 font-display text-4xl leading-none">5:48</p>
+              <p className="mt-3 text-xs text-text-secondary/70">Strong long-form engagement.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Duration meter</p>
+              <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+                <div className="h-full bg-accent/85" style={{ width: `${(348 / 600) * 100}%` }} />
+              </div>
+              <div className="mt-4 grid grid-cols-12 gap-1" aria-hidden="true">
+                {Array.from({ length: 12 }).map((_, index) => (
+                  <span
+                    key={index}
+                    className={cn(
+                      "h-2 rounded-full border border-white/10",
+                      index < Math.round((348 / 600) * 12) ? "bg-accent/35" : "bg-white/5",
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </KpiVizFrame>
+      );
+    case "ai-search-visibility":
+      return (
+        <KpiVizFrame eyebrow="AI citations" meta={snapshotMeta}>
+          <MiniBars
+            idPrefix="ai"
+            ariaLabel="AI search mentions and cited pages"
+            items={[
+              { label: "Mentions", value: semrushSnapshot.aiMentions },
+              { label: "Cited", value: semrushSnapshot.aiCitedPages },
+            ]}
+          />
+        </KpiVizFrame>
       );
     default:
       return null;
