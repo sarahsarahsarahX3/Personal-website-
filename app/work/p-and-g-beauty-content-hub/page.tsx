@@ -23,6 +23,7 @@ type Metric = {
   id: string;
   value: string;
   category: string;
+  listTitle: string;
   stat: string;
   description: string;
 };
@@ -69,6 +70,7 @@ const metrics: Metric[] = [
     id: "growth-rate",
     category: "Growth Rate",
     value: "+126%",
+    listTitle: "+126% Organic Growth",
     stat: "Organic Growth in 4 Months",
     description: "Increased monthly organic traffic from ~110K to 250K in four months.",
   },
@@ -76,6 +78,7 @@ const metrics: Metric[] = [
     id: "search-footprint",
     category: "Search Footprint",
     value: "47K",
+    listTitle: "47K Organic Keywords Ranked",
     stat: "Organic Keywords Ranked",
     description: "Expanded keyword footprint across high-intent beauty and wellness topics.",
   },
@@ -83,6 +86,7 @@ const metrics: Metric[] = [
     id: "domain-authority",
     category: "Domain Authority",
     value: "44",
+    listTitle: "Domain Authority: 44",
     stat: "Authority Score 44 · 947 Referring Domains",
     description: "Established strong domain authority and earned editorial backlinks in competitive categories.",
   },
@@ -90,6 +94,7 @@ const metrics: Metric[] = [
     id: "organic-media-value",
     category: "Organic Media Value",
     value: "$72K+",
+    listTitle: "$72K+ Est. Traffic Value",
     stat: "Estimated Monthly Traffic Value",
     description: "Estimated organic traffic value based on equivalent paid media cost.",
   },
@@ -97,6 +102,7 @@ const metrics: Metric[] = [
     id: "content-engagement",
     category: "Content Engagement",
     value: "5:48",
+    listTitle: "5:48 Avg Visit Duration",
     stat: "Average Visit Duration",
     description: "Demonstrated strong engagement with long-form, educational content.",
   },
@@ -104,6 +110,7 @@ const metrics: Metric[] = [
     id: "ai-search-visibility",
     category: "AI Search Visibility",
     value: "984",
+    listTitle: "984 AI Mentions & 738 AI-Cited Pages",
     stat: "AI Mentions · 738 AI-Cited Pages",
     description: "Content referenced across AI-powered search experiences and cited in AI-generated results.",
   },
@@ -483,9 +490,8 @@ function MetricTabs({
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
-                    <p className="mt-2 text-[11px] font-mono uppercase tracking-widest text-text-secondary/80">
-                      {metric.stat}
+                    <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
+                      {metric.listTitle}
                     </p>
                   </div>
                   <span
@@ -579,9 +585,8 @@ function MetricTabs({
                       : "border-white/10 hover:bg-white/5 hover:border-white/20",
                   )}
                 >
-                  <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
-                  <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                    {metric.stat}
+                  <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
+                    {metric.listTitle}
                   </p>
                 </button>
               );
