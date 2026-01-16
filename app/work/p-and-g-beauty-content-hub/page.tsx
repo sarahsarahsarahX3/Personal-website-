@@ -968,11 +968,6 @@ export default function PAndGBeautyContentHubProjectPage() {
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
-              <div className="mt-8 lg:hidden rounded-3xl border border-white/10 bg-surface-alt/10 p-6">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
-                <p className="mt-4 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
-              </div>
-
               <div className="mt-12 grid gap-6 lg:grid-cols-2">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
