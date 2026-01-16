@@ -485,9 +485,8 @@ function MetricTabs({
                   <div>
                     <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
                     <p className="mt-2 text-[11px] font-mono uppercase tracking-widest text-text-secondary/80">
-                      {metric.category}
+                      {metric.stat}
                     </p>
-                    <p className="mt-2 text-sm leading-snug text-text-secondary">{metric.stat}</p>
                   </div>
                   <span
                     aria-hidden="true"
@@ -582,9 +581,8 @@ function MetricTabs({
                 >
                   <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
                   <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                    {metric.category}
+                    {metric.stat}
                   </p>
-                  <p className="mt-2 text-sm leading-snug text-text-secondary line-clamp-2">{metric.stat}</p>
                 </button>
               );
             })}
