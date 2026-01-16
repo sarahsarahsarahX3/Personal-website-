@@ -788,7 +788,7 @@ function PdfSlideshow({
   const activeIndex = useMemo(() => items.findIndex((i) => i.id === activeId), [items, activeId]);
   const active = items.find((i) => i.id === activeId) ?? items[0];
   const href = active ? getPdfHref(active) : undefined;
-  const iframeSrc = href ? `${href}#view=FitH&zoom=40&toolbar=0&navpanes=0` : undefined;
+  const iframeSrc = href ? `${href}#view=FitH&zoom=30&toolbar=0&navpanes=0` : undefined;
 
   const goPrev = () => {
     if (!items.length) return;
