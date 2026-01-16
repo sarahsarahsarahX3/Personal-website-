@@ -15,6 +15,7 @@ type MediaItem = {
 type PdfItem = {
   id: string;
   title: string;
+  fileName?: string;
   href?: string;
 };
 
@@ -86,12 +87,57 @@ const sectionLinks: SectionLink[] = [
 ];
 
 const articlePdfs: PdfItem[] = [
-  { id: "pdf1", title: "Digital article PDF 01", href: undefined },
-  { id: "pdf2", title: "Digital article PDF 02", href: undefined },
-  { id: "pdf3", title: "Digital article PDF 03", href: undefined },
-  { id: "pdf4", title: "Digital article PDF 04", href: undefined },
-  { id: "pdf5", title: "Digital article PDF 05", href: undefined },
-  { id: "pdf6", title: "Digital article PDF 06", href: undefined },
+  {
+    id: "pdf-oily-hair",
+    title: "Understanding and Managing Oily Hair and Scalp: Tips, Causes, and Remedies - HairCode",
+    fileName: "Understanding and Managing Oily Hair and Scalp: Tips, Causes, and Remedies - HairCode.pdf",
+  },
+  { id: "pdf-low-porosity", title: "The Best Products for Low Porosity Hair", fileName: "The Best Products for Low Porosity Hair.pdf" },
+  {
+    id: "pdf-curly-hair",
+    title: "Ultimate Guide: How to Care for Curly Hair - HairCode",
+    fileName: "Ultimate Guide: How to Care for Curly Hair - HairCode.pdf",
+  },
+  {
+    id: "pdf-deep-conditioning",
+    title: "Deep Conditioning 101: How to help Repair and Care for Bleached Hair",
+    fileName: "Deep Conditioning 101: How to help Repair and Care for Bleached Hair.pdf",
+  },
+  {
+    id: "pdf-scalp-detox",
+    title: "Hair or Scalp Detox? How to Detox Hair Based on Your Scalp Concerns",
+    fileName: "Hair or Scalp Detox? How to Detox Hair Based on Your Scalp Concerns.pdf",
+  },
+  {
+    id: "pdf-exfoliate-scalp",
+    title: "How to Exfoliate Your Scalp: The Secret to Healthy Looking Hair",
+    fileName: "How to Exfoliate Your Scalp: The Secret to Healthy Looking Hair.pdf",
+  },
+  {
+    id: "pdf-keratin-treatment-hype",
+    title: "What Does a Keratin Treatment Do and Is It Worth the Hype?",
+    fileName: "What Does a Keratin Treatment Do and Is It Worth the Hype?.pdf",
+  },
+  {
+    id: "pdf-hair-mask",
+    title: "How to Do a Hair Mask: A Step-by-Step Guide",
+    fileName: "How to Do a Hair Mask: A Step-by-Step Guide.pdf",
+  },
+  {
+    id: "pdf-keratin-curly-hair",
+    title: "What Does Keratin Do for Curly Hair? The Truth Behind the Treatment",
+    fileName: "What Does Keratin Do for Curly Hair? The Truth Behind the Treatment.pdf",
+  },
+  {
+    id: "pdf-silk-press",
+    title: "The Silk Press Survival Guide: How to Maintain a Silk Press",
+    fileName: "The Silk Press Survival Guide: How to Maintain a Silk Press.pdf",
+  },
+  {
+    id: "pdf-90s-haircuts",
+    title: "The Evolution of ‘90s Haircut Styles From Grunge to Glam",
+    fileName: "The Evolution of ‘90s Haircut Styles From Grunge to Glam.pdf",
+  },
 ];
 
 const chartMedia: MediaItem[] = [
@@ -741,6 +787,10 @@ function PdfGrid({ items }: { items: PdfItem[] }) {
   return (
     <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
       {items.map((item) => {
+        const resolvedHref =
+          item.href ??
+          (item.fileName ? `/images/${encodeURIComponent(item.fileName)}` : undefined);
+
         const content = (
           <>
             <div className="flex items-start justify-between gap-4">
@@ -751,7 +801,7 @@ function PdfGrid({ items }: { items: PdfItem[] }) {
             </div>
             <div className="mt-4 flex items-center justify-between gap-3">
               <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                {item.href ? "Open in new tab" : "Add PDF file"}
+                {resolvedHref ? "Open in new tab" : "Add PDF file"}
               </p>
               <span aria-hidden="true" className="text-text-secondary">
                 ↗
@@ -760,7 +810,7 @@ function PdfGrid({ items }: { items: PdfItem[] }) {
           </>
         );
 
-        if (!item.href) {
+        if (!resolvedHref) {
           return (
             <li key={item.id}>
               <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
@@ -773,7 +823,7 @@ function PdfGrid({ items }: { items: PdfItem[] }) {
         return (
           <li key={item.id}>
             <a
-              href={item.href}
+              href={resolvedHref}
               target="_blank"
               rel="noreferrer"
               className={cn(
