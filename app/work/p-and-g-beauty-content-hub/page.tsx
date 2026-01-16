@@ -484,12 +484,12 @@ function MetricTabs({
                 aria-controls={`metric-accordion-panel-${metric.id}`}
                 onClick={() => setActive(metric.id)}
                 className={cn(
-                  "group relative w-full px-5 py-4 text-left overflow-hidden",
-                  "after:absolute after:left-5 after:right-5 after:bottom-0 after:h-px",
-                  "after:bg-gradient-to-r after:from-accent/0 after:via-accent/45 after:to-accent/0",
-                  "after:opacity-0 after:transition-opacity after:duration-200",
+                  "group relative w-full px-5 py-4 pl-11 text-left",
+                  "before:absolute before:left-5 before:top-6 before:h-2.5 before:w-2.5 before:rounded-full before:border before:transition-all before:duration-200",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                  isOpen ? "after:opacity-100" : "hover:after:opacity-60",
+                  isOpen
+                    ? "before:border-accent/40 before:bg-accent/90 before:shadow-[0_0_0_4px_rgba(255,59,48,0.14)]"
+                    : "before:border-white/15 before:bg-transparent hover:before:border-white/25 hover:before:bg-white/10",
                 )}
               >
                 <div className="flex items-start justify-between gap-4">
@@ -500,10 +500,8 @@ function MetricTabs({
                   <div className="flex items-center gap-2">
                     <span
                       className={cn(
-                        "shrink-0 rounded-full border px-2 py-1 text-[10px] font-mono uppercase tracking-widest transition-colors",
-                        isOpen
-                          ? "border-accent/30 bg-accent/10 text-accent"
-                          : "border-white/10 bg-surface/40 text-text-secondary",
+                        "shrink-0 rounded-full px-2 py-1 text-[10px] font-mono uppercase tracking-widest transition-colors",
+                        isOpen ? "bg-accent/10 text-accent" : "bg-white/5 text-text-secondary",
                       )}
                     >
                       {metric.value}
@@ -591,14 +589,12 @@ function MetricTabs({
                   id={`metric-tab-${metric.id}`}
                   onClick={() => setActive(metric.id)}
                   className={cn(
-                    "group relative overflow-hidden rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
-                    "after:absolute after:left-5 after:right-5 after:bottom-0 after:h-px",
-                    "after:bg-gradient-to-r after:from-accent/0 after:via-accent/45 after:to-accent/0",
-                    "after:opacity-0 after:transition-opacity after:duration-200",
+                    "group relative rounded-2xl border bg-surface-alt/10 px-5 py-4 pl-11 text-left transition-colors",
+                    "before:absolute before:left-5 before:top-6 before:h-2.5 before:w-2.5 before:rounded-full before:border before:transition-all before:duration-200",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                     selected
-                      ? "border-white/25 bg-white/5 after:opacity-100"
-                      : "border-white/10 hover:bg-white/5 hover:border-white/20 hover:after:opacity-60",
+                      ? "border-white/25 bg-white/5 before:border-accent/40 before:bg-accent/90 before:shadow-[0_0_0_4px_rgba(255,59,48,0.14)]"
+                      : "border-white/10 before:border-white/15 before:bg-transparent hover:bg-white/5 hover:border-white/20 hover:before:border-white/25 hover:before:bg-white/10",
                   )}
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -607,10 +603,10 @@ function MetricTabs({
                     </p>
                     <span
                       className={cn(
-                        "shrink-0 rounded-full border px-2 py-1 text-[10px] font-mono uppercase tracking-widest transition-colors",
+                        "shrink-0 rounded-full px-2 py-1 text-[10px] font-mono uppercase tracking-widest transition-colors",
                         selected
-                          ? "border-accent/30 bg-accent/10 text-accent"
-                          : "border-white/10 bg-surface/40 text-text-secondary group-hover:border-white/20 group-hover:bg-white/5",
+                          ? "bg-accent/10 text-accent"
+                          : "bg-white/5 text-text-secondary group-hover:bg-white/10",
                       )}
                     >
                       {metric.value}
