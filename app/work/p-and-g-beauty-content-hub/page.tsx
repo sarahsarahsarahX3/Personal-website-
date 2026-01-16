@@ -12,6 +12,12 @@ type MediaItem = {
   imageSrc?: string;
 };
 
+type PdfItem = {
+  id: string;
+  title: string;
+  href?: string;
+};
+
 type Metric = {
   id: string;
   label: string;
@@ -79,19 +85,21 @@ const sectionLinks: SectionLink[] = [
   { id: "tools", label: "Tools" },
 ];
 
-const articleMedia: MediaItem[] = [
-  { id: "a1", title: "Digital article screenshot 01" },
-  { id: "a2", title: "Digital article screenshot 02" },
-  { id: "a3", title: "Digital article screenshot 03" },
-  { id: "a4", title: "Digital article screenshot 04" },
-  { id: "a5", title: "Digital article screenshot 05" },
-  { id: "a6", title: "Digital article screenshot 06" },
+const articlePdfs: PdfItem[] = [
+  { id: "pdf1", title: "Digital article PDF 01", href: undefined },
+  { id: "pdf2", title: "Digital article PDF 02", href: undefined },
+  { id: "pdf3", title: "Digital article PDF 03", href: undefined },
+  { id: "pdf4", title: "Digital article PDF 04", href: undefined },
+  { id: "pdf5", title: "Digital article PDF 05", href: undefined },
+  { id: "pdf6", title: "Digital article PDF 06", href: undefined },
 ];
 
 const chartMedia: MediaItem[] = [
   { id: "c1", title: "Performance chart 01" },
   { id: "c2", title: "Performance chart 02" },
 ];
+
+const livePreviewUrl = "https://example.com";
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -729,6 +737,97 @@ function Modal({
   );
 }
 
+function PdfGrid({ items }: { items: PdfItem[] }) {
+  return (
+    <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+      {items.map((item) => {
+        const content = (
+          <>
+            <div className="flex items-start justify-between gap-4">
+              <p className="text-sm tracking-tight text-text-primary">{item.title}</p>
+              <span className="shrink-0 rounded-full border border-white/10 bg-surface/40 px-2 py-1 text-[10px] font-mono uppercase tracking-widest text-text-secondary">
+                PDF
+              </span>
+            </div>
+            <div className="mt-4 flex items-center justify-between gap-3">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                {item.href ? "Open in new tab" : "Add PDF file"}
+              </p>
+              <span aria-hidden="true" className="text-text-secondary">
+                ↗
+              </span>
+            </div>
+          </>
+        );
+
+        if (!item.href) {
+          return (
+            <li key={item.id}>
+              <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
+                {content}
+              </div>
+            </li>
+          );
+        }
+
+        return (
+          <li key={item.id}>
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+              className={cn(
+                "block rounded-2xl border border-white/10 bg-surface-alt/10 p-5 transition-colors",
+                "hover:bg-white/5 hover:border-white/20",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+              aria-label={`Open ${item.title}`}
+            >
+              {content}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function LiveSitePreview({ url }: { url: string }) {
+  return (
+    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 overflow-hidden">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Live preview</p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          className={cn(
+            "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
+            "text-[11px] font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+          )}
+        >
+          Open site
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <div className="aspect-[16/10] bg-surface/40">
+        <iframe
+          title="Live site preview"
+          src={url}
+          loading="lazy"
+          className="h-full w-full"
+        />
+      </div>
+      <div className="px-5 py-4">
+        <p className="text-xs leading-relaxed text-text-secondary/70">
+          Note: Some sites block embedded previews. If you see a blank frame, use “Open site”.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function PAndGBeautyContentHubProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const progress = useScrollProgress();
@@ -749,7 +848,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
   const { open, activeId, closeButtonRef, openWith, close } = useModal();
   const activeMedia = useMemo(() => {
-    const all = [...articleMedia, ...chartMedia];
+    const all = [...chartMedia];
     return all.find((item) => item.id === activeId) ?? all[0]!;
   }, [activeId]);
 
@@ -934,8 +1033,12 @@ export default function PAndGBeautyContentHubProjectPage() {
               <div className="mt-10">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
                 <div className="mt-6">
-                  <MediaGrid items={articleMedia} onOpen={openWith} />
+                  <PdfGrid items={articlePdfs} />
                 </div>
+              </div>
+
+              <div className="mt-10">
+                <LiveSitePreview url={livePreviewUrl} />
               </div>
             </Section>
 
