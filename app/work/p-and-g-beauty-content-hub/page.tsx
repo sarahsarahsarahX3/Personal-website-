@@ -644,66 +644,6 @@ function MetricTabs({
   );
 }
 
-function DiagramCard({
-  title,
-  subtitle,
-  children,
-}: {
-  title: string;
-  subtitle?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-7">
-      <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{title}</p>
-      {subtitle ? <p className="mt-3 text-sm text-text-secondary">{subtitle}</p> : null}
-      <div className="mt-6">{children}</div>
-    </div>
-  );
-}
-
-function NodeDiagram({
-  nodes,
-  activeIndex,
-}: {
-  nodes: Array<{ x: number; y: number }>;
-  activeIndex: number;
-}) {
-  const path = nodes
-    .map((node, index) => `${index === 0 ? "M" : "L"} ${node.x} ${node.y}`)
-    .join(" ");
-
-  return (
-    <svg viewBox="0 0 100 100" role="img" aria-label="Process diagram" className="w-full h-auto">
-      <path d={path} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.5" strokeLinecap="round" />
-
-      {nodes.map((node, index) => {
-        const isActive = index === activeIndex;
-        return (
-          <g key={`${node.x}-${node.y}`}>
-            <circle
-              cx={node.x}
-              cy={node.y}
-              r={7.5}
-              fill="rgba(255,255,255,0.03)"
-              stroke={isActive ? "rgba(255,59,48,0.9)" : "rgba(255,255,255,0.18)"}
-              strokeWidth={isActive ? 2 : 1.25}
-              style={{ transition: "stroke 200ms ease, stroke-width 200ms ease" }}
-            />
-            <circle
-              cx={node.x}
-              cy={node.y}
-              r={3.25}
-              fill={isActive ? "rgba(255,59,48,0.95)" : "rgba(255,255,255,0.28)"}
-              style={{ transition: "fill 200ms ease" }}
-            />
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
-
 function useModal() {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -836,6 +776,7 @@ function PdfSlideshow({
   const activeIndex = useMemo(() => items.findIndex((i) => i.id === activeId), [items, activeId]);
   const active = items.find((i) => i.id === activeId) ?? items[0];
   const href = active ? getPdfHref(active) : undefined;
+  const iframeSrc = href ? `${href}#view=Fit` : undefined;
 
   const goPrev = () => {
     if (!items.length) return;
@@ -951,9 +892,9 @@ function PdfSlideshow({
       </div>
 
       <div className="bg-surface/40">
-        <div className="h-[62vh] min-h-[420px] w-full">
-          {href ? (
-            <iframe title={active?.title ?? "PDF preview"} src={href} className="h-full w-full" />
+        <div className="h-[75vh] min-h-[520px] lg:h-[62vh] lg:min-h-[420px] w-full">
+          {iframeSrc ? (
+            <iframe title={active?.title ?? "PDF preview"} src={iframeSrc} className="h-full w-full" />
           ) : (
             <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
               Add a PDF href for this item
@@ -976,7 +917,6 @@ export default function PAndGBeautyContentHubProjectPage() {
   const progress = useScrollProgress();
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
-  const [activeExecutionIndex, setActiveExecutionIndex] = useState(0);
 
   const { open, activeId, closeButtonRef, openWith, close } = useModal();
   const activeMedia = useMemo(() => {
@@ -1023,7 +963,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                 <p className="mt-4 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
               </div>
 
-              <div className="mt-12 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+              <div className="mt-12 grid gap-6 lg:grid-cols-2">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
@@ -1126,54 +1066,25 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="execution" title="Execution">
-              <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+              <div className="grid gap-8 lg:grid-cols-2">
                 <ol className="grid gap-3">
-                  {(project.executionBullets as unknown as string[]).map((step, index) => {
-                    const isActive = index === activeExecutionIndex;
-                    return (
-                      <li key={step}>
-                        <button
-                          type="button"
-                          onClick={() => setActiveExecutionIndex(index)}
-                          onMouseEnter={() => setActiveExecutionIndex(index)}
-                          onFocus={() => setActiveExecutionIndex(index)}
-                          className={cn(
-                            "group w-full rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
-                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                            isActive ? "border-white/20 bg-white/5" : "border-white/10 hover:border-white/20 hover:bg-white/5",
-                          )}
-                        >
-                          <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
-                            <span className="mt-[0.35rem] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
-                              {String(index + 1).padStart(2, "0")}
-                            </span>
-                            <span className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</span>
-                          </span>
-                        </button>
-                      </li>
-                    );
-                  })}
+                  {(project.executionBullets as unknown as string[]).map((step, index) => (
+                    <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
+                      <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
+                        <span className="mt-[0.35rem] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</span>
+                      </span>
+                    </li>
+                  ))}
                 </ol>
 
-                <DiagramCard title="Execution flow" subtitle="A single workflow, tuned over time.">
-                  <NodeDiagram
-                    activeIndex={activeExecutionIndex}
-                    nodes={[
-                      { x: 22, y: 14 },
-                      { x: 78, y: 26 },
-                      { x: 28, y: 44 },
-                      { x: 74, y: 58 },
-                      { x: 30, y: 74 },
-                      { x: 70, y: 88 },
-                    ]}
-                  />
-                </DiagramCard>
-              </div>
-
-              <div className="mt-10">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
-                <div className="mt-6">
-                  <PdfSlideshow items={articlePdfs} activeId={activePdfId} onSelect={setActivePdfId} />
+                <div className="lg:sticky lg:top-16 self-start">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
+                  <div className="mt-6">
+                    <PdfSlideshow items={articlePdfs} activeId={activePdfId} onSelect={setActivePdfId} />
+                  </div>
                 </div>
               </div>
             </Section>
