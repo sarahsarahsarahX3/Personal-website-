@@ -453,14 +453,6 @@ function DesktopRail({
             })}
           </ul>
         </div>
-
-        <div
-          key={activeId}
-          className={cn("rounded-2xl border border-white/10 bg-surface-alt/10 p-4", "transition-opacity duration-300")}
-        >
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
-        </div>
       </div>
     </aside>
   );
