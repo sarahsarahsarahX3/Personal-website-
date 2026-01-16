@@ -532,9 +532,6 @@ function MetricTabs({
                 <div className="px-5 pb-5">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
                   <h4 className="mt-3 font-display text-xl tracking-tight text-text-primary">{metric.category}</h4>
-                  <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                    {metric.listTitle}
-                  </p>
                   <p className="mt-3 text-sm leading-relaxed text-text-secondary">{metric.description}</p>
 
                   <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -628,7 +625,6 @@ function MetricTabs({
         >
           <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
           <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.category}</h3>
-          <p className="mt-3 text-sm tracking-tight text-text-secondary">{activeMetric.listTitle}</p>
           <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
             {activeMetric.description}
           </p>
