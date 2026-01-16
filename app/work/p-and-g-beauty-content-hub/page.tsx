@@ -31,7 +31,7 @@ const project = {
   title: "Procter & Gamble HairCode",
   subtitle: "Content Strategy and Growth Marketing",
   overview:
-    "This project focused on developing and optimizing SEO-driven editorial content for Procter & Gamble’s consumer-facing content hub to improve organic traffic and search visibility across beauty, health, and wellness topics.",
+    "Developed and optimized SEO-driven editorial content for HairCode, Procter & Gamble’s consumer-facing content hub, across beauty, health, and wellness topics. The work focused on driving sustainable organic growth and search visibility in highly competitive categories.",
   role: "Copywriter & Content Strategist",
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
@@ -973,10 +973,10 @@ export default function PAndGBeautyContentHubProjectPage() {
                 <p className="mt-4 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
               </div>
 
-              <div className="mt-12 grid gap-6 lg:grid-cols-2">
+                <div className="mt-12 grid gap-6 lg:grid-cols-2">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
-                  <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
+                  <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
 
                   <div className="mt-8">
                     <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
