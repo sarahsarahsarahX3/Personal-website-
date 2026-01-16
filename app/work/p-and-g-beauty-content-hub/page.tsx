@@ -785,62 +785,6 @@ function Modal({
   );
 }
 
-function PdfGrid({ items, onOpen }: { items: PdfItem[]; onOpen: (id: string) => void }) {
-  return (
-    <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-      {items.map((item) => {
-        const resolvedHref = getPdfHref(item);
-
-        const content = (
-          <>
-            <div className="flex items-start justify-between gap-4">
-              <p className="text-sm tracking-tight text-text-primary">{item.title}</p>
-              <span className="shrink-0 rounded-full border border-white/10 bg-surface/40 px-2 py-1 text-[10px] font-mono uppercase tracking-widest text-text-secondary">
-                PDF
-              </span>
-            </div>
-            <div className="mt-4 flex items-center justify-between gap-3">
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                {resolvedHref ? "Preview PDF" : "Add PDF file"}
-              </p>
-              <span aria-hidden="true" className="text-text-secondary">
-                ↗
-              </span>
-            </div>
-          </>
-        );
-
-        if (!resolvedHref) {
-          return (
-            <li key={item.id}>
-              <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
-                {content}
-              </div>
-            </li>
-          );
-        }
-
-        return (
-          <li key={item.id}>
-            <button
-              type="button"
-              onClick={() => onOpen(item.id)}
-              className={cn(
-                "w-full text-left rounded-2xl border border-white/10 bg-surface-alt/10 p-5 transition-colors",
-                "hover:bg-white/5 hover:border-white/20",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-              )}
-              aria-label={`Preview ${item.title}`}
-            >
-              {content}
-            </button>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
 function PdfSlideshow({
   items,
   activeId,
@@ -866,17 +810,27 @@ function PdfSlideshow({
     onSelect(items[nextIndex]?.id ?? items[0]!.id);
   };
 
-  return (
-    <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
-      <div className="order-2 lg:order-1">
-        <PdfGrid items={items} onOpen={onSelect} />
-      </div>
+  const safeActiveId = items.some((item) => item.id === activeId) ? activeId : (items[0]?.id ?? "");
 
-      <div className="order-1 lg:order-2 rounded-3xl border border-white/10 bg-surface-alt/10 overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
+  return (
+    <div
+      className="rounded-3xl border border-white/10 bg-surface-alt/10 overflow-hidden"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          goPrev();
+        }
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          goNext();
+        }
+      }}
+    >
+      <div className="border-b border-white/10 px-5 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Article preview</p>
-            <p className="mt-2 text-sm tracking-tight text-text-primary line-clamp-2">{active?.title ?? "Preview"}</p>
             <p className="mt-1 text-xs font-mono uppercase tracking-widest text-text-secondary/60">
               {items.length ? `${Math.max(1, activeIndex + 1)} / ${items.length}` : ""}
             </p>
@@ -923,23 +877,56 @@ function PdfSlideshow({
           </div>
         </div>
 
-        <div className="bg-surface/40">
-          <div className="h-[62vh] min-h-[420px] w-full">
-            {href ? (
-              <iframe title={active?.title ?? "PDF preview"} src={href} className="h-full w-full" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                Add a PDF href for this item
-              </div>
-            )}
+        <div className="mt-4">
+          <label htmlFor="article-preview-select" className="sr-only">
+            Select article
+          </label>
+          <div className="relative">
+            <select
+              id="article-preview-select"
+              value={safeActiveId}
+              onChange={(event) => onSelect(event.target.value)}
+              className={cn(
+                "w-full appearance-none rounded-2xl border border-white/10 bg-surface/40 px-4 py-3 pr-10",
+                "text-sm tracking-tight text-text-primary",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+              aria-label="Select article"
+            >
+              {items.map((item, index) => (
+                <option key={item.id} value={item.id}>
+                  {String(index + 1).padStart(2, "0")} · {item.title}
+                </option>
+              ))}
+            </select>
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary"
+            >
+              ▾
+            </span>
           </div>
         </div>
 
-        <div className="border-t border-white/10 px-5 py-4">
-          <p className="text-xs leading-relaxed text-text-secondary/70">
-            Use Prev/Next to move through articles. Open launches the PDF in a new tab.
-          </p>
+        <p className="mt-3 text-sm tracking-tight text-text-primary line-clamp-2">{active?.title ?? "Preview"}</p>
+      </div>
+
+      <div className="bg-surface/40">
+        <div className="h-[62vh] min-h-[420px] w-full">
+          {href ? (
+            <iframe title={active?.title ?? "PDF preview"} src={href} className="h-full w-full" />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+              Add a PDF href for this item
+            </div>
+          )}
         </div>
+      </div>
+
+      <div className="border-t border-white/10 px-5 py-4">
+        <p className="text-xs leading-relaxed text-text-secondary/70">
+          Use Prev/Next or the selector to navigate. Arrow keys work when this panel is focused.
+        </p>
       </div>
     </div>
   );
