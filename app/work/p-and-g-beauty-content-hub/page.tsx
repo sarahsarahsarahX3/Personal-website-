@@ -89,13 +89,13 @@ const sectionLinks: SectionLink[] = [
 const articlePdfs: PdfItem[] = [
   {
     id: "pdf-oily-hair",
-    title: "Understanding and Managing Oily Hair and Scalp: Tips, Causes, and Remedies - HairCode",
+    title: "Understanding and Managing Oily Hair and Scalp: Tips, Causes, and Remedies",
     fileName: "Understanding and Managing Oily Hair and Scalp: Tips, Causes, and Remedies - HairCode.pdf",
   },
   { id: "pdf-low-porosity", title: "The Best Products for Low Porosity Hair", fileName: "The Best Products for Low Porosity Hair.pdf" },
   {
     id: "pdf-curly-hair",
-    title: "Ultimate Guide: How to Care for Curly Hair - HairCode",
+    title: "Ultimate Guide: How to Care for Curly Hair",
     fileName: "Ultimate Guide: How to Care for Curly Hair - HairCode.pdf",
   },
   {
@@ -144,8 +144,6 @@ const chartMedia: MediaItem[] = [
   { id: "c1", title: "Performance chart 01" },
   { id: "c2", title: "Performance chart 02" },
 ];
-
-const livePreviewUrl = "https://haircode.com";
 
 function getPdfHref(item: PdfItem) {
   return item.href ?? (item.fileName ? `/images/${encodeURIComponent(item.fileName)}` : undefined);
@@ -787,191 +785,6 @@ function Modal({
   );
 }
 
-function usePdfModal(items: PdfItem[]) {
-  const [open, setOpen] = useState(false);
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  const activeIndex = useMemo(() => items.findIndex((i) => i.id === activeId), [items, activeId]);
-
-  useEffect(() => {
-    if (!open) return;
-    closeButtonRef.current?.focus();
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const previousOverflow = document.documentElement.style.overflow;
-    document.documentElement.style.overflow = "hidden";
-    return () => {
-      document.documentElement.style.overflow = previousOverflow;
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-        return;
-      }
-      if (!items.length) return;
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        const next = activeIndex <= 0 ? items.length - 1 : activeIndex - 1;
-        setActiveId(items[next]?.id ?? null);
-      }
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-        const next = activeIndex >= items.length - 1 ? 0 : activeIndex + 1;
-        setActiveId(items[next]?.id ?? null);
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open, items, activeIndex]);
-
-  return {
-    open,
-    activeId,
-    activeIndex,
-    closeButtonRef,
-    openWith: (id: string) => {
-      setActiveId(id);
-      setOpen(true);
-    },
-    close: () => setOpen(false),
-    prev: () => {
-      if (!items.length) return;
-      const next = activeIndex <= 0 ? items.length - 1 : activeIndex - 1;
-      setActiveId(items[next]?.id ?? null);
-    },
-    next: () => {
-      if (!items.length) return;
-      const next = activeIndex >= items.length - 1 ? 0 : activeIndex + 1;
-      setActiveId(items[next]?.id ?? null);
-    },
-  };
-}
-
-function PdfCarouselModal({
-  open,
-  items,
-  activeId,
-  activeIndex,
-  onClose,
-  onPrev,
-  onNext,
-  closeButtonRef,
-}: {
-  open: boolean;
-  items: PdfItem[];
-  activeId: string | null;
-  activeIndex: number;
-  onClose: () => void;
-  onPrev: () => void;
-  onNext: () => void;
-  closeButtonRef: React.RefObject<HTMLButtonElement | null>;
-}) {
-  if (!open) return null;
-
-  const active = items.find((i) => i.id === activeId) ?? items[0];
-  const href = active ? getPdfHref(active) : undefined;
-
-  return (
-    <div role="dialog" aria-modal="true" aria-label={active?.title ?? "PDF preview"} className="fixed inset-0 z-50">
-      <button type="button" aria-label="Close modal" onClick={onClose} className="absolute inset-0 bg-black/70" />
-
-      <div className="relative mx-auto grid h-full w-full max-w-6xl grid-rows-[auto_1fr] p-4 sm:p-6">
-        <div className="rounded-3xl border border-white/10 bg-surface overflow-hidden">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
-            <div className="min-w-0">
-              <p className="text-sm tracking-tight text-text-primary line-clamp-1">{active?.title ?? "Preview"}</p>
-              <p className="mt-1 text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                {items.length ? `${Math.max(1, activeIndex + 1)} / ${items.length}` : ""}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={onPrev}
-                className={cn(
-                  "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-3",
-                  "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                )}
-              >
-                Prev
-              </button>
-              <button
-                type="button"
-                onClick={onNext}
-                className={cn(
-                  "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-3",
-                  "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                )}
-              >
-                Next
-              </button>
-
-              {href ? (
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={cn(
-                    "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-3",
-                    "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                  )}
-                >
-                  Open ↗
-                </a>
-              ) : null}
-
-              <button
-                type="button"
-                ref={closeButtonRef}
-                onClick={onClose}
-                className={cn(
-                  "inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
-                  "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                )}
-                aria-label="Close"
-              >
-                ×
-              </button>
-            </div>
-          </div>
-
-          <div className="bg-surface-alt/10">
-            <div className="h-[70vh] min-h-[420px] w-full">
-              {href ? (
-                <iframe title={active?.title ?? "PDF preview"} src={href} className="h-full w-full" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                  Add a PDF href for this item
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="border-t border-white/10 px-5 py-4">
-            <p className="text-xs leading-relaxed text-text-secondary/70">
-              Tip: Use your keyboard arrow keys to move between PDFs.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function PdfGrid({ items, onOpen }: { items: PdfItem[]; onOpen: (id: string) => void }) {
   return (
     <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
@@ -1028,37 +841,105 @@ function PdfGrid({ items, onOpen }: { items: PdfItem[]; onOpen: (id: string) => 
   );
 }
 
-function LiveSitePreview({ url }: { url: string }) {
+function PdfSlideshow({
+  items,
+  activeId,
+  onSelect,
+}: {
+  items: PdfItem[];
+  activeId: string;
+  onSelect: (id: string) => void;
+}) {
+  const activeIndex = useMemo(() => items.findIndex((i) => i.id === activeId), [items, activeId]);
+  const active = items.find((i) => i.id === activeId) ?? items[0];
+  const href = active ? getPdfHref(active) : undefined;
+
+  const goPrev = () => {
+    if (!items.length) return;
+    const nextIndex = activeIndex <= 0 ? items.length - 1 : activeIndex - 1;
+    onSelect(items[nextIndex]?.id ?? items[0]!.id);
+  };
+
+  const goNext = () => {
+    if (!items.length) return;
+    const nextIndex = activeIndex >= items.length - 1 ? 0 : activeIndex + 1;
+    onSelect(items[nextIndex]?.id ?? items[0]!.id);
+  };
+
   return (
-    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 overflow-hidden">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
-        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Live preview</p>
-        <a
-          href={url}
-          target="_blank"
-          rel="noreferrer"
-          className={cn(
-            "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
-            "text-[11px] font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-          )}
-        >
-          Open site
-          <span aria-hidden="true">↗</span>
-        </a>
+    <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
+      <div className="order-2 lg:order-1">
+        <PdfGrid items={items} onOpen={onSelect} />
       </div>
-      <div className="aspect-[16/10] bg-surface/40">
-        <iframe
-          title="Live site preview"
-          src={url}
-          loading="lazy"
-          className="h-full w-full"
-        />
-      </div>
-      <div className="px-5 py-4">
-        <p className="text-xs leading-relaxed text-text-secondary/70">
-          Note: Some sites block embedded previews. If you see a blank frame, use “Open site”.
-        </p>
+
+      <div className="order-1 lg:order-2 rounded-3xl border border-white/10 bg-surface-alt/10 overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
+          <div className="min-w-0">
+            <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Article preview</p>
+            <p className="mt-2 text-sm tracking-tight text-text-primary line-clamp-2">{active?.title ?? "Preview"}</p>
+            <p className="mt-1 text-xs font-mono uppercase tracking-widest text-text-secondary/60">
+              {items.length ? `${Math.max(1, activeIndex + 1)} / ${items.length}` : ""}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={goPrev}
+              className={cn(
+                "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
+                "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+            >
+              Prev
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              className={cn(
+                "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
+                "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+            >
+              Next
+            </button>
+
+            {href ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                className={cn(
+                  "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
+                  "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
+              >
+                Open ↗
+              </a>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="bg-surface/40">
+          <div className="h-[62vh] min-h-[420px] w-full">
+            {href ? (
+              <iframe title={active?.title ?? "PDF preview"} src={href} className="h-full w-full" />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                Add a PDF href for this item
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 px-5 py-4">
+          <p className="text-xs leading-relaxed text-text-secondary/70">
+            Use Prev/Next to move through articles. Open launches the PDF in a new tab.
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -1087,7 +968,7 @@ export default function PAndGBeautyContentHubProjectPage() {
     const all = [...chartMedia];
     return all.find((item) => item.id === activeId) ?? all[0]!;
   }, [activeId]);
-  const pdfModal = usePdfModal(articlePdfs);
+  const [activePdfId, setActivePdfId] = useState(articlePdfs[0]?.id ?? "");
 
   return (
     <main className="min-h-screen bg-surface text-text-primary">
@@ -1270,12 +1151,8 @@ export default function PAndGBeautyContentHubProjectPage() {
               <div className="mt-10">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
                 <div className="mt-6">
-                  <PdfGrid items={articlePdfs} onOpen={pdfModal.openWith} />
+                  <PdfSlideshow items={articlePdfs} activeId={activePdfId} onSelect={setActivePdfId} />
                 </div>
-              </div>
-
-              <div className="mt-10">
-                <LiveSitePreview url={livePreviewUrl} />
               </div>
             </Section>
 
@@ -1341,17 +1218,6 @@ export default function PAndGBeautyContentHubProjectPage() {
         imageSrc={activeMedia?.imageSrc}
         onClose={close}
         closeButtonRef={closeButtonRef}
-      />
-
-      <PdfCarouselModal
-        open={pdfModal.open}
-        items={articlePdfs}
-        activeId={pdfModal.activeId}
-        activeIndex={pdfModal.activeIndex}
-        onClose={pdfModal.close}
-        onPrev={pdfModal.prev}
-        onNext={pdfModal.next}
-        closeButtonRef={pdfModal.closeButtonRef}
       />
 
     </main>
