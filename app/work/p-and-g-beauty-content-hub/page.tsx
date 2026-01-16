@@ -173,18 +173,16 @@ function scrollToId(id: string, behavior: ScrollBehavior) {
 }
 
 function Pill({ children }: { children: React.ReactNode }) {
-  const title = typeof children === "string" ? children : undefined;
   return (
     <span
-      title={title}
       className={cn(
         "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
-        "px-2.5 py-1.5 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
-        "overflow-hidden",
-        "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest",
+        "px-3 py-2 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
+        "text-center leading-snug whitespace-normal",
+        "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest sm:leading-normal sm:text-left",
       )}
     >
-      <span className="truncate">{children}</span>
+      {children}
     </span>
   );
 }
@@ -237,10 +235,12 @@ function Section({
 function MobileJumpBar({
   items,
   activeId,
+  progress,
   onNavigate,
 }: {
   items: SectionLink[];
   activeId: string;
+  progress: number;
   onNavigate: (id: string) => void;
 }) {
   return (
@@ -282,6 +282,10 @@ function MobileJumpBar({
               ▾
             </span>
           </div>
+        </div>
+
+        <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+          <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
         </div>
       </div>
     </nav>
@@ -754,6 +758,7 @@ export default function PAndGBeautyContentHubProjectPage() {
       <MobileJumpBar
         items={sectionLinks}
         activeId={activeSection}
+        progress={progress}
         onNavigate={(id) => scrollToId(id, scrollBehavior)}
       />
 
@@ -780,6 +785,11 @@ export default function PAndGBeautyContentHubProjectPage() {
                 {project.title}
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
+
+              <div className="mt-8 lg:hidden rounded-3xl border border-white/10 bg-surface-alt/10 p-6">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
+                <p className="mt-4 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
+              </div>
 
               <div className="mt-12 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
@@ -825,11 +835,6 @@ export default function PAndGBeautyContentHubProjectPage() {
                     </button>
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-8 lg:hidden rounded-3xl border border-white/10 bg-surface-alt/10 p-6">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
-                <p className="mt-4 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
               </div>
             </section>
 
