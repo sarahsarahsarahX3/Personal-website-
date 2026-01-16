@@ -338,6 +338,10 @@ function MobileJumpBar({
               ▾
             </span>
           </div>
+
+          <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+            {Math.round(progress * 100)}%
+          </p>
         </div>
 
         <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
@@ -1010,17 +1014,24 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Quick results</p>
                   <div className="mt-5 grid gap-5">
                     <div>
-                      <p className="font-display text-3xl leading-none">+126%</p>
-                      <p className="mt-2 flex items-center gap-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                      <p className="font-display text-3xl leading-none">250K+</p>
+                      <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                         <SquiggleMark />
-                        Organic growth in four months
+                        Monthly organic visits
                       </p>
                     </div>
                     <div>
-                      <p className="font-display text-3xl leading-none">110K → 250K</p>
-                      <p className="mt-2 flex items-center gap-2 whitespace-nowrap text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                      <p className="font-display text-3xl leading-none">+126%</p>
+                      <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                         <SquiggleMark />
-                        Monthly organic search traffic
+                        Organic growth in 4 months
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-display text-3xl leading-none">$72K+</p>
+                      <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                        <SquiggleMark />
+                        Est. Monthly Organic Traffic Value
                       </p>
                     </div>
                   </div>
