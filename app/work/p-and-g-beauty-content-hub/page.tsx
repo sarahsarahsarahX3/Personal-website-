@@ -597,7 +597,6 @@ export default function PAndGBeautyContentHubProjectPage() {
   const progress = useScrollProgress();
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
-  const [activeStrategyIndex, setActiveStrategyIndex] = useState(0);
   const [activeExecutionIndex, setActiveExecutionIndex] = useState(0);
 
   const highlights = useMemo<Record<string, string>>(
@@ -686,7 +685,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                         type="button"
                         onClick={() => scrollToId("results", scrollBehavior)}
                         className={cn(
-                          "inline-flex items-center justify-center rounded-full px-4 py-2 text-xs font-mono uppercase tracking-widest",
+                          "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest",
                           "bg-text-primary text-surface hover:bg-white transition-colors",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                         )}
@@ -712,44 +711,37 @@ export default function PAndGBeautyContentHubProjectPage() {
                   />
 
                   <ol className="grid gap-3 text-sm md:text-base text-text-secondary" aria-label="Strategy pillars">
-                    {project.strategyBullets.map((bullet, index) => {
-                      const isActive = index === activeStrategyIndex;
+                    {project.strategyBullets.map((bullet) => {
                       return (
                         <li key={bullet}>
-                          <button
-                            type="button"
-                            onClick={() => setActiveStrategyIndex(index)}
-                            onMouseEnter={() => setActiveStrategyIndex(index)}
-                            onFocus={() => setActiveStrategyIndex(index)}
+                          <div
+                            tabIndex={0}
                             className={cn(
                               "group w-full rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
                               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                              isActive
-                                ? "border-white/20 bg-white/5"
-                                : "border-white/10 hover:border-white/20 hover:bg-white/5",
+                              "border-white/10 hover:border-white/20 hover:bg-white/5",
                             )}
                           >
                             <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
                               <span className="relative justify-self-center mt-[0.7rem]" aria-hidden="true">
                                 <span
                                   className={cn(
-                                    "absolute inset-0 -m-[7px] rounded-full border transition-colors duration-200",
-                                    isActive ? "border-accent/40" : "border-white/10 group-hover:border-white/20",
+                                    "absolute inset-0 -m-[7px] rounded-full border border-white/10 transition-colors duration-200",
+                                    "group-hover:border-accent/40 group-focus-visible:border-accent/40",
                                   )}
                                 />
                                 <span
                                   className={cn(
-                                    "relative block h-2.5 w-2.5 rounded-full transition-transform duration-200",
-                                    isActive
-                                      ? "bg-accent scale-110"
-                                      : "bg-accent/70 group-hover:bg-accent/95 group-hover:scale-110",
+                                    "relative block h-2.5 w-2.5 rounded-full bg-accent/65 transition-transform transition-colors duration-200",
+                                    "group-hover:bg-accent group-hover:scale-110",
+                                    "group-focus-visible:bg-accent group-focus-visible:scale-110",
                                   )}
                                 />
                               </span>
 
                               <span className="leading-relaxed">{bullet}</span>
                             </span>
-                          </button>
+                          </div>
                         </li>
                       );
                     })}
