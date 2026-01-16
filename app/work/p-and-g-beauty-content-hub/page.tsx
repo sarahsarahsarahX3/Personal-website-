@@ -36,7 +36,7 @@ const project = {
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
   strategyIntro:
-    "Implement an SEO-driven editorial strategy grounded in search intent, content structure, and credibility. The approach focused on:",
+    "I designed a content system to drive sustainable organic growth by:",
   strategyBullets: [
     "Mapping topics to high-intent user queries and audience needs.",
     "Structuring content for clarity, scannability, and discoverability.",
@@ -306,12 +306,14 @@ function Section({
   subtitle,
   children,
   contentClassName,
+  subtitleClassName,
 }: {
   id: string;
   title: string;
   subtitle?: React.ReactNode;
   children: React.ReactNode;
   contentClassName?: string;
+  subtitleClassName?: string;
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16 pt-10">
@@ -323,7 +325,14 @@ function Section({
           {title}
         </h2>
         {subtitle ? (
-          <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">{subtitle}</p>
+          <p
+            className={cn(
+              "mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70",
+              subtitleClassName,
+            )}
+          >
+            {subtitle}
+          </p>
         ) : null}
       </header>
       <div className={cn("mt-8", contentClassName)}>{children}</div>
@@ -528,7 +537,7 @@ function MetricTabs({
                 )}
               >
                 <div className="px-5 pb-5">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key performance indicator:</p>
                   <h4 className="mt-3 font-display text-xl tracking-tight text-text-primary">{metric.category}</h4>
                   <p className="mt-3 text-sm leading-relaxed text-text-secondary">{metric.description}</p>
 
@@ -611,7 +620,7 @@ function MetricTabs({
           aria-labelledby={`metric-tab-${activeMetric.id}`}
           className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8"
         >
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key performance indicator:</p>
           <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.category}</h3>
           <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
             {activeMetric.description}
@@ -898,8 +907,6 @@ function PdfSlideshow({
             </span>
           </div>
         </div>
-
-        <p className="mt-3 text-sm tracking-tight text-text-primary line-clamp-2">{active?.title ?? "Preview"}</p>
       </div>
 
       <div className="bg-surface/40">
@@ -1077,7 +1084,11 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="execution" title="Execution">
-              <ol className="grid gap-3">
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">
+                I applied this strategy to a structured, repeatable execution workflow, including:
+              </p>
+
+              <ol className="mt-6 grid gap-3">
                 {(project.executionBullets as unknown as string[]).map((step, index) => (
                   <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
                     <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
@@ -1091,8 +1102,8 @@ export default function PAndGBeautyContentHubProjectPage() {
               </ol>
 
               <div className="mt-10">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
-                <div className="mt-6">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Final deliverables</p>
+                <div className="mt-6 w-full max-w-[740px] mx-auto">
                   <PdfSlideshow items={articlePdfs} activeId={activePdfId} onSelect={setActivePdfId} />
                 </div>
               </div>
@@ -1100,7 +1111,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="results" title="Results" subtitle="Select a metric to view the highlight.">
+            <Section id="results" title="Results" subtitle="SELECT A KPI TO VIEW THE DATA.">
               <MetricTabs metrics={metrics} charts={chartMedia} onOpenChart={openWith} />
             </Section>
 
