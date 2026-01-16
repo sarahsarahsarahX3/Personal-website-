@@ -499,14 +499,6 @@ function MetricTabs({
 
                   <div className="flex items-center gap-2">
                     <span
-                      className={cn(
-                        "shrink-0 rounded-full px-2 py-1 text-[10px] font-mono uppercase tracking-widest transition-colors",
-                        isOpen ? "bg-accent/10 text-accent" : "bg-white/5 text-text-secondary",
-                      )}
-                    >
-                      {metric.value}
-                    </span>
-                    <span
                       aria-hidden="true"
                       className={cn(
                         "inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-text-secondary transition-transform duration-200",
@@ -601,16 +593,6 @@ function MetricTabs({
                     <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
                       {metric.listTitle}
                     </p>
-                    <span
-                      className={cn(
-                        "shrink-0 rounded-full px-2 py-1 text-[10px] font-mono uppercase tracking-widest transition-colors",
-                        selected
-                          ? "bg-accent/10 text-accent"
-                          : "bg-white/5 text-text-secondary group-hover:bg-white/10",
-                      )}
-                    >
-                      {metric.value}
-                    </span>
                   </div>
                 </button>
               );
