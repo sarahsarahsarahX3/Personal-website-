@@ -785,10 +785,32 @@ function PdfSlideshow({
   activeId: string;
   onSelect: (id: string) => void;
 }) {
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.("(max-width: 768px)");
+    if (!mq) return;
+    const update = () => setIsMobileView(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
   const activeIndex = useMemo(() => items.findIndex((i) => i.id === activeId), [items, activeId]);
   const active = items.find((i) => i.id === activeId) ?? items[0];
   const href = active ? getPdfHref(active) : undefined;
-  const iframeSrc = href ? `${href}#view=FitH&zoom=30&toolbar=0&navpanes=0` : undefined;
+  const iframeSrc = href
+    ? `${href}#view=FitH&zoom=${isMobileView ? 18 : 30}&toolbar=0&navpanes=0`
+    : undefined;
+  const mobileScale = 0.58;
+  const iframeStyle = isMobileView
+    ? ({
+        transform: `scale(${mobileScale})`,
+        transformOrigin: "0 0",
+        width: `${100 / mobileScale}%`,
+        height: `${100 / mobileScale}%`,
+      } as const)
+    : undefined;
 
   const goPrev = () => {
     if (!items.length) return;
@@ -902,9 +924,14 @@ function PdfSlideshow({
       </div>
 
       <div className="bg-surface/40">
-        <div className="h-[75vh] min-h-[520px] lg:h-[62vh] lg:min-h-[420px] w-full">
+        <div className="relative h-[75vh] min-h-[520px] lg:h-[62vh] lg:min-h-[420px] w-full overflow-hidden">
           {iframeSrc ? (
-            <iframe title={active?.title ?? "PDF preview"} src={iframeSrc} className="h-full w-full" />
+            <iframe
+              title={active?.title ?? "PDF preview"}
+              src={iframeSrc}
+              className={cn("absolute inset-0 h-full w-full border-0")}
+              style={iframeStyle}
+            />
           ) : (
             <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
               Add a PDF href for this item
