@@ -67,10 +67,18 @@ const project = {
 
 const metrics: Metric[] = [
   {
+    id: "monthly-organic-visits",
+    category: "Monthly Organic Visits",
+    value: "250K+",
+    listTitle: "250K+ Monthly Organic Visits",
+    stat: "Monthly Organic Visits",
+    description: "Increased monthly organic traffic from ~110K to 250K in four months.",
+  },
+  {
     id: "growth-rate",
     category: "Growth Rate",
     value: "+126%",
-    listTitle: "250K+ Monthly Organic Visits",
+    listTitle: "+126% Organic Growth",
     stat: "Organic Growth in 4 Months",
     description: "Increased monthly organic traffic from ~110K to 250K in four months.",
   },
@@ -94,7 +102,7 @@ const metrics: Metric[] = [
     id: "organic-media-value",
     category: "Organic Media Value",
     value: "$72K+",
-    listTitle: "$72K+ Est. Traffic Value",
+    listTitle: "$72K+ Estimated Traffic Value",
     stat: "Estimated Monthly Traffic Value",
     description: "Estimated organic traffic value based on equivalent paid media cost.",
   },
@@ -102,7 +110,7 @@ const metrics: Metric[] = [
     id: "content-engagement",
     category: "Content Engagement",
     value: "5:48",
-    listTitle: "5:48 Avg Visit Duration",
+    listTitle: "5:48 Average Visit Duration",
     stat: "Average Visit Duration",
     description: "Demonstrated strong engagement with long-form, educational content.",
   },
