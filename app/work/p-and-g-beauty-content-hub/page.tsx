@@ -1,16 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/app/lib/utils";
 
 type SectionLink = { id: string; label: string };
-
-type MediaItem = {
-  id: string;
-  title: string;
-  imageSrc?: string;
-};
 
 type PdfItem = {
   id: string;
@@ -178,10 +172,19 @@ const articlePdfs: PdfItem[] = [
   },
 ];
 
-const chartMedia: MediaItem[] = [
-  { id: "c1", title: "Performance chart 01" },
-  { id: "c2", title: "Performance chart 02" },
-];
+const semrushSnapshot = {
+  trafficSeries: [
+    { label: "May 2025", valueK: 110.88 },
+    { label: "Oct 2025", valueK: 250.66 },
+  ],
+  trafficValueK: 72.22,
+  organicKeywords: 47000,
+  authorityScore: 44,
+  referringDomains: 947,
+  aiMentions: 984,
+  aiCitedPages: 738,
+  topPositions: { top3: 8, top10: 9, top20: 10, top100: 10 },
+} as const;
 
 function getPdfHref(item: PdfItem) {
   return item.href ?? (item.fileName ? `/images/${encodeURIComponent(item.fileName)}` : undefined);
@@ -298,6 +301,288 @@ function SquiggleMark({ className }: { className?: string }) {
       />
     </svg>
   );
+}
+
+function formatNumber(value: number) {
+  return new Intl.NumberFormat("en-US").format(value);
+}
+
+function MiniLineChart({
+  points,
+  ariaLabel,
+}: {
+  points: { label: string; valueK: number }[];
+  ariaLabel: string;
+}) {
+  const width = 320;
+  const height = 120;
+  const paddingX = 8;
+  const paddingY = 12;
+  const innerWidth = width - paddingX * 2;
+  const innerHeight = height - paddingY * 2;
+
+  const values = points.map((p) => p.valueK);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = Math.max(1, max - min);
+
+  const toX = (index: number) => paddingX + (points.length <= 1 ? 0 : (index / (points.length - 1)) * innerWidth);
+  const toY = (value: number) => paddingY + (1 - (value - min) / range) * innerHeight;
+
+  const path = points
+    .map((point, index) => `${index === 0 ? "M" : "L"} ${toX(index).toFixed(2)} ${toY(point.valueK).toFixed(2)}`)
+    .join(" ");
+
+  return (
+    <svg
+      role="img"
+      aria-label={ariaLabel}
+      viewBox={`0 0 ${width} ${height}`}
+      className="h-32 w-full"
+    >
+      <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
+        <line x1="0" y1="24" x2={width} y2="24" />
+        <line x1="0" y1="60" x2={width} y2="60" />
+        <line x1="0" y1="96" x2={width} y2="96" />
+      </g>
+
+      <path d={path} fill="none" stroke="rgba(255,59,48,0.9)" strokeWidth="2.25" strokeLinecap="round" />
+
+      {points.map((point, index) => {
+        const x = toX(index);
+        const y = toY(point.valueK);
+        return (
+          <g key={point.label}>
+            <circle cx={x} cy={y} r="3.2" fill="rgba(255,59,48,0.95)" />
+          </g>
+        );
+      })}
+
+      {points.length >= 2 ? (
+        <>
+          <text x={paddingX} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)">
+            {points[0]!.label}
+          </text>
+          <text x={width - paddingX} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)" textAnchor="end">
+            {points[points.length - 1]!.label}
+          </text>
+
+          <text x={paddingX} y={14} fontSize="10" fill="rgba(255,255,255,0.70)">
+            {points[0]!.valueK.toFixed(2)}K
+          </text>
+          <text x={width - paddingX} y={14} fontSize="10" fill="rgba(255,255,255,0.70)" textAnchor="end">
+            {points[points.length - 1]!.valueK.toFixed(2)}K
+          </text>
+        </>
+      ) : null}
+    </svg>
+  );
+}
+
+function MiniBars({
+  items,
+  ariaLabel,
+}: {
+  items: { label: string; value: number }[];
+  ariaLabel: string;
+}) {
+  const width = 320;
+  const height = 120;
+  const paddingX = 10;
+  const paddingY = 14;
+  const innerHeight = height - paddingY * 2;
+  const max = Math.max(1, ...items.map((i) => i.value));
+  const gap = 10;
+  const barWidth = (width - paddingX * 2 - gap * (items.length - 1)) / items.length;
+
+  return (
+    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${width} ${height}`} className="h-32 w-full">
+      <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
+        <line x1="0" y1="24" x2={width} y2="24" />
+        <line x1="0" y1="60" x2={width} y2="60" />
+        <line x1="0" y1="96" x2={width} y2="96" />
+      </g>
+
+      {items.map((item, index) => {
+        const x = paddingX + index * (barWidth + gap);
+        const h = (item.value / max) * innerHeight;
+        const y = height - paddingY - h;
+        return (
+          <g key={item.label}>
+            <rect x={x} y={y} width={barWidth} height={h} rx="10" fill="rgba(255,59,48,0.38)" />
+            <rect x={x} y={y} width={barWidth} height={2.25} rx="10" fill="rgba(255,59,48,0.9)" />
+            <text x={x + barWidth / 2} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)" textAnchor="middle">
+              {item.label}
+            </text>
+            <text x={x + barWidth / 2} y={Math.max(14, y - 4)} fontSize="10" fill="rgba(255,255,255,0.70)" textAnchor="middle">
+              {formatNumber(item.value)}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function Gauge({
+  value,
+  max,
+  ariaLabel,
+}: {
+  value: number;
+  max: number;
+  ariaLabel: string;
+}) {
+  const size = 132;
+  const stroke = 10;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const pct = Math.max(0, Math.min(1, value / max));
+  const dash = c * pct;
+
+  return (
+    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${size} ${size}`} className="h-[132px] w-[132px]">
+      <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,0.10)" strokeWidth={stroke} fill="none" />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={r}
+        stroke="rgba(255,59,48,0.95)"
+        strokeWidth={stroke}
+        fill="none"
+        strokeLinecap="round"
+        strokeDasharray={`${dash} ${c}`}
+        transform={`rotate(-90 ${size / 2} ${size / 2})`}
+      />
+      <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" fontSize="28" fill="rgba(255,255,255,0.92)">
+        {value}
+      </text>
+      <text x="50%" y="72%" textAnchor="middle" dominantBaseline="middle" fontSize="10" fill="rgba(255,255,255,0.55)">
+        / {max}
+      </text>
+    </svg>
+  );
+}
+
+function MetricChart({ metricId }: { metricId: Metric["id"] }) {
+  const wrapperClassName = cn("mt-8 rounded-2xl border border-white/10 bg-surface/40 p-4 md:p-5");
+
+  switch (metricId) {
+    case "monthly-organic-visits":
+      return (
+        <div className={wrapperClassName}>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Traffic trend</p>
+          <div className="mt-3">
+            <MiniLineChart
+              ariaLabel="Organic traffic trend from May 2025 to October 2025"
+              points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
+            />
+          </div>
+        </div>
+      );
+    case "growth-rate":
+      return (
+        <div className={wrapperClassName}>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Growth curve</p>
+          <div className="mt-3">
+            <MiniLineChart
+              ariaLabel="Organic traffic growth from May 2025 to October 2025"
+              points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
+            />
+          </div>
+        </div>
+      );
+    case "search-footprint":
+      return (
+        <div className={wrapperClassName}>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Keywords and top positions</p>
+          <div className="mt-4 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <p className="font-display text-3xl leading-none">{formatNumber(semrushSnapshot.organicKeywords)}</p>
+              <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">Ranking organic keywords</p>
+            </div>
+            <div className="justify-self-start md:justify-self-end">
+              <MiniBars
+                ariaLabel="Top position keyword counts snapshot"
+                items={[
+                  { label: "Top 3", value: semrushSnapshot.topPositions.top3 },
+                  { label: "Top 10", value: semrushSnapshot.topPositions.top10 },
+                  { label: "Top 20", value: semrushSnapshot.topPositions.top20 },
+                  { label: "Top 100", value: semrushSnapshot.topPositions.top100 },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    case "domain-authority":
+      return (
+        <div className={wrapperClassName}>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Authority and links</p>
+          <div className="mt-4 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
+            <Gauge ariaLabel="Authority score gauge" value={semrushSnapshot.authorityScore} max={100} />
+            <div className="grid gap-3">
+              <div className="rounded-xl border border-white/10 bg-surface-alt/10 p-4">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Referring domains</p>
+                <p className="mt-2 font-display text-2xl leading-none">{formatNumber(semrushSnapshot.referringDomains)}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    case "organic-media-value":
+      return (
+        <div className={wrapperClassName}>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Estimated value</p>
+          <div className="mt-4">
+            <div className="flex items-baseline justify-between gap-4">
+              <p className="font-display text-3xl leading-none">${semrushSnapshot.trafficValueK.toFixed(2)}K</p>
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">Monthly traffic value</p>
+            </div>
+            <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+              <div
+                className="h-full bg-accent/80"
+                style={{ width: `${Math.max(0, Math.min(1, semrushSnapshot.trafficValueK / 100)) * 100}%` }}
+              />
+            </div>
+            <p className="mt-3 text-xs text-text-secondary/70">Scaled to a 0–100K visual range.</p>
+          </div>
+        </div>
+      );
+    case "content-engagement":
+      return (
+        <div className={wrapperClassName}>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Session depth</p>
+          <div className="mt-4">
+            <div className="flex items-baseline justify-between gap-4">
+              <p className="font-display text-3xl leading-none">5:48</p>
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">Average visit duration</p>
+            </div>
+            <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+              <div className="h-full bg-accent/80" style={{ width: `${(348 / 600) * 100}%` }} />
+            </div>
+            <p className="mt-3 text-xs text-text-secondary/70">Scaled to a 0–10 minute visual range.</p>
+          </div>
+        </div>
+      );
+    case "ai-search-visibility":
+      return (
+        <div className={wrapperClassName}>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">AI citations</p>
+          <div className="mt-3">
+            <MiniBars
+              ariaLabel="AI search mentions and cited pages"
+              items={[
+                { label: "Mentions", value: semrushSnapshot.aiMentions },
+                { label: "Cited pages", value: semrushSnapshot.aiCitedPages },
+              ]}
+            />
+          </div>
+        </div>
+      );
+    default:
+      return null;
+  }
 }
 
 function Section({
@@ -460,12 +745,8 @@ function DesktopRail({
 
 function MetricTabs({
   metrics,
-  charts,
-  onOpenChart,
 }: {
   metrics: Metric[];
-  charts: MediaItem[];
-  onOpenChart: (id: string) => void;
 }) {
   const [active, setActive] = useState(metrics[0]?.id ?? "");
   const activeMetric = metrics.find((m) => m.id === active) ?? metrics[0]!;
@@ -532,39 +813,7 @@ function MetricTabs({
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key performance indicator:</p>
                   <h4 className="mt-3 font-display text-xl tracking-tight text-text-primary">{metric.category}</h4>
                   <p className="mt-3 text-sm leading-relaxed text-text-secondary">{metric.description}</p>
-
-                  <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {charts.map((item) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => onOpenChart(item.id)}
-                        className={cn(
-                          "group overflow-hidden rounded-2xl border border-white/10 bg-surface/40 text-left",
-                          "hover:border-white/20 hover:bg-white/5 transition-colors",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                        )}
-                      >
-                        <div className="aspect-[16/10] bg-surface/40">
-                          {item.imageSrc ? (
-                            <img
-                              src={item.imageSrc}
-                              alt={item.title}
-                              loading="lazy"
-                              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-                            />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center px-4 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                              Add chart
-                            </div>
-                          )}
-                        </div>
-                        <div className="px-4 py-3">
-                          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.title}</p>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
+                  <MetricChart metricId={metric.id} />
                 </div>
               </div>
             </div>
@@ -617,162 +866,10 @@ function MetricTabs({
           <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
             {activeMetric.description}
           </p>
-
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {charts.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => onOpenChart(item.id)}
-                className={cn(
-                  "group overflow-hidden rounded-2xl border border-white/10 bg-surface/40 text-left",
-                  "hover:border-white/20 hover:bg-white/5 transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                )}
-              >
-                <div className="aspect-[16/10] bg-surface/40">
-                  {item.imageSrc ? (
-                    <img
-                      src={item.imageSrc}
-                      alt={item.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center px-4 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                      Add chart
-                    </div>
-                  )}
-                </div>
-                <div className="px-4 py-3">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.title}</p>
-                </div>
-              </button>
-            ))}
-          </div>
+          <MetricChart metricId={activeMetric.id} />
         </div>
       </div>
     </>
-  );
-}
-
-function useModal() {
-  const [open, setOpen] = useState(false);
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    closeButtonRef.current?.focus();
-  }, [open]);
-
-  return {
-    open,
-    activeId,
-    closeButtonRef,
-    openWith: (id: string) => {
-      setActiveId(id);
-      setOpen(true);
-    },
-    close: () => setOpen(false),
-  };
-}
-
-function MediaGrid({ items, onOpen }: { items: MediaItem[]; onOpen: (id: string) => void }) {
-  return (
-    <ul role="list" className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-      {items.map((item) => (
-        <li key={item.id}>
-          <button
-            type="button"
-            onClick={() => onOpen(item.id)}
-            className={cn(
-              "group w-full overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10",
-              "hover:bg-white/5 hover:border-white/20 transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-            )}
-          >
-            <div className="aspect-[4/3] bg-surface/40">
-              {item.imageSrc ? (
-                <img
-                  src={item.imageSrc}
-                  alt={item.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center px-4 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                  Add image
-                </div>
-              )}
-            </div>
-            <div className="px-4 py-3">
-              <p className="text-sm tracking-tight text-text-primary line-clamp-2">{item.title}</p>
-            </div>
-          </button>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function Modal({
-  open,
-  title,
-  imageSrc,
-  onClose,
-  closeButtonRef,
-}: {
-  open: boolean;
-  title: string;
-  imageSrc?: string;
-  onClose: () => void;
-  closeButtonRef: React.RefObject<HTMLButtonElement | null>;
-}) {
-  if (!open) return null;
-
-  return (
-    <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-50 grid place-items-center p-6">
-      <button type="button" aria-label="Close modal" onClick={onClose} className="absolute inset-0 bg-black/70" />
-      <div className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-surface">
-        <div className="flex items-center justify-between gap-6 border-b border-white/10 px-5 py-4">
-          <p className="text-sm tracking-tight text-text-primary">{title}</p>
-          <button
-            type="button"
-            ref={closeButtonRef}
-            onClick={onClose}
-            className={cn(
-              "inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
-              "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-            )}
-            aria-label="Close"
-          >
-            ×
-          </button>
-        </div>
-        <div className="bg-surface-alt/10">
-          <div className="aspect-[16/10] w-full">
-            {imageSrc ? (
-              <img src={imageSrc} alt={title} className="h-full w-full object-contain" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                Add an imageSrc for this item
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -794,12 +891,10 @@ function PdfSlideshow({
     update();
     mq.addEventListener?.("change", update);
     // Safari fallback
-    // eslint-disable-next-line
-    mq.addListener?.(update);
+    (mq as unknown as { addListener?: (listener: () => void) => void }).addListener?.(update);
     return () => {
       mq.removeEventListener?.("change", update);
-      // eslint-disable-next-line
-      mq.removeListener?.(update);
+      (mq as unknown as { removeListener?: (listener: () => void) => void }).removeListener?.(update);
     };
   }, []);
 
@@ -952,11 +1047,6 @@ export default function PAndGBeautyContentHubProjectPage() {
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
 
-  const { open, activeId, closeButtonRef, openWith, close } = useModal();
-  const activeMedia = useMemo(() => {
-    const all = [...chartMedia];
-    return all.find((item) => item.id === activeId) ?? all[0]!;
-  }, [activeId]);
   const [activePdfId, setActivePdfId] = useState(articlePdfs[0]?.id ?? "");
 
   return (
@@ -1156,7 +1246,7 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="results" title="Results" subtitle="SELECT A KPI TO VIEW THE DATA.">
-              <MetricTabs metrics={metrics} charts={chartMedia} onOpenChart={openWith} />
+              <MetricTabs metrics={metrics} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -1201,15 +1291,6 @@ export default function PAndGBeautyContentHubProjectPage() {
           />
         </div>
       </div>
-
-      <Modal
-        open={open}
-        title={activeMedia?.title ?? "Preview"}
-        imageSrc={activeMedia?.imageSrc}
-        onClose={close}
-        closeButtonRef={closeButtonRef}
-      />
-
     </main>
   );
 }
