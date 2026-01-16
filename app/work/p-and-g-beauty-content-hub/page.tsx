@@ -24,7 +24,6 @@ type Metric = {
   value: string;
   category: string;
   listTitle: string;
-  stat: string;
   description: string;
 };
 
@@ -68,59 +67,52 @@ const project = {
 const metrics: Metric[] = [
   {
     id: "monthly-organic-visits",
-    category: "Monthly Organic Visits",
+    category: "Organic Search Traffic",
     value: "250K+",
     listTitle: "250K+ Monthly Organic Visits",
-    stat: "Monthly Organic Visits",
-    description: "Increased monthly organic traffic from ~110K to 250K in four months.",
+    description: "Scaled monthly organic traffic to 250K+ visits through SEO-led editorial growth.",
   },
   {
     id: "growth-rate",
     category: "Growth Rate",
     value: "+126%",
     listTitle: "+126% Organic Growth",
-    stat: "Organic Growth in 4 Months",
-    description: "Increased monthly organic traffic from ~110K to 250K in four months.",
+    description: "Increased organic traffic by 126% in four months, growing from ~110K to 250K monthly visits.",
   },
   {
     id: "search-footprint",
     category: "Search Footprint",
     value: "47K",
     listTitle: "47K Organic Keywords Ranked",
-    stat: "Organic Keywords Ranked",
-    description: "Expanded keyword footprint across high-intent beauty and wellness topics.",
+    description: "Expanded the site’s search footprint to 47K ranking organic keywords.",
   },
   {
     id: "domain-authority",
     category: "Domain Authority",
     value: "44",
-    listTitle: "Domain Authority: 44",
-    stat: "Authority Score 44 · 947 Referring Domains",
-    description: "Established strong domain authority and earned editorial backlinks in competitive categories.",
+    listTitle: "Authority Score: 44 · 947 Referring Domains",
+    description: "Built a domain authority score of 44 supported by 947 referring domains.",
   },
   {
     id: "organic-media-value",
     category: "Organic Media Value",
     value: "$72K+",
-    listTitle: "$72K+ Estimated Traffic Value",
-    stat: "Estimated Monthly Traffic Value",
-    description: "Estimated organic traffic value based on equivalent paid media cost.",
+    listTitle: "$72K+ Estimated Monthly Organic Traffic Value",
+    description: "Generated $72K+ in estimated monthly organic traffic value, based on paid media equivalents.",
   },
   {
     id: "content-engagement",
     category: "Content Engagement",
     value: "5:48",
     listTitle: "5:48 Average Visit Duration",
-    stat: "Average Visit Duration",
-    description: "Demonstrated strong engagement with long-form, educational content.",
+    description: "Drove an average visit duration of 5:48, reflecting strong engagement with long-form content.",
   },
   {
     id: "ai-search-visibility",
     category: "AI Search Visibility",
     value: "984",
-    listTitle: "984 AI Mentions & 738 AI-Cited Pages",
-    stat: "AI Mentions · 738 AI-Cited Pages",
-    description: "Content referenced across AI-powered search experiences and cited in AI-generated results.",
+    listTitle: "984 AI Search Mentions · 738 AI-Cited Pages",
+    description: "Earned 984 AI search mentions with 738 pages cited in AI-generated search results.",
   },
 ];
 
@@ -526,11 +518,11 @@ function MetricTabs({
                 )}
               >
                 <div className="px-5 pb-5">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
-                <p className="mt-3 text-sm font-mono uppercase tracking-widest text-text-secondary/70">
-                  {metric.stat}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-text-secondary">{metric.description}</p>
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
+                  <p className="mt-3 text-sm font-mono uppercase tracking-widest text-text-secondary/70">
+                    {metric.category}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-text-secondary">{metric.description}</p>
 
                   <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {charts.map((item) => (
@@ -609,9 +601,9 @@ function MetricTabs({
           className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8"
         >
           <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
-          <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.category}</h3>
+          <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.listTitle}</h3>
           <p className="mt-3 text-sm font-mono uppercase tracking-widest text-text-secondary/70">
-            {activeMetric.stat}
+            {activeMetric.category}
           </p>
           <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
             {activeMetric.description}
