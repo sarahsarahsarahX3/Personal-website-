@@ -691,51 +691,57 @@ export default function PAndGBeautyContentHubProjectPage() {
             <Section id="strategy" title="Strategy">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.strategyIntro}</p>
 
-              <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_360px]">
-                <ul className="grid gap-3 text-sm md:text-base text-text-secondary">
-                  {project.strategyBullets.map((bullet, index) => {
-                    const isActive = index === activeStrategyIndex;
-                    return (
-                      <li key={bullet}>
-                        <button
-                          type="button"
-                          onClick={() => setActiveStrategyIndex(index)}
-                          onMouseEnter={() => setActiveStrategyIndex(index)}
-                          onFocus={() => setActiveStrategyIndex(index)}
-                          className={cn(
-                            "group w-full rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
-                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                            isActive ? "border-white/20 bg-white/5" : "border-white/10 hover:border-white/20 hover:bg-white/5",
-                          )}
-                        >
-                          <span className="flex gap-3">
-                            <span
-                              aria-hidden="true"
-                              className={cn(
-                                "inline-flex h-2.5 w-2.5 shrink-0 rounded-full translate-y-[0.45em]",
-                                isActive ? "bg-accent" : "bg-accent/70 group-hover:bg-accent/90",
-                              )}
-                            />
-                            <span className="leading-relaxed">{bullet}</span>
-                          </span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-
-                <DiagramCard title="Strategy map" subtitle="Hover or tap a pillar to highlight.">
-                  <NodeDiagram
-                    activeIndex={activeStrategyIndex}
-                    nodes={[
-                      { x: 18, y: 18 },
-                      { x: 78, y: 28 },
-                      { x: 26, y: 52 },
-                      { x: 74, y: 64 },
-                      { x: 34, y: 84 },
-                    ]}
+              <div className="mt-10">
+                <div className="relative">
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-[34px] top-4 bottom-4 w-px bg-accent/25"
                   />
-                </DiagramCard>
+
+                  <ol className="grid gap-3 text-sm md:text-base text-text-secondary" aria-label="Strategy pillars">
+                    {project.strategyBullets.map((bullet, index) => {
+                      const isActive = index === activeStrategyIndex;
+                      return (
+                        <li key={bullet}>
+                          <button
+                            type="button"
+                            onClick={() => setActiveStrategyIndex(index)}
+                            onMouseEnter={() => setActiveStrategyIndex(index)}
+                            onFocus={() => setActiveStrategyIndex(index)}
+                            className={cn(
+                              "group w-full rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
+                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                              isActive
+                                ? "border-white/20 bg-white/5"
+                                : "border-white/10 hover:border-white/20 hover:bg-white/5",
+                            )}
+                          >
+                            <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
+                              <span className="relative justify-self-center mt-[0.7rem]" aria-hidden="true">
+                                <span
+                                  className={cn(
+                                    "absolute inset-0 -m-[7px] rounded-full border transition-colors duration-200",
+                                    isActive ? "border-accent/40" : "border-white/10 group-hover:border-white/20",
+                                  )}
+                                />
+                                <span
+                                  className={cn(
+                                    "relative block h-2.5 w-2.5 rounded-full transition-transform duration-200",
+                                    isActive
+                                      ? "bg-accent scale-110"
+                                      : "bg-accent/70 group-hover:bg-accent/95 group-hover:scale-110",
+                                  )}
+                                />
+                              </span>
+
+                              <span className="leading-relaxed">{bullet}</span>
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
               </div>
             </Section>
 
