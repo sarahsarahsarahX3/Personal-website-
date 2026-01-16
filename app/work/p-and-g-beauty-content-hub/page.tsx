@@ -28,7 +28,7 @@ type Metric = {
 };
 
 const project = {
-  title: "Procter & Gamble Beauty Content Hub",
+  title: "Procter & Gamble HairCode",
   subtitle: "Content Strategy and Growth Marketing",
   overview:
     "This project focused on developing and optimizing SEO-driven editorial content for Procter & Gamble’s consumer-facing content hub to improve organic traffic and search visibility across beauty, health, and wellness topics.",
@@ -36,7 +36,7 @@ const project = {
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
   strategyIntro:
-    "I designed a content system to drive sustainable organic growth by:",
+    "Designed a content system to drive sustainable organic growth by:",
   strategyBullets: [
     "Mapping topics to high-intent user queries and audience needs.",
     "Structuring content for clarity, scannability, and discoverability.",
@@ -69,12 +69,12 @@ const metrics: Metric[] = [
     id: "monthly-organic-visits",
     category: "Organic Search Traffic",
     value: "250K+",
-    listTitle: "250K+ Monthly Organic Visits",
+    listTitle: "250K+ Monthly Organic Traffic",
     description: "Scaled monthly organic traffic to 250K+ visits through SEO-led editorial growth.",
   },
   {
     id: "growth-rate",
-    category: "Growth Rate",
+    category: "Organic Growth Rate",
     value: "+126%",
     listTitle: "+126% Organic Growth",
     description: "Increased organic traffic by 126% in four months, growing from ~110K to 250K monthly visits.",
@@ -111,7 +111,7 @@ const metrics: Metric[] = [
     id: "ai-search-visibility",
     category: "AI Search Visibility",
     value: "984",
-    listTitle: "984 AI Search Mentions & 738 AI-Cited Pages",
+    listTitle: "984 AI Search Mentions + 738 AI-Cited Pages",
     description: "Earned 984 AI search mentions with 738 pages cited in AI-generated search results.",
   },
 ];
@@ -1085,7 +1085,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <Section id="execution" title="Execution">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">
-                I applied this strategy to a structured, repeatable execution workflow, including:
+                Applied this strategy to a structured, repeatable execution workflow, including:
               </p>
 
               <ol className="mt-6 grid gap-3">
