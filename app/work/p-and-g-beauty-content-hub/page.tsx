@@ -99,7 +99,7 @@ const chartMedia: MediaItem[] = [
   { id: "c2", title: "Performance chart 02" },
 ];
 
-const livePreviewUrl = "https://example.com";
+const livePreviewUrl = "https://haircode.com";
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
