@@ -194,7 +194,10 @@ function Section({
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16 pt-10">
       <header className="max-w-3xl">
-        <h2 id={`${id}-title`} className="font-display text-3xl md:text-4xl tracking-tight text-text-primary">
+        <h2
+          id={`${id}-title`}
+          className="font-display text-2xl md:text-3xl tracking-tight text-text-secondary/85"
+        >
           {title}
         </h2>
       </header>
@@ -299,15 +302,10 @@ function DesktopRail({
 
         <div
           key={activeId}
-          className={cn(
-            "rounded-2xl border border-white/10 bg-surface-alt/10 p-4",
-            "transition-opacity duration-300",
-          )}
+          className={cn("rounded-2xl border border-white/10 bg-surface-alt/10 p-4", "transition-opacity duration-300")}
         >
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            {project.objective}
-          </p>
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
         </div>
       </div>
     </aside>
@@ -557,10 +555,8 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
 
-                  <div className="mt-8 text-sm md:text-base text-text-secondary">
-                    <span className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                      My Role:
-                    </span>{" "}
+                  <div className="mt-8 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xs font-mono tracking-widest text-text-secondary">
+                    <span className="uppercase text-text-secondary/70">My Role:</span>
                     <span>Copywriter and Content Strategist</span>
                   </div>
                 </div>
@@ -612,7 +608,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                   >
                     <span
                       aria-hidden="true"
-                      className="mt-[6px] inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-accent/80"
+                      className="inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-accent/80 translate-y-[0.45em]"
                     />
                     <span className="leading-relaxed">{bullet}</span>
                   </li>
@@ -627,7 +623,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                 {(project.executionBullets as unknown as string[]).map((step, index) => (
                   <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
                     <div className="flex items-start gap-3">
-                      <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                      <span className="mt-[2px] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <p className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</p>
