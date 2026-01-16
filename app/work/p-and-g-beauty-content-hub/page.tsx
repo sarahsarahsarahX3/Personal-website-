@@ -70,7 +70,7 @@ const metrics: Metric[] = [
     id: "growth-rate",
     category: "Growth Rate",
     value: "+126%",
-    listTitle: "+126% Organic Growth",
+    listTitle: "250K+ Monthly Organic Visits",
     stat: "Organic Growth in 4 Months",
     description: "Increased monthly organic traffic from ~110K to 250K in four months.",
   },
