@@ -215,7 +215,7 @@ function Section({
       <header className="max-w-3xl">
         <h2
           id={`${id}-title`}
-          className="font-display text-xl md:text-2xl tracking-tight text-text-secondary/85"
+          className="font-display text-3xl md:text-2xl tracking-tight text-text-secondary/85"
         >
           {title}
         </h2>
@@ -281,7 +281,7 @@ function DesktopRail({
   onNavigate: (id: string) => void;
 }) {
   return (
-    <aside className="hidden xl:block sticky top-14 self-start">
+    <aside className="hidden lg:block sticky top-14 self-start">
       <div className="grid gap-3">
         <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
           <div className="flex items-center justify-between gap-3">
@@ -353,83 +353,183 @@ function MetricTabs({
   const activeMetric = metrics.find((m) => m.id === active) ?? metrics[0]!;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-      <div>
-        <div role="tablist" aria-label="Result metrics" className="grid gap-2">
-          {metrics.map((metric) => {
-            const selected = metric.id === active;
-            return (
-              <button
-                key={metric.id}
-                type="button"
-                role="tab"
-                aria-selected={selected}
-                aria-controls={`metric-panel-${metric.id}`}
-                id={`metric-tab-${metric.id}`}
-                onClick={() => setActive(metric.id)}
-                className={cn(
-                  "rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                  selected ? "border-white/25 bg-white/5" : "border-white/10 hover:bg-white/5 hover:border-white/20",
-                )}
-              >
-                <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
-                <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                  {metric.label}
-                  {metric.detail ? ` · ${metric.detail}` : ""}
-                </p>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div
-        role="tabpanel"
-        id={`metric-panel-${activeMetric.id}`}
-        aria-labelledby={`metric-tab-${activeMetric.id}`}
-        className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8"
-      >
-        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
-        <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.label}</h3>
-        <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
-          {highlights[activeMetric.id] ?? ""}
-        </p>
-
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {charts.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => onOpenChart(item.id)}
+    <>
+      <div className="grid gap-3 lg:hidden">
+        {metrics.map((metric) => {
+          const isOpen = metric.id === active;
+          return (
+            <div
+              key={metric.id}
               className={cn(
-                "group overflow-hidden rounded-2xl border border-white/10 bg-surface/40 text-left",
-                "hover:border-white/20 hover:bg-white/5 transition-colors",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                "rounded-2xl border border-white/10 bg-surface-alt/10 overflow-hidden",
+                "transition-colors",
+                isOpen ? "bg-white/5 border-white/20" : "bg-surface-alt/10",
               )}
             >
-              <div className="aspect-[16/10] bg-surface/40">
-                {item.imageSrc ? (
-                  <img
-                    src={item.imageSrc}
-                    alt={item.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center px-4 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                    Add chart
-                  </div>
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={`metric-accordion-panel-${metric.id}`}
+                onClick={() => setActive(metric.id)}
+                className={cn(
+                  "w-full px-5 py-4 text-left",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                 )}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
+                    <p className="mt-2 text-[11px] font-mono uppercase tracking-widest text-text-secondary/80">
+                      {metric.label}
+                      {metric.detail ? ` · ${metric.detail}` : ""}
+                    </p>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "mt-1 inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-text-secondary transition-transform duration-200",
+                      isOpen ? "rotate-180" : "rotate-0",
+                    )}
+                  >
+                    ▾
+                  </span>
+                </div>
+              </button>
+
+              <div
+                id={`metric-accordion-panel-${metric.id}`}
+                aria-hidden={!isOpen}
+                className={cn(
+                  "overflow-hidden",
+                  "transition-[max-height,opacity,transform] duration-300",
+                  isOpen
+                    ? "max-h-[999px] opacity-100 translate-y-0"
+                    : "max-h-0 opacity-0 -translate-y-1 pointer-events-none",
+                )}
+              >
+                <div className="px-5 pb-5">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
+                  <p className="mt-3 text-sm leading-relaxed text-text-secondary">{highlights[metric.id] ?? ""}</p>
+
+                  <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {charts.map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => onOpenChart(item.id)}
+                        className={cn(
+                          "group overflow-hidden rounded-2xl border border-white/10 bg-surface/40 text-left",
+                          "hover:border-white/20 hover:bg-white/5 transition-colors",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                        )}
+                      >
+                        <div className="aspect-[16/10] bg-surface/40">
+                          {item.imageSrc ? (
+                            <img
+                              src={item.imageSrc}
+                              alt={item.title}
+                              loading="lazy"
+                              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                            />
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center px-4 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                              Add chart
+                            </div>
+                          )}
+                        </div>
+                        <div className="px-4 py-3">
+                          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.title}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="px-4 py-3">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.title}</p>
-              </div>
-            </button>
-          ))}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="hidden lg:grid gap-6 lg:grid-cols-[320px_1fr]">
+        <div>
+          <div role="tablist" aria-label="Result metrics" className="grid gap-2">
+            {metrics.map((metric) => {
+              const selected = metric.id === active;
+              return (
+                <button
+                  key={metric.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  aria-controls={`metric-panel-${metric.id}`}
+                  id={`metric-tab-${metric.id}`}
+                  onClick={() => setActive(metric.id)}
+                  className={cn(
+                    "rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                    selected
+                      ? "border-white/25 bg-white/5"
+                      : "border-white/10 hover:bg-white/5 hover:border-white/20",
+                  )}
+                >
+                  <p className="font-display text-2xl leading-none text-text-primary">{metric.value}</p>
+                  <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                    {metric.label}
+                    {metric.detail ? ` · ${metric.detail}` : ""}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div
+          role="tabpanel"
+          id={`metric-panel-${activeMetric.id}`}
+          aria-labelledby={`metric-tab-${activeMetric.id}`}
+          className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8"
+        >
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Highlight</p>
+          <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.label}</h3>
+          <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
+            {highlights[activeMetric.id] ?? ""}
+          </p>
+
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {charts.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => onOpenChart(item.id)}
+                className={cn(
+                  "group overflow-hidden rounded-2xl border border-white/10 bg-surface/40 text-left",
+                  "hover:border-white/20 hover:bg-white/5 transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
+              >
+                <div className="aspect-[16/10] bg-surface/40">
+                  {item.imageSrc ? (
+                    <img
+                      src={item.imageSrc}
+                      alt={item.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center px-4 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                      Add chart
+                    </div>
+                  )}
+                </div>
+                <div className="px-4 py-3">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.title}</p>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -660,7 +760,7 @@ export default function PAndGBeautyContentHubProjectPage() {
           </Link>
         </header>
 
-        <div className="mt-10 grid gap-10 xl:grid-cols-[1fr_280px]">
+        <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             <section id="overview" className="scroll-mt-16">
               <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #1</p>
@@ -670,7 +770,7 @@ export default function PAndGBeautyContentHubProjectPage() {
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
               <div className="mt-12 grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
-                <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
 
@@ -680,7 +780,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                   </div>
                 </div>
 
-                <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8 flex flex-col">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Quick results</p>
                   <div className="mt-5 grid gap-5">
                     <div>
@@ -697,21 +797,31 @@ export default function PAndGBeautyContentHubProjectPage() {
                         Monthly organic search traffic
                       </p>
                     </div>
-                    <div className="pt-4 border-t border-white/10">
-                      <button
-                        type="button"
-                        onClick={() => scrollToId("results", scrollBehavior)}
-                        className={cn(
-                          "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest",
-                          "bg-text-primary text-surface hover:bg-white transition-colors",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                        )}
-                      >
-                        View Results
-                      </button>
-                    </div>
+                  </div>
+
+                  <div className="mt-auto pt-8">
+                    <button
+                      type="button"
+                      onClick={() => scrollToId("results", scrollBehavior)}
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest",
+                        "bg-text-primary text-surface hover:bg-white transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      )}
+                    >
+                      View Results
+                    </button>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-8 lg:hidden rounded-3xl border border-white/10 bg-surface-alt/10 p-6">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
+                <p className="mt-4 text-sm leading-relaxed text-text-secondary">
+                  <span className={cn("glitchText", "relative inline-block")} data-text={project.overview}>
+                    {project.overview}
+                  </span>
+                </p>
               </div>
             </section>
 
@@ -732,10 +842,8 @@ export default function PAndGBeautyContentHubProjectPage() {
                       return (
                         <li key={bullet}>
                           <div
-                            tabIndex={0}
                             className={cn(
                               "w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4 text-left",
-                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                             )}
                           >
                             <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
@@ -884,8 +992,8 @@ export default function PAndGBeautyContentHubProjectPage() {
 
       <style jsx>{`
         .glitchText {
-          text-shadow: 0 0 18px rgba(255, 59, 48, 0.22), 0 0 1px rgba(255, 59, 48, 0.28);
-          animation: glowFlicker 3.6s ease-in-out infinite;
+          text-shadow: 0 0 22px rgba(255, 59, 48, 0.32), 0 0 1px rgba(255, 59, 48, 0.38);
+          animation: glowFlicker 2.9s ease-in-out infinite;
         }
 
         .glitchText::before,
@@ -896,34 +1004,34 @@ export default function PAndGBeautyContentHubProjectPage() {
           top: 0;
           width: 100%;
           pointer-events: none;
-          opacity: 0.32;
+          opacity: 0.5;
           color: rgba(255, 59, 48, 0.92);
-          filter: blur(0.2px);
+          filter: blur(0.15px);
         }
 
         .glitchText::before {
           transform: translate(0.9px, -0.3px);
           clip-path: inset(0 0 62% 0);
-          animation: glitchTop 2.8s ease-in-out infinite;
+          animation: glitchTop 2.1s ease-in-out infinite;
         }
 
         .glitchText::after {
           transform: translate(-0.8px, 0.3px);
           clip-path: inset(60% 0 0 0);
-          animation: glitchBottom 3.2s ease-in-out infinite;
+          animation: glitchBottom 2.5s ease-in-out infinite;
         }
 
         @keyframes glowFlicker {
           0%,
           84%,
           100% {
-            text-shadow: 0 0 18px rgba(255, 59, 48, 0.18), 0 0 1px rgba(255, 59, 48, 0.22);
+            text-shadow: 0 0 22px rgba(255, 59, 48, 0.24), 0 0 1px rgba(255, 59, 48, 0.3);
           }
           86% {
-            text-shadow: 0 0 24px rgba(255, 59, 48, 0.28), 0 0 2px rgba(255, 59, 48, 0.32);
+            text-shadow: 0 0 30px rgba(255, 59, 48, 0.38), 0 0 2px rgba(255, 59, 48, 0.42);
           }
           88% {
-            text-shadow: 0 0 20px rgba(255, 59, 48, 0.22), 0 0 1px rgba(255, 59, 48, 0.24);
+            text-shadow: 0 0 26px rgba(255, 59, 48, 0.3), 0 0 1px rgba(255, 59, 48, 0.34);
           }
         }
 
