@@ -117,7 +117,7 @@ const metrics: Metric[] = [
 ];
 
 const sectionLinks: SectionLink[] = [
-  { id: "overview", label: "Objective" },
+  { id: "overview", label: "Overview" },
   { id: "strategy", label: "Strategy" },
   { id: "execution", label: "Execution" },
   { id: "results", label: "Results" },
@@ -980,7 +980,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
                   <div className="mt-8">
                     <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
-                    <p className="mt-2 text-sm md:text-base text-text-secondary">Copywriter and Content Strategist</p>
+                    <p className="mt-2 text-sm md:text-base text-text-secondary">Copywriter and Content Strategist (Contract)</p>
                   </div>
                 </div>
 
