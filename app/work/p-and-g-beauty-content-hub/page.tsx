@@ -76,8 +76,6 @@ const sectionLinks: SectionLink[] = [
   { id: "strategy", label: "Strategy" },
   { id: "execution", label: "Execution" },
   { id: "results", label: "Results" },
-  { id: "articles", label: "Articles" },
-  { id: "performance", label: "Performance" },
   { id: "tools", label: "Tools" },
 ];
 
@@ -315,9 +313,13 @@ function DesktopRail({
 function MetricTabs({
   metrics,
   highlights,
+  charts,
+  onOpenChart,
 }: {
   metrics: Metric[];
   highlights: Record<string, string>;
+  charts: MediaItem[];
+  onOpenChart: (id: string) => void;
 }) {
   const [active, setActive] = useState(metrics[0]?.id ?? "");
   const activeMetric = metrics.find((m) => m.id === active) ?? metrics[0]!;
@@ -365,6 +367,39 @@ function MetricTabs({
         <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
           {highlights[activeMetric.id] ?? ""}
         </p>
+
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {charts.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => onOpenChart(item.id)}
+              className={cn(
+                "group overflow-hidden rounded-2xl border border-white/10 bg-surface/40 text-left",
+                "hover:border-white/20 hover:bg-white/5 transition-colors",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+            >
+              <div className="aspect-[16/10] bg-surface/40">
+                {item.imageSrc ? (
+                  <img
+                    src={item.imageSrc}
+                    alt={item.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center px-4 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                    Add chart
+                  </div>
+                )}
+              </div>
+              <div className="px-4 py-3">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.title}</p>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -750,40 +785,25 @@ export default function PAndGBeautyContentHubProjectPage() {
                   />
                 </DiagramCard>
               </div>
+
+              <div className="mt-10">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
+                <div className="mt-6">
+                  <MediaGrid items={articleMedia} onOpen={openWith} />
+                </div>
+              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="results" title="Results">
-              <MetricTabs metrics={metrics} highlights={highlights} />
+              <MetricTabs metrics={metrics} highlights={highlights} charts={chartMedia} onOpenChart={openWith} />
               <div className="mt-10 grid gap-3 max-w-3xl text-sm md:text-base text-text-secondary">
                 {project.resultsBullets.map((line) => (
                   <p key={line} className="leading-relaxed">
                     {line}
                   </p>
                 ))}
-              </div>
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="articles" title="Published article visuals">
-              <p className="max-w-3xl text-sm md:text-base leading-relaxed text-text-secondary">
-                Add screenshots of digital articles here.
-              </p>
-              <div className="mt-8">
-                <MediaGrid items={articleMedia} onOpen={openWith} />
-              </div>
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="performance" title="Performance graphs">
-              <p className="max-w-3xl text-sm md:text-base leading-relaxed text-text-secondary">
-                Add two performance graphs or charts here.
-              </p>
-              <div className="mt-8">
-                <MediaGrid items={chartMedia} onOpen={openWith} />
               </div>
             </Section>
 
