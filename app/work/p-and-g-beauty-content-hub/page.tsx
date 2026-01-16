@@ -303,11 +303,13 @@ function SquiggleMark({ className }: { className?: string }) {
 function Section({
   id,
   title,
+  subtitle,
   children,
   contentClassName,
 }: {
   id: string;
   title: string;
+  subtitle?: React.ReactNode;
   children: React.ReactNode;
   contentClassName?: string;
 }) {
@@ -320,6 +322,9 @@ function Section({
         >
           {title}
         </h2>
+        {subtitle ? (
+          <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">{subtitle}</p>
+        ) : null}
       </header>
       <div className={cn("mt-8", contentClassName)}>{children}</div>
     </section>
@@ -1095,7 +1100,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="results" title="Results">
+            <Section id="results" title="Results" subtitle="Select a metric to view the highlight.">
               <MetricTabs metrics={metrics} charts={chartMedia} onOpenChart={openWith} />
             </Section>
 
