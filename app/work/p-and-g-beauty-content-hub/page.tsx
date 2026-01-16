@@ -1043,9 +1043,13 @@ export default function PAndGBeautyContentHubProjectPage() {
 
                 <div className="bg-surface/30">
                   <div className="aspect-[16/9] w-full">
-                    <div className="flex h-full w-full items-center justify-center px-6 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                      Add header image
-                    </div>
+                    <img
+                      src="/HairCode%20Header%20Image.png"
+                      alt="HairCode header image"
+                      className="h-full w-full object-cover"
+                      loading="eager"
+                      decoding="async"
+                    />
                   </div>
                 </div>
                 <figcaption className="sr-only">Header image placeholder</figcaption>
