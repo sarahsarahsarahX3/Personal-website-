@@ -654,11 +654,9 @@ export default function PAndGBeautyContentHubProjectPage() {
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Objective</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
 
-                  <div className="mt-8 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                    <span className="text-sm md:text-base font-mono uppercase tracking-widest text-text-secondary/70">
-                      My Role:
-                    </span>
-                    <span className="text-sm md:text-base text-text-secondary">Copywriter and Content Strategist</span>
+                  <div className="mt-8">
+                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
+                    <p className="mt-2 text-sm md:text-base text-text-secondary">Copywriter and Content Strategist</p>
                   </div>
                 </div>
 
