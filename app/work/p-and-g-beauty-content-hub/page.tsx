@@ -973,7 +973,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                 <p className="mt-4 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
               </div>
 
-                <div className="mt-12 grid gap-6 lg:grid-cols-2">
+              <div className="mt-12 grid gap-6 lg:grid-cols-2">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
@@ -1025,6 +1025,31 @@ export default function PAndGBeautyContentHubProjectPage() {
                   </div>
                 </div>
               </div>
+
+              <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface/40 px-4 py-3">
+                  <div className="flex items-center gap-2" aria-hidden="true">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
+                  </div>
+                  <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                    Header image
+                  </p>
+                  <span aria-hidden="true" className="text-text-secondary/50">
+                    ⌄
+                  </span>
+                </div>
+
+                <div className="bg-surface/30">
+                  <div className="aspect-[16/9] w-full">
+                    <div className="flex h-full w-full items-center justify-center px-6 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                      Add header image
+                    </div>
+                  </div>
+                </div>
+                <figcaption className="sr-only">Header image placeholder</figcaption>
+              </figure>
             </section>
 
             <div className="mt-16 border-t border-white/10" />
