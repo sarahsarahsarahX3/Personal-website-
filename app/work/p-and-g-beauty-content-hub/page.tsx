@@ -30,19 +30,19 @@ const project = {
   strategyIntro:
     "Implement an SEO-driven editorial strategy grounded in search intent, content structure, and credibility. The approach focused on:",
   strategyBullets: [
-    "Mapping topics to high-intent user queries and audience needs",
-    "Structuring content for clarity, scannability, and discoverability",
-    "Optimizing for SEO, AEO, and GEO to support traditional and generative search",
-    "Embedding subject-matter expert validation into the editorial workflow",
-    "Designing evergreen content built to compound in performance",
+    "Mapping topics to high-intent user queries and audience needs.",
+    "Structuring content for clarity, scannability, and discoverability.",
+    "Optimizing for SEO, AEO, and GEO to support traditional and generative search.",
+    "Embedding subject-matter expert validation into the editorial workflow.",
+    "Designing evergreen content built to compound in performance.",
   ],
   executionBullets: [
-    "Wrote and published 50+ long-form, consumer-facing articles",
-    "Conducted keyword research and SERP analysis to guide topic selection",
-    "Optimized headlines, content structure, internal linking, and metadata",
-    "Collaborated with scientists and subject-matter experts to validate claims",
-    "Refreshed existing content based on performance insights",
-    "Tracked and analyzed results using SEMrush and Google Analytics",
+    "Wrote and published 50+ long-form, consumer-facing articles.",
+    "Conducted keyword research and SERP analysis to guide topic selection.",
+    "Optimized headlines, content structure, internal linking, and metadata.",
+    "Collaborated with scientists and subject-matter experts to validate claims.",
+    "Refreshed existing content based on performance insights.",
+    "Tracked and analyzed results using SEMrush and Google Analytics.",
   ],
   resultsBullets: [
     "Increased monthly organic users from 110K to 250K (+126%) in four months",
@@ -203,10 +203,12 @@ function Section({
   id,
   title,
   children,
+  contentClassName,
 }: {
   id: string;
   title: string;
   children: React.ReactNode;
+  contentClassName?: string;
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16 pt-10">
@@ -218,7 +220,7 @@ function Section({
           {title}
         </h2>
       </header>
-      <div className="mt-8">{children}</div>
+      <div className={cn("mt-8", contentClassName)}>{children}</div>
     </section>
   );
 }
@@ -715,7 +717,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="strategy" title="Strategy">
+            <Section id="strategy" title="Strategy" contentClassName="mt-5">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.strategyIntro}</p>
 
               <div className="mt-10">
@@ -732,24 +734,20 @@ export default function PAndGBeautyContentHubProjectPage() {
                           <div
                             tabIndex={0}
                             className={cn(
-                              "group w-full rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
+                              "w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4 text-left",
                               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                              "border-white/10 hover:border-white/20 hover:bg-white/5",
                             )}
                           >
                             <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
                               <span className="relative justify-self-center mt-[0.7rem]" aria-hidden="true">
                                 <span
                                   className={cn(
-                                    "absolute inset-0 -m-[7px] rounded-full border border-white/10 transition-colors duration-200",
-                                    "group-hover:border-accent/40 group-focus-visible:border-accent/40",
+                                    "absolute inset-0 -m-[7px] rounded-full border border-white/10",
                                   )}
                                 />
                                 <span
                                   className={cn(
-                                    "relative block h-2.5 w-2.5 rounded-full bg-accent/65 transition-transform transition-colors duration-200",
-                                    "group-hover:bg-accent group-hover:scale-110",
-                                    "group-focus-visible:bg-accent group-focus-visible:scale-110",
+                                    "relative block h-2.5 w-2.5 rounded-full bg-accent/70",
                                   )}
                                 />
                               </span>
@@ -785,8 +783,8 @@ export default function PAndGBeautyContentHubProjectPage() {
                             isActive ? "border-white/20 bg-white/5" : "border-white/10 hover:border-white/20 hover:bg-white/5",
                           )}
                         >
-                          <span className="flex items-start gap-3">
-                            <span className="mt-[2px] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                          <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
+                            <span className="mt-[0.35rem] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
                               {String(index + 1).padStart(2, "0")}
                             </span>
                             <span className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</span>
