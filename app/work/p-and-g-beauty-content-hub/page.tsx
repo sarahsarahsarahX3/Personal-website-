@@ -467,9 +467,8 @@ function MetricTabs({
   return (
     <>
       <div className="grid gap-3 lg:hidden">
-        {metrics.map((metric, index) => {
+        {metrics.map((metric) => {
           const isOpen = metric.id === active;
-          const ordinal = String(index + 1).padStart(2, "0");
           return (
             <div
               key={metric.id}
@@ -485,36 +484,40 @@ function MetricTabs({
                 aria-controls={`metric-accordion-panel-${metric.id}`}
                 onClick={() => setActive(metric.id)}
                 className={cn(
-                  "group w-full px-5 py-4 text-left",
+                  "group relative w-full px-5 py-4 text-left overflow-hidden",
+                  "after:absolute after:left-5 after:right-5 after:bottom-0 after:h-px",
+                  "after:bg-gradient-to-r after:from-accent/0 after:via-accent/45 after:to-accent/0",
+                  "after:opacity-0 after:transition-opacity after:duration-200",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  isOpen ? "after:opacity-100" : "hover:after:opacity-60",
                 )}
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="flex items-start gap-3">
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          "mt-0.5 text-[11px] font-mono tracking-widest",
-                          isOpen ? "text-accent" : "text-text-secondary/55",
-                        )}
-                      >
-                        {ordinal}
-                      </span>
-                      <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
-                        {metric.listTitle}
-                      </p>
-                    </div>
+                  <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
+                    {metric.listTitle}
+                  </p>
+
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-full border px-2 py-1 text-[10px] font-mono uppercase tracking-widest transition-colors",
+                        isOpen
+                          ? "border-accent/30 bg-accent/10 text-accent"
+                          : "border-white/10 bg-surface/40 text-text-secondary",
+                      )}
+                    >
+                      {metric.value}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-text-secondary transition-transform duration-200",
+                        isOpen ? "rotate-180" : "rotate-0",
+                      )}
+                    >
+                      ▾
+                    </span>
                   </div>
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "mt-1 inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-text-secondary transition-transform duration-200",
-                      isOpen ? "rotate-180" : "rotate-0",
-                    )}
-                  >
-                    ▾
-                  </span>
                 </div>
               </button>
 
@@ -576,9 +579,8 @@ function MetricTabs({
       <div className="hidden lg:grid gap-6 lg:grid-cols-[320px_1fr]">
         <div>
           <div role="tablist" aria-label="Result metrics" className="grid gap-2">
-            {metrics.map((metric, index) => {
+            {metrics.map((metric) => {
               const selected = metric.id === active;
-              const ordinal = String(index + 1).padStart(2, "0");
               return (
                 <button
                   key={metric.id}
@@ -590,26 +592,29 @@ function MetricTabs({
                   onClick={() => setActive(metric.id)}
                   className={cn(
                     "group relative overflow-hidden rounded-2xl border bg-surface-alt/10 px-5 py-4 text-left transition-colors",
-                    "before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:rounded-full before:transition-colors before:duration-200",
+                    "after:absolute after:left-5 after:right-5 after:bottom-0 after:h-px",
+                    "after:bg-gradient-to-r after:from-accent/0 after:via-accent/45 after:to-accent/0",
+                    "after:opacity-0 after:transition-opacity after:duration-200",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                     selected
-                      ? "border-white/25 bg-white/5 before:bg-accent/70"
-                      : "border-white/10 before:bg-white/10 hover:bg-white/5 hover:border-white/20 hover:before:bg-white/20",
+                      ? "border-white/25 bg-white/5 after:opacity-100"
+                      : "border-white/10 hover:bg-white/5 hover:border-white/20 hover:after:opacity-60",
                   )}
                 >
-                  <div className="flex items-start gap-3">
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        "mt-0.5 text-[11px] font-mono tracking-widest transition-colors",
-                        selected ? "text-accent" : "text-text-secondary/55 group-hover:text-text-secondary/70",
-                      )}
-                    >
-                      {ordinal}
-                    </span>
+                  <div className="flex items-start justify-between gap-4">
                     <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
                       {metric.listTitle}
                     </p>
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-full border px-2 py-1 text-[10px] font-mono uppercase tracking-widest transition-colors",
+                        selected
+                          ? "border-accent/30 bg-accent/10 text-accent"
+                          : "border-white/10 bg-surface/40 text-text-secondary group-hover:border-white/20 group-hover:bg-white/5",
+                      )}
+                    >
+                      {metric.value}
+                    </span>
                   </div>
                 </button>
               );
