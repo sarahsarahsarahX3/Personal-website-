@@ -1034,7 +1034,7 @@ export default function PAndGBeautyContentHubProjectPage() {
                     <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
                   </div>
                   <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                    Header image
+                    P&G Beauty’s Brand-Owned Content Hub: HairCode
                   </p>
                   <span aria-hidden="true" className="text-text-secondary/50">
                     ⌄
@@ -1058,7 +1058,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="strategy" title="Strategy">
+            <Section id="strategy" title="Strategy" contentClassName="mt-6">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.strategyIntro}</p>
 
               <div className="mt-10">
@@ -1104,7 +1104,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="execution" title="Execution">
+            <Section id="execution" title="Execution" contentClassName="mt-6">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">
                 Applied this strategy to a structured, repeatable execution workflow, including:
               </p>
