@@ -147,6 +147,10 @@ const chartMedia: MediaItem[] = [
 
 const livePreviewUrl = "https://haircode.com";
 
+function getPdfHref(item: PdfItem) {
+  return item.href ?? (item.fileName ? `/images/${encodeURIComponent(item.fileName)}` : undefined);
+}
+
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
 
@@ -783,13 +787,196 @@ function Modal({
   );
 }
 
-function PdfGrid({ items }: { items: PdfItem[] }) {
+function usePdfModal(items: PdfItem[]) {
+  const [open, setOpen] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const activeIndex = useMemo(() => items.findIndex((i) => i.id === activeId), [items, activeId]);
+
+  useEffect(() => {
+    if (!open) return;
+    closeButtonRef.current?.focus();
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.documentElement.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (!items.length) return;
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        const next = activeIndex <= 0 ? items.length - 1 : activeIndex - 1;
+        setActiveId(items[next]?.id ?? null);
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        const next = activeIndex >= items.length - 1 ? 0 : activeIndex + 1;
+        setActiveId(items[next]?.id ?? null);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open, items, activeIndex]);
+
+  return {
+    open,
+    activeId,
+    activeIndex,
+    closeButtonRef,
+    openWith: (id: string) => {
+      setActiveId(id);
+      setOpen(true);
+    },
+    close: () => setOpen(false),
+    prev: () => {
+      if (!items.length) return;
+      const next = activeIndex <= 0 ? items.length - 1 : activeIndex - 1;
+      setActiveId(items[next]?.id ?? null);
+    },
+    next: () => {
+      if (!items.length) return;
+      const next = activeIndex >= items.length - 1 ? 0 : activeIndex + 1;
+      setActiveId(items[next]?.id ?? null);
+    },
+  };
+}
+
+function PdfCarouselModal({
+  open,
+  items,
+  activeId,
+  activeIndex,
+  onClose,
+  onPrev,
+  onNext,
+  closeButtonRef,
+}: {
+  open: boolean;
+  items: PdfItem[];
+  activeId: string | null;
+  activeIndex: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  closeButtonRef: React.RefObject<HTMLButtonElement | null>;
+}) {
+  if (!open) return null;
+
+  const active = items.find((i) => i.id === activeId) ?? items[0];
+  const href = active ? getPdfHref(active) : undefined;
+
+  return (
+    <div role="dialog" aria-modal="true" aria-label={active?.title ?? "PDF preview"} className="fixed inset-0 z-50">
+      <button type="button" aria-label="Close modal" onClick={onClose} className="absolute inset-0 bg-black/70" />
+
+      <div className="relative mx-auto grid h-full w-full max-w-6xl grid-rows-[auto_1fr] p-4 sm:p-6">
+        <div className="rounded-3xl border border-white/10 bg-surface overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
+            <div className="min-w-0">
+              <p className="text-sm tracking-tight text-text-primary line-clamp-1">{active?.title ?? "Preview"}</p>
+              <p className="mt-1 text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                {items.length ? `${Math.max(1, activeIndex + 1)} / ${items.length}` : ""}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={onPrev}
+                className={cn(
+                  "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-3",
+                  "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
+              >
+                Prev
+              </button>
+              <button
+                type="button"
+                onClick={onNext}
+                className={cn(
+                  "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-3",
+                  "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
+              >
+                Next
+              </button>
+
+              {href ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={cn(
+                    "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-3",
+                    "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                >
+                  Open ↗
+                </a>
+              ) : null}
+
+              <button
+                type="button"
+                ref={closeButtonRef}
+                onClick={onClose}
+                className={cn(
+                  "inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
+                  "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-surface-alt/10">
+            <div className="h-[70vh] min-h-[420px] w-full">
+              {href ? (
+                <iframe title={active?.title ?? "PDF preview"} src={href} className="h-full w-full" />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                  Add a PDF href for this item
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 px-5 py-4">
+            <p className="text-xs leading-relaxed text-text-secondary/70">
+              Tip: Use your keyboard arrow keys to move between PDFs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PdfGrid({ items, onOpen }: { items: PdfItem[]; onOpen: (id: string) => void }) {
   return (
     <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
       {items.map((item) => {
-        const resolvedHref =
-          item.href ??
-          (item.fileName ? `/images/${encodeURIComponent(item.fileName)}` : undefined);
+        const resolvedHref = getPdfHref(item);
 
         const content = (
           <>
@@ -801,7 +988,7 @@ function PdfGrid({ items }: { items: PdfItem[] }) {
             </div>
             <div className="mt-4 flex items-center justify-between gap-3">
               <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                {resolvedHref ? "Open in new tab" : "Add PDF file"}
+                {resolvedHref ? "Preview PDF" : "Add PDF file"}
               </p>
               <span aria-hidden="true" className="text-text-secondary">
                 ↗
@@ -822,19 +1009,18 @@ function PdfGrid({ items }: { items: PdfItem[] }) {
 
         return (
           <li key={item.id}>
-            <a
-              href={resolvedHref}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
+              onClick={() => onOpen(item.id)}
               className={cn(
-                "block rounded-2xl border border-white/10 bg-surface-alt/10 p-5 transition-colors",
+                "w-full text-left rounded-2xl border border-white/10 bg-surface-alt/10 p-5 transition-colors",
                 "hover:bg-white/5 hover:border-white/20",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
               )}
-              aria-label={`Open ${item.title}`}
+              aria-label={`Preview ${item.title}`}
             >
               {content}
-            </a>
+            </button>
           </li>
         );
       })}
@@ -901,6 +1087,7 @@ export default function PAndGBeautyContentHubProjectPage() {
     const all = [...chartMedia];
     return all.find((item) => item.id === activeId) ?? all[0]!;
   }, [activeId]);
+  const pdfModal = usePdfModal(articlePdfs);
 
   return (
     <main className="min-h-screen bg-surface text-text-primary">
@@ -1083,7 +1270,7 @@ export default function PAndGBeautyContentHubProjectPage() {
               <div className="mt-10">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
                 <div className="mt-6">
-                  <PdfGrid items={articlePdfs} />
+                  <PdfGrid items={articlePdfs} onOpen={pdfModal.openWith} />
                 </div>
               </div>
 
@@ -1154,6 +1341,17 @@ export default function PAndGBeautyContentHubProjectPage() {
         imageSrc={activeMedia?.imageSrc}
         onClose={close}
         closeButtonRef={closeButtonRef}
+      />
+
+      <PdfCarouselModal
+        open={pdfModal.open}
+        items={articlePdfs}
+        activeId={pdfModal.activeId}
+        activeIndex={pdfModal.activeIndex}
+        onClose={pdfModal.close}
+        onPrev={pdfModal.prev}
+        onNext={pdfModal.next}
+        closeButtonRef={pdfModal.closeButtonRef}
       />
 
     </main>
