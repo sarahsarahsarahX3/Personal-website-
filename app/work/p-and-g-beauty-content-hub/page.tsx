@@ -1068,25 +1068,23 @@ export default function PAndGBeautyContentHubProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="execution" title="Execution">
-              <div className="grid gap-8 lg:grid-cols-2">
-                <ol className="grid gap-3">
-                  {(project.executionBullets as unknown as string[]).map((step, index) => (
-                    <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
-                      <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
-                        <span className="mt-[0.35rem] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</span>
+              <ol className="grid gap-3">
+                {(project.executionBullets as unknown as string[]).map((step, index) => (
+                  <li key={step} className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4">
+                    <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
+                      <span className="mt-[0.35rem] inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
+                        {String(index + 1).padStart(2, "0")}
                       </span>
-                    </li>
-                  ))}
-                </ol>
+                      <span className="text-sm md:text-base leading-relaxed text-text-secondary">{step}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
 
-                <div className="lg:sticky lg:top-16 self-start">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
-                  <div className="mt-6">
-                    <PdfSlideshow items={articlePdfs} activeId={activePdfId} onSelect={setActivePdfId} />
-                  </div>
+              <div className="mt-10">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Digital articles</p>
+                <div className="mt-6">
+                  <PdfSlideshow items={articlePdfs} activeId={activePdfId} onSelect={setActivePdfId} />
                 </div>
               </div>
             </Section>
