@@ -49,7 +49,7 @@ const project = {
   ],
   snapshot: [
     { title: "Total Campaign Impressions", value: "1M+" },
-    { title: "Multi-Channel Activation", value: "EXPERIENTIAL · SOCIAL · EMAIL · DIGITAL" },
+    { title: "Multi-Channel Activation", value: "EXPERIENTIAL · SOCIAL · EMAIL · DIGITAL · PAID · PR" },
     { title: "Headlining Industry Moment", value: "ALIGNED WITH NEW YORK FASHION WEEK" },
   ],
   channels: ["Experiential", "Social", "Email", "Digital", "Paid", "PR"],
@@ -391,7 +391,7 @@ function WindowFrame({
           <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-white/10" />
           <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-white/10" />
         </div>
-        <p className="truncate text-xs font-mono uppercase tracking-widest text-text-secondary/75">{title}</p>
+        <p className="truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">{title}</p>
         <span aria-hidden="true" className="h-6 w-6 rounded-full border border-white/10 bg-surface/40" />
       </div>
       <div className="p-4 md:p-5">{children}</div>
@@ -523,26 +523,17 @@ export default function SalonCentricNyfwProjectPage() {
                     ))}
                   </div>
 
-                  <div className="mt-8 border-t border-white/10 pt-6">
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Channels</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.channels.map((channel) => (
-                        <Pill key={channel}>{channel}</Pill>
-                      ))}
-                    </div>
-                  </div>
-
                   <div className="mt-auto pt-8">
                     <button
                       type="button"
-                      onClick={() => scrollToId("results", scrollBehavior)}
+                      onClick={() => scrollToId("deliverables", scrollBehavior)}
                       className={cn(
-                        "w-full rounded-2xl border border-white/10 bg-surface/40 px-5 py-4",
-                        "text-left text-sm text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                        "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest",
+                        "bg-text-primary text-surface hover:bg-white transition-colors",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                       )}
                     >
-                      View Results
+                      View Assets
                     </button>
                   </div>
                 </div>
@@ -608,10 +599,8 @@ export default function SalonCentricNyfwProjectPage() {
               <RailList ariaLabel="Content production points" items={[...project.productionBullets]} />
             </Section>
 
-            <div className="mt-16 border-t border-white/10" />
-
             <section id="deliverables" aria-labelledby="deliverables-title" className="scroll-mt-16 pt-10">
-              <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
+              <div className="flex items-end justify-between gap-6 pb-2">
                 <h2
                   id="deliverables-title"
                   className="font-display text-3xl md:text-2xl tracking-tight text-text-primary/90"
@@ -646,7 +635,7 @@ export default function SalonCentricNyfwProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <section id="results" aria-labelledby="results-title" className="scroll-mt-16 pt-10">
-              <div className="flex flex-col gap-3 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
+              <div className="flex flex-col gap-3 pb-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <h2
                     id="results-title"
@@ -719,6 +708,29 @@ export default function SalonCentricNyfwProjectPage() {
                 ))}
               </div>
             </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <footer className="pt-2">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <button
+                  type="button"
+                  onClick={() => scrollToId("overview", scrollBehavior)}
+                  className={cn(
+                    "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                    "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                >
+                  <span aria-hidden="true">↑</span>
+                  <span>Back to top</span>
+                </button>
+
+                <div className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
+                  {Math.round(progress * 100)}% read
+                </div>
+              </div>
+            </footer>
           </div>
 
           <DesktopRail
