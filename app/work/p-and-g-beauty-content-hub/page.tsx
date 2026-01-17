@@ -196,6 +196,10 @@ const articlePdfs: PdfItem[] = [
 const semrushSnapshot = {
   trafficSeries: [
     { label: "May 2025", valueK: 110.88 },
+    { label: "Jun 2025", valueK: 103.32 },
+    { label: "Jul 2025", valueK: 139.73 },
+    { label: "Aug 2025", valueK: 207.9 },
+    { label: "Sep 2025", valueK: 234.63 },
     { label: "Oct 2025", valueK: 250.66 },
   ],
   trafficValueK: 72.22,
