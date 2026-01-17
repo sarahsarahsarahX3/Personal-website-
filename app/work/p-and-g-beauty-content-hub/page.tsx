@@ -959,12 +959,12 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
         <KpiVizFrame eyebrow="Growth curve" meta={trafficMeta}>
           <MiniDeltaBars
             idPrefix="growth-delta"
-            ariaLabel="Month-over-month organic traffic growth rates from June 2025 to October 2025"
+            ariaLabel="Cumulative organic traffic growth percentage from May 2025 to October 2025"
             items={(() => {
               const series = semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[];
-              return series.slice(1).map((point, index) => {
-                const prev = series[index]!;
-                const pct = ((point.valueK - prev.valueK) / prev.valueK) * 100;
+              const base = series[0]?.valueK ?? 1;
+              return series.map((point) => {
+                const pct = ((point.valueK - base) / base) * 100;
                 return { label: point.label.split(" ")[0] ?? point.label, pct };
               });
             })()}
