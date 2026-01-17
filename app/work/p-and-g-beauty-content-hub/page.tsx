@@ -65,7 +65,7 @@ const metrics: Metric[] = [
     value: "250K+",
     listTitle: "250K+ Monthly Organic Sessions",
     description:
-      "Organic Traffic Volume. Drove 250K+ monthly organic sessions, scaling from ~110K to 250K+ and establishing sustained, non-paid reach for HairCode’s content hub.",
+      "Drove 250K+ monthly organic sessions, scaling from ~110K to 250K+ and establishing sustained, non-paid reach for HairCode’s content hub.",
   },
   {
     id: "organic-growth-rate",
@@ -73,18 +73,18 @@ const metrics: Metric[] = [
     value: "+126%",
     listTitle: "+126% Organic Traffic Growth Rate",
     description:
-      "Organic Growth Performance. Increased monthly organic traffic by +126% in four months, sustaining an average ~17.6% month-over-month growth rate.",
+      "Increased monthly organic traffic by +126% in four months, sustaining an average ~17.6% month-over-month growth rate.",
   },
   {
     id: "ranking-keywords-organic",
     category: "Ranking Keywords (Organic)",
     value: "47K",
     listTitle: "47K Ranking Keywords (Organic)",
-    description: "Keyword Coverage. Expanded keyword coverage to 47K organic terms across high-intent informational searches.",
+    description: "Expanded keyword coverage to 47K organic terms across high-intent informational searches.",
   },
   {
     id: "top3-google-rankings",
-    category: "Top-3 Google Keyword Rankings",
+    category: "SERP Positioning",
     value: "Top 3",
     listTitle: "Top-3 Google Keyword Rankings",
     description:
@@ -96,7 +96,7 @@ const metrics: Metric[] = [
     value: "82%",
     listTitle: "82% Organic Search Visibility",
     description:
-      "Share of Search. Established 82% organic search visibility across tracked competitive queries.",
+      "Established 82% organic search visibility across tracked competitive queries.",
   },
   {
     id: "domain-authority",
@@ -104,14 +104,14 @@ const metrics: Metric[] = [
     value: "44",
     listTitle: "44 Domain Authority Score",
     description:
-      "Domain Trust & Authority. Strengthened domain authority to a score of 44 with 4.52K backlinks and 788 referring domains across competitive topics.",
+      "Strengthened domain authority to a score of 44 with 4.52K backlinks and 788 referring domains across competitive topics.",
   },
   {
     id: "organic-media-value",
     category: "Organic Traffic Value (Earned Media)",
     value: "$72K+",
     listTitle: "$72K+ Organic Traffic Value (Earned Media)",
-    description: "Earned Media Value. Delivered $72K+ in estimated monthly organic traffic value.",
+    description: "Delivered $72K+ in estimated monthly organic traffic value.",
   },
   {
     id: "content-engagement",
@@ -119,7 +119,7 @@ const metrics: Metric[] = [
     value: "5:48",
     listTitle: "5:48 Average Session Duration",
     description:
-      "Content Engagement. Sustained an average session duration of 5:48 across long-form educational content.",
+      "Sustained an average session duration of 5:48 across long-form educational content.",
   },
   {
     id: "ai-search-visibility",
@@ -127,7 +127,7 @@ const metrics: Metric[] = [
     value: "984",
     listTitle: "984 AI Search Mentions / 738 AI-Cited Pages",
     description:
-      "Generative Search Visibility. Achieved 984 AI search mentions and 738 AI-cited pages across AI-powered discovery platforms.",
+      "Achieved 984 AI search mentions and 738 AI-cited pages across AI-powered discovery platforms.",
   },
 ];
 
@@ -1286,7 +1286,7 @@ function MetricTabs({
                 <div className="px-5 pb-5">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key performance indicator:</p>
                   <h4 className="mt-3 font-display text-xl tracking-tight text-text-primary">{metric.category}</h4>
-                  <p className="mt-3 text-sm leading-relaxed text-text-secondary">{metric.description}</p>
+                  <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{metric.description}</p>
                   <MetricChart metricId={metric.id} />
                 </div>
               </div>
@@ -1337,7 +1337,7 @@ function MetricTabs({
         >
           <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key performance indicator:</p>
           <h3 className="mt-3 font-display text-2xl md:text-3xl tracking-tight">{activeMetric.category}</h3>
-          <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
+          <p className="mt-5 text-sm md:text-[15px] leading-relaxed text-text-secondary">
             {activeMetric.description}
           </p>
           <MetricChart metricId={activeMetric.id} />
@@ -1670,13 +1670,13 @@ export default function PAndGBeautyContentHubProjectPage() {
                     className="absolute left-[34px] top-4 bottom-4 w-px bg-accent/25"
                   />
 
-                  <ol className="grid gap-3 text-sm md:text-base text-text-secondary" aria-label="Strategy pillars">
+                  <ol className="grid gap-2 text-sm md:text-base text-text-secondary" aria-label="Strategy pillars">
                     {project.strategyBullets.map((bullet) => {
                       return (
                         <li key={bullet}>
                           <div
                             className={cn(
-                              "w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4 text-left",
+                              "w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3 text-left",
                             )}
                           >
                             <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
@@ -1711,10 +1711,10 @@ export default function PAndGBeautyContentHubProjectPage() {
                 Applied this strategy to a structured, repeatable execution workflow, including:
               </p>
 
-              <ol className="mt-6 grid gap-3">
+              <ol className="mt-5 grid gap-2">
                 {(project.executionBullets as unknown as string[]).map((step, index) => (
                   <li key={step}>
-                    <div className="w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-4 text-left">
+                    <div className="w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3 text-left">
                       <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
                         <span className="relative justify-self-center mt-[0.35rem]" aria-hidden="true">
                           <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-[11px] font-mono text-text-secondary">
