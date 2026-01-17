@@ -28,6 +28,17 @@ export default async function WorkPage() {
     }));
 
     projects.unshift({
+        title: "SalonCentric × New York Fashion Week",
+        category: "Campaigns",
+        image: "",
+        size: "small",
+        slug: "saloncentric-nyfw",
+        tags: ["Campaigns", "Content Strategy", "Copywriting", "Brand Storytelling"],
+        description:
+            "Integrated campaign content production translating a live NYFW activation into coordinated digital, social, and email storytelling.",
+    });
+
+    projects.unshift({
         title: "Procter & Gamble HairCode",
         category: "SEO & AEO",
         image: "/images/P%26G.jpg",
