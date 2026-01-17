@@ -109,6 +109,36 @@ function CollaborationIcon() {
   );
 }
 
+function AssetsIcon() {
+  return (
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <rect x="14" y="12" width="20" height="24" rx="6" className={styles.strokeSoft} />
+      <path d="M18 18h12" className={styles.stroke} />
+      <path d="M18 22h9" className={styles.strokeSoft} />
+      <path d="M18 26h12" className={styles.strokeSoft} />
+      <path d="M18 30h10" className={styles.strokeSoft} />
+      <g className={styles.scan}>
+        <path d="M16 16h16" className={styles.accentStroke} />
+      </g>
+    </svg>
+  );
+}
+
+function MarketsIcon() {
+  return (
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
+      <path d="M8 24h32" className={styles.strokeSoft} />
+      <path d="M24 8c6 6 6 26 0 32" className={styles.strokeSoft} />
+      <path d="M24 8c-6 6-6 26 0 32" className={styles.strokeSoft} />
+      <g className={styles.orbit}>
+        <circle cx="24" cy="8" r="2.1" className={styles.accentFill} />
+      </g>
+      <path d="M16 31c2.2 2.2 5 3.4 8 3.4 3 0 5.8-1.2 8-3.4" className={styles.accentStroke} />
+    </svg>
+  );
+}
+
 export function BioSection() {
   const [headshotSrc, setHeadshotSrc] = useState("/images/IMG_8516_edited.jpg");
 
@@ -161,7 +191,17 @@ export function BioSection() {
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">3</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Fortune 500 Companies
+                      Fortune 100 Companies
+                    </div>
+                  </div>
+                </li>
+
+                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
+                  <AssetsIcon />
+                  <div className="min-w-0">
+                    <div className="text-2xl md:text-3xl text-text-primary leading-none">1,000+</div>
+                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
+                      Assets Delivered Annually
                     </div>
                   </div>
                 </li>
@@ -180,6 +220,16 @@ export function BioSection() {
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">50+</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
                       Brand Collaborations
+                    </div>
+                  </div>
+                </li>
+
+                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
+                  <MarketsIcon />
+                  <div className="min-w-0">
+                    <div className="text-2xl md:text-3xl text-text-primary leading-none">Global, U.S., and Canadian</div>
+                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
+                      Markets
                     </div>
                   </div>
                 </li>
