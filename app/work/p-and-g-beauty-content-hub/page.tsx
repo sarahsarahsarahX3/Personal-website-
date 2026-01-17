@@ -387,23 +387,84 @@ function KpiVizFrame({
 
 function EvidenceImage({ src, alt }: { src?: string; alt: string }) {
   if (!src) return null;
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   return (
-    <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
-      <div className="relative aspect-[16/9] w-full bg-surface/30">
-        <img
-          src={src}
-          alt={alt}
-          className="h-full w-full object-contain opacity-[0.92] contrast-[1.08] saturate-[0.95]"
-          loading="lazy"
-          decoding="async"
-        />
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={cn(
+          "mt-5 w-full overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10 text-left",
+          "hover:border-white/20 hover:bg-white/5 transition-colors",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+        )}
+        aria-label="Expand screenshot"
+      >
+        <div className="relative w-full bg-surface/30 p-2 md:p-3">
+          <img
+            src={src}
+            alt={alt}
+            className={cn(
+              "w-full h-auto max-h-[340px] md:max-h-[420px] object-contain mx-auto",
+              "opacity-[0.94] contrast-[1.06] saturate-[0.95]",
+            )}
+            loading="lazy"
+            decoding="async"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.18]"
+          />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+        </div>
+      </button>
+
+      {open ? (
         <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.18]"
-        />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
-      </div>
-    </div>
+          role="dialog"
+          aria-modal="true"
+          aria-label={alt}
+          className="fixed inset-0 z-50 grid place-items-center p-4 md:p-8"
+        >
+          <button
+            type="button"
+            aria-label="Close expanded screenshot"
+            className="absolute inset-0 bg-black/75"
+            onClick={() => setOpen(false)}
+          />
+          <div className="relative w-full max-w-6xl overflow-hidden rounded-3xl border border-white/10 bg-surface">
+            <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">SEMrush screenshot</p>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className={cn(
+                  "inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-surface/40",
+                  "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <div className="bg-surface/40 p-3 md:p-5">
+              <img src={src} alt={alt} className="h-[70vh] w-full object-contain" decoding="async" />
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }
 
@@ -417,9 +478,10 @@ function MiniLineChart({
   ariaLabel: string;
 }) {
   // Slightly larger viewBox => cleaner spacing at the same rendered size.
-  const width = 360;
+  const width = 380;
   const height = 132;
-  const paddingX = 8;
+  // Extra horizontal padding so callout pills can center over end points.
+  const paddingX = 30;
   const paddingY = 12;
   const innerWidth = width - paddingX * 2;
   const innerHeight = height - paddingY * 2;
@@ -461,7 +523,7 @@ function MiniLineChart({
     x: number;
     y: number;
     text: string;
-    anchor: "start" | "end";
+    anchor: "start" | "center" | "end";
     side: "above" | "below";
     level: number;
   }) => {
@@ -470,7 +532,12 @@ function MiniLineChart({
     const estCharW = 5.8;
     const w = padX * 2 + text.length * estCharW;
     const h = 18;
-    const rectX = anchor === "start" ? x + 10 : x - 10 - w;
+    const rectX =
+      anchor === "center"
+        ? x - w / 2
+        : anchor === "start"
+          ? x + 10
+          : x - 10 - w;
     const baseGap = 16;
     const laneSpacing = h + 8;
     const rectY =
@@ -479,7 +546,12 @@ function MiniLineChart({
         : y + baseGap + (level - 1) * laneSpacing;
     const safeX = clamp(rectX, 6, width - w - 6);
     const safeY = clamp(rectY, 6, height - h - 6);
-    const textX = anchor === "start" ? safeX + padX : safeX + w - padX;
+    const textX =
+      anchor === "center"
+        ? safeX + w / 2
+        : anchor === "start"
+          ? safeX + padX
+          : safeX + w - padX;
     return { rectX: safeX, rectY: safeY, w, h, textX, textY: safeY + padY + 8, anchor, text };
   };
 
@@ -493,7 +565,16 @@ function MiniLineChart({
     a.rectY + a.h > b.rectY;
 
   const labelBoxes = (() => {
-    const placed: { rectX: number; rectY: number; w: number; h: number; textX: number; textY: number; anchor: "start" | "end"; text: string }[] =
+    const placed: {
+      rectX: number;
+      rectY: number;
+      w: number;
+      h: number;
+      textX: number;
+      textY: number;
+      anchor: "start" | "center" | "end";
+      text: string;
+    }[] =
       [];
 
     points.forEach((point, index) => {
@@ -511,7 +592,14 @@ function MiniLineChart({
               ? "end"
               : "start";
 
-      const anchors: ("start" | "end")[] = preferred === "start" ? ["start", "end"] : ["end", "start"];
+      const anchors: ("start" | "center" | "end")[] =
+        index === 0
+          ? ["center", "start", "end"]
+          : index === points.length - 1
+            ? ["center", "end", "start"]
+            : preferred === "start"
+              ? ["center", "start", "end"]
+              : ["center", "end", "start"];
 
       const preferredSide: "above" | "below" =
         y < height * 0.34 ? "below" : y > height * 0.68 ? "above" : "above";
@@ -534,7 +622,7 @@ function MiniLineChart({
             ];
 
       let chosen:
-        | { rectX: number; rectY: number; w: number; h: number; textX: number; textY: number; anchor: "start" | "end"; text: string }
+        | { rectX: number; rectY: number; w: number; h: number; textX: number; textY: number; anchor: "start" | "center" | "end"; text: string }
         | undefined;
 
       for (const { side, level } of candidateLanes) {
@@ -617,7 +705,7 @@ function MiniLineChart({
                 y={box.textY}
                 fontSize="10"
                 fill="rgba(255,255,255,0.82)"
-                textAnchor={box.anchor === "start" ? "start" : "end"}
+                textAnchor={box.anchor === "center" ? "middle" : box.anchor === "start" ? "start" : "end"}
                 fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
               >
                 {box.text}
