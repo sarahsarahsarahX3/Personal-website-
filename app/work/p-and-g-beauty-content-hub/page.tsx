@@ -88,7 +88,7 @@ const metrics: Metric[] = [
     value: "Top 3",
     listTitle: "Top-3 Google Keyword Rankings",
     description:
-      "SERP Positioning. Secured Top-3 Google rankings for priority keywords across core content categories.",
+      "Secured Top-3 Google rankings for priority keywords across core content categories.",
   },
   {
     id: "organic-search-visibility",
@@ -388,6 +388,7 @@ function KpiVizFrame({
 function EvidenceImage({ src, alt }: { src?: string; alt: string }) {
   if (!src) return null;
   const [open, setOpen] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -398,38 +399,61 @@ function EvidenceImage({ src, alt }: { src?: string; alt: string }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  useEffect(() => {
+    const mq = window.matchMedia?.("(max-width: 768px)");
+    if (!mq) return;
+    const update = () => setIsMobileView(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    (mq as unknown as { addListener?: (listener: () => void) => void }).addListener?.(update);
+    return () => {
+      mq.removeEventListener?.("change", update);
+      (mq as unknown as { removeListener?: (listener: () => void) => void }).removeListener?.(update);
+    };
+  }, []);
+
+  const imageBody = (
+    <div className="relative w-full bg-surface/30 p-2 md:p-3">
+      <img
+        src={src}
+        alt={alt}
+        className={cn(
+          "w-full h-auto max-h-[340px] md:max-h-[420px] object-contain mx-auto",
+          "opacity-[0.94] contrast-[1.06] saturate-[0.95]",
+        )}
+        loading="lazy"
+        decoding="async"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.18]"
+      />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+    </div>
+  );
+
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={cn(
-          "mt-5 w-full overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10 text-left",
-          "hover:border-white/20 hover:bg-white/5 transition-colors",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-        )}
-        aria-label="Expand screenshot"
-      >
-        <div className="relative w-full bg-surface/30 p-2 md:p-3">
-          <img
-            src={src}
-            alt={alt}
-            className={cn(
-              "w-full h-auto max-h-[340px] md:max-h-[420px] object-contain mx-auto",
-              "opacity-[0.94] contrast-[1.06] saturate-[0.95]",
-            )}
-            loading="lazy"
-            decoding="async"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.18]"
-          />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+      {isMobileView ? (
+        <div className="mt-5 w-full overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
+          {imageBody}
         </div>
-      </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className={cn(
+            "mt-5 w-full overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10 text-left",
+            "hover:border-white/20 hover:bg-white/5 transition-colors",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+          )}
+          aria-label="Expand screenshot"
+        >
+          {imageBody}
+        </button>
+      )}
 
-      {open ? (
+      {open && !isMobileView ? (
         <div
           role="dialog"
           aria-modal="true"
@@ -783,6 +807,77 @@ function MiniBars({
   );
 }
 
+function MiniDeltaBars({
+  idPrefix,
+  items,
+  ariaLabel,
+}: {
+  idPrefix: string;
+  items: { label: string; pct: number }[];
+  ariaLabel: string;
+}) {
+  const width = 360;
+  const height = 132;
+  const paddingX = 14;
+  const paddingY = 16;
+  const midY = height / 2;
+  const innerHeight = height - paddingY * 2;
+
+  const maxAbs = Math.max(1, ...items.map((i) => Math.abs(i.pct)));
+  const gap = 10;
+  const barWidth = (width - paddingX * 2 - gap * (items.length - 1)) / items.length;
+
+  return (
+    <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${width} ${height}`} className="h-36 w-full">
+      <defs>
+        <linearGradient id={`${idPrefix}-pos`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255,59,48,0.70)" />
+          <stop offset="100%" stopColor="rgba(255,59,48,0.20)" />
+        </linearGradient>
+        <linearGradient id={`${idPrefix}-neg`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.28)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0.10)" />
+        </linearGradient>
+      </defs>
+
+      <g stroke="rgba(255,255,255,0.10)" strokeWidth="1">
+        <line x1="0" y1={midY} x2={width} y2={midY} />
+        <line x1="0" y1={paddingY} x2={width} y2={paddingY} />
+        <line x1="0" y1={height - paddingY} x2={width} y2={height - paddingY} />
+      </g>
+
+      {items.map((item, index) => {
+        const x = paddingX + index * (barWidth + gap);
+        const h = (Math.abs(item.pct) / maxAbs) * (innerHeight / 2);
+        const isPositive = item.pct >= 0;
+        const y = isPositive ? midY - h : midY;
+        const fill = isPositive ? `url(#${idPrefix}-pos)` : `url(#${idPrefix}-neg)`;
+        const label = `${item.pct >= 0 ? "+" : ""}${item.pct.toFixed(1)}%`;
+
+        return (
+          <g key={item.label}>
+            <rect x={x} y={y} width={barWidth} height={h} rx="10" fill={fill} />
+            <rect x={x} y={y} width={barWidth} height={2.2} rx="10" fill={isPositive ? "rgba(255,59,48,0.95)" : "rgba(255,255,255,0.35)"} />
+            <text x={x + barWidth / 2} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)" textAnchor="middle">
+              {item.label}
+            </text>
+            <text
+              x={x + barWidth / 2}
+              y={isPositive ? y - 6 : y + h + 14}
+              fontSize="10"
+              fill="rgba(255,255,255,0.70)"
+              textAnchor="middle"
+              fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+            >
+              {label}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 function Gauge({
   value,
   max,
@@ -862,10 +957,17 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
     case "organic-growth-rate":
       return (
         <KpiVizFrame eyebrow="Growth curve" meta={trafficMeta}>
-          <MiniLineChart
-            idPrefix="growth"
-            ariaLabel="Organic traffic growth from May 2025 to October 2025"
-            points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
+          <MiniDeltaBars
+            idPrefix="growth-delta"
+            ariaLabel="Month-over-month organic traffic growth rates from June 2025 to October 2025"
+            items={(() => {
+              const series = semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[];
+              return series.slice(1).map((point, index) => {
+                const prev = series[index]!;
+                const pct = ((point.valueK - prev.valueK) / prev.valueK) * 100;
+                return { label: point.label.split(" ")[0] ?? point.label, pct };
+              });
+            })()}
           />
           <EvidenceImage
             src="/Organic%20Traffic%20Growth%20Rate.png"
@@ -940,10 +1042,6 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
               </div>
             </div>
           </div>
-          <EvidenceImage
-            src="/Organic%20Search%20Visibility.png"
-            alt="SEMrush screenshot showing organic search visibility for HairCode.com."
-          />
         </KpiVizFrame>
       );
     case "domain-authority":
