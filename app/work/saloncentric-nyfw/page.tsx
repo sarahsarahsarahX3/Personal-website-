@@ -15,6 +15,8 @@ type Metric = {
   value?: string;
 };
 
+type SnapshotCard = { title: string; value: string };
+
 const project = {
   title: "SalonCentric × New York Fashion Week",
   subtitle: "Integrated Campaign and Content Production",
@@ -116,6 +118,51 @@ const sectionLinks: SectionLink[] = [
   { id: "tools", label: "Tools & Skills" },
 ];
 
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+    const update = () => setReduced(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      const doc = document.documentElement;
+      const scrollTop = window.scrollY || doc.scrollTop || 0;
+      const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      setProgress(Math.max(0, Math.min(1, scrollTop / max)));
+    };
+
+    const onScroll = () => {
+      window.cancelAnimationFrame(raf);
+      raf = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  return progress;
+}
+
 function useActiveSection(ids: string[]) {
   const [activeId, setActiveId] = useState(ids[0] ?? "");
 
@@ -144,22 +191,189 @@ function useActiveSection(ids: string[]) {
   return activeId;
 }
 
-function scrollToId(id: string) {
+function scrollToId(id: string, behavior: ScrollBehavior) {
   const node = document.getElementById(id);
   if (!node) return;
-  node.scrollIntoView({ behavior: "smooth", block: "start" });
+  node.scrollIntoView({ behavior, block: "start" });
 }
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-3 py-1.5",
-        "text-[11px] font-mono uppercase tracking-widest text-text-secondary",
+        "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
+        "px-3 py-2 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
+        "text-center leading-snug whitespace-normal",
+        "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest sm:leading-normal sm:text-left",
       )}
     >
       {children}
     </span>
+  );
+}
+
+function SquiggleMark({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 10"
+      className={cn("h-2.5 w-5 shrink-0 text-accent/90", className)}
+    >
+      <path
+        d="M1 6 C4 1 8 9 12 4 C16 -1 20 9 23 4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function Section({
+  id,
+  title,
+  subtitle,
+  children,
+  contentClassName,
+}: {
+  id: string;
+  title: string;
+  subtitle?: React.ReactNode;
+  children: React.ReactNode;
+  contentClassName?: string;
+}) {
+  return (
+    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16 pt-10">
+      <header className="max-w-3xl">
+        <h2 id={`${id}-title`} className="font-display text-3xl md:text-2xl tracking-tight text-text-primary/90">
+          {title}
+        </h2>
+        {subtitle ? (
+          <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">{subtitle}</p>
+        ) : null}
+      </header>
+      <div className={cn("mt-8", contentClassName)}>{children}</div>
+    </section>
+  );
+}
+
+function MobileJumpBar({
+  items,
+  activeId,
+  progress,
+  onNavigate,
+}: {
+  items: SectionLink[];
+  activeId: string;
+  progress: number;
+  onNavigate: (id: string) => void;
+}) {
+  return (
+    <nav
+      aria-label="Jump to section"
+      className={cn(
+        "md:hidden sticky top-0 z-20",
+        "bg-surface/85 backdrop-blur-md border-b border-white/10",
+      )}
+    >
+      <div className="mx-auto w-full max-w-6xl px-6 py-3">
+        <div className="flex items-center gap-3">
+          <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+            On this page
+          </p>
+
+          <div className="relative min-w-0 flex-1">
+            <select
+              value={activeId}
+              onChange={(event) => onNavigate(event.target.value)}
+              className={cn(
+                "w-full appearance-none rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2 pr-10",
+                "text-[11px] font-mono uppercase tracking-widest text-text-primary",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+              aria-label="Select section"
+            >
+              {items.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary"
+            >
+              ▾
+            </span>
+          </div>
+
+          <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+            {Math.round(progress * 100)}%
+          </p>
+        </div>
+
+        <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+          <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function DesktopRail({
+  items,
+  activeId,
+  progress,
+  onNavigate,
+}: {
+  items: SectionLink[];
+  activeId: string;
+  progress: number;
+  onNavigate: (id: string) => void;
+}) {
+  return (
+    <aside className="hidden lg:block sticky top-14 self-start">
+      <div className="grid gap-3">
+        <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
+            <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
+              {Math.round(progress * 100)}%
+            </p>
+          </div>
+
+          <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden">
+            <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
+          </div>
+
+          <ul className="mt-4 space-y-1.5">
+            {items.map((item) => {
+              const isActive = item.id === activeId;
+              return (
+                <li key={item.id}>
+                  <button
+                    type="button"
+                    onClick={() => onNavigate(item.id)}
+                    className={cn(
+                      "w-full rounded-lg px-3 py-2 text-left transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      isActive
+                        ? "bg-white/5 border border-white/15 text-text-primary"
+                        : "border border-transparent text-text-secondary hover:text-text-primary hover:bg-white/5 hover:border-white/10",
+                    )}
+                  >
+                    <span className="text-sm tracking-tight">{item.label}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </aside>
   );
 }
 
@@ -202,172 +416,200 @@ function PlaceholderBlock({ label }: { label: string }) {
   );
 }
 
+function RailList({
+  ariaLabel,
+  items,
+}: {
+  ariaLabel: string;
+  items: string[];
+}) {
+  return (
+    <div className="relative mt-10">
+      <span aria-hidden="true" className="absolute left-[34px] top-4 bottom-4 w-px bg-accent/25" />
+
+      <ol className="grid gap-2 text-sm md:text-base text-text-secondary" aria-label={ariaLabel}>
+        {items.map((item) => (
+          <li key={item}>
+            <div className="w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3">
+              <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
+                <span className="relative justify-self-center mt-[0.7rem]" aria-hidden="true">
+                  <span className="absolute inset-0 -m-[7px] rounded-full border border-white/10" />
+                  <span className="relative block h-2.5 w-2.5 rounded-full bg-accent/70" />
+                </span>
+                <span className="leading-relaxed">{item}</span>
+              </span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export default function SalonCentricNyfwProjectPage() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const progress = useScrollProgress();
   const [activeMetricId, setActiveMetricId] = useState(metrics[0]?.id ?? "");
   const activeMetric = useMemo(() => metrics.find((m) => m.id === activeMetricId) ?? metrics[0], [activeMetricId]);
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
+  const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+
+  const snapshotCards = useMemo<SnapshotCard[]>(
+    () => project.snapshot.map((item) => ({ title: item.title, value: item.value })),
+    [],
+  );
 
   return (
-    <main className="min-h-screen bg-surface pb-32 pt-24 md:pt-28">
-      <div className="container mx-auto px-6">
-        <div className="mb-12 flex items-center justify-between gap-6">
+    <main className="min-h-screen bg-surface text-text-primary">
+      <MobileJumpBar
+        items={sectionLinks}
+        activeId={activeSection}
+        progress={progress}
+        onNavigate={(id) => scrollToId(id, scrollBehavior)}
+      />
+
+      <div className="mx-auto w-full max-w-6xl px-6 pt-10 md:pt-16 pb-24 md:pb-32">
+        <header className="flex items-center">
           <Link
             href="/work"
             className={cn(
               "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
-              "text-sm text-text-secondary hover:text-white hover:border-white/20 hover:bg-white/5 transition-colors",
+              "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
             )}
           >
             <span aria-hidden="true">←</span>
-            Back to Work
+            <span>Back to Projects</span>
           </Link>
-        </div>
-
-        <header className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-8">
-            <p className="text-xs font-mono uppercase tracking-[0.32em] text-accent">Project #2</p>
-            <h1 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-6xl">
-              {project.title}
-            </h1>
-            <p className="mt-4 text-lg text-text-secondary md:text-xl">{project.subtitle}</p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Pill>My Role</Pill>
-              <span className="text-sm text-text-secondary">{project.role}</span>
-            </div>
-
-            <p className="mt-8 max-w-3xl text-base leading-relaxed text-text-secondary">{project.overview}</p>
-          </div>
-
-          <aside className="lg:col-span-4">
-            <div className="lg:sticky lg:top-28 space-y-6">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
-                <div className="border-b border-white/10 px-5 py-4">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
-                </div>
-                <nav className="p-2" aria-label="On this page">
-                  {sectionLinks.map((link) => {
-                    const isActive = activeSection === link.id;
-                    return (
-                      <button
-                        key={link.id}
-                        type="button"
-                        onClick={() => scrollToId(link.id)}
-                        className={cn(
-                          "w-full rounded-xl px-4 py-3 text-left text-sm transition-colors",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                          isActive
-                            ? "bg-white/5 text-white"
-                            : "text-text-secondary hover:text-white hover:bg-white/5",
-                        )}
-                      >
-                        {link.label}
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-
-              <div className="grid gap-4">
-                {project.snapshot.map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-2xl border border-white/10 bg-surface-alt/10 px-5 py-5"
-                  >
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.title}</p>
-                    <p className="mt-3 text-sm text-white/90">{item.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </aside>
         </header>
 
-        <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-8 space-y-16">
-            <section id="overview" aria-labelledby="overview-title">
-              <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
-                <h2 id="overview-title" className="text-xl font-display tracking-tight text-white/90">
-                  Overview
-                </h2>
-              </div>
-              <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-6">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Target Audience</p>
-                  <dl className="mt-5 space-y-4">
-                    {project.audience.map((item) => (
-                      <div key={item.label} className="grid grid-cols-[110px,1fr] gap-4">
-                        <dt className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.label}</dt>
-                        <dd className="text-sm leading-relaxed text-text-secondary">{item.value}</dd>
+        <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_280px]">
+          <div className="min-w-0">
+            <section id="overview" className="scroll-mt-16">
+              <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #2</p>
+              <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">
+                {project.title}
+              </h1>
+              <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
+
+              <div className="mt-12 grid gap-6 lg:grid-cols-2">
+                <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
+                  <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
+
+                  <div className="mt-8">
+                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
+                    <p className="mt-2 text-base md:text-base text-text-secondary">{project.role}</p>
+                  </div>
+                </div>
+
+                <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8 flex flex-col">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Campaign snapshot</p>
+
+                  <div className="mt-5 grid gap-5">
+                    {snapshotCards.map((card) => (
+                      <div key={card.title}>
+                        <p className="font-display text-3xl leading-none">{card.value}</p>
+                        <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
+                          <SquiggleMark />
+                          {card.title}
+                        </p>
                       </div>
                     ))}
-                  </dl>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-6">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Channels</p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {project.channels.map((channel) => (
-                      <span
-                        key={channel}
-                        className="inline-flex items-center rounded-full border border-white/10 bg-surface/30 px-3 py-1 text-xs text-text-secondary"
-                      >
-                        {channel}
-                      </span>
-                    ))}
+                  </div>
+
+                  <div className="mt-8 border-t border-white/10 pt-6">
+                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Target audience</p>
+                    <dl className="mt-4 space-y-3">
+                      {project.audience.map((item) => (
+                        <div key={item.label} className="grid grid-cols-[120px_1fr] gap-4">
+                          <dt className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                            {item.label}
+                          </dt>
+                          <dd className="text-sm leading-relaxed text-text-secondary">{item.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+
+                  <div className="mt-8 border-t border-white/10 pt-6">
+                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Channels</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.channels.map((channel) => (
+                        <Pill key={channel}>{channel}</Pill>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-auto pt-8">
+                    <button
+                      type="button"
+                      onClick={() => scrollToId("results", scrollBehavior)}
+                      className={cn(
+                        "w-full rounded-2xl border border-white/10 bg-surface/40 px-5 py-4",
+                        "text-left text-sm text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      )}
+                    >
+                      View Results
+                    </button>
                   </div>
                 </div>
               </div>
+
+              <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface/40 px-4 py-3">
+                  <div className="flex items-center gap-2" aria-hidden="true">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
+                  </div>
+                  <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                    NYFW activation highlight placeholder
+                  </p>
+                  <span aria-hidden="true" className="text-text-secondary/50">
+                    ⌄
+                  </span>
+                </div>
+
+                <div className="bg-surface/30">
+                  <div className="aspect-[16/9] w-full">
+                    <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                      Header image placeholder
+                    </div>
+                  </div>
+                </div>
+                <figcaption className="sr-only">Header image placeholder</figcaption>
+              </figure>
             </section>
 
-            <section id="objective" aria-labelledby="objective-title">
-              <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
-                <h2 id="objective-title" className="text-xl font-display tracking-tight text-white/90">
-                  Campaign Objective
-                </h2>
-              </div>
-              <p className="mt-6 text-base leading-relaxed text-text-secondary">{project.objective}</p>
-            </section>
+            <div className="mt-16 border-t border-white/10" />
 
-            <section id="messaging" aria-labelledby="messaging-title">
-              <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
-                <h2 id="messaging-title" className="text-xl font-display tracking-tight text-white/90">
-                  Campaign Messaging
-                </h2>
-              </div>
-              <p className="mt-6 text-base leading-relaxed text-text-secondary">{project.messagingIntro}</p>
-              <ul className="mt-6 space-y-3">
-                {project.messagingBullets.map((bullet) => (
-                  <li key={bullet} className="flex gap-3 text-sm leading-relaxed text-text-secondary">
-                    <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/90" />
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            <Section id="objective" title="Objective" subtitle="Campaign objective" contentClassName="mt-6">
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
+            </Section>
 
-            <section id="production" aria-labelledby="production-title">
-              <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
-                <h2 id="production-title" className="text-xl font-display tracking-tight text-white/90">
-                  Content Production
-                </h2>
-              </div>
-              <p className="mt-6 text-base leading-relaxed text-text-secondary">{project.productionIntro}</p>
-              <ul className="mt-6 space-y-3">
-                {project.productionBullets.map((bullet) => (
-                  <li key={bullet} className="flex gap-3 text-sm leading-relaxed text-text-secondary">
-                    <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/90" />
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            <div className="mt-16 border-t border-white/10" />
 
-            <section id="results" aria-labelledby="results-title">
-                <div className="flex flex-col gap-3 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
-                  <div>
-                    <h2 id="results-title" className="text-xl font-display tracking-tight text-white/90">
-                      Results
+            <Section id="messaging" title="Campaign Messaging" contentClassName="mt-6">
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.messagingIntro}</p>
+              <RailList ariaLabel="Campaign messaging points" items={[...project.messagingBullets]} />
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="production" title="Content Production" contentClassName="mt-6">
+              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.productionIntro}</p>
+              <RailList ariaLabel="Content production points" items={[...project.productionBullets]} />
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <section id="results" aria-labelledby="results-title" className="scroll-mt-16 pt-10">
+              <div className="flex flex-col gap-3 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <h2 id="results-title" className="text-xl font-display tracking-tight text-white/90">
+                    Results
                     </h2>
                     <p className="mt-2 text-sm text-text-secondary">Select a KPI to view the data.</p>
                   </div>
@@ -423,7 +665,9 @@ export default function SalonCentricNyfwProjectPage() {
               </div>
             </section>
 
-            <section id="deliverables" aria-labelledby="deliverables-title">
+            <div className="mt-16 border-t border-white/10" />
+
+            <section id="deliverables" aria-labelledby="deliverables-title" className="scroll-mt-16 pt-10">
               <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
                 <h2 id="deliverables-title" className="text-xl font-display tracking-tight text-white/90">
                   Final Deliverables
@@ -453,26 +697,23 @@ export default function SalonCentricNyfwProjectPage() {
               </div>
             </section>
 
-            <section id="tools" aria-labelledby="tools-title">
-              <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
-                <h2 id="tools-title" className="text-xl font-display tracking-tight text-white/90">
-                  Tools & Skills
-                </h2>
-              </div>
-              <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
+              <div className="flex flex-wrap gap-2">
                 {project.tools.map((tool) => (
-                  <span
-                    key={tool}
-                    className="inline-flex items-center rounded-full border border-white/10 bg-surface-alt/10 px-3 py-1 text-xs text-text-secondary"
-                  >
-                    {tool}
-                  </span>
+                  <Pill key={tool}>{tool}</Pill>
                 ))}
               </div>
-            </section>
+            </Section>
           </div>
 
-          <div className="lg:col-span-4" />
+          <DesktopRail
+            items={sectionLinks}
+            activeId={activeSection}
+            progress={progress}
+            onNavigate={(id) => scrollToId(id, scrollBehavior)}
+          />
         </div>
       </div>
     </main>
