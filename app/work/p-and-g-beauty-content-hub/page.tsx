@@ -422,34 +422,97 @@ function MiniLineChart({
 
   const clamp = (value: number, minValue: number, maxValue: number) => Math.max(minValue, Math.min(maxValue, value));
 
-  const pill = (x: number, y: number, text: string, anchor: "start" | "end") => {
+  const rectFor = ({
+    x,
+    y,
+    text,
+    anchor,
+    side,
+    level,
+  }: {
+    x: number;
+    y: number;
+    text: string;
+    anchor: "start" | "end";
+    side: "above" | "below";
+    level: number;
+  }) => {
     const padX = 8;
     const padY = 5;
     const estCharW = 6.2;
     const w = padX * 2 + text.length * estCharW;
     const h = 20;
     const rectX = anchor === "start" ? x + 10 : x - 10 - w;
-    // Keep the pill away from the line by default.
-    const rectY = y - 14 - h;
+    const baseGap = 14;
+    const laneSpacing = h + 8;
+    const rectY =
+      side === "above"
+        ? y - baseGap - h - (level - 1) * laneSpacing
+        : y + baseGap + (level - 1) * laneSpacing;
     const safeX = clamp(rectX, 6, width - w - 6);
     const safeY = clamp(rectY, 6, height - h - 6);
     const textX = anchor === "start" ? safeX + padX : safeX + w - padX;
-    return (
-      <g>
-        <rect x={safeX} y={safeY} width={w} height={h} rx="10" fill="rgba(10,10,12,0.75)" stroke="rgba(255,255,255,0.14)" />
-        <text
-          x={textX}
-          y={safeY + padY + 9}
-          fontSize="11"
-          fill="rgba(255,255,255,0.82)"
-          textAnchor={anchor === "start" ? "start" : "end"}
-          fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
-        >
-          {text}
-        </text>
-      </g>
-    );
+    return { rectX: safeX, rectY: safeY, w, h, textX, textY: safeY + padY + 9, anchor, text };
   };
+
+  const intersects = (
+    a: { rectX: number; rectY: number; w: number; h: number },
+    b: { rectX: number; rectY: number; w: number; h: number },
+  ) =>
+    a.rectX < b.rectX + b.w &&
+    a.rectX + a.w > b.rectX &&
+    a.rectY < b.rectY + b.h &&
+    a.rectY + a.h > b.rectY;
+
+  const labelBoxes = (() => {
+    const placed: { rectX: number; rectY: number; w: number; h: number; textX: number; textY: number; anchor: "start" | "end"; text: string }[] =
+      [];
+
+    const orderedSides: { side: "above" | "below"; level: number }[] = [
+      { side: "above", level: 1 },
+      { side: "above", level: 2 },
+      { side: "below", level: 1 },
+      { side: "below", level: 2 },
+    ];
+
+    points.forEach((point, index) => {
+      const x = toX(index);
+      const y = toY(point.valueK);
+      const text = `${point.valueK.toFixed(2)}K`;
+
+      const next = points[index + 1]?.valueK;
+      const preferred: "start" | "end" =
+        index === 0
+          ? "start"
+          : index === points.length - 1
+            ? "end"
+            : typeof next === "number" && next > point.valueK
+              ? "end"
+              : "start";
+
+      const anchors: ("start" | "end")[] = preferred === "start" ? ["start", "end"] : ["end", "start"];
+
+      let chosen:
+        | { rectX: number; rectY: number; w: number; h: number; textX: number; textY: number; anchor: "start" | "end"; text: string }
+        | undefined;
+
+      for (const { side, level } of orderedSides) {
+        for (const anchor of anchors) {
+          const candidate = rectFor({ x, y, text, anchor, side, level });
+          const collides = placed.some((p) => intersects(p, candidate));
+          if (collides) continue;
+          chosen = candidate;
+          break;
+        }
+        if (chosen) break;
+      }
+
+      chosen = chosen ?? rectFor({ x, y, text, anchor: preferred, side: "above", level: 1 });
+      placed.push(chosen);
+    });
+
+    return placed;
+  })();
 
   return (
     <svg role="img" aria-label={ariaLabel} viewBox={`0 0 ${width} ${height}`} className="h-36 w-full">
@@ -497,27 +560,29 @@ function MiniLineChart({
 
       {points.length >= 2 ? (
         <>
-          {points.map((point, index) => {
-            const x = toX(index);
-            const y = toY(point.valueK);
-            const prev = points[index - 1]?.valueK;
-            const next = points[index + 1]?.valueK;
-
-            const anchor: "start" | "end" =
-              index === 0
-                ? "start"
-                : index === points.length - 1
-                  ? "end"
-                  : typeof next === "number" && next > point.valueK
-                    ? "end"
-                    : "start";
-
-            return (
-              <g key={point.label}>
-                {pill(x, y, `${point.valueK.toFixed(2)}K`, anchor)}
-              </g>
-            );
-          })}
+          {labelBoxes.map((box, index) => (
+            <g key={`pill-${points[index]?.label ?? index}`}>
+              <rect
+                x={box.rectX}
+                y={box.rectY}
+                width={box.w}
+                height={box.h}
+                rx="10"
+                fill="rgba(10,10,12,0.75)"
+                stroke="rgba(255,255,255,0.14)"
+              />
+              <text
+                x={box.textX}
+                y={box.textY}
+                fontSize="11"
+                fill="rgba(255,255,255,0.82)"
+                textAnchor={box.anchor === "start" ? "start" : "end"}
+                fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+              >
+                {box.text}
+              </text>
+            </g>
+          ))}
 
           <text x={paddingX} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)">
             {left.label}
