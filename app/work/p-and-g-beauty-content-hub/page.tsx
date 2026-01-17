@@ -60,53 +60,74 @@ const project = {
 
 const metrics: Metric[] = [
   {
-    id: "monthly-organic-visits",
-    category: "Organic Search Traffic",
+    id: "monthly-organic-sessions",
+    category: "Monthly Organic Sessions",
     value: "250K+",
-    listTitle: "250K+ Monthly Organic Traffic",
-    description: "Scaled monthly organic traffic to 250K+ visits through SEO-led editorial growth.",
+    listTitle: "250K+ Monthly Organic Sessions",
+    description:
+      "Organic Traffic Volume. Drove 250K+ monthly organic sessions, scaling from ~110K to 250K+ and establishing sustained, non-paid reach for HairCode’s content hub.",
   },
   {
-    id: "growth-rate",
-    category: "Organic Growth Rate",
+    id: "organic-growth-rate",
+    category: "Organic Traffic Growth Rate",
     value: "+126%",
-    listTitle: "+126% Organic Growth",
-    description: "Increased organic traffic by 126% in four months, growing from ~110K to 250K monthly visits.",
+    listTitle: "+126% Organic Traffic Growth Rate",
+    description:
+      "Organic Growth Performance. Increased monthly organic traffic by +126% in four months, sustaining an average ~17.6% month-over-month growth rate.",
   },
   {
-    id: "search-footprint",
-    category: "Search Footprint",
+    id: "ranking-keywords-organic",
+    category: "Ranking Keywords (Organic)",
     value: "47K",
-    listTitle: "47K Organic Keywords Ranked",
-    description: "Expanded the site’s search footprint to 47K ranking organic keywords.",
+    listTitle: "47K Ranking Keywords (Organic)",
+    description: "Keyword Coverage. Expanded keyword coverage to 47K organic terms across high-intent informational searches.",
+  },
+  {
+    id: "top3-google-rankings",
+    category: "Top-3 Google Keyword Rankings",
+    value: "Top 3",
+    listTitle: "Top-3 Google Keyword Rankings",
+    description:
+      "SERP Positioning. Secured Top-3 Google rankings for priority keywords across core content categories.",
+  },
+  {
+    id: "organic-search-visibility",
+    category: "Organic Search Visibility",
+    value: "82%",
+    listTitle: "82% Organic Search Visibility",
+    description:
+      "Share of Search. Established 82% organic search visibility across tracked competitive queries.",
   },
   {
     id: "domain-authority",
-    category: "Domain Authority",
+    category: "Domain Authority / Authority Score",
     value: "44",
-    listTitle: "Authority Score: 44",
-    description: "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains.",
+    listTitle: "44 Domain Authority / Authority Score",
+    description:
+      "Domain Trust & Authority. Strengthened domain authority to a score of 44 with 4.52K backlinks and 788 referring domains across competitive topics.",
   },
   {
     id: "organic-media-value",
-    category: "Organic Media Value",
+    category: "Organic Traffic Value (Earned Media)",
     value: "$72K+",
-    listTitle: "$72K+ Organic Traffic Value",
-    description: "Generated $72K+ in estimated monthly organic traffic value, based on paid media equivalents.",
+    listTitle: "$72K+ Organic Traffic Value (Earned Media)",
+    description: "Earned Media Value. Delivered $72K+ in estimated monthly organic traffic value.",
   },
   {
     id: "content-engagement",
-    category: "Content Engagement",
+    category: "Average Session Duration",
     value: "5:48",
-    listTitle: "5:48 Average Visit Duration",
-    description: "Drove an average visit duration of 5:48, reflecting strong engagement with long-form content.",
+    listTitle: "5:48 Average Session Duration",
+    description:
+      "Content Engagement. Sustained an average session duration of 5:48 across long-form educational content.",
   },
   {
     id: "ai-search-visibility",
-    category: "AI Search Visibility",
+    category: "AI Search Mentions & Citations",
     value: "984",
-    listTitle: "984 AI Search Mentions + 738 AI-Cited Pages",
-    description: "Earned 984 AI search mentions with 738 pages cited in AI-generated search results.",
+    listTitle: "984 AI Search Mentions / 738 AI-Cited Pages",
+    description:
+      "Generative Search Visibility. Achieved 984 AI search mentions and 738 AI-cited pages across AI-powered discovery platforms.",
   },
 ];
 
@@ -179,6 +200,7 @@ const semrushSnapshot = {
   ],
   trafficValueK: 72.22,
   organicKeywords: 47000,
+  visibilityPct: 82.06,
   authorityScore: 44,
   backlinks: 4520,
   referringDomains: 788,
@@ -599,7 +621,7 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
   const snapshotMeta = "Jan 2026 · Domain overview";
 
   switch (metricId) {
-    case "monthly-organic-visits":
+    case "monthly-organic-sessions":
       return (
         <KpiVizFrame eyebrow="Traffic trend" meta={trafficMeta}>
           <MiniLineChart
@@ -609,7 +631,7 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
           />
         </KpiVizFrame>
       );
-    case "growth-rate":
+    case "organic-growth-rate":
       return (
         <KpiVizFrame eyebrow="Growth curve" meta={trafficMeta}>
           <MiniLineChart
@@ -619,7 +641,7 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
           />
         </KpiVizFrame>
       );
-    case "search-footprint":
+    case "ranking-keywords-organic":
       return (
         <KpiVizFrame eyebrow="Keywords and top positions" meta={keywordsMeta}>
           <div className="grid gap-5 md:grid-cols-[1fr_1.25fr] md:items-center">
@@ -638,6 +660,49 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
                 { label: "Top 100", value: semrushSnapshot.topPositions.top100 },
               ]}
             />
+          </div>
+        </KpiVizFrame>
+      );
+    case "top3-google-rankings":
+      return (
+        <KpiVizFrame eyebrow="Top rankings snapshot" meta={keywordsMeta}>
+          <div className="grid gap-5 md:grid-cols-[1fr_1.25fr] md:items-center">
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Top-3 keywords</p>
+              <p className="mt-2 font-display text-4xl leading-none">{formatNumber(semrushSnapshot.topPositions.top3)}</p>
+              <p className="mt-3 text-xs text-text-secondary/70">Count of tracked Top-3 rankings.</p>
+            </div>
+            <MiniBars
+              idPrefix="top3"
+              ariaLabel="Top position keyword counts snapshot"
+              items={[
+                { label: "Top 3", value: semrushSnapshot.topPositions.top3 },
+                { label: "Top 10", value: semrushSnapshot.topPositions.top10 },
+                { label: "Top 20", value: semrushSnapshot.topPositions.top20 },
+                { label: "Top 100", value: semrushSnapshot.topPositions.top100 },
+              ]}
+            />
+          </div>
+        </KpiVizFrame>
+      );
+    case "organic-search-visibility":
+      return (
+        <KpiVizFrame eyebrow="Visibility score" meta={keywordsMeta}>
+          <div className="grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <Gauge ariaLabel="Organic visibility gauge" value={Math.round(semrushSnapshot.visibilityPct)} max={100} />
+              <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70 text-center">
+                Visibility
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Visibility percentage</p>
+              <p className="mt-2 font-display text-4xl leading-none">{semrushSnapshot.visibilityPct.toFixed(2)}%</p>
+              <p className="mt-3 text-xs text-text-secondary/70">Across tracked competitive queries.</p>
+              <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+                <div className="h-full bg-accent/85" style={{ width: `${Math.min(100, semrushSnapshot.visibilityPct)}%` }} />
+              </div>
+            </div>
           </div>
         </KpiVizFrame>
       );
