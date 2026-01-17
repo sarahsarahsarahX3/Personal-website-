@@ -422,11 +422,6 @@ function MiniLineChart({
 
   const clamp = (value: number, minValue: number, maxValue: number) => Math.max(minValue, Math.min(maxValue, value));
 
-  const leftX = toX(0);
-  const leftY = toY(left.valueK);
-  const rightX = toX(points.length - 1);
-  const rightY = toY(right.valueK);
-
   const pill = (x: number, y: number, text: string, anchor: "start" | "end") => {
     const padX = 8;
     const padY = 5;
@@ -434,7 +429,8 @@ function MiniLineChart({
     const w = padX * 2 + text.length * estCharW;
     const h = 20;
     const rectX = anchor === "start" ? x + 10 : x - 10 - w;
-    const rectY = y - 10 - h;
+    // Keep the pill away from the line by default.
+    const rectY = y - 14 - h;
     const safeX = clamp(rectX, 6, width - w - 6);
     const safeY = clamp(rectY, 6, height - h - 6);
     const textX = anchor === "start" ? safeX + padX : safeX + w - padX;
@@ -501,8 +497,27 @@ function MiniLineChart({
 
       {points.length >= 2 ? (
         <>
-          {pill(leftX, leftY, `${left.valueK.toFixed(2)}K`, "start")}
-          {pill(rightX, rightY, `${right.valueK.toFixed(2)}K`, "end")}
+          {points.map((point, index) => {
+            const x = toX(index);
+            const y = toY(point.valueK);
+            const prev = points[index - 1]?.valueK;
+            const next = points[index + 1]?.valueK;
+
+            const anchor: "start" | "end" =
+              index === 0
+                ? "start"
+                : index === points.length - 1
+                  ? "end"
+                  : typeof next === "number" && next > point.valueK
+                    ? "end"
+                    : "start";
+
+            return (
+              <g key={point.label}>
+                {pill(x, y, `${point.valueK.toFixed(2)}K`, anchor)}
+              </g>
+            );
+          })}
 
           <text x={paddingX} y={height - 6} fontSize="10" fill="rgba(255,255,255,0.55)">
             {left.label}
