@@ -514,7 +514,7 @@ export default function SalonCentricNyfwProjectPage() {
                   <div className="mt-5 grid gap-5">
                     {snapshotCards.map((card) => (
                       <div key={card.title}>
-                        <p className="font-display text-3xl leading-none">{card.value}</p>
+                        <p className="font-display text-[28px] leading-none">{card.value}</p>
                         <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                           <SquiggleMark />
                           {card.title}
