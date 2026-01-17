@@ -15,7 +15,7 @@ export default async function WorkPage() {
     }));
 
     projects.unshift({
-        title: "Procter & Gamble Beauty Content Hub",
+        title: "Procter & Gamble HairCode",
         category: "SEO & AEO",
         image: "/images/P%26G.jpg",
         size: "large",

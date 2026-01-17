@@ -8,7 +8,7 @@ import { cn } from "@/app/lib/utils";
 interface Project {
     title: string;
     category: string;
-    image: string; // mapped from heroImage
+    image?: string; // mapped from heroImage
     size?: "large" | "small" | "tall";
     slug: string;
     tags?: string[];
@@ -61,7 +61,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                     {filteredProjects.map((project, index) => (
                         <motion.div
                             layout
-                            key={project.title}
+                            key={project.slug}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
@@ -77,7 +77,6 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                                 title={project.title}
                                 category={project.category}
                                 slug={project.slug}
-                                size={project.size}
                                 className="h-full"
                             />
                         </motion.div>
