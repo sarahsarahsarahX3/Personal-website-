@@ -85,7 +85,7 @@ const metrics: Metric[] = [
     category: "Domain Authority",
     value: "44",
     listTitle: "Authority Score: 44",
-    description: "Built a domain authority score of 44 supported by 947 referring domains.",
+    description: "Raised domain authority to 44 with 4.52K backlinks and 788 referring domains.",
   },
   {
     id: "organic-media-value",
@@ -180,7 +180,8 @@ const semrushSnapshot = {
   trafficValueK: 72.22,
   organicKeywords: 47000,
   authorityScore: 44,
-  referringDomains: 947,
+  backlinks: 4520,
+  referringDomains: 788,
   aiMentions: 984,
   aiCitedPages: 738,
   topPositions: { top3: 8, top10: 9, top20: 10, top100: 10 },
@@ -305,6 +306,10 @@ function SquiggleMark({ className }: { className?: string }) {
 
 function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
+}
+
+function formatCompactNumber(value: number) {
+  return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(value);
 }
 
 function KpiVizFrame({
@@ -647,6 +652,10 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
               </p>
             </div>
             <div className="grid gap-3">
+              <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Backlinks</p>
+                <p className="mt-2 font-display text-3xl leading-none">{formatCompactNumber(semrushSnapshot.backlinks)}</p>
+              </div>
               <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-4">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Referring domains</p>
                 <p className="mt-2 font-display text-3xl leading-none">{formatNumber(semrushSnapshot.referringDomains)}</p>
@@ -1053,8 +1062,10 @@ function PdfSlideshow({
   const activeIndex = useMemo(() => items.findIndex((i) => i.id === activeId), [items, activeId]);
   const active = items.find((i) => i.id === activeId) ?? items[0];
   const href = active ? getPdfHref(active) : undefined;
-  const iframeSrc = href
-    ? `${href}#view=${isMobileView ? "Fit" : "FitH"}&toolbar=0&navpanes=0`
+  const previewSrc = href
+    ? isMobileView
+      ? href
+      : `${href}#view=FitH&toolbar=0&navpanes=0`
     : undefined;
 
   const goPrev = () => {
@@ -1169,13 +1180,30 @@ function PdfSlideshow({
       </div>
 
       <div className="bg-surface/40">
-        <div className="h-[75vh] min-h-[520px] lg:h-[62vh] lg:min-h-[420px] w-full overflow-hidden">
-          {iframeSrc ? (
-            <iframe
-              title={active?.title ?? "PDF preview"}
-              src={iframeSrc}
-              className={cn("h-full w-full border-0")}
-            />
+        <div
+          className={cn(
+            "h-[75vh] min-h-[520px] lg:h-[62vh] lg:min-h-[420px] w-full",
+            "overflow-auto md:overflow-hidden",
+          )}
+          style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+        >
+          {previewSrc ? (
+            isMobileView ? (
+              <object
+                data={previewSrc}
+                type="application/pdf"
+                aria-label={active?.title ?? "PDF preview"}
+                className="h-full w-full"
+              >
+                <iframe title={active?.title ?? "PDF preview"} src={previewSrc} className="h-full w-full border-0" />
+              </object>
+            ) : (
+              <iframe
+                title={active?.title ?? "PDF preview"}
+                src={previewSrc}
+                className={cn("h-full w-full border-0")}
+              />
+            )
           ) : (
             <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
               Add a PDF href for this item
