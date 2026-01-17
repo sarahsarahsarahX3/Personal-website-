@@ -100,9 +100,9 @@ const metrics: Metric[] = [
   },
   {
     id: "domain-authority",
-    category: "Domain Authority / Authority Score",
+    category: "Domain Authority Score",
     value: "44",
-    listTitle: "44 Domain Authority / Authority Score",
+    listTitle: "44 Domain Authority Score",
     description:
       "Domain Trust & Authority. Strengthened domain authority to a score of 44 with 4.52K backlinks and 788 referring domains across competitive topics.",
   },
@@ -359,10 +359,21 @@ function KpiVizFrame({
           <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">{eyebrow}</p>
           {meta ? <p className="mt-1 text-xs text-text-secondary/70">{meta}</p> : null}
         </div>
-        <div className="flex items-center gap-2" aria-hidden="true">
-          <span className="h-2 w-2 rounded-full bg-accent/70" />
-          <span className="h-2 w-2 rounded-full bg-white/10" />
-          <span className="h-2 w-2 rounded-full bg-white/10" />
+        <div className="flex items-center" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            className="h-5 w-5 text-text-secondary/70"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M4 17V7" />
+            <path d="M9 17V11" />
+            <path d="M14 17V9" />
+            <path d="M19 17V5" />
+          </svg>
         </div>
       </div>
       <div className="relative mt-4">{children}</div>
@@ -1006,7 +1017,7 @@ function MetricTabs({
                 )}
               >
                 <div className="flex items-start justify-between gap-4">
-                  <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
+                  <p className="font-display text-base leading-snug text-text-primary line-clamp-2">
                     {metric.listTitle}
                   </p>
 
@@ -1071,7 +1082,7 @@ function MetricTabs({
                   )}
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <p className="font-display text-lg leading-snug text-text-primary line-clamp-2">
+                    <p className="font-display text-base leading-snug text-text-primary line-clamp-2">
                       {metric.listTitle}
                     </p>
                   </div>
@@ -1492,6 +1503,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <Section id="results" title="Results" subtitle="SELECT A KPI TO VIEW THE DATA.">
               <MetricTabs metrics={metrics} />
+              <p className="mt-6 text-xs text-text-secondary/70">Source: SEMrush (U.S. &amp; Global data).</p>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
