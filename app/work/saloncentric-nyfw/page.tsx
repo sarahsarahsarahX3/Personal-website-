@@ -603,9 +603,9 @@ export default function SalonCentricNyfwProjectPage() {
               <div className="flex items-end justify-between gap-6 pb-2">
                 <h2
                   id="deliverables-title"
-                  className="font-display text-3xl md:text-2xl tracking-tight text-text-primary/90"
+                  className="text-xs font-mono uppercase tracking-widest text-text-secondary/70"
                 >
-                  Final Deliverables
+                  Final deliverables
                 </h2>
               </div>
 
