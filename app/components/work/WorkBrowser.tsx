@@ -12,6 +12,8 @@ interface Project {
     size?: "large" | "small" | "tall";
     slug: string;
     tags?: string[];
+    year?: string;
+    description?: string;
 }
 
 const categories = [
@@ -36,26 +38,34 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
     return (
         <>
             {/* Filter Bar */}
-            <div className="flex flex-wrap gap-4 mb-16">
+            <div className="mb-12 flex gap-8 overflow-x-auto pb-3 no-scrollbar md:flex-wrap md:overflow-visible md:pb-0 border-b border-white/10">
                 {categories.map((category) => (
                     <button
                         key={category}
                         onClick={() => setActiveCategory(category)}
+                        aria-pressed={activeCategory === category}
                         className={cn(
-                            "px-4 py-2 rounded-full text-sm uppercase tracking-wide transition-all border",
+                            "relative py-3 text-xs uppercase tracking-[0.24em] transition-colors whitespace-nowrap",
                             activeCategory === category
-                                ? "bg-white text-surface border-white"
-                                : "bg-transparent text-text-secondary border-white/10 hover:border-white/50 hover:text-white"
+                                ? "text-white"
+                                : "text-white/55 hover:text-white"
                         )}
                     >
                         {category}
+                        <span
+                            aria-hidden="true"
+                            className={cn(
+                                "pointer-events-none absolute left-0 right-0 -bottom-px h-px bg-accent transition-opacity",
+                                activeCategory === category ? "opacity-100" : "opacity-0"
+                            )}
+                        />
                     </button>
                 ))}
             </div>
 
             <motion.div
                 layout
-                className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[460px]"
             >
                 <AnimatePresence mode="popLayout">
                     {filteredProjects.map((project, index) => (
@@ -67,7 +77,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.4 }}
                             className={cn(
-                                project.size === "large" && "md:col-span-2 md:row-span-2",
+                                project.size === "large" && "md:col-span-2",
                                 project.size === "tall" && "md:row-span-2"
                             )}
                         >
@@ -77,6 +87,8 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                                 title={project.title}
                                 category={project.category}
                                 slug={project.slug}
+                                year={project.year}
+                                description={project.description}
                                 className="h-full"
                             />
                         </motion.div>

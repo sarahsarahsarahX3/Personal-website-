@@ -12,35 +12,40 @@ interface ProjectCardProps {
     image?: string;
     index: number;
     slug: string;
+    year?: string;
+    description?: string;
     className?: string; // Add className prop
 }
 
-export function ProjectCard({ title, category, image, index, slug, className }: ProjectCardProps) {
+function formatIndex(index: number) {
+    return String(index + 1).padStart(2, "0");
+}
+
+export function ProjectCard({ title, category, image, index, slug, year, description, className }: ProjectCardProps) {
     const isRemoteImage = typeof image === "string" && /^https?:\/\//.test(image);
     const hasImage = typeof image === "string" && image.trim().length > 0;
 
     return (
-        <motion.div
+        <motion.article
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
             viewport={{ once: true }}
             className={cn(
-                "group relative overflow-hidden rounded-xl bg-surface-alt",
+                "group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/40 transition-colors hover:border-white/20",
                 className
             )}
         >
             <Link
                 href={`/work/${slug}`}
                 className={cn(
-                    "block group relative w-full h-full overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+                    "flex h-full w-full flex-col overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
                     className
                 )}
                 aria-label={`${title} project page`}
             >
-                <div className="relative w-full h-full overflow-hidden bg-surface-secondary">
-                    {/* WebGL Image Replacement */}
-                    <div className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-105">
+                <div className="relative flex-1 overflow-hidden bg-surface-secondary">
+                    <div className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-[1.03]">
                         {!hasImage ? (
                             <div
                                 className="w-full h-full bg-gradient-to-b from-white/5 to-transparent"
@@ -60,22 +65,52 @@ export function ProjectCard({ title, category, image, index, slug, className }: 
                         )}
                     </div>
 
-                    {/* Overlay & Text */}
-                    <div className="absolute inset-x-0 bottom-0 p-6 z-20 flex flex-col justify-end bg-gradient-to-t from-black/80 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500">
-                        <div className="flex items-end justify-between w-full translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 group-focus-within:translate-y-0 transition-transform duration-500">
-                            <div>
-                                <span className="text-accent text-xs uppercase tracking-widest mb-2 block delay-100">
-                                    {category}
-                                </span>
-                                <h3 className="text-2xl font-display text-white italic">{title}</h3>
-                            </div>
-                            <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-500 hover:bg-accent hover:scale-110">
-                                <ArrowUpRight size={18} />
-                            </div>
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/35" />
+                </div>
+
+                <div className="relative flex items-start justify-between gap-6 p-5 md:p-6">
+                    <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.24em]">
+                            <span className="text-accent">Project {formatIndex(index)}</span>
+                            <span className="text-white/25">•</span>
+                            <span className="text-white/70">{category}</span>
+                            {year ? (
+                                <>
+                                    <span className="text-white/25">•</span>
+                                    <span className="text-white/50">{year}</span>
+                                </>
+                            ) : null}
                         </div>
+
+                        <h3 className="mt-2 font-display text-[1.6rem] leading-[1.05] text-white/90 transition-colors group-hover:text-white">
+                            {title}
+                        </h3>
+
+                        {description ? (
+                            <p
+                                className="mt-3 max-w-[60ch] text-sm leading-relaxed text-text-secondary"
+                                style={{
+                                    display: "-webkit-box",
+                                    WebkitBoxOrient: "vertical",
+                                    WebkitLineClamp: 2,
+                                    overflow: "hidden",
+                                }}
+                            >
+                                {description}
+                            </p>
+                        ) : null}
+                    </div>
+
+                    <div className="mt-1 flex shrink-0 items-center gap-2 text-white/70 transition-colors group-hover:text-white">
+                        <span className="text-xs uppercase tracking-[0.2em] text-white/40 group-hover:text-white/60">
+                            View
+                        </span>
+                        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur-md transition-transform duration-300 group-hover:scale-105">
+                            <ArrowUpRight size={18} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        </span>
                     </div>
                 </div>
             </Link>
-        </motion.div>
+        </motion.article>
     );
 }

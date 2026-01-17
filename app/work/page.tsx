@@ -12,6 +12,8 @@ export default async function WorkPage() {
         size: file.size || "small",
         slug: file.slug,
         tags: file.tags,
+        year: file.year,
+        description: file.description,
     }));
 
     projects.unshift({
@@ -21,6 +23,8 @@ export default async function WorkPage() {
         size: "large",
         slug: "p-and-g-beauty-content-hub",
         tags: ["SEO & AEO", "Content Strategy", "Copywriting", "Brand Storytelling"],
+        description:
+            "SEO-led editorial growth program for HairCode, Procter & Gamble Beauty’s brand-owned content hub.",
     });
 
     return (
