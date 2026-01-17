@@ -389,8 +389,19 @@ function EvidenceImage({ src, alt }: { src?: string; alt: string }) {
   if (!src) return null;
   return (
     <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
-      <div className="aspect-[16/9] w-full bg-surface/30">
-        <img src={src} alt={alt} className="h-full w-full object-contain" loading="lazy" decoding="async" />
+      <div className="relative aspect-[16/9] w-full bg-surface/30">
+        <img
+          src={src}
+          alt={alt}
+          className="h-full w-full object-contain opacity-[0.92] contrast-[1.08] saturate-[0.95]"
+          loading="lazy"
+          decoding="async"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.18]"
+        />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
       </div>
     </div>
   );
@@ -405,8 +416,9 @@ function MiniLineChart({
   points: { label: string; valueK: number }[];
   ariaLabel: string;
 }) {
-  const width = 320;
-  const height = 120;
+  // Slightly larger viewBox => cleaner spacing at the same rendered size.
+  const width = 360;
+  const height = 132;
   const paddingX = 8;
   const paddingY = 12;
   const innerWidth = width - paddingX * 2;
@@ -433,6 +445,11 @@ function MiniLineChart({
 
   const clamp = (value: number, minValue: number, maxValue: number) => Math.max(minValue, Math.min(maxValue, value));
 
+  const formatK = (valueK: number) => {
+    const fixed = valueK.toFixed(2);
+    return `${fixed.endsWith("0") ? fixed.slice(0, -1) : fixed}K`;
+  };
+
   const rectFor = ({
     x,
     y,
@@ -448,13 +465,13 @@ function MiniLineChart({
     side: "above" | "below";
     level: number;
   }) => {
-    const padX = 8;
-    const padY = 5;
-    const estCharW = 6.2;
+    const padX = 7;
+    const padY = 4;
+    const estCharW = 5.8;
     const w = padX * 2 + text.length * estCharW;
-    const h = 20;
+    const h = 18;
     const rectX = anchor === "start" ? x + 10 : x - 10 - w;
-    const baseGap = 14;
+    const baseGap = 16;
     const laneSpacing = h + 8;
     const rectY =
       side === "above"
@@ -463,7 +480,7 @@ function MiniLineChart({
     const safeX = clamp(rectX, 6, width - w - 6);
     const safeY = clamp(rectY, 6, height - h - 6);
     const textX = anchor === "start" ? safeX + padX : safeX + w - padX;
-    return { rectX: safeX, rectY: safeY, w, h, textX, textY: safeY + padY + 9, anchor, text };
+    return { rectX: safeX, rectY: safeY, w, h, textX, textY: safeY + padY + 8, anchor, text };
   };
 
   const intersects = (
@@ -479,17 +496,10 @@ function MiniLineChart({
     const placed: { rectX: number; rectY: number; w: number; h: number; textX: number; textY: number; anchor: "start" | "end"; text: string }[] =
       [];
 
-    const orderedSides: { side: "above" | "below"; level: number }[] = [
-      { side: "above", level: 1 },
-      { side: "above", level: 2 },
-      { side: "below", level: 1 },
-      { side: "below", level: 2 },
-    ];
-
     points.forEach((point, index) => {
       const x = toX(index);
       const y = toY(point.valueK);
-      const text = `${point.valueK.toFixed(2)}K`;
+      const text = formatK(point.valueK);
 
       const next = points[index + 1]?.valueK;
       const preferred: "start" | "end" =
@@ -503,11 +513,31 @@ function MiniLineChart({
 
       const anchors: ("start" | "end")[] = preferred === "start" ? ["start", "end"] : ["end", "start"];
 
+      const preferredSide: "above" | "below" =
+        y < height * 0.34 ? "below" : y > height * 0.68 ? "above" : "above";
+
+      const candidateLanes: { side: "above" | "below"; level: number }[] =
+        preferredSide === "above"
+          ? [
+              { side: "above", level: 1 },
+              { side: "above", level: 2 },
+              { side: "above", level: 3 },
+              { side: "below", level: 1 },
+              { side: "below", level: 2 },
+            ]
+          : [
+              { side: "below", level: 1 },
+              { side: "below", level: 2 },
+              { side: "below", level: 3 },
+              { side: "above", level: 1 },
+              { side: "above", level: 2 },
+            ];
+
       let chosen:
         | { rectX: number; rectY: number; w: number; h: number; textX: number; textY: number; anchor: "start" | "end"; text: string }
         | undefined;
 
-      for (const { side, level } of orderedSides) {
+      for (const { side, level } of candidateLanes) {
         for (const anchor of anchors) {
           const candidate = rectFor({ x, y, text, anchor, side, level });
           const collides = placed.some((p) => intersects(p, candidate));
@@ -549,9 +579,9 @@ function MiniLineChart({
       </defs>
 
       <g stroke="rgba(255,255,255,0.10)" strokeWidth="1">
-        <line x1="0" y1="24" x2={width} y2="24" />
-        <line x1="0" y1="60" x2={width} y2="60" />
-        <line x1="0" y1="96" x2={width} y2="96" />
+        <line x1="0" y1={Math.round(height * 0.22)} x2={width} y2={Math.round(height * 0.22)} />
+        <line x1="0" y1={Math.round(height * 0.52)} x2={width} y2={Math.round(height * 0.52)} />
+        <line x1="0" y1={Math.round(height * 0.82)} x2={width} y2={Math.round(height * 0.82)} />
       </g>
 
       <path d={areaPath} fill={`url(#${idPrefix}-area)`} />
@@ -578,14 +608,14 @@ function MiniLineChart({
                 y={box.rectY}
                 width={box.w}
                 height={box.h}
-                rx="10"
+                rx="9"
                 fill="rgba(10,10,12,0.75)"
                 stroke="rgba(255,255,255,0.14)"
               />
               <text
                 x={box.textX}
                 y={box.textY}
-                fontSize="11"
+                fontSize="10"
                 fill="rgba(255,255,255,0.82)"
                 textAnchor={box.anchor === "start" ? "start" : "end"}
                 fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
@@ -961,7 +991,7 @@ function Section({
       <header className="max-w-3xl">
         <h2
           id={`${id}-title`}
-          className="font-display text-3xl md:text-2xl tracking-tight text-text-secondary/85"
+          className="font-display text-3xl md:text-2xl tracking-tight text-text-primary/90"
         >
           {title}
         </h2>
