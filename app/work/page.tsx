@@ -1,15 +1,26 @@
 import { getAllFilesFrontMatter } from "@/app/lib/mdx";
 import { WorkBrowser } from "@/app/components/work/WorkBrowser";
 
+type WorkProject = {
+    title: string;
+    category: string;
+    image?: string;
+    size?: "large" | "small" | "tall";
+    slug: string;
+    tags?: string[];
+    year?: string;
+    description?: string;
+};
+
 export default async function WorkPage() {
     const workFiles = await getAllFilesFrontMatter("work");
 
     // Serialize/Map data
-    const projects = workFiles.map((file: any) => ({
+    const projects: WorkProject[] = workFiles.map((file: any) => ({
         title: file.title,
         category: file.category,
         image: file.heroImage,
-        size: file.size || "small",
+        size: (file.size ?? "small") as WorkProject["size"],
         slug: file.slug,
         tags: file.tags,
         year: file.year,
