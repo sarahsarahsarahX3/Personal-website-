@@ -21,25 +21,25 @@ const project = {
   title: "SalonCentric × New York Fashion Week",
   subtitle: "Integrated Campaign and Content Production",
   overview:
-    "Produced integrated campaign content for SalonCentric’s New York Fashion Week activation. Translated a live, in-person industry event into coordinated digital, social, and email storytelling, ensuring consistent messaging across experiential, digital, and owned platforms. My work extended the impact of SalonCentric’s NYFW presence by transforming the event activation into a multi-channel campaign that reinforced brand authority, strengthened brand communications, and drove engagement.",
+    "Produced integrated campaign content for SalonCentric’s New York Fashion Week activation by scaling a live industry event into cohesive, multi-channel brand storytelling that drove engagement and strengthened brand authority.",
   role: "Copywriter and Campaign Content Lead",
   objective:
     "Anchored brand communications and campaign storytelling in the energy and cultural relevance of New York Fashion Week by highlighting professional artistry, backstage access, and inclusive industry moments. Positioned SalonCentric as an insider brand connected to fashion’s most influential stage, balancing prestige storytelling with performance-aware copy across experiential, social, and owned channels.",
   messagingIntro:
-    "Defined a campaign narrative that transformed key NYFW moments into scalable, multi-channel brand storytelling, including:",
+    "Defined a campaign narrative that transformed NYFW moments into scalable, multi-channel brand storytelling, including:",
   messagingBullets: [
-    "Spotlighted professional artists through runway and backstage access",
-    "Positioned SalonCentric as a thought leader through clear, consistent brand communications during fashion’s most influential moment",
-    "Balanced prestige storytelling with performance-driven copy",
-    "Maintained a unified narrative across live production and post-production event content",
+    "Spotlighted professional artists through runway and backstage access.",
+    "Positioned SalonCentric as a thought leader through clear, consistent brand communications during fashion’s most influential moment.",
+    "Balanced prestige storytelling with performance-driven copy.",
+    "Maintained a unified narrative across live production and post-production event content.",
   ],
   productionIntro: "Produced campaign content and live-event coverage across channels, including:",
   productionBullets: [
-    "Wrote campaign copy for social, email, and supporting digital assets",
-    "Supported real-time and post-event content tied to runway and cultural moments",
-    "Collaborated with experiential, social, brand, and email teams",
-    "Ensured brand voice consistency across paid, organic, and owned channels",
-    "Extended campaign lifespan through post-event amplification",
+    "Wrote campaign copy for social, email, and supporting digital assets.",
+    "Supported real-time and post-event content tied to runway and cultural moments.",
+    "Collaborated with experiential, social, brand, and email teams.",
+    "Ensured brand voice consistency across paid, organic, and owned channels.",
+    "Extended campaign lifespan through post-event amplification.",
   ],
   audience: [
     { label: "B2B", value: "Licensed beauty professionals and salon decision-makers" },
@@ -114,8 +114,7 @@ const sectionLinks: SectionLink[] = [
   { id: "messaging", label: "Campaign Messaging" },
   { id: "production", label: "Content Production" },
   { id: "results", label: "Results" },
-  { id: "deliverables", label: "Final Deliverables" },
-  { id: "tools", label: "Tools & Skills" },
+  { id: "tools", label: "Tools" },
 ];
 
 function usePrefersReducedMotion() {
@@ -455,7 +454,13 @@ export default function SalonCentricNyfwProjectPage() {
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
 
   const snapshotCards = useMemo<SnapshotCard[]>(
-    () => project.snapshot.map((item) => ({ title: item.title, value: item.value })),
+    () =>
+      project.snapshot.map((item) => {
+        if (item.title === "Multi-Channel Activation" || item.title === "Headlining Industry Moment") {
+          return { title: item.value, value: item.title.toUpperCase() };
+        }
+        return { title: item.title, value: item.value };
+      }),
     [],
   );
 
@@ -519,20 +524,6 @@ export default function SalonCentricNyfwProjectPage() {
                   </div>
 
                   <div className="mt-8 border-t border-white/10 pt-6">
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Target audience</p>
-                    <dl className="mt-4 space-y-3">
-                      {project.audience.map((item) => (
-                        <div key={item.label} className="grid grid-cols-[120px_1fr] gap-4">
-                          <dt className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                            {item.label}
-                          </dt>
-                          <dd className="text-sm leading-relaxed text-text-secondary">{item.value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
-
-                  <div className="mt-8 border-t border-white/10 pt-6">
                     <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Channels</p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {project.channels.map((channel) => (
@@ -585,8 +576,22 @@ export default function SalonCentricNyfwProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="objective" title="Objective" subtitle="Campaign objective" contentClassName="mt-6">
+            <Section id="objective" title="Campaign Objective" contentClassName="mt-6">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
+
+              <div className="mt-10 max-w-3xl rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Target Audience</p>
+                <dl className="mt-5 space-y-4">
+                  {project.audience.map((item) => (
+                    <div key={item.label} className="grid grid-cols-[120px_1fr] gap-4">
+                      <dt className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                        {item.label}
+                      </dt>
+                      <dd className="text-sm leading-relaxed text-text-secondary">{item.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -605,18 +610,50 @@ export default function SalonCentricNyfwProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
+            <section id="deliverables" aria-labelledby="deliverables-title" className="scroll-mt-16 pt-10">
+              <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
+                <h2 id="deliverables-title" className="text-xl font-display tracking-tight text-white/90">
+                  Final Deliverables
+                </h2>
+              </div>
+
+              <div className="mt-8 grid gap-6">
+                <WindowFrame title="Article PDF preview (to be added)">
+                  <PlaceholderBlock label="Article PDF preview placeholder" />
+                  <p className="mt-4 text-sm text-text-secondary">
+                    Add the PDF to `public/images/` and I will wire it into this preview.
+                  </p>
+                </WindowFrame>
+
+                <div className="grid gap-6 md:grid-cols-2">
+                  <WindowFrame title="Instagram post screenshot (to be added)">
+                    <PlaceholderBlock label="Instagram post screenshot placeholder" />
+                  </WindowFrame>
+                  <WindowFrame title="Campaign images (3) (to be added)">
+                    <div className="grid gap-4">
+                      <PlaceholderBlock label="Image placeholder 01" />
+                      <PlaceholderBlock label="Image placeholder 02" />
+                      <PlaceholderBlock label="Image placeholder 03" />
+                    </div>
+                  </WindowFrame>
+                </div>
+              </div>
+            </section>
+
+            <div className="mt-16 border-t border-white/10" />
+
             <section id="results" aria-labelledby="results-title" className="scroll-mt-16 pt-10">
               <div className="flex flex-col gap-3 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <h2 id="results-title" className="text-xl font-display tracking-tight text-white/90">
                     Results
-                    </h2>
-                    <p className="mt-2 text-sm text-text-secondary">Select a KPI to view the data.</p>
-                  </div>
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                    Source: Campaign reporting.
-                  </p>
+                  </h2>
+                  <p className="mt-2 text-sm text-text-secondary">Select a KPI to view the data.</p>
                 </div>
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                  Source: Campaign reporting.
+                </p>
+              </div>
 
               <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-5">
@@ -659,38 +696,6 @@ export default function SalonCentricNyfwProjectPage() {
                     <div className="mt-6 grid gap-4 md:grid-cols-2">
                       <PlaceholderBlock label="KPI chart placeholder" />
                       <PlaceholderBlock label="Reporting screenshot placeholder" />
-                    </div>
-                  </WindowFrame>
-                </div>
-              </div>
-            </section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <section id="deliverables" aria-labelledby="deliverables-title" className="scroll-mt-16 pt-10">
-              <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
-                <h2 id="deliverables-title" className="text-xl font-display tracking-tight text-white/90">
-                  Final Deliverables
-                </h2>
-              </div>
-
-              <div className="mt-8 grid gap-6">
-                <WindowFrame title="Article PDF preview (to be added)">
-                  <PlaceholderBlock label="Article PDF preview placeholder" />
-                  <p className="mt-4 text-sm text-text-secondary">
-                    Add the PDF to `public/images/` and I will wire it into this preview.
-                  </p>
-                </WindowFrame>
-
-                <div className="grid gap-6 md:grid-cols-2">
-                  <WindowFrame title="Instagram post screenshot (to be added)">
-                    <PlaceholderBlock label="Instagram post screenshot placeholder" />
-                  </WindowFrame>
-                  <WindowFrame title="Campaign images (3) (to be added)">
-                    <div className="grid gap-4">
-                      <PlaceholderBlock label="Image placeholder 01" />
-                      <PlaceholderBlock label="Image placeholder 02" />
-                      <PlaceholderBlock label="Image placeholder 03" />
                     </div>
                   </WindowFrame>
                 </div>
