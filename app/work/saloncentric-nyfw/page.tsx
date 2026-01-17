@@ -612,7 +612,10 @@ export default function SalonCentricNyfwProjectPage() {
 
             <section id="deliverables" aria-labelledby="deliverables-title" className="scroll-mt-16 pt-10">
               <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-4">
-                <h2 id="deliverables-title" className="text-xl font-display tracking-tight text-white/90">
+                <h2
+                  id="deliverables-title"
+                  className="font-display text-3xl md:text-2xl tracking-tight text-text-primary/90"
+                >
                   Final Deliverables
                 </h2>
               </div>
@@ -645,14 +648,17 @@ export default function SalonCentricNyfwProjectPage() {
             <section id="results" aria-labelledby="results-title" className="scroll-mt-16 pt-10">
               <div className="flex flex-col gap-3 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
                 <div>
-                  <h2 id="results-title" className="text-xl font-display tracking-tight text-white/90">
+                  <h2
+                    id="results-title"
+                    className="font-display text-3xl md:text-2xl tracking-tight text-text-primary/90"
+                  >
                     Results
                   </h2>
-                  <p className="mt-2 text-sm text-text-secondary">Select a KPI to view the data.</p>
+                  <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                    Select a KPI to view the data.
+                  </p>
                 </div>
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                  Source: Campaign reporting.
-                </p>
+                <p className="text-xs text-text-secondary/70">Source: Campaign reporting.</p>
               </div>
 
               <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
@@ -669,8 +675,8 @@ export default function SalonCentricNyfwProjectPage() {
                             "w-full rounded-xl px-4 py-3 text-left text-[13px] leading-snug transition-colors",
                             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                             isActive
-                              ? "bg-white/5 text-white"
-                              : "text-white/70 hover:text-white hover:bg-white/5",
+                              ? "bg-white/5 text-text-primary"
+                              : "text-text-secondary hover:text-text-primary hover:bg-white/5",
                           )}
                         >
                           <div className="flex items-center justify-between gap-4">
@@ -689,9 +695,11 @@ export default function SalonCentricNyfwProjectPage() {
 
                 <div className="lg:col-span-7">
                   <WindowFrame title="Key Performance Indicator:">
-                    <p className="text-xs font-mono uppercase tracking-widest text-accent">{activeMetric.kpiLabel}</p>
-                    <h3 className="mt-3 font-display text-2xl leading-tight text-white/90">{activeMetric.title}</h3>
-                    <p className="mt-4 text-sm leading-relaxed text-text-secondary">{activeMetric.description}</p>
+                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                      {activeMetric.kpiLabel}
+                    </p>
+                    <h3 className="mt-3 font-display text-xl tracking-tight text-text-primary">{activeMetric.title}</h3>
+                    <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{activeMetric.description}</p>
 
                     <div className="mt-6 grid gap-4 md:grid-cols-2">
                       <PlaceholderBlock label="KPI chart placeholder" />
