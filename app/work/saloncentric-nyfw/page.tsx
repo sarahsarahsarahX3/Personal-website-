@@ -17,6 +17,13 @@ type Metric = {
 
 type SnapshotCard = { title: string; value: string };
 
+const deliverables = {
+  articlePdf: {
+    title: "SalonCentric Uplifts Black Beauty Excellence This New York Fashion Week SS 2024",
+    fileName: "SalonCentric Uplifts Black Beauty Excellence This New York Fashion Week SS 2024.pdf",
+  },
+} as const;
+
 const project = {
   title: "SalonCentric × New York Fashion Week",
   subtitle: "Integrated Campaign and Content Production",
@@ -194,6 +201,25 @@ function scrollToId(id: string, behavior: ScrollBehavior) {
   const node = document.getElementById(id);
   if (!node) return;
   node.scrollIntoView({ behavior, block: "start" });
+}
+
+function useIsMobileView() {
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.("(max-width: 768px)");
+    if (!mq) return;
+    const update = () => setIsMobileView(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    (mq as unknown as { addListener?: (listener: () => void) => void }).addListener?.(update);
+    return () => {
+      mq.removeEventListener?.("change", update);
+      (mq as unknown as { removeListener?: (listener: () => void) => void }).removeListener?.(update);
+    };
+  }, []);
+
+  return isMobileView;
 }
 
 function Pill({ children }: { children: React.ReactNode }) {
@@ -448,6 +474,7 @@ function RailList({
 export default function SalonCentricNyfwProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const progress = useScrollProgress();
+  const isMobileView = useIsMobileView();
   const [activeMetricId, setActiveMetricId] = useState(metrics[0]?.id ?? "");
   const activeMetric = useMemo(() => metrics.find((m) => m.id === activeMetricId) ?? metrics[0], [activeMetricId]);
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
@@ -462,6 +489,15 @@ export default function SalonCentricNyfwProjectPage() {
         return { title: item.title, value: item.value };
       }),
     [],
+  );
+
+  const deliverablePdfHref = useMemo(() => `/${encodeURIComponent(deliverables.articlePdf.fileName)}`, []);
+  const deliverablePdfPreviewSrc = useMemo(
+    () =>
+      isMobileView
+        ? deliverablePdfHref
+        : `${deliverablePdfHref}#view=FitH&toolbar=0&navpanes=0`,
+    [deliverablePdfHref, isMobileView],
   );
 
   return (
@@ -610,11 +646,42 @@ export default function SalonCentricNyfwProjectPage() {
               </div>
 
               <div className="mt-8 grid gap-6">
-                <WindowFrame title="Article PDF preview (to be added)">
-                  <PlaceholderBlock label="Article PDF preview placeholder" />
-                  <p className="mt-4 text-sm text-text-secondary">
-                    Add the PDF to `public/images/` and I will wire it into this preview.
-                  </p>
+                <WindowFrame title="Article preview">
+                  <div className="rounded-2xl border border-white/10 bg-surface/40 overflow-hidden">
+                    <div
+                      className={cn("h-[70vh] min-h-[520px] w-full overflow-auto")}
+                      style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+                    >
+                      <object
+                        data={deliverablePdfPreviewSrc}
+                        type="application/pdf"
+                        aria-label={deliverables.articlePdf.title}
+                        className="h-full w-full"
+                      >
+                        <iframe
+                          title={deliverables.articlePdf.title}
+                          src={deliverablePdfPreviewSrc}
+                          className="h-full w-full border-0"
+                        />
+                      </object>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    <p className="text-sm text-text-secondary">{deliverables.articlePdf.title}</p>
+                    <a
+                      href={deliverablePdfHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-full px-4 py-2 text-xs font-mono uppercase tracking-widest",
+                        "border border-white/10 bg-surface-alt/10 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      )}
+                    >
+                      Open ↗
+                    </a>
+                  </div>
                 </WindowFrame>
 
                 <div className="grid gap-6 md:grid-cols-2">
