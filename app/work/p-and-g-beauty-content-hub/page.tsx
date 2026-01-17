@@ -385,6 +385,17 @@ function KpiVizFrame({
   );
 }
 
+function EvidenceImage({ src, alt }: { src?: string; alt: string }) {
+  if (!src) return null;
+  return (
+    <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
+      <div className="aspect-[16/9] w-full bg-surface/30">
+        <img src={src} alt={alt} className="h-full w-full object-contain" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  );
+}
+
 function MiniLineChart({
   idPrefix,
   points,
@@ -724,6 +735,10 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
             ariaLabel="Organic traffic trend from May 2025 to October 2025"
             points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
           />
+          <EvidenceImage
+            src="/Monthly%20Organic%20Sessions.png"
+            alt="SEMrush screenshot showing monthly organic sessions for HairCode.com."
+          />
         </KpiVizFrame>
       );
     case "organic-growth-rate":
@@ -733,6 +748,10 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
             idPrefix="growth"
             ariaLabel="Organic traffic growth from May 2025 to October 2025"
             points={semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[]}
+          />
+          <EvidenceImage
+            src="/Organic%20Traffic%20Growth%20Rate.png"
+            alt="SEMrush screenshot showing organic traffic growth rate for HairCode.com."
           />
         </KpiVizFrame>
       );
@@ -778,6 +797,10 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
               ]}
             />
           </div>
+          <EvidenceImage
+            src="/Top-3%20Google%20Keyword%20Rankings.png"
+            alt="SEMrush screenshot showing Top-3 Google keyword rankings for HairCode.com."
+          />
         </KpiVizFrame>
       );
     case "organic-search-visibility":
@@ -799,6 +822,10 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
               </div>
             </div>
           </div>
+          <EvidenceImage
+            src="/Organic%20Search%20Visibility.png"
+            alt="SEMrush screenshot showing organic search visibility for HairCode.com."
+          />
         </KpiVizFrame>
       );
     case "domain-authority":
@@ -825,6 +852,10 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
               </div>
             </div>
           </div>
+          <EvidenceImage
+            src="/Domain%20Authoirty%20Score.png"
+            alt="SEMrush screenshot showing domain authority score and backlink profile for HairCode.com."
+          />
         </KpiVizFrame>
       );
     case "organic-media-value":
@@ -898,6 +929,10 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
               { label: "Mentions", value: semrushSnapshot.aiMentions },
               { label: "Cited", value: semrushSnapshot.aiCitedPages },
             ]}
+          />
+          <EvidenceImage
+            src="/AI%20Search%20Mentions%20%3A%20Cited%20Pages.png"
+            alt="SEMrush screenshot showing AI search mentions and AI-cited pages for HairCode.com."
           />
         </KpiVizFrame>
       );
