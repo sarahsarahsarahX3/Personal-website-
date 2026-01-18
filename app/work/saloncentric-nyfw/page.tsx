@@ -6,15 +6,6 @@ import { cn } from "@/app/lib/utils";
 
 type SectionLink = { id: string; label: string };
 
-type Metric = {
-  id: string;
-  listTitle: string;
-  title: string;
-  kpiLabel: string;
-  description: string;
-  value?: string;
-};
-
 type SnapshotCard = { title: string; value: string };
 
 const deliverables = {
@@ -70,50 +61,6 @@ const project = {
     "Brand Messaging",
   ],
 } as const;
-
-const metrics: Metric[] = [
-  {
-    id: "total-impressions",
-    value: "1M+",
-    listTitle: "Total Campaign Impressions (1M+)",
-    title: "Total Campaign Impressions",
-    kpiLabel: "Campaign Reach",
-    description:
-      "Delivered 1M+ impressions across social, email, and digital channels through integrated campaign content tied to New York Fashion Week.",
-  },
-  {
-    id: "social-engagement",
-    listTitle: "Social Reach & Engagement",
-    title: "Social Reach & Engagement",
-    kpiLabel: "Content Performance",
-    description:
-      "Drove strong reach and engagement by translating live runway and backstage moments into platform-native social content.",
-  },
-  {
-    id: "email-lift",
-    listTitle: "Email Engagement Lift",
-    title: "Email Engagement Lift",
-    kpiLabel: "Owned Channel Engagement",
-    description:
-      "Supported increased engagement across NYFW-themed email campaigns aligned with the broader campaign narrative.",
-  },
-  {
-    id: "amplification",
-    listTitle: "Cross-Channel Content Amplification",
-    title: "Cross-Channel Content Amplification",
-    kpiLabel: "Integrated Execution",
-    description:
-      "Extended the impact of the in-person activation by coordinating content across experiential, social, and owned channels.",
-  },
-  {
-    id: "brand-visibility",
-    listTitle: "Brand Visibility During NYFW",
-    title: "Brand Visibility During NYFW",
-    kpiLabel: "Brand Presence",
-    description:
-      "Strengthened SalonCentric’s visibility and authority within the professional beauty space during a high-profile fashion event.",
-  },
-];
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
@@ -524,22 +471,6 @@ function WindowFrame({
   );
 }
 
-function PlaceholderBlock({ label }: { label: string }) {
-  return (
-    <div
-      className={cn(
-        "relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10",
-        "before:absolute before:inset-0 before:bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)]",
-        "before:bg-[size:28px_28px] before:opacity-60",
-      )}
-    >
-      <div className="relative flex min-h-[220px] items-end p-4 md:min-h-[260px]">
-        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{label}</p>
-      </div>
-    </div>
-  );
-}
-
 function RailList({
   ariaLabel,
   items,
@@ -570,82 +501,6 @@ function RailList({
   );
 }
 
-function ResultsAccordion({
-  metrics,
-  activeId,
-  onSelect,
-}: {
-  metrics: Metric[];
-  activeId: string;
-  onSelect: (id: string) => void;
-}) {
-  return (
-    <div className="grid gap-3 lg:hidden">
-      {metrics.map((metric) => {
-        const isOpen = metric.id === activeId;
-        return (
-          <div
-            key={metric.id}
-            className={cn(
-              "rounded-2xl border border-white/10 bg-surface-alt/10 overflow-hidden",
-              "transition-colors",
-              isOpen ? "bg-white/5 border-white/20" : "bg-surface-alt/10",
-            )}
-          >
-            <button
-              type="button"
-              aria-expanded={isOpen}
-              aria-controls={`metric-accordion-panel-${metric.id}`}
-              onClick={() => onSelect(metric.id)}
-              className={cn(
-                "group relative w-full px-5 py-4 pl-11 text-left",
-                "before:absolute before:left-5 before:top-6 before:h-2.5 before:w-2.5 before:rounded-full before:border before:transition-all before:duration-200",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                isOpen
-                  ? "before:border-accent/40 before:bg-accent/90 before:shadow-[0_0_0_4px_rgba(255,59,48,0.14)]"
-                  : "before:border-white/15 before:bg-transparent hover:before:border-white/25 hover:before:bg-white/10",
-              )}
-            >
-              <div className="flex items-start justify-between gap-4">
-                <p className="font-display text-base leading-snug text-text-primary line-clamp-2">{metric.listTitle}</p>
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    "inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-text-secondary transition-transform duration-200",
-                    isOpen ? "rotate-180" : "rotate-0",
-                  )}
-                >
-                  ▾
-                </span>
-              </div>
-            </button>
-
-            <div
-              id={`metric-accordion-panel-${metric.id}`}
-              aria-hidden={!isOpen}
-              className={cn(
-                "overflow-hidden",
-                "transition-[max-height,opacity,transform] duration-300",
-                isOpen ? "max-h-[999px] opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-1 pointer-events-none",
-              )}
-            >
-              <div className="px-5 pb-5">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key performance indicator:</p>
-                <h4 className="mt-3 font-display text-xl tracking-tight text-text-primary">{metric.kpiLabel}</h4>
-                <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{metric.description}</p>
-                <div className="mt-6 grid gap-4">
-                  <PlaceholderBlock label="KPI chart placeholder" />
-                  <PlaceholderBlock label="Reporting screenshot placeholder" />
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 export default function SalonCentricNyfwProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const progress = useScrollProgress();
@@ -655,8 +510,6 @@ export default function SalonCentricNyfwProjectPage() {
     "/NYFW Social Reel 3.mov",
     "/BBR Luncheon Reel 1.mov",
   ]);
-  const [activeMetricId, setActiveMetricId] = useState(metrics[0]?.id ?? "");
-  const activeMetric = useMemo(() => metrics.find((m) => m.id === activeMetricId) ?? metrics[0], [activeMetricId]);
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
 
@@ -799,10 +652,10 @@ export default function SalonCentricNyfwProjectPage() {
               <RailList ariaLabel="Content production points" items={[...project.productionBullets]} />
             </Section>
 
-            <section id="deliverables" aria-labelledby="deliverables-title" className="scroll-mt-16 pt-10">
+            <section id="results" aria-labelledby="results-title" className="scroll-mt-16 pt-10">
               <div className="flex items-end justify-between gap-6 pb-2">
                 <h2
-                  id="deliverables-title"
+                  id="results-title"
                   className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90"
                 >
                   Results
@@ -990,75 +843,6 @@ export default function SalonCentricNyfwProjectPage() {
                     </div>
                   </div>
                 </WindowFrame>
-              </div>
-            </section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <section id="results" aria-labelledby="results-title" className="scroll-mt-16 pt-10">
-              <div className="flex flex-col gap-3 pb-4 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <h2
-                    id="results-title"
-                    className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90"
-                  >
-                    Results
-                  </h2>
-                  <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                    Select a KPI to view the data.
-                  </p>
-                </div>
-                <p className="text-xs text-text-secondary/70">Source: Campaign reporting.</p>
-              </div>
-
-              <ResultsAccordion metrics={metrics} activeId={activeMetricId} onSelect={setActiveMetricId} />
-
-              <div className="mt-8 hidden lg:grid grid-cols-1 gap-6 lg:grid-cols-12">
-                <div className="lg:col-span-5">
-                  <div className="space-y-2 rounded-2xl border border-white/10 bg-surface-alt/10 p-2">
-                    {metrics.map((metric) => {
-                      const isActive = metric.id === activeMetricId;
-                      return (
-                        <button
-                          key={metric.id}
-                          type="button"
-                          onClick={() => setActiveMetricId(metric.id)}
-                          className={cn(
-                            "w-full rounded-xl px-4 py-3 text-left text-[13px] leading-snug transition-colors",
-                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                            isActive
-                              ? "bg-white/5 text-text-primary"
-                              : "text-text-secondary hover:text-text-primary hover:bg-white/5",
-                          )}
-                        >
-                          <div className="flex items-center justify-between gap-4">
-                            <span>{metric.listTitle}</span>
-                            {metric.value ? (
-                              <span className="rounded-full border border-white/10 bg-surface/30 px-2 py-0.5 text-[11px] font-mono text-text-secondary">
-                                {metric.value}
-                              </span>
-                            ) : null}
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="lg:col-span-7">
-                  <WindowFrame title="Key Performance Indicator:">
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                      {activeMetric.kpiLabel}
-                    </p>
-                    <h3 className="mt-3 font-display text-xl tracking-tight text-text-primary">{activeMetric.title}</h3>
-                    <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{activeMetric.description}</p>
-
-                    <div className="mt-6 grid gap-4 md:grid-cols-2">
-                      <PlaceholderBlock label="KPI chart placeholder" />
-                      <PlaceholderBlock label="Reporting screenshot placeholder" />
-                    </div>
-                  </WindowFrame>
-                </div>
               </div>
             </section>
 
