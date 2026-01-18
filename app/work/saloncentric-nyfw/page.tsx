@@ -35,10 +35,10 @@ const project = {
   messagingIntro:
     "Define a campaign narrative that transformed NYFW moments into scalable, multi-channel brand storytelling by:",
   messagingBullets: [
-    "Spotlighted professional artists through runway and backstage access.",
-    "Positioned SalonCentric as a thought leader through clear, consistent brand communications during fashion’s most influential moment.",
-    "Balanced prestige storytelling with performance-driven copy.",
-    "Maintained a unified narrative across live production and post-production event content.",
+    "Spotlighting professional artists through runway and backstage access.",
+    "Positioning SalonCentric as a thought leader through clear, consistent brand communications during fashion’s most influential moment.",
+    "Balancing prestige storytelling with performance-driven copy.",
+    "Maintaining a unified narrative across live production and post-production event content.",
   ],
   productionIntro: "Produced campaign content and live-event coverage across channels, including:",
   productionBullets: [
@@ -259,19 +259,27 @@ function Section({
   id,
   title,
   subtitle,
+  titleClassName,
   children,
   contentClassName,
 }: {
   id: string;
   title: string;
   subtitle?: React.ReactNode;
+  titleClassName?: string;
   children: React.ReactNode;
   contentClassName?: string;
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16 pt-10">
       <header className="max-w-3xl">
-        <h2 id={`${id}-title`} className="font-display text-3xl md:text-2xl tracking-tight text-text-primary/90">
+        <h2
+          id={`${id}-title`}
+          className={cn(
+            "font-display text-3xl md:text-2xl tracking-tight text-text-primary/90",
+            titleClassName,
+          )}
+        >
           {title}
         </h2>
         {subtitle ? (
@@ -693,7 +701,12 @@ export default function SalonCentricNyfwProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="messaging" title="Campaign Messaging Strategy" contentClassName="mt-6">
+            <Section
+              id="messaging"
+              title="Campaign Messaging Strategy"
+              titleClassName="text-[22px] sm:text-3xl"
+              contentClassName="mt-6"
+            >
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.messagingIntro}</p>
               <RailList ariaLabel="Campaign messaging points" items={[...project.messagingBullets]} />
             </Section>
@@ -893,7 +906,7 @@ export default function SalonCentricNyfwProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
                 {project.tools.map((tool) => (
                   <Pill key={tool}>{tool}</Pill>
                 ))}
