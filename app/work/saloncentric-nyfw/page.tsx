@@ -562,14 +562,14 @@ export default function SalonCentricNyfwProjectPage() {
                   <div className="mt-auto pt-8">
                     <button
                       type="button"
-                      onClick={() => scrollToId("deliverables", scrollBehavior)}
+                      onClick={() => scrollToId("results", scrollBehavior)}
                       className={cn(
                         "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest",
                         "bg-text-primary text-surface hover:bg-white transition-colors",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                       )}
                     >
-                      View Assets
+                      View Results
                     </button>
                   </div>
                 </div>
@@ -606,15 +606,23 @@ export default function SalonCentricNyfwProjectPage() {
             <Section id="objective" title="Campaign Objective" contentClassName="mt-6">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
 
-              <div className="mt-10 max-w-3xl rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+              <div
+                className={cn(
+                  "mt-10 max-w-3xl relative overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8",
+                  "before:absolute before:inset-0 before:pointer-events-none before:opacity-[0.5]",
+                  "before:bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)]",
+                  "before:bg-[size:28px_28px]",
+                  "after:absolute after:-right-24 after:-top-24 after:h-64 after:w-64 after:rounded-full after:bg-accent/10 after:blur-3xl after:pointer-events-none",
+                )}
+              >
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Target Audience</p>
-                <dl className="mt-5 space-y-4">
+                <dl className="relative mt-6 grid gap-x-10 gap-y-5 md:grid-cols-2">
                   {project.audience.map((item) => (
-                    <div key={item.label} className="grid grid-cols-[120px_1fr] gap-4">
-                      <dt className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                    <div key={item.label} className="min-w-0">
+                      <dt className="inline-flex items-center rounded-full border border-white/10 bg-surface/30 px-3 py-1 text-[11px] font-mono uppercase tracking-widest text-text-secondary/80">
                         {item.label}
                       </dt>
-                      <dd className="text-sm leading-relaxed text-text-secondary">{item.value}</dd>
+                      <dd className="mt-3 text-sm leading-relaxed text-text-secondary">{item.value}</dd>
                     </div>
                   ))}
                 </dl>
@@ -688,11 +696,32 @@ export default function SalonCentricNyfwProjectPage() {
                   <WindowFrame title="Instagram post screenshot (to be added)">
                     <PlaceholderBlock label="Instagram post screenshot placeholder" />
                   </WindowFrame>
-                  <WindowFrame title="Campaign images (3) (to be added)">
-                    <div className="grid gap-4">
-                      <PlaceholderBlock label="Image placeholder 01" />
-                      <PlaceholderBlock label="Image placeholder 02" />
-                      <PlaceholderBlock label="Image placeholder 03" />
+                  <WindowFrame title="Campaign images">
+                    <div className="grid gap-4 sm:grid-cols-3">
+                      {["/Model1.png", "/Model2.png", "/Model3.png"].map((src, index) => (
+                        <div
+                          key={src}
+                          className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10"
+                        >
+                          <div className="relative aspect-[3/4] w-full bg-surface/30">
+                            <img
+                              src={src}
+                              alt={`Campaign image ${index + 1}`}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                            <div
+                              aria-hidden="true"
+                              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.18]"
+                            />
+                            <div
+                              aria-hidden="true"
+                              className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </WindowFrame>
                 </div>
