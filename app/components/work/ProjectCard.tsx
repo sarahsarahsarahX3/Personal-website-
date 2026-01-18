@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/app/lib/utils";
-import { DistortImage } from "@/app/components/ui/DistortImage";
 import { ArrowUpRight } from "lucide-react";
 
 interface ProjectCardProps {
@@ -61,7 +60,13 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                                 decoding="async"
                             />
                         ) : (
-                            <DistortImage src={image} alt={title} className="w-full h-full" fill />
+                            <img
+                                src={image}
+                                alt={title}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                                decoding="async"
+                            />
                         )}
                     </div>
 
