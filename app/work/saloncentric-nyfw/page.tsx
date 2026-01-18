@@ -221,6 +221,83 @@ function useIsMobileView() {
   return isMobileView;
 }
 
+function useVideoPosters(sources: string[]) {
+  const [posters, setPosters] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const capturePoster = (src: string) =>
+      new Promise<string | null>((resolve) => {
+        const video = document.createElement("video");
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "auto";
+        video.crossOrigin = "anonymous";
+        video.src = src;
+
+        const clean = () => {
+          video.pause();
+          video.removeAttribute("src");
+          video.load();
+        };
+
+        const fail = () => {
+          clean();
+          resolve(null);
+        };
+
+        const onLoaded = async () => {
+          try {
+            const duration = Number.isFinite(video.duration) ? video.duration : 0;
+            const targetTime = duration > 0 ? Math.min(0.5, Math.max(0.12, duration * 0.05)) : 0.12;
+            video.currentTime = targetTime;
+
+            await new Promise<void>((r) => {
+              const onSeeked = () => r();
+              video.addEventListener("seeked", onSeeked, { once: true });
+            });
+
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.max(1, video.videoWidth || 1);
+            canvas.height = Math.max(1, video.videoHeight || 1);
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return fail();
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const data = canvas.toDataURL("image/jpeg", 0.82);
+            clean();
+            resolve(data || null);
+          } catch {
+            fail();
+          }
+        };
+
+        video.addEventListener("loadeddata", onLoaded, { once: true });
+        video.addEventListener("error", fail, { once: true });
+      });
+
+    const run = async () => {
+      for (const src of sources) {
+        if (cancelled) return;
+        if (posters[src]) continue;
+        const data = await capturePoster(src);
+        if (cancelled) return;
+        if (!data) continue;
+        setPosters((prev) => (prev[src] ? prev : { ...prev, [src]: data }));
+      }
+    };
+
+    void run();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sources.join("|")]);
+
+  return posters;
+}
+
 function Pill({ children }: { children: React.ReactNode }) {
   return (
     <span
@@ -573,6 +650,11 @@ export default function SalonCentricNyfwProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const progress = useScrollProgress();
   const isMobileView = useIsMobileView();
+  const videoPosters = useVideoPosters([
+    "/NYFW Social Reel 2.mov",
+    "/NYFW Social Reel 3.mov",
+    "/BBR Luncheon Reel 1.mov",
+  ]);
   const [activeMetricId, setActiveMetricId] = useState(metrics[0]?.id ?? "");
   const activeMetric = useMemo(() => metrics.find((m) => m.id === activeMetricId) ?? metrics[0], [activeMetricId]);
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
@@ -803,11 +885,11 @@ export default function SalonCentricNyfwProjectPage() {
 
                         <div className="p-2">
                           <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
-                            <div className="relative aspect-[4/5] w-full bg-surface/30">
+                            <div className="relative aspect-[668/597] w-full bg-surface/30">
                               <img
                                 src={post.src}
                                 alt={post.alt}
-                                className="h-full w-full object-cover"
+                                className="h-full w-full object-contain"
                                 loading="lazy"
                                 decoding="async"
                               />
@@ -851,8 +933,16 @@ export default function SalonCentricNyfwProjectPage() {
                       <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
                         {[
                           { src: "/NYFW Insta Social Reel_1.mov", label: "NYFW reel 1", poster: "/NYFW Social Reel SS 1 Pre.png" },
-                          { src: "/NYFW Social Reel 2.mov", label: "NYFW reel 2", poster: "/Header Image.png" },
-                          { src: "/NYFW Social Reel 3.mov", label: "NYFW reel 3", poster: "/Header Image.png" },
+                          {
+                            src: "/NYFW Social Reel 2.mov",
+                            label: "NYFW reel 2",
+                            poster: videoPosters["/NYFW Social Reel 2.mov"] ?? "/Header Image.png",
+                          },
+                          {
+                            src: "/NYFW Social Reel 3.mov",
+                            label: "NYFW reel 3",
+                            poster: videoPosters["/NYFW Social Reel 3.mov"] ?? "/Header Image.png",
+                          },
                         ].map((reel) => (
                           <div
                             key={reel.src}
@@ -892,6 +982,79 @@ export default function SalonCentricNyfwProjectPage() {
                       <p className="mt-2 text-[11px] text-text-secondary/70">
                         Swipe to view reels.
                       </p>
+                    </div>
+                  </div>
+                </WindowFrame>
+
+                <WindowFrame title="BBR Luncheon reel + post">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="rounded-[26px] border border-white/10 bg-black/30 overflow-hidden">
+                      <div className="relative aspect-[9/16] w-full">
+                        <video
+                          src="/BBR Luncheon Reel 1.mov"
+                          poster={videoPosters["/BBR Luncheon Reel 1.mov"] ?? "/NYFW BBR Social Post 2.png"}
+                          controls
+                          playsInline
+                          preload="metadata"
+                          className="h-full w-full object-cover"
+                          aria-label="BBR Luncheon reel"
+                        />
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/55 to-black/0"
+                        />
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/55 to-black/0"
+                        />
+                        <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2">
+                          <span className="inline-flex items-center rounded-full border border-white/15 bg-black/35 px-2 py-1 text-[10px] font-mono uppercase tracking-widest text-white/80">
+                            Reel
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                      <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <span
+                            aria-hidden="true"
+                            className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
+                          />
+                          <div className="min-w-0">
+                            <p className="truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                              Instagram
+                            </p>
+                            <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
+                          </div>
+                        </div>
+                        <span aria-hidden="true" className="text-text-secondary/60">
+                          •••
+                        </span>
+                      </div>
+
+                      <div className="p-2">
+                        <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
+                          <div className="relative aspect-[670/594] w-full bg-surface/30">
+                            <img
+                              src="/NYFW BBR Social Post 2.png"
+                              alt="NYFW BBR social post screenshot"
+                              className="h-full w-full object-contain"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                            <div
+                              aria-hidden="true"
+                              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.04] to-black/[0.16]"
+                            />
+                            <div
+                              aria-hidden="true"
+                              className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </WindowFrame>
