@@ -20,6 +20,7 @@ type SnapshotCard = { title: string; value: string };
 const deliverables = {
   articlePdf: {
     title: "SalonCentric Uplifts Black Beauty Excellence This New York Fashion Week SS 2024",
+    displayTitle: "Digital Article & Brand Communications",
     fileName: "SalonCentric Uplifts Black Beauty Excellence This New York Fashion Week SS 2024.pdf",
   },
 } as const;
@@ -486,6 +487,82 @@ function RailList({
   );
 }
 
+function ResultsAccordion({
+  metrics,
+  activeId,
+  onSelect,
+}: {
+  metrics: Metric[];
+  activeId: string;
+  onSelect: (id: string) => void;
+}) {
+  return (
+    <div className="grid gap-3 lg:hidden">
+      {metrics.map((metric) => {
+        const isOpen = metric.id === activeId;
+        return (
+          <div
+            key={metric.id}
+            className={cn(
+              "rounded-2xl border border-white/10 bg-surface-alt/10 overflow-hidden",
+              "transition-colors",
+              isOpen ? "bg-white/5 border-white/20" : "bg-surface-alt/10",
+            )}
+          >
+            <button
+              type="button"
+              aria-expanded={isOpen}
+              aria-controls={`metric-accordion-panel-${metric.id}`}
+              onClick={() => onSelect(metric.id)}
+              className={cn(
+                "group relative w-full px-5 py-4 pl-11 text-left",
+                "before:absolute before:left-5 before:top-6 before:h-2.5 before:w-2.5 before:rounded-full before:border before:transition-all before:duration-200",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                isOpen
+                  ? "before:border-accent/40 before:bg-accent/90 before:shadow-[0_0_0_4px_rgba(255,59,48,0.14)]"
+                  : "before:border-white/15 before:bg-transparent hover:before:border-white/25 hover:before:bg-white/10",
+              )}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <p className="font-display text-base leading-snug text-text-primary line-clamp-2">{metric.listTitle}</p>
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-text-secondary transition-transform duration-200",
+                    isOpen ? "rotate-180" : "rotate-0",
+                  )}
+                >
+                  ▾
+                </span>
+              </div>
+            </button>
+
+            <div
+              id={`metric-accordion-panel-${metric.id}`}
+              aria-hidden={!isOpen}
+              className={cn(
+                "overflow-hidden",
+                "transition-[max-height,opacity,transform] duration-300",
+                isOpen ? "max-h-[999px] opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-1 pointer-events-none",
+              )}
+            >
+              <div className="px-5 pb-5">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Key performance indicator:</p>
+                <h4 className="mt-3 font-display text-xl tracking-tight text-text-primary">{metric.kpiLabel}</h4>
+                <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{metric.description}</p>
+                <div className="mt-6 grid gap-4">
+                  <PlaceholderBlock label="KPI chart placeholder" />
+                  <PlaceholderBlock label="Reporting screenshot placeholder" />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function SalonCentricNyfwProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const progress = useScrollProgress();
@@ -620,28 +697,6 @@ export default function SalonCentricNyfwProjectPage() {
 
             <Section id="objective" title="Campaign Objective" contentClassName="mt-6">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
-
-              <div
-                className={cn(
-                  "mt-10 max-w-3xl relative overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8",
-                  "before:absolute before:inset-0 before:pointer-events-none before:opacity-[0.5]",
-                  "before:bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)]",
-                  "before:bg-[size:28px_28px]",
-                  "after:absolute after:-right-24 after:-top-24 after:h-64 after:w-64 after:rounded-full after:bg-accent/10 after:blur-3xl after:pointer-events-none",
-                )}
-              >
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Target Audience</p>
-                <dl className="relative mt-6 grid gap-x-10 gap-y-5 md:grid-cols-2">
-                  {project.audience.map((item) => (
-                    <div key={item.label} className="min-w-0">
-                      <dt className="inline-flex items-center rounded-full border border-white/10 bg-surface/30 px-3 py-1 text-[11px] font-mono uppercase tracking-widest text-text-secondary/80">
-                        {item.label}
-                      </dt>
-                      <dd className="mt-3 text-sm leading-relaxed text-text-secondary">{item.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -670,7 +725,7 @@ export default function SalonCentricNyfwProjectPage() {
 
               <div className="mt-8 grid gap-6">
                 <WindowFrame
-                  title={deliverables.articlePdf.title}
+                  title={deliverables.articlePdf.displayTitle}
                   titleClassName="text-sm tracking-tight text-text-primary normal-case"
                   actions={
                     <a
@@ -719,7 +774,28 @@ export default function SalonCentricNyfwProjectPage() {
 
                 <div className="grid gap-6 md:grid-cols-2">
                   <WindowFrame title="Instagram post screenshot (to be added)">
-                    <PlaceholderBlock label="Instagram post screenshot placeholder" />
+                    <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                      <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <span
+                            aria-hidden="true"
+                            className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
+                          />
+                          <div className="min-w-0">
+                            <p className="truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                              Instagram
+                            </p>
+                            <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
+                          </div>
+                        </div>
+                        <span aria-hidden="true" className="text-text-secondary/60">
+                          •••
+                        </span>
+                      </div>
+                      <div className="p-3">
+                        <PlaceholderBlock label="Instagram post screenshot placeholder" />
+                      </div>
+                    </div>
                   </WindowFrame>
                   <WindowFrame title="Campaign images">
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -771,7 +847,9 @@ export default function SalonCentricNyfwProjectPage() {
                 <p className="text-xs text-text-secondary/70">Source: Campaign reporting.</p>
               </div>
 
-              <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
+              <ResultsAccordion metrics={metrics} activeId={activeMetricId} onSelect={setActiveMetricId} />
+
+              <div className="mt-8 hidden lg:grid grid-cols-1 gap-6 lg:grid-cols-12">
                 <div className="lg:col-span-5">
                   <div className="space-y-2 rounded-2xl border border-white/10 bg-surface-alt/10 p-2">
                     {metrics.map((metric) => {
