@@ -70,6 +70,13 @@ const sectionLinks: SectionLink[] = [
   { id: "tools", label: "Tools" },
 ];
 
+const episodeClips = [
+  {
+    title: "Hurtigruten UK · Roald Amundsen clip",
+    src: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FHurtigrutenUK%2Fvideos%2F1772286852926623%2F&show_text=false&width=560&t=0",
+  },
+] as const;
+
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
 
@@ -428,8 +435,30 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
                 <div className="bg-surface/30">
                   <div className="aspect-[16/9] w-full">
-                    <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                      Add 1–3 stills or production frames
+                    <div className="grid h-full w-full gap-4 p-4 md:p-5 md:grid-cols-2">
+                      {episodeClips.map((clip) => (
+                        <div
+                          key={clip.src}
+                          className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40"
+                        >
+                          <div className="relative aspect-video w-full">
+                            <iframe
+                              src={clip.src}
+                              title={clip.title}
+                              className="absolute inset-0 h-full w-full"
+                              loading="lazy"
+                              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                              allowFullScreen
+                            />
+                          </div>
+                        </div>
+                      ))}
+
+                      <div className="hidden md:flex items-center justify-center rounded-2xl border border-white/10 bg-surface/30 px-6 text-center">
+                        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                          Add more clips when ready
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
