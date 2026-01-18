@@ -76,10 +76,6 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.4 }}
-                            className={cn(
-                                project.size === "large" && "md:col-span-2",
-                                project.size === "tall" && "md:row-span-2"
-                            )}
                         >
                             <ProjectCard
                                 index={index}
