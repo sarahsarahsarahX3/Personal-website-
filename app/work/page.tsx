@@ -30,6 +30,17 @@ export default async function WorkPage() {
     }));
 
     projects.unshift({
+        title: "Discovery Channel × Mighty Cruise Ships",
+        category: "Video Production",
+        image: "/images/Discovery%20Channel.png",
+        size: "small",
+        slug: "discovery-mighty-cruise-ships",
+        tags: ["Video Production", "Brand Storytelling"],
+        description:
+            "Editorial and production support for a Discovery Channel documentary episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship.",
+    });
+
+    projects.unshift({
         title: "SalonCentric × New York Fashion Week",
         category: "Campaigns",
         image: "/NYFW%20Project%20thumbnail.png",
