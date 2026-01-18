@@ -38,9 +38,26 @@ const project = {
     "Maintained consistency with broadcast standards, tone, and documentary conventions.",
   ],
   impact: [
-    { label: "Delivery", value: "Supported a broadcast-ready episode pipeline from production through editorial handoff." },
-    { label: "Standards", value: "Maintained documentary consistency and broadcast expectations across supporting materials." },
-    { label: "Distribution", value: "Contributed to storytelling designed for a global Discovery Channel audience." },
+    {
+      label: "International Distribution",
+      value: "Supported editorial packaging and deliverables suitable for international broadcast distribution and localization workflows.",
+    },
+    {
+      label: "Flagship Series Contribution",
+      value: "Contributed to a Discovery Channel documentary franchise by supporting episode-level production and editorial coordination.",
+    },
+    {
+      label: "Broadcast Delivery",
+      value: "Maintained reliable handoffs and supporting materials across production and post to keep delivery organized and standards-aligned.",
+    },
+    {
+      label: "Long-Form Engagement",
+      value: "Helped keep complex engineering and expedition challenges clear and watchable through audience-first storytelling structure.",
+    },
+    {
+      label: "Series Reputation",
+      value: "Protected tone and documentary integrity through detail-oriented support that reinforced trust in the series’ storytelling.",
+    },
   ] satisfies SnapshotRow[],
   tools: ["Production Support", "Editorial Coordination", "Story Notes", "Broadcast Standards", "Cross-Functional Collaboration"],
 } as const;
@@ -434,8 +451,8 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Impact" subtitle="Broadcast-ready indicators">
-              <div className="grid gap-4 md:grid-cols-3">
+            <Section id="impact" title="Impact" subtitle="Impact & Broadcast Reach">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {project.impact.map((item) => (
                   <div key={item.label} className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
                     <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.label}</p>
