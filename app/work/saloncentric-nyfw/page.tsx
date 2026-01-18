@@ -276,7 +276,7 @@ function Section({
         <h2
           id={`${id}-title`}
           className={cn(
-            "font-display text-3xl md:text-2xl tracking-tight text-text-primary/90",
+            "font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90",
             titleClassName,
           )}
         >
@@ -701,12 +701,7 @@ export default function SalonCentricNyfwProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section
-              id="messaging"
-              title="Campaign Messaging Strategy"
-              titleClassName="text-[22px] sm:text-3xl"
-              contentClassName="mt-6"
-            >
+            <Section id="messaging" title="Campaign Messaging Strategy" contentClassName="mt-6">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.messagingIntro}</p>
               <RailList ariaLabel="Campaign messaging points" items={[...project.messagingBullets]} />
             </Section>
@@ -722,9 +717,9 @@ export default function SalonCentricNyfwProjectPage() {
               <div className="flex items-end justify-between gap-6 pb-2">
                 <h2
                   id="deliverables-title"
-                  className="text-xs font-mono uppercase tracking-widest text-text-secondary/70"
+                  className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90"
                 >
-                  Final deliverables
+                  Final Deliverables
                 </h2>
               </div>
 
@@ -841,7 +836,7 @@ export default function SalonCentricNyfwProjectPage() {
                 <div>
                   <h2
                     id="results-title"
-                    className="font-display text-3xl md:text-2xl tracking-tight text-text-primary/90"
+                    className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90"
                   >
                     Results
                   </h2>

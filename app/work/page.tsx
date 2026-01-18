@@ -30,10 +30,11 @@ export default async function WorkPage() {
     projects.unshift({
         title: "SalonCentric × New York Fashion Week",
         category: "Campaigns",
-        image: "",
+        image: "/images/New%20York%20Fashion%20Week.png",
         size: "small",
         slug: "saloncentric-nyfw",
         tags: ["Campaigns", "Content Strategy", "Copywriting", "Brand Storytelling"],
+        year: "2024",
         description:
             "Integrated campaign content production translating a live NYFW activation into coordinated digital, social, and email storytelling.",
     });
@@ -45,6 +46,7 @@ export default async function WorkPage() {
         size: "large",
         slug: "p-and-g-beauty-content-hub",
         tags: ["SEO & AEO", "Content Strategy", "Copywriting", "Brand Storytelling"],
+        year: "2025",
         description:
             "SEO-led editorial growth program for HairCode, Procter & Gamble Beauty’s brand-owned content hub.",
     });
