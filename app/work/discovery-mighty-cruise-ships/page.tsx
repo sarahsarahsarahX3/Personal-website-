@@ -98,7 +98,7 @@ const sectionLinks: SectionLink[] = [
   { id: "focus", label: "Storytelling Focus" },
   { id: "support", label: "Production Support" },
   { id: "impact", label: "Impact" },
-  { id: "tools", label: "Tools & Skills" },
+  { id: "tools", label: "Tools" },
 ];
 
 const episodeClips = [
