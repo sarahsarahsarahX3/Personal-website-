@@ -30,7 +30,7 @@ const project = {
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
   strategyIntro:
-    "Designed a content system to drive sustainable organic growth by:",
+    "Design a content system to drive sustainable organic growth by:",
   strategyBullets: [
     "Mapping topics to high-intent user queries and audience needs.",
     "Structuring content for clarity, scannability, and discoverability.",
@@ -813,7 +813,7 @@ function MiniDeltaBars({
   ariaLabel,
 }: {
   idPrefix: string;
-  items: { label: string; pct: number }[];
+  items: { label: string; pct: number; labelText?: string }[];
   ariaLabel: string;
 }) {
   const width = 360;
@@ -852,7 +852,7 @@ function MiniDeltaBars({
         const isPositive = item.pct >= 0;
         const y = isPositive ? midY - h : midY;
         const fill = isPositive ? `url(#${idPrefix}-pos)` : `url(#${idPrefix}-neg)`;
-        const label = `${item.pct >= 0 ? "+" : ""}${item.pct.toFixed(1)}%`;
+        const label = item.labelText ?? `${item.pct >= 0 ? "+" : ""}${item.pct.toFixed(1)}%`;
 
         return (
           <g key={item.label}>
@@ -963,9 +963,18 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
             items={(() => {
               const series = semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[];
               const base = series[0]?.valueK ?? 1;
+              const formatK = (valueK: number) => {
+                const fixed = valueK.toFixed(2);
+                return `${fixed.endsWith("0") ? fixed.slice(0, -1) : fixed}K`;
+              };
               return series.map((point) => {
                 const pct = ((point.valueK - base) / base) * 100;
-                return { label: point.label.split(" ")[0] ?? point.label, pct };
+                const label = point.label.split(" ")[0] ?? point.label;
+                return {
+                  label,
+                  pct,
+                  labelText: label === "May" ? formatK(point.valueK) : undefined,
+                };
               });
             })()}
           />

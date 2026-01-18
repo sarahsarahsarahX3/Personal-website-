@@ -168,83 +168,6 @@ function useIsMobileView() {
   return isMobileView;
 }
 
-function useVideoPosters(sources: string[]) {
-  const [posters, setPosters] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const capturePoster = (src: string) =>
-      new Promise<string | null>((resolve) => {
-        const video = document.createElement("video");
-        video.muted = true;
-        video.playsInline = true;
-        video.preload = "auto";
-        video.crossOrigin = "anonymous";
-        video.src = src;
-
-        const clean = () => {
-          video.pause();
-          video.removeAttribute("src");
-          video.load();
-        };
-
-        const fail = () => {
-          clean();
-          resolve(null);
-        };
-
-        const onLoaded = async () => {
-          try {
-            const duration = Number.isFinite(video.duration) ? video.duration : 0;
-            const targetTime = duration > 0 ? Math.min(0.5, Math.max(0.12, duration * 0.05)) : 0.12;
-            video.currentTime = targetTime;
-
-            await new Promise<void>((r) => {
-              const onSeeked = () => r();
-              video.addEventListener("seeked", onSeeked, { once: true });
-            });
-
-            const canvas = document.createElement("canvas");
-            canvas.width = Math.max(1, video.videoWidth || 1);
-            canvas.height = Math.max(1, video.videoHeight || 1);
-            const ctx = canvas.getContext("2d");
-            if (!ctx) return fail();
-
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const data = canvas.toDataURL("image/jpeg", 0.82);
-            clean();
-            resolve(data || null);
-          } catch {
-            fail();
-          }
-        };
-
-        video.addEventListener("loadeddata", onLoaded, { once: true });
-        video.addEventListener("error", fail, { once: true });
-      });
-
-    const run = async () => {
-      for (const src of sources) {
-        if (cancelled) return;
-        if (posters[src]) continue;
-        const data = await capturePoster(src);
-        if (cancelled) return;
-        if (!data) continue;
-        setPosters((prev) => (prev[src] ? prev : { ...prev, [src]: data }));
-      }
-    };
-
-    void run();
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sources.join("|")]);
-
-  return posters;
-}
-
 function Pill({ children }: { children: React.ReactNode }) {
   return (
     <span
@@ -505,11 +428,6 @@ export default function SalonCentricNyfwProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const progress = useScrollProgress();
   const isMobileView = useIsMobileView();
-  const videoPosters = useVideoPosters([
-    "/NYFW Social Reel 2.mov",
-    "/NYFW Social Reel 3.mov",
-    "/BBR Luncheon Reel 1.mov",
-  ]);
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
 
@@ -653,6 +571,7 @@ export default function SalonCentricNyfwProjectPage() {
             </Section>
 
             <section id="results" aria-labelledby="results-title" className="scroll-mt-16 pt-10">
+              <div aria-hidden="true" className="mb-5 h-px w-16 bg-white/10" />
               <div className="flex items-end justify-between gap-6 pb-2">
                 <h2
                   id="results-title"
@@ -789,17 +708,17 @@ export default function SalonCentricNyfwProjectPage() {
                           {
                             src: "/NYFW Social Reel 2.mov",
                             label: "NYFW reel 2",
-                            poster: videoPosters["/NYFW Social Reel 2.mov"] ?? "/Header Image.png",
+                            poster: "/posters/NYFW%20Social%20Reel%202.mov.png",
                           },
                           {
                             src: "/NYFW Social Reel 3.mov",
                             label: "NYFW reel 3",
-                            poster: videoPosters["/NYFW Social Reel 3.mov"] ?? "/Header Image.png",
+                            poster: "/posters/NYFW%20Social%20Reel%203.mov.png",
                           },
                           {
                             src: "/BBR Luncheon Reel 1.mov",
                             label: "BBR luncheon reel 1",
-                            poster: videoPosters["/BBR Luncheon Reel 1.mov"] ?? "/NYFW BBR Social Post 2.png",
+                            poster: "/posters/BBR%20Luncheon%20Reel%201.mov.png",
                           },
                         ].map((reel) => (
                           <div
