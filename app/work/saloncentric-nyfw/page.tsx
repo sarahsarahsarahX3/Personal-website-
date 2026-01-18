@@ -681,7 +681,7 @@ export default function SalonCentricNyfwProjectPage() {
                     <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
                   </div>
                   <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                    NYFW activation highlight placeholder
+                    New York Fashion Week SS 2024
                   </p>
                   <span aria-hidden="true" className="text-text-secondary/50">
                     ⌄
@@ -777,86 +777,54 @@ export default function SalonCentricNyfwProjectPage() {
                 </WindowFrame>
 
                 <div className="grid gap-6 md:grid-cols-2">
-                  <WindowFrame title="Instagram post screenshots">
-                    <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                      <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
-                        <div className="flex min-w-0 items-center gap-3">
-                          <span
-                            aria-hidden="true"
-                            className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
-                          />
-                          <div className="min-w-0">
-                            <p className="truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                              Instagram
-                            </p>
-                            <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
-                          </div>
-                        </div>
-                        <span aria-hidden="true" className="text-text-secondary/60">
-                          •••
-                        </span>
-                      </div>
-                      <div className="p-3">
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          {[
-                            { src: "/NYFW Social Post 1.png", alt: "NYFW social post screenshot 1" },
-                            { src: "/NYFW BBR Social Post 2.png", alt: "NYFW social post screenshot 2" },
-                          ].map((item) => (
-                            <div
-                              key={item.src}
-                              className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10"
-                            >
-                              <div className="relative aspect-square w-full bg-surface/30">
-                                <img
-                                  src={item.src}
-                                  alt={item.alt}
-                                  className="h-full w-full object-cover"
-                                  loading="lazy"
-                                  decoding="async"
-                                />
-                                <div
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.04] to-black/[0.16]"
-                                />
-                                <div
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
-                                />
-                              </div>
+                  {[
+                    { src: "/NYFW Social Post 1.png", alt: "NYFW social post screenshot 1" },
+                    { src: "/NYFW BBR Social Post 2.png", alt: "NYFW social post screenshot 2" },
+                  ].map((post) => (
+                    <WindowFrame key={post.src} title="Instagram post screenshot">
+                      <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                        <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                          <div className="flex min-w-0 items-center gap-3">
+                            <span
+                              aria-hidden="true"
+                              className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
+                            />
+                            <div className="min-w-0">
+                              <p className="truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                                Instagram
+                              </p>
+                              <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
                             </div>
-                          ))}
+                          </div>
+                          <span aria-hidden="true" className="text-text-secondary/60">
+                            •••
+                          </span>
                         </div>
-                      </div>
-                    </div>
-                  </WindowFrame>
-                  <WindowFrame title="Campaign images">
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {["/Model1.png", "/Model2.png", "/Model3.png"].map((src, index) => (
-                        <div
-                          key={src}
-                          className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10"
-                        >
-                          <div className="relative aspect-[3/4] w-full bg-surface/30">
-                            <img
-                              src={src}
-                              alt={`Campaign image ${index + 1}`}
-                              className="h-full w-full object-cover"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                            <div
-                              aria-hidden="true"
-                              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.18]"
-                            />
-                            <div
-                              aria-hidden="true"
-                              className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
-                            />
+
+                        <div className="p-2">
+                          <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
+                            <div className="relative aspect-[4/5] w-full bg-surface/30">
+                              <img
+                                src={post.src}
+                                alt={post.alt}
+                                className="h-full w-full object-cover"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                              <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.04] to-black/[0.16]"
+                              />
+                              <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                              />
+                            </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </WindowFrame>
+                      </div>
+                    </WindowFrame>
+                  ))}
                 </div>
 
                 <WindowFrame title="Instagram reels">
@@ -883,8 +851,8 @@ export default function SalonCentricNyfwProjectPage() {
                       <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
                         {[
                           { src: "/NYFW Insta Social Reel_1.mov", label: "NYFW reel 1", poster: "/NYFW Social Reel SS 1 Pre.png" },
-                          { src: "/NYFW Social Reel 2.mov", label: "NYFW reel 2" },
-                          { src: "/NYFW Social Reel 3.mov", label: "NYFW reel 3" },
+                          { src: "/NYFW Social Reel 2.mov", label: "NYFW reel 2", poster: "/Header Image.png" },
+                          { src: "/NYFW Social Reel 3.mov", label: "NYFW reel 3", poster: "/Header Image.png" },
                         ].map((reel) => (
                           <div
                             key={reel.src}
