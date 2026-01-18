@@ -435,11 +435,11 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
                 <div className="bg-surface/30">
                   <div className="aspect-[16/9] w-full">
-                    <div className="grid h-full w-full gap-4 p-4 md:p-5 md:grid-cols-2">
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-4 md:p-5">
                       {episodeClips.map((clip) => (
                         <div
                           key={clip.src}
-                          className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40"
+                          className="w-full max-w-[720px] overflow-hidden rounded-2xl border border-white/10 bg-surface/40"
                         >
                           <div className="relative aspect-video w-full">
                             <iframe
@@ -453,12 +453,6 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                           </div>
                         </div>
                       ))}
-
-                      <div className="hidden md:flex items-center justify-center rounded-2xl border border-white/10 bg-surface/30 px-6 text-center">
-                        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                          Add more clips when ready
-                        </p>
-                      </div>
                     </div>
                   </div>
                 </div>
