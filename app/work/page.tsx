@@ -16,7 +16,9 @@ export default async function WorkPage() {
     const workFiles = await getAllFilesFrontMatter("work");
 
     // Serialize/Map data
-    const projects: WorkProject[] = workFiles.map((file: any) => ({
+    const projects: WorkProject[] = workFiles
+        .filter((file: any) => !["vortex", "lumina"].includes(file.slug))
+        .map((file: any) => ({
         title: file.title,
         category: file.category,
         image: file.heroImage,

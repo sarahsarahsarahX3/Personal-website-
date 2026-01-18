@@ -26,7 +26,7 @@ export function Hero() {
                             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                             className="text-text-secondary text-lg md:text-xl font-light tracking-wide"
                         >
-                            WELCOME TO MY
+                            WELCOME
                         </motion.p>
                     </div>
 
