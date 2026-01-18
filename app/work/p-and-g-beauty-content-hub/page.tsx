@@ -962,19 +962,15 @@ function MetricChart({ metricId }: { metricId: Metric["id"] }) {
             ariaLabel="Cumulative organic traffic growth percentage from May 2025 to October 2025"
             items={(() => {
               const series = semrushSnapshot.trafficSeries as unknown as { label: string; valueK: number }[];
-              const base = series[0]?.valueK ?? 1;
               const formatK = (valueK: number) => {
                 const fixed = valueK.toFixed(2);
                 return `${fixed.endsWith("0") ? fixed.slice(0, -1) : fixed}K`;
               };
-              return series.map((point) => {
-                const pct = ((point.valueK - base) / base) * 100;
+              return series.map((point, index) => {
+                const prev = series[index - 1]?.valueK ?? point.valueK;
+                const pct = index === 0 ? 0 : ((point.valueK - prev) / Math.max(1, prev)) * 100;
                 const label = point.label.split(" ")[0] ?? point.label;
-                return {
-                  label,
-                  pct,
-                  labelText: label === "May" ? formatK(point.valueK) : undefined,
-                };
+                return { label, pct, labelText: formatK(point.valueK) };
               });
             })()}
           />

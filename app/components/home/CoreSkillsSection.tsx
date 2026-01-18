@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import { cn } from "@/app/lib/utils";
 import styles from "./CoreSkillsSection.module.css";
-import { CoreSkillViz, type CoreSkillVizId } from "@/app/components/home/CoreSkillViz";
+import type { CoreSkillVizId } from "@/app/components/home/CoreSkillViz";
 
 type ValueArea = {
   id: CoreSkillVizId;
@@ -203,9 +203,6 @@ export function CoreSkillsSection() {
                       >
                         <div className={styles.accordionInner}>
                           <div className="pt-3 text-sm leading-relaxed text-text-secondary">{area.description}</div>
-                          <div className="mt-5 h-[220px] rounded-xl border border-white/10 overflow-hidden">
-                            {isOpen ? <CoreSkillViz id={area.id} /> : null}
-                          </div>
                         </div>
                       </div>
                     </li>
@@ -292,7 +289,7 @@ export function CoreSkillsSection() {
               id="value-detail-panel"
               role="tabpanel"
               aria-labelledby={`value-tab-${activeArea.id}`}
-              className="rounded-2xl border border-white/10 bg-surface-alt/10 p-7 md:p-8 md:h-[521px]"
+              className="rounded-2xl border border-white/10 bg-surface-alt/10 p-7 md:p-8"
             >
               <div key={activeArea.id} className={cn("flex h-full flex-col", styles.detailInner)}>
                 <div className="flex items-center gap-3 font-mono text-xs tracking-widest text-text-secondary/70">
@@ -306,12 +303,6 @@ export function CoreSkillsSection() {
                 <p className="mt-6 text-base leading-relaxed text-text-secondary max-w-2xl">
                   {activeArea.description}
                 </p>
-
-                <div className="mt-auto pt-8">
-                  <div className="h-[220px] md:h-[260px] rounded-xl border border-white/10 overflow-hidden">
-                    <CoreSkillViz id={activeArea.id} />
-                  </div>
-                </div>
               </div>
             </div>
 

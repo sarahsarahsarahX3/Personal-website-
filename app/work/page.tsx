@@ -59,7 +59,7 @@ export default async function WorkPage() {
                         Selected Work
                     </h1>
                     <p className="text-text-secondary text-xl max-w-xl animate-fade-in-up delay-200">
-                        A curation of campaigns, strategies, and digital experiences that moved the needle and defined culture.
+                        A curation of campaigns, strategies, and digital content that moved the needle and defined culture.
                     </p>
                 </header>
 

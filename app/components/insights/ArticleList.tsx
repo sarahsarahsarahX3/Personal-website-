@@ -86,26 +86,7 @@ function emitAnalytics(event: string, payload: Record<string, unknown>) {
 }
 
 export function ArticleList({ articles }: { articles: Article[] }) {
-    const [activeTag, setActiveTag] = useState<string | null>(null);
     const [showBackToTop, setShowBackToTop] = useState(false);
-
-    const allTags = useMemo(() => {
-        const tags = new Set<string>();
-        for (const article of articles) {
-            for (const tag of article.tags ?? []) {
-                const trimmed = tag.trim();
-                if (!trimmed) continue;
-                if (isHiddenTag(trimmed)) continue;
-                tags.add(trimmed);
-            }
-        }
-        return Array.from(tags).sort((a, b) => a.localeCompare(b));
-    }, [articles]);
-
-    const filteredArticles = useMemo(() => {
-        if (!activeTag || isHiddenTag(activeTag)) return articles;
-        return articles.filter((article) => (article.tags ?? []).some((tag) => tag.trim() === activeTag));
-    }, [articles, activeTag]);
 
     useEffect(() => {
         const onScroll = () => setShowBackToTop(window.scrollY > 600);
@@ -116,54 +97,8 @@ export function ArticleList({ articles }: { articles: Article[] }) {
 
     return (
         <>
-            {allTags.length ? (
-                <div className="mb-8 hidden md:flex flex-wrap items-center justify-center gap-3">
-                    <span className="text-xs uppercase tracking-widest text-text-secondary/70 font-mono">
-                        Tags
-                    </span>
-                    <button
-                        type="button"
-                        className={cn(
-                            "px-4 py-2 rounded-full border border-dashed text-xs uppercase tracking-widest transition-colors",
-                            !activeTag
-                                ? "border-accent/60 text-accent bg-transparent"
-                                : "border-white/15 text-text-secondary bg-transparent hover:bg-white/5 hover:border-white/25 hover:text-text-primary"
-                        )}
-                        onClick={() => {
-                            setActiveTag(null);
-                            emitAnalytics("article_tag_filter_click", { tag: null });
-                        }}
-                        data-analytics="article_tag_filter"
-                        data-tag="all"
-                    >
-                        All
-                    </button>
-
-                    {allTags.map((tag) => (
-                        <button
-                            key={tag}
-                            type="button"
-                            className={cn(
-                                "px-4 py-2 rounded-full border border-dashed text-xs uppercase tracking-widest transition-colors",
-                                activeTag === tag
-                                    ? "border-accent/60 text-accent bg-transparent"
-                                    : "border-white/15 text-text-secondary bg-transparent hover:bg-white/5 hover:border-white/25 hover:text-text-primary"
-                            )}
-                            onClick={() => {
-                                setActiveTag(tag);
-                                emitAnalytics("article_tag_filter_click", { tag });
-                            }}
-                            data-analytics="article_tag_filter"
-                            data-tag={tag}
-                        >
-                            {tag}
-                        </button>
-                    ))}
-                </div>
-            ) : null}
-
             <div className="border-t border-white/10">
-                {filteredArticles.map((article, i) => {
+                {articles.map((article, i) => {
                     const internalHref = `/insights/${article.slug}`;
                     const href = article.link ?? internalHref;
                     const isExternal = href.startsWith("http://") || href.startsWith("https://");
