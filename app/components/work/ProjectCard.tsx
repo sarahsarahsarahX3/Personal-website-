@@ -23,6 +23,8 @@ function formatIndex(index: number) {
 export function ProjectCard({ title, category, image, index, slug, year, description, className }: ProjectCardProps) {
     const isRemoteImage = typeof image === "string" && /^https?:\/\//.test(image);
     const hasImage = typeof image === "string" && image.trim().length > 0;
+    const imagePositionClassName =
+        slug === "discovery-mighty-cruise-ships" ? "object-[50%_65%]" : "object-center";
 
     return (
         <motion.article
@@ -55,7 +57,7 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                             <img
                                 src={image}
                                 alt={title}
-                                className="w-full h-full object-cover"
+                                className={cn("w-full h-full object-cover", imagePositionClassName)}
                                 loading="lazy"
                                 decoding="async"
                             />
@@ -63,7 +65,7 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                             <img
                                 src={image}
                                 alt={title}
-                                className="w-full h-full object-cover"
+                                className={cn("w-full h-full object-cover", imagePositionClassName)}
                                 loading="lazy"
                                 decoding="async"
                             />

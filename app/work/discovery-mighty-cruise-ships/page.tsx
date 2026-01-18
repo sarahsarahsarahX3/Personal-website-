@@ -11,6 +11,12 @@ type SnapshotRow = {
   value: string;
 };
 
+type ImpactKpi = {
+  id: string;
+  title: string;
+  description: string;
+};
+
 const project = {
   title: "Discovery Channel × Mighty Cruise Ships",
   subtitle: "Travel, Tourism, and Exploration Storytelling",
@@ -37,29 +43,48 @@ const project = {
     "Assisted with production logistics and deliverables to keep the episode on track.",
     "Maintained consistency with broadcast standards, tone, and documentary conventions.",
   ],
-  impact: [
+  impactKpis: [
     {
-      label: "International Distribution",
-      value: "Supported editorial packaging and deliverables suitable for international broadcast distribution and localization workflows.",
+      id: "international-distribution",
+      title: "International Distribution",
+      description:
+        "Supported editorial packaging and deliverables suitable for international broadcast distribution and localization workflows.",
     },
     {
-      label: "Flagship Series Contribution",
-      value: "Contributed to a Discovery Channel documentary franchise by supporting episode-level production and editorial coordination.",
+      id: "flagship-series",
+      title: "Flagship Series Contribution",
+      description:
+        "Contributed to a Discovery Channel documentary franchise by supporting episode-level production and editorial coordination.",
     },
     {
-      label: "Broadcast Delivery",
-      value: "Maintained reliable handoffs and supporting materials across production and post to keep delivery organized and standards-aligned.",
+      id: "broadcast-delivery",
+      title: "Broadcast Delivery",
+      description:
+        "Maintained reliable handoffs and supporting materials across production and post to keep delivery organized and standards-aligned.",
     },
     {
-      label: "Long-Form Engagement",
-      value: "Helped keep complex engineering and expedition challenges clear and watchable through audience-first storytelling structure.",
+      id: "long-form-engagement",
+      title: "Long-Form Engagement",
+      description:
+        "Helped keep complex engineering and expedition challenges clear and watchable through audience-first storytelling structure.",
     },
     {
-      label: "Series Reputation",
-      value: "Protected tone and documentary integrity through detail-oriented support that reinforced trust in the series’ storytelling.",
+      id: "series-reputation",
+      title: "Series Reputation",
+      description:
+        "Protected tone and documentary integrity through detail-oriented support that reinforced trust in the series’ storytelling.",
     },
-  ] satisfies SnapshotRow[],
-  tools: ["Production Support", "Editorial Coordination", "Story Notes", "Broadcast Standards", "Cross-Functional Collaboration"],
+  ] satisfies ImpactKpi[],
+  tools: [
+    "Production Support",
+    "Editorial Coordination",
+    "Story Notes",
+    "Broadcast Standards",
+    "Cross-Functional Collaboration",
+    "Creative Production",
+    "Travel & Tourism Marketing",
+    "Storytelling",
+  ],
 } as const;
 
 const sectionLinks: SectionLink[] = [
@@ -67,7 +92,7 @@ const sectionLinks: SectionLink[] = [
   { id: "focus", label: "Storytelling Focus" },
   { id: "support", label: "Production Support" },
   { id: "impact", label: "Impact" },
-  { id: "tools", label: "Tools" },
+  { id: "tools", label: "Tools & Skills" },
 ];
 
 const episodeClips = [
@@ -351,6 +376,76 @@ function RailList({ ariaLabel, items }: { ariaLabel: string; items: string[] }) 
   );
 }
 
+function ImpactAccordion({
+  items,
+  activeId,
+  onSelect,
+}: {
+  items: ImpactKpi[];
+  activeId: string;
+  onSelect: (id: string) => void;
+}) {
+  return (
+    <div className="grid gap-3 lg:hidden">
+      {items.map((item) => {
+        const isOpen = item.id === activeId;
+        return (
+          <div
+            key={item.id}
+            className={cn(
+              "rounded-2xl border border-white/10 bg-surface-alt/10 overflow-hidden",
+              "transition-colors",
+              isOpen ? "bg-white/5 border-white/20" : "bg-surface-alt/10",
+            )}
+          >
+            <button
+              type="button"
+              aria-expanded={isOpen}
+              aria-controls={`impact-accordion-panel-${item.id}`}
+              onClick={() => onSelect(isOpen ? "" : item.id)}
+              className={cn(
+                "group relative w-full px-5 py-4 pl-11 text-left",
+                "before:absolute before:left-5 before:top-6 before:h-2.5 before:w-2.5 before:rounded-full before:border before:transition-all before:duration-200",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                isOpen
+                  ? "before:border-accent/40 before:bg-accent/90 before:shadow-[0_0_0_4px_rgba(255,59,48,0.14)]"
+                  : "before:border-white/15 before:bg-transparent hover:before:border-white/25 hover:before:bg-white/10",
+              )}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <p className="font-display text-base leading-snug text-text-primary">{item.title}</p>
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-text-secondary transition-transform duration-200",
+                    isOpen ? "rotate-180" : "rotate-0",
+                  )}
+                >
+                  ▾
+                </span>
+              </div>
+            </button>
+
+            <div
+              id={`impact-accordion-panel-${item.id}`}
+              aria-hidden={!isOpen}
+              className={cn(
+                "overflow-hidden",
+                "transition-[max-height,opacity,transform] duration-300",
+                isOpen ? "max-h-[999px] opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-1 pointer-events-none",
+              )}
+            >
+              <div className="px-5 pb-5">
+                <p className="text-[13px] leading-relaxed text-text-secondary">{item.description}</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function DiscoveryMightyCruiseShipsProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
@@ -358,6 +453,11 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
 
   const snapshotCards = useMemo(() => project.snapshot, []);
+  const [activeImpactId, setActiveImpactId] = useState(project.impactKpis[0]?.id ?? "");
+  const activeImpact = useMemo(
+    () => project.impactKpis.find((item) => item.id === activeImpactId) ?? project.impactKpis[0],
+    [activeImpactId],
+  );
 
   return (
     <main className="min-h-screen bg-surface text-text-primary">
@@ -487,19 +587,56 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="impact" title="Impact" subtitle="Impact & Broadcast Reach">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {project.impact.map((item) => (
-                  <div key={item.label} className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{item.label}</p>
-                    <p className="mt-3 text-sm leading-relaxed text-text-secondary">{item.value}</p>
+              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                Select a KPI to view the detail.
+              </p>
+
+              <div className="mt-6">
+                <ImpactAccordion items={project.impactKpis as unknown as ImpactKpi[]} activeId={activeImpactId} onSelect={setActiveImpactId} />
+              </div>
+
+              <div className="mt-8 hidden lg:grid grid-cols-1 gap-6 lg:grid-cols-12">
+                <div className="lg:col-span-5">
+                  <div className="space-y-2 rounded-2xl border border-white/10 bg-surface-alt/10 p-2">
+                    {project.impactKpis.map((item) => {
+                      const isActive = item.id === activeImpactId;
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => setActiveImpactId(item.id)}
+                          className={cn(
+                            "w-full rounded-xl px-4 py-3 text-left text-[13px] leading-snug transition-colors",
+                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                            isActive
+                              ? "bg-white/5 text-text-primary"
+                              : "text-text-secondary hover:text-text-primary hover:bg-white/5",
+                          )}
+                        >
+                          <div className="flex items-center justify-between gap-4">
+                            <span>{item.title}</span>
+                            <span aria-hidden="true" className={cn("text-text-secondary/50", isActive && "text-accent/80")}>
+                              ↗
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
-                ))}
+                </div>
+
+                <div className="lg:col-span-7">
+                  <WindowFrame title="Impact & Broadcast Reach">
+                    <h3 className="font-display text-xl tracking-tight text-text-primary">{activeImpact?.title}</h3>
+                    <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{activeImpact?.description}</p>
+                  </WindowFrame>
+                </div>
               </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="tools" title="Tools" contentClassName="mt-6">
+            <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
               <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
                 {project.tools.map((tool) => (
                   <Pill key={tool}>{tool}</Pill>
