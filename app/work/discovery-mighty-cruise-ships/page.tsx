@@ -13,7 +13,7 @@ type SnapshotRow = {
 
 const project = {
   title: "Discovery Channel × Mighty Cruise Ships",
-  subtitle: "Travel, Exploration, and Documentary Storytelling",
+  subtitle: "Travel, Tourism, and Exploration Storytelling",
   role: "Production Assistant",
   overview:
     "Led editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series, contributing to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world expedition challenges into compelling, broadcast-ready storytelling for a global audience.",
@@ -22,8 +22,8 @@ const project = {
   snapshot: [
     { label: "Format", value: "Broadcast Documentary Series" },
     { label: "Episode Focus", value: "MS Roald Amundsen (hybrid-powered expedition ship)" },
-    { label: "Primary Goal", value: "Travel and Exploration Storytelling" },
-    { label: "Focus Areas", value: "Travel · Engineering · Environment · Expedition Challenges" },
+    { label: "Primary Goal", value: "Multimedia Storytelling" },
+    { label: "Focus Areas", value: "Travel · Tourism · Engineering · Environment · Expedition Challenges" },
   ] satisfies SnapshotRow[],
   storytellingFocus: [
     "Translate complex systems into clear, audience-first narrative beats.",
@@ -73,7 +73,7 @@ const sectionLinks: SectionLink[] = [
 const episodeClips = [
   {
     title: "Hurtigruten UK · Roald Amundsen clip",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHurtigrutenUK%2Fvideos%2F1772286852926623%2F&width=720&show_text=false&height=405&appId",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHurtigrutenUK%2Fvideos%2F1772286852926623%2F&show_text=false&width=1280&height=720&t=0",
   },
 ] as const;
 
