@@ -20,7 +20,6 @@ type SnapshotCard = { title: string; value: string };
 const deliverables = {
   articlePdf: {
     title: "SalonCentric Uplifts Black Beauty Excellence This New York Fashion Week SS 2024",
-    displayTitle: "Digital Article & Brand Communications",
     fileName: "SalonCentric Uplifts Black Beauty Excellence This New York Fashion Week SS 2024.pdf",
   },
 } as const;
@@ -29,12 +28,12 @@ const project = {
   title: "SalonCentric × New York Fashion Week",
   subtitle: "Integrated Campaign and Content Production",
   overview:
-    "Produced integrated campaign content for SalonCentric’s New York Fashion Week activation by scaling a live industry event into cohesive, multi-channel brand storytelling that drove engagement and strengthened brand authority.",
+    "Led integrated campaign content for SalonCentric’s New York Fashion Week activation, including extending the live event into a multi-channel brand campaign across digital, social, and email. The campaign positioned SalonCentric as a thought leader and industry insider through culturally relevant storytelling, including coverage of the Black Beauty Excellence Luncheon.",
   role: "Copywriter and Campaign Content Lead",
   objective:
     "Anchored brand communications and campaign storytelling in the energy and cultural relevance of New York Fashion Week by highlighting professional artistry, backstage access, and inclusive industry moments. Positioned SalonCentric as an insider brand connected to fashion’s most influential stage, balancing prestige storytelling with performance-aware copy across experiential, social, and owned channels.",
   messagingIntro:
-    "Defined a campaign narrative that transformed NYFW moments into scalable, multi-channel brand storytelling, including:",
+    "Define a campaign narrative that transformed NYFW moments into scalable, multi-channel brand storytelling by:",
   messagingBullets: [
     "Spotlighted professional artists through runway and backstage access.",
     "Positioned SalonCentric as a thought leader through clear, consistent brand communications during fashion’s most influential moment.",
@@ -57,7 +56,7 @@ const project = {
   ],
   snapshot: [
     { title: "Total Campaign Impressions", value: "1M+" },
-    { title: "Multi-Channel Activation", value: "EXPERIENTIAL · SOCIAL · EMAIL · DIGITAL · PAID · PR" },
+    { title: "Multi-Channel Activation", value: "EXPERIENTIAL · SOCIAL · EDITORIAL · EMAIL · DIGITAL · PAID · OWNED · PR" },
     { title: "Headlining Industry Moment", value: "ALIGNED WITH NEW YORK FASHION WEEK" },
   ],
   channels: ["Experiential", "Social", "Email", "Digital", "Paid", "PR"],
@@ -118,9 +117,8 @@ const metrics: Metric[] = [
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
-  { id: "objective", label: "Objective" },
-  { id: "messaging", label: "Campaign Messaging" },
-  { id: "production", label: "Content Production" },
+  { id: "messaging", label: "Strategy" },
+  { id: "production", label: "Execution" },
   { id: "results", label: "Results" },
   { id: "tools", label: "Tools" },
 ];
@@ -576,7 +574,7 @@ export default function SalonCentricNyfwProjectPage() {
     () =>
       project.snapshot.map((item) => {
         if (item.title === "Multi-Channel Activation" || item.title === "Headlining Industry Moment") {
-          return { title: item.value, value: item.title.toUpperCase() };
+          return { title: item.value, value: item.title };
         }
         return { title: item.title, value: item.value };
       }),
@@ -642,7 +640,7 @@ export default function SalonCentricNyfwProjectPage() {
                   <div className="mt-5 grid gap-5">
                     {snapshotCards.map((card) => (
                       <div key={card.title}>
-                        <p className="font-display text-[26px] leading-none">{card.value}</p>
+                        <p className="font-display text-[24px] leading-none">{card.value}</p>
                         <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                           <SquiggleMark />
                           {card.title}
@@ -695,20 +693,14 @@ export default function SalonCentricNyfwProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="objective" title="Campaign Objective" contentClassName="mt-6">
-              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.objective}</p>
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="messaging" title="Campaign Messaging" contentClassName="mt-6">
+            <Section id="messaging" title="Campaign Messaging Strategy" contentClassName="mt-6">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.messagingIntro}</p>
               <RailList ariaLabel="Campaign messaging points" items={[...project.messagingBullets]} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="production" title="Content Production" contentClassName="mt-6">
+            <Section id="production" title="Campaign Execution" contentClassName="mt-6">
               <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.productionIntro}</p>
               <RailList ariaLabel="Content production points" items={[...project.productionBullets]} />
             </Section>
@@ -725,8 +717,8 @@ export default function SalonCentricNyfwProjectPage() {
 
               <div className="mt-8 grid gap-6">
                 <WindowFrame
-                  title={deliverables.articlePdf.displayTitle}
-                  titleClassName="text-sm tracking-tight text-text-primary normal-case"
+                  title="ARTICLE PREVIEW"
+                  titleClassName="text-xs font-mono uppercase tracking-widest text-text-secondary/70"
                   actions={
                     <a
                       href={deliverablePdfHref}
