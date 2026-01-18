@@ -73,7 +73,7 @@ const sectionLinks: SectionLink[] = [
 const episodeClips = [
   {
     title: "Hurtigruten UK · Roald Amundsen clip",
-    src: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FHurtigrutenUK%2Fvideos%2F1772286852926623%2F&show_text=false&width=560&t=0",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHurtigrutenUK%2Fvideos%2F1772286852926623%2F&width=720&show_text=false&height=405&appId",
   },
 ] as const;
 
