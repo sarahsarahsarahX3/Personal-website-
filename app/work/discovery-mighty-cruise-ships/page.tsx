@@ -108,7 +108,16 @@ const episodeClips = [
   },
 ] as const;
 
-const tripPhotos = [] satisfies TripPhoto[];
+const tripPhotos = [
+  { src: "/0503f44f-70ec-4bcb-94e3-581515061189.jpg", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/IMG_3193.png", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/IMG_0424.jpg", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/hi.jpg", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/IMG_3938_edited.jpg", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/P1020912.JPG", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/f873d7ce-df5b-40c3-8ae5-503f74aafe41.jpg", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/1749749961001-761b7718-b7c9-44f7-98f0-ca55fc7da356_3.png", alt: "Mighty Cruise Ships expedition photo" },
+] satisfies TripPhoto[];
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
