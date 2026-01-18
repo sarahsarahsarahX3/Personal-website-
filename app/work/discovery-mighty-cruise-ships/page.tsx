@@ -17,6 +17,12 @@ type ImpactKpi = {
   description: string;
 };
 
+type TripPhoto = {
+  src: string;
+  alt: string;
+  caption?: string;
+};
+
 const project = {
   title: "Discovery Channel × Mighty Cruise Ships",
   subtitle: "Travel, Tourism, and Exploration Storytelling",
@@ -101,6 +107,8 @@ const episodeClips = [
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHurtigrutenUK%2Fvideos%2F1772286852926623%2F&show_text=false&width=1280&height=720&t=0",
   },
 ] as const;
+
+const tripPhotos = [] satisfies TripPhoto[];
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -446,6 +454,188 @@ function ImpactAccordion({
   );
 }
 
+function TripPhotoGallery({ photos }: { photos: TripPhoto[] }) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const activePhoto = activeIndex === null ? null : photos[activeIndex];
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const previous = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+      previous?.focus?.();
+    };
+  }, [activeIndex]);
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setActiveIndex(null);
+        return;
+      }
+
+      if (!photos.length) return;
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        setActiveIndex((value) => (value === null ? 0 : (value + 1) % photos.length));
+      }
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        setActiveIndex((value) => (value === null ? 0 : (value - 1 + photos.length) % photos.length));
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [activeIndex, photos]);
+
+  if (!photos.length) {
+    return (
+      <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Expedition photos</p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">A photo gallery for Antarctica field moments.</p>
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              aria-hidden="true"
+              className={cn(
+                "aspect-[4/5] rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent",
+                "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
+              )}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Expedition photos</p>
+        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{photos.length} frames</p>
+      </div>
+
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {photos.map((photo, index) => (
+          <button
+            key={photo.src}
+            type="button"
+            onClick={() => setActiveIndex(index)}
+            className={cn(
+              "group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20",
+              "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
+              "transition-colors hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+            )}
+            aria-label={`Open photo ${index + 1}`}
+          >
+            <div className="relative aspect-[4/5] w-full">
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/35" />
+              <div className="pointer-events-none absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-white/70">Frame {index + 1}</span>
+                <span className="text-[11px] font-mono uppercase tracking-widest text-white/60">View</span>
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {activePhoto ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Expanded photo viewer"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4 py-8"
+          onClick={() => setActiveIndex(null)}
+        >
+          <div
+            className={cn(
+              "w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-surface/90 backdrop-blur",
+              "shadow-[0_30px_80px_rgba(0,0,0,0.6)]",
+              prefersReducedMotion ? "" : "transition-[transform,opacity] duration-200",
+            )}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+              <p className="min-w-0 flex-1 truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                Photo {activeIndex! + 1} of {photos.length}
+              </p>
+              <button
+                type="button"
+                onClick={() => setActiveIndex(null)}
+                className={cn(
+                  "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
+                  "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="grid gap-4 p-4 md:grid-cols-[1fr_220px] md:gap-6 md:p-6">
+              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
+                <img src={activePhoto.src} alt={activePhoto.alt} className="h-full w-full object-contain" />
+              </div>
+
+              <div className="flex flex-col justify-between gap-4">
+                <div>
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Caption</p>
+                  <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+                    {activePhoto.caption ?? activePhoto.alt}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveIndex((value) => (value === null ? 0 : (value - 1 + photos.length) % photos.length))
+                    }
+                    className={cn(
+                      "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                      "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                    )}
+                  >
+                    ← Prev
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveIndex((value) => (value === null ? 0 : (value + 1) % photos.length))}
+                    className={cn(
+                      "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                      "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                    )}
+                  >
+                    Next →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export default function DiscoveryMightyCruiseShipsProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
@@ -570,6 +760,10 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                   <div aria-hidden="true" className="mx-auto mt-5 h-2 w-32 rounded-full bg-white/8" />
                 </div>
               </figure>
+
+              <div className="mt-10">
+                <TripPhotoGallery photos={tripPhotos} />
+              </div>
             </section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -587,11 +781,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="impact" title="Impact" subtitle="Impact & Broadcast Reach">
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                Select a KPI to view the detail.
-              </p>
-
-              <div className="mt-6">
+              <div>
                 <ImpactAccordion items={project.impactKpis as unknown as ImpactKpi[]} activeId={activeImpactId} onSelect={setActiveImpactId} />
               </div>
 
