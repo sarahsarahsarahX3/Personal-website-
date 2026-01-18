@@ -635,7 +635,16 @@ export default function SalonCentricNyfwProjectPage() {
                     { src: "/NYFW Social Post 1.png", alt: "NYFW social post screenshot 1" },
                     { src: "/NYFW BBR Social Post 2.png", alt: "NYFW social post screenshot 2" },
                   ].map((post) => (
-                    <WindowFrame key={post.src} title="Instagram post screenshot">
+                    <WindowFrame
+                      key={post.src}
+                      title={
+                        isMobileView
+                          ? post.src === "/NYFW Social Post 1.png"
+                            ? "NYFW POST"
+                            : "BBR LUNCHEON POST"
+                          : "Instagram post screenshot"
+                      }
+                    >
                       <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
                         <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
                           <div className="flex min-w-0 items-center gap-3">
@@ -681,7 +690,7 @@ export default function SalonCentricNyfwProjectPage() {
                   ))}
                 </div>
 
-                <WindowFrame title="NYFW & BBR LUNCHEON SOCIAL REELS">
+                <WindowFrame title={isMobileView ? "NYFW & BBR SOCIAL REELS" : "NYFW & BBR LUNCHEON SOCIAL REELS"}>
                   <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
                     <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
                       <div className="flex min-w-0 items-center gap-3">
