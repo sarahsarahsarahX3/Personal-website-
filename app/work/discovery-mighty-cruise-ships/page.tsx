@@ -418,45 +418,57 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                 </div>
               </div>
 
-              <figure className="mt-10 overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10">
-                <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface/40 px-4 py-3">
+              <figure
+                className={cn(
+                  "mt-10 overflow-hidden rounded-[28px]",
+                  "border border-white/10 bg-[#0b0b0e]",
+                  "shadow-[0_0_0_1px_rgba(255,255,255,0.04)]",
+                )}
+                aria-label="TV preview"
+              >
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-black/35 px-5 py-3">
                   <div className="flex items-center gap-2" aria-hidden="true">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
+                    <span className="h-2 w-2 rounded-full bg-white/25" />
+                    <span className="h-2 w-2 rounded-full bg-white/20" />
+                    <span className="h-2 w-2 rounded-full bg-white/15" />
                   </div>
-                  <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                    Episode visuals placeholder
+                  <p className="min-w-0 flex-1 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/75 text-center">
+                    Mighty Cruise Ships: Roald Amundsen (Season 4, Ep 7) Commercial Preview
                   </p>
                   <span aria-hidden="true" className="text-text-secondary/50">
-                    ⌄
+                    ⏵
                   </span>
                 </div>
 
-                <div className="bg-surface/30">
-                  <div className="aspect-[16/9] w-full">
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-4 md:p-5">
+                <div className="bg-black/20 p-5 md:p-6">
+                  <div
+                    className={cn(
+                      "mx-auto w-full max-w-[720px]",
+                      "rounded-[22px] border border-white/10 bg-black/30 overflow-hidden",
+                      "ring-1 ring-inset ring-white/5",
+                    )}
+                  >
+                    <div className="relative aspect-video w-full">
                       {episodeClips.map((clip) => (
-                        <div
+                        <iframe
                           key={clip.src}
-                          className="w-full max-w-[720px] overflow-hidden rounded-2xl border border-white/10 bg-surface/40"
-                        >
-                          <div className="relative aspect-video w-full">
-                            <iframe
-                              src={clip.src}
-                              title={clip.title}
-                              className="absolute inset-0 h-full w-full"
-                              loading="lazy"
-                              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                              allowFullScreen
-                            />
-                          </div>
-                        </div>
+                          src={clip.src}
+                          title={clip.title}
+                          className="absolute inset-0 h-full w-full"
+                          loading="lazy"
+                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          allowFullScreen
+                        />
                       ))}
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_70%_at_50%_30%,rgba(255,255,255,0.06),rgba(0,0,0,0))]"
+                      />
                     </div>
                   </div>
+
+                  <div aria-hidden="true" className="mx-auto mt-5 h-2 w-32 rounded-full bg-white/8" />
                 </div>
-                <figcaption className="sr-only">Episode visuals placeholder</figcaption>
               </figure>
             </section>
 

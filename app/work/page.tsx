@@ -32,7 +32,7 @@ export default async function WorkPage() {
     projects.unshift({
         title: "Discovery Channel × Mighty Cruise Ships",
         category: "Video Production",
-        image: "/images/Discovery%20Channel.png",
+        image: "/Mighty%20Cruise%20Ships%20Project%20Thumbnail.png",
         size: "small",
         slug: "discovery-mighty-cruise-ships",
         tags: ["Video Production", "Brand Storytelling"],
