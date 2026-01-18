@@ -20,10 +20,10 @@ const project = {
   logline:
     "A hybrid-powered expedition cruise ship meets extreme conditions, cutting-edge engineering, and human resilience at sea.",
   snapshot: [
-    { label: "Format", value: "Broadcast documentary series" },
+    { label: "Format", value: "Broadcast Documentary Series" },
     { label: "Episode Focus", value: "MS Roald Amundsen (hybrid-powered expedition ship)" },
-    { label: "Primary Goal", value: "Broadcast-ready storytelling" },
-    { label: "Focus Areas", value: "Engineering · Environment · Expedition challenges" },
+    { label: "Primary Goal", value: "Travel and Exploration Storytelling" },
+    { label: "Focus Areas", value: "Travel · Engineering · Environment · Expedition Challenges" },
   ] satisfies SnapshotRow[],
   storytellingFocus: [
     "Translate complex systems into clear, audience-first narrative beats.",
@@ -49,8 +49,8 @@ const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
   { id: "focus", label: "Storytelling Focus" },
   { id: "support", label: "Production Support" },
-  { id: "impact", label: "Impact & Reach" },
-  { id: "tools", label: "Tools & Skills" },
+  { id: "impact", label: "Impact" },
+  { id: "tools", label: "Tools" },
 ];
 
 function usePrefersReducedMotion() {
@@ -374,11 +374,6 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
 
                   <div className="mt-8">
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview / Logline</p>
-                    <p className="mt-2 text-base md:text-base text-text-secondary">{project.logline}</p>
-                  </div>
-
-                  <div className="mt-8">
                     <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
                     <p className="mt-2 text-base md:text-base text-text-secondary">{project.role}</p>
                   </div>
@@ -439,7 +434,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Impact & Reach" subtitle="Broadcast-ready indicators">
+            <Section id="impact" title="Impact" subtitle="Broadcast-ready indicators">
               <div className="grid gap-4 md:grid-cols-3">
                 {project.impact.map((item) => (
                   <div key={item.label} className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
@@ -452,7 +447,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
+            <Section id="tools" title="Tools" contentClassName="mt-6">
               <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
                 {project.tools.map((tool) => (
                   <Pill key={tool}>{tool}</Pill>
