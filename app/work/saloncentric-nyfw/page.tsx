@@ -404,21 +404,36 @@ function DesktopRail({
 
 function WindowFrame({
   title,
+  titleClassName,
+  actions,
   children,
 }: {
   title: string;
+  titleClassName?: string;
+  actions?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
       <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
         <div className="flex items-center gap-2">
-          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-white/15" />
-          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-white/10" />
-          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-white/10" />
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
         </div>
-        <p className="truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">{title}</p>
-        <span aria-hidden="true" className="h-6 w-6 rounded-full border border-white/10 bg-surface/40" />
+        <p
+          className={cn(
+            "min-w-0 flex-1 truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70",
+            titleClassName,
+          )}
+        >
+          {title}
+        </p>
+        {actions ? (
+          <div className="flex shrink-0 items-center gap-2">{actions}</div>
+        ) : (
+          <span aria-hidden="true" className="h-6 w-6 rounded-full border border-white/10 bg-surface/40" />
+        )}
       </div>
       <div className="p-4 md:p-5">{children}</div>
     </div>
@@ -450,7 +465,7 @@ function RailList({
 }) {
   return (
     <div className="relative mt-10">
-      <span aria-hidden="true" className="absolute left-[34px] top-4 bottom-4 w-px bg-accent/25" />
+      <span aria-hidden="true" className="absolute left-[30px] top-4 bottom-4 w-px bg-accent/25" />
 
       <ol className="grid gap-2 text-sm md:text-base text-text-secondary" aria-label={ariaLabel}>
         {items.map((item) => (
@@ -550,7 +565,7 @@ export default function SalonCentricNyfwProjectPage() {
                   <div className="mt-5 grid gap-5">
                     {snapshotCards.map((card) => (
                       <div key={card.title}>
-                        <p className="font-display text-[28px] leading-none">{card.value}</p>
+                        <p className="font-display text-[26px] leading-none">{card.value}</p>
                         <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                           <SquiggleMark />
                           {card.title}
@@ -654,41 +669,51 @@ export default function SalonCentricNyfwProjectPage() {
               </div>
 
               <div className="mt-8 grid gap-6">
-                <WindowFrame title="Article preview">
-                  <div className="rounded-2xl border border-white/10 bg-surface/40 overflow-hidden">
-                    <div
-                      className={cn("h-[70vh] min-h-[520px] w-full overflow-auto")}
-                      style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
-                    >
-                      <object
-                        data={deliverablePdfPreviewSrc}
-                        type="application/pdf"
-                        aria-label={deliverables.articlePdf.title}
-                        className="h-full w-full"
-                      >
-                        <iframe
-                          title={deliverables.articlePdf.title}
-                          src={deliverablePdfPreviewSrc}
-                          className="h-full w-full border-0"
-                        />
-                      </object>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                    <p className="text-sm text-text-secondary">{deliverables.articlePdf.title}</p>
+                <WindowFrame
+                  title={deliverables.articlePdf.title}
+                  titleClassName="text-sm tracking-tight text-text-primary normal-case"
+                  actions={
                     <a
                       href={deliverablePdfHref}
                       target="_blank"
                       rel="noreferrer"
                       className={cn(
-                        "inline-flex items-center justify-center rounded-full px-4 py-2 text-xs font-mono uppercase tracking-widest",
-                        "border border-white/10 bg-surface-alt/10 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                        "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
+                        "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
                       )}
                     >
                       Open ↗
                     </a>
+                  }
+                >
+                  <div className="rounded-2xl border border-white/10 bg-surface/40 overflow-hidden">
+                    <div
+                      className={cn(
+                        "h-[75vh] min-h-[520px] lg:h-[62vh] lg:min-h-[420px] w-full",
+                        "overflow-auto md:overflow-hidden",
+                      )}
+                      style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+                    >
+                      {deliverablePdfHref ? (
+                        isMobileView ? (
+                          <object
+                            data={deliverablePdfHref}
+                            type="application/pdf"
+                            aria-label={deliverables.articlePdf.title}
+                            className="h-full w-full"
+                          >
+                            <iframe title={deliverables.articlePdf.title} src={deliverablePdfHref} className="h-full w-full border-0" />
+                          </object>
+                        ) : (
+                          <iframe title={deliverables.articlePdf.title} src={deliverablePdfPreviewSrc} className="h-full w-full border-0" />
+                        )
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                          Add a PDF file
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </WindowFrame>
 
@@ -697,7 +722,7 @@ export default function SalonCentricNyfwProjectPage() {
                     <PlaceholderBlock label="Instagram post screenshot placeholder" />
                   </WindowFrame>
                   <WindowFrame title="Campaign images">
-                    <div className="grid gap-4 sm:grid-cols-3">
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                       {["/Model1.png", "/Model2.png", "/Model3.png"].map((src, index) => (
                         <div
                           key={src}
