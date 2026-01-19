@@ -116,7 +116,8 @@ const tripPhotos = [
   { src: "/IMG_3938_edited.jpg", alt: "Mighty Cruise Ships expedition photo" },
   { src: "/P1020912.JPG", alt: "Mighty Cruise Ships expedition photo" },
   { src: "/f873d7ce-df5b-40c3-8ae5-503f74aafe41.jpg", alt: "Mighty Cruise Ships expedition photo" },
-  { src: "/1749749961001-761b7718-b7c9-44f7-98f0-ca55fc7da356_3.png", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/support.png", alt: "Mighty Cruise Ships expedition photo" },
+  { src: "/support%202.jpg", alt: "Mighty Cruise Ships expedition photo" },
 ] satisfies TripPhoto[];
 
 function usePrefersReducedMotion() {
@@ -569,72 +570,81 @@ function TripPhotoGallery({ photos }: { photos: TripPhoto[] }) {
           role="dialog"
           aria-modal="true"
           aria-label="Expanded photo viewer"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4 py-8"
+          className="fixed inset-0 z-50 overflow-y-auto bg-black/75 px-4 py-8"
           onClick={() => setActiveIndex(null)}
         >
-          <div
-            className={cn(
-              "w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-surface/90 backdrop-blur",
-              "shadow-[0_30px_80px_rgba(0,0,0,0.6)]",
-              prefersReducedMotion ? "" : "transition-[transform,opacity] duration-200",
-            )}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
-              <p className="min-w-0 flex-1 truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                Photo {activeIndex! + 1} of {photos.length}
-              </p>
-              <button
-                type="button"
-                onClick={() => setActiveIndex(null)}
-                className={cn(
-                  "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
-                  "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                )}
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="grid gap-4 p-4 md:grid-cols-[1fr_220px] md:gap-6 md:p-6">
-              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
-                <img src={activePhoto.src} alt={activePhoto.alt} className="h-full w-full object-contain" />
+          <div className="mx-auto flex min-h-full w-full max-w-5xl items-center justify-center">
+            <div
+              className={cn(
+                "w-full overflow-hidden rounded-2xl border border-white/10 bg-surface/90 backdrop-blur",
+                "shadow-[0_30px_80px_rgba(0,0,0,0.6)]",
+                "flex max-h-[85vh] flex-col",
+                prefersReducedMotion ? "" : "transition-[transform,opacity] duration-200",
+              )}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                <p className="min-w-0 flex-1 truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                  Photo {activeIndex! + 1} of {photos.length}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setActiveIndex(null)}
+                  className={cn(
+                    "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
+                    "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                >
+                  Close
+                </button>
               </div>
 
-              <div className="flex flex-col justify-between gap-4">
-                <div>
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Caption</p>
-                  <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                    {activePhoto.caption ?? activePhoto.alt}
-                  </p>
-                </div>
+              <div className="min-h-0 flex-1 overflow-y-auto">
+                <div className="grid gap-4 p-4 md:grid-cols-[1fr_220px] md:gap-6 md:p-6">
+                  <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
+                    <img
+                      src={activePhoto.src}
+                      alt={activePhoto.alt}
+                      className="w-full h-auto max-h-[62vh] md:max-h-[66vh] object-contain"
+                    />
+                  </div>
 
-                <div className="flex items-center justify-between gap-3">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActiveIndex((value) => (value === null ? 0 : (value - 1 + photos.length) % photos.length))
-                    }
-                    className={cn(
-                      "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
-                      "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                    )}
-                  >
-                    ← Prev
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveIndex((value) => (value === null ? 0 : (value + 1) % photos.length))}
-                    className={cn(
-                      "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
-                      "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                    )}
-                  >
-                    Next →
-                  </button>
+                  <div className="flex flex-col justify-between gap-4">
+                    <div>
+                      <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Caption</p>
+                      <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+                        {activePhoto.caption ?? activePhoto.alt}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setActiveIndex((value) => (value === null ? 0 : (value - 1 + photos.length) % photos.length))
+                        }
+                        className={cn(
+                          "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                          "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                        )}
+                      >
+                        ← Prev
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveIndex((value) => (value === null ? 0 : (value + 1) % photos.length))}
+                        className={cn(
+                          "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                          "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                        )}
+                      >
+                        Next →
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
