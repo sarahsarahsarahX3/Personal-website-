@@ -294,16 +294,12 @@ function DesktopRail({
     <aside className="hidden lg:block">
       <div className="sticky top-28 space-y-6">
         <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
-
-          <div className="mt-4">
-            <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">
-              <span>Read</span>
-              <span>{Math.round(progress * 100)}%</span>
-            </div>
-            <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
-              <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
-            </div>
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
+            <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">{Math.round(progress * 100)}%</p>
+          </div>
+          <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+            <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
           </div>
 
           <ul className="mt-4 space-y-2" role="list">
