@@ -126,72 +126,72 @@ const headerImage = {
 
 const dailyPlanetClips = [
   {
-    title: "Daily Planet segment · 1624452390937260",
+    title: "The Easter Bunny: Gigantic Edition",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1624452390937260%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1694189590630206",
+    title: "Segment ID 1694189590630206",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1694189590630206%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1682665248449307",
+    title: "Segment ID 1682665248449307",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1682665248449307%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1679922312056934",
+    title: "Segment ID 1679922312056934",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1679922312056934%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1676770252372140",
+    title: "Segment ID 1676770252372140",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1676770252372140%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1672868082762357",
+    title: "Segment ID 1672868082762357",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1672868082762357%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1670361973012968",
+    title: "Segment ID 1670361973012968",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1670361973012968%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1670193526363146",
+    title: "Segment ID 1670193526363146",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1670193526363146%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1664543106928188",
+    title: "Segment ID 1664543106928188",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664543106928188%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1664522366930262",
+    title: "Segment ID 1664522366930262",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664522366930262%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1664477796934719",
+    title: "Segment ID 1664477796934719",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664477796934719%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1657508370964995",
+    title: "Segment ID 1657508370964995",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1657508370964995%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1651594218223077",
+    title: "Segment ID 1651594218223077",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1651594218223077%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Daily Planet segment · 1650908161625016",
+    title: "Segment ID 1650908161625016",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1650908161625016%2F&width=720&show_text=false&height=405&appId",
   },
@@ -207,8 +207,6 @@ const dailyPlanetFacebookPosts = [
     src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fposts%2Fpfbid02j94QL4CWHWeJodh3AavAtjsm1SFP8k2QorWLB72x892JedEHayhspqUGA8xCVjzQl&show_text=true&width=500",
   },
 ] satisfies SocialEmbed[];
-
-const dailyPlanetImages = [] satisfies { src: string; alt: string }[];
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -557,6 +555,7 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
           <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode segments</p>
           <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 segments</p>
         </div>
+        <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Swipe to browse →</p>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
           Add clips to the <span className="font-mono">dailyPlanetClips</span> array (supports local files or embed URLs).
         </p>
@@ -583,6 +582,7 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
         <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode segments</p>
         <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} segments</p>
       </div>
+      <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Swipe to browse →</p>
 
       <div className="relative mt-6">
         <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar snap-x snap-mandatory">
@@ -600,7 +600,18 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
               aria-label={`Open clip ${index + 1}`}
             >
               <div className="relative aspect-video w-full">
-                {clip.poster ? (
+                {clip.kind === "embed" ? (
+                  <iframe
+                    src={clip.src}
+                    title=""
+                    aria-hidden="true"
+                    tabIndex={-1}
+                    className="absolute inset-0 h-full w-full pointer-events-none opacity-95"
+                    loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                ) : clip.poster ? (
                   <img
                     src={clip.poster}
                     alt=""
@@ -619,7 +630,9 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
               </div>
 
               <div className="px-4 py-3">
-                <p className="text-sm leading-snug text-text-primary/90 line-clamp-2">{clip.title}</p>
+                <p className="text-sm leading-snug text-text-primary/90 line-clamp-2">
+                  Daily Planet Episode Segment - {clip.title}
+                </p>
               </div>
             </button>
           ))}
@@ -690,6 +703,31 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
                     )}
                   </div>
                   <p className="mt-4 text-sm leading-relaxed text-text-secondary">{activeClip.title}</p>
+
+                  <div className="mt-6 flex items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setActiveIndex((value) => (value === null ? 0 : (value - 1 + clips.length) % clips.length))}
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                        "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      )}
+                    >
+                      ← Previous
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveIndex((value) => (value === null ? 0 : (value + 1) % clips.length))}
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                        "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      )}
+                    >
+                      Next →
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -700,19 +738,18 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
   );
 }
 
-function SocialAndImages({ posts, images }: { posts: SocialEmbed[]; images: { src: string; alt: string }[] }) {
-  const hasAny = posts.length > 0 || images.length > 0;
+function FacebookPosts({ posts }: { posts: SocialEmbed[] }) {
+  const hasAny = posts.length > 0;
 
   if (!hasAny) {
     return (
       <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
         <div className="flex items-center justify-between gap-4">
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Facebook posts + images</p>
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">FACEBOOK POSTS + IMAGES</p>
           <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 items</p>
         </div>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
-          Add 2 Facebook embed URLs to <span className="font-mono">dailyPlanetFacebookPosts</span> and add 2 images to{" "}
-          <span className="font-mono">dailyPlanetImages</span>.
+          Add 2 Facebook embed URLs to <span className="font-mono">dailyPlanetFacebookPosts</span>.
         </p>
         <div className="mt-6 grid gap-3 md:grid-cols-2">
           <div className="aspect-[4/3] rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent" aria-hidden="true" />
@@ -725,51 +762,27 @@ function SocialAndImages({ posts, images }: { posts: SocialEmbed[]; images: { sr
   return (
     <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Facebook posts + images</p>
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">FACEBOOK POSTS + IMAGES</p>
         <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">
-          {posts.length + images.length} items
+          {posts.length} items
         </p>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <div className="grid gap-3">
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Facebook posts</p>
-          <div className="grid gap-3">
-            {posts.map((post) => (
-              <div key={post.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                <div className="relative aspect-video w-full">
-                  <iframe
-                    src={post.src}
-                    title={post.title}
-                    className="absolute inset-0 h-full w-full"
-                    loading="lazy"
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
-            ))}
+      <div className="mt-6 grid gap-3 md:grid-cols-2">
+        {posts.map((post) => (
+          <div key={post.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+            <div className="relative aspect-[3/4] w-full">
+              <iframe
+                src={post.src}
+                title={post.title}
+                className="absolute inset-0 h-full w-full pointer-events-none"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-popups"
+              />
+              <div aria-hidden="true" className="absolute inset-0 pointer-events-auto" />
+            </div>
           </div>
-        </div>
-
-        <div className="grid gap-3">
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Images</p>
-          <div className="grid grid-cols-2 gap-3">
-            {images.map((img) => (
-              <div key={img.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                <div className="relative aspect-[4/3] w-full">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="absolute inset-0 h-full w-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
@@ -947,7 +960,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
                 <VideoClipsRail clips={dailyPlanetClips} />
               </div>
               <div className="mt-10">
-                <SocialAndImages posts={dailyPlanetFacebookPosts} images={dailyPlanetImages} />
+                <FacebookPosts posts={dailyPlanetFacebookPosts} />
               </div>
             </Section>
 
