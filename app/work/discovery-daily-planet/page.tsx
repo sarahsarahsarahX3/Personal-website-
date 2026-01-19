@@ -18,7 +18,7 @@ type ImpactKpi = {
 };
 
 const project = {
-  title: "Discovery Channel × Daily Planet",
+  title: "Discovery Channel: Daily Planet",
   subtitle: "Broadcast Science and Technology Storytelling",
   roleTitle: "Production Assistant",
   overview:
@@ -30,9 +30,9 @@ const project = {
     "Helped keep scientific accuracy, tone, and clarity aligned across segments.",
   ],
   snapshot: [
-    { label: "Format", value: "Weekly broadcast science program" },
-    { label: "Production model", value: "High-volume content production" },
-    { label: "Focus", value: "Science · technology · innovation" },
+    { label: "Format", value: "Science News Magazine Television Show" },
+    { label: "Production model", value: "5x New Episodes Per Week" },
+    { label: "Focus", value: "Science · Technology · Innovation · Wildlife" },
   ] satisfies SnapshotRow[],
   editorialFocus: [
     "Translate complex science into accessible, audience-friendly storytelling.",
@@ -104,7 +104,6 @@ const project = {
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
   { id: "role", label: "My Role" },
-  { id: "snapshot", label: "Project Snapshot" },
   { id: "focus", label: "Editorial Focus" },
   { id: "support", label: "Production Support" },
   { id: "impact", label: "Impact" },
@@ -471,13 +470,19 @@ export default function DiscoveryDailyPlanetProjectPage() {
           <div className="min-w-0">
             <section className="scroll-mt-16" id="overview">
               <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #4</p>
-              <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">{project.title}</h1>
+              <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">
+                <span>Discovery Channel:</span> <em className="italic">Daily Planet</em>
+              </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
               <div className="mt-12 grid gap-6 lg:grid-cols-2">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
+                  <div className="mt-8">
+                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
+                    <p className="mt-2 text-base text-text-secondary">{project.roleTitle}</p>
+                  </div>
                 </div>
 
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
@@ -500,19 +505,6 @@ export default function DiscoveryDailyPlanetProjectPage() {
               <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{project.roleTitle}</p>
                 <RailList ariaLabel="Role scope" items={[...project.roleScope]} />
-              </div>
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="snapshot" title="Project Snapshot" subtitle="Weekly production · multi-segment delivery">
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {project.snapshot.map((row) => (
-                  <div key={row.label} className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
-                    <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">{row.label}</p>
-                    <p className="mt-3 text-base tracking-tight text-text-primary/90">{row.value}</p>
-                  </div>
-                ))}
               </div>
             </Section>
 
