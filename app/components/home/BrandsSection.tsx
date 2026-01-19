@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "@/app/lib/utils";
+
 type Brand = {
   name: string;
   logoSrc: string;
@@ -18,25 +20,37 @@ const brands: Brand[] = [
 
 function BrandMark({ brand }: { brand: Brand }) {
   return (
-    <li className="group relative w-full">
+    <li className="group relative">
       <div
-        className={
-          "relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#f6f6f6] px-6 py-6 " +
-          "shadow-[0_0_0_1px_rgba(0,0,0,0.06)] transition-transform duration-300 group-hover:-translate-y-0.5"
-        }
+        className={cn(
+          "relative flex items-center justify-center",
+          "h-[84px] sm:h-[92px] md:h-[104px] lg:h-[112px]",
+          "rounded-2xl border border-white/10 bg-surface-alt/10",
+          "transition-colors duration-300",
+          "hover:border-white/20 hover:bg-white/[0.06]",
+        )}
       >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_30%,rgba(255,255,255,0.75),rgba(255,255,255,0))] opacity-70"
-        />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,rgba(0,0,0,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.06)_1px,transparent_1px)] [background-size:28px_28px]" />
-
         <img
           src={brand.logoSrc}
           alt={`${brand.name} logo`}
           loading="lazy"
           decoding="async"
-          className="relative block h-10 md:h-11 w-auto max-w-full object-contain opacity-90 mix-blend-multiply"
+          className={cn(
+            "block w-auto max-w-[86%] object-contain",
+            "h-10 sm:h-12 md:h-14 lg:h-16",
+            "opacity-70 transition-[opacity,filter,transform] duration-300",
+            "grayscale brightness-125 contrast-125 invert",
+            "group-hover:opacity-100 group-hover:brightness-150 group-hover:contrast-150 group-hover:scale-[1.02]",
+          )}
+        />
+
+        <div
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute inset-0 rounded-2xl",
+            "opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+            "bg-[radial-gradient(65%_60%_at_50%_40%,rgba(255,255,255,0.08),rgba(0,0,0,0))]",
+          )}
         />
       </div>
     </li>
@@ -50,14 +64,14 @@ export function BrandsSection() {
         <header className="max-w-3xl mx-auto text-center">
           <h2
             id="brands-title"
-            className="text-xl md:text-2xl font-display tracking-tight text-text-secondary/60"
+            className="text-xl md:text-2xl font-display tracking-tight text-text-secondary/70"
           >
             Working With Industry Leaders
           </h2>
         </header>
 
         <div className="mt-12 rounded-3xl border border-white/10 bg-surface-alt/10 p-4 md:p-6">
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 items-stretch">
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {brands.map((brand) => (
               <BrandMark key={brand.name} brand={brand} />
             ))}
