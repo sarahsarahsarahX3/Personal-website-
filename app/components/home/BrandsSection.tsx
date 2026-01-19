@@ -6,26 +6,39 @@ type Brand = {
 };
 
 const brands: Brand[] = [
-  { name: "Discovery Channel", logoSrc: "/images/Discovery%20Channel.png" },
-  { name: "USA Network", logoSrc: "/images/USA%20Network.png" },
-  { name: "Bell Media", logoSrc: "/images/Bell%20Media.png" },
-  { name: "L’Oréal", logoSrc: "/images/L%27OREAL.png" },
-  { name: "SalonCentric", logoSrc: "/images/SalonCentric.png" },
-  { name: "New York Fashion Week", logoSrc: "/images/New%20York%20Fashion%20Week.png" },
-  { name: "P&G", logoSrc: "/images/P%26G.jpg" },
-  { name: "P&G Beauty", logoSrc: "/images/P%26G%20Beauty.png" },
+  { name: "Discovery Channel", logoSrc: "/1.png" },
+  { name: "USA Network", logoSrc: "/2.png" },
+  { name: "Bell Media", logoSrc: "/3.png" },
+  { name: "L’Oréal", logoSrc: "/4.png" },
+  { name: "P&G Beauty", logoSrc: "/5.png" },
+  { name: "P&G", logoSrc: "/6.png" },
+  { name: "SalonCentric", logoSrc: "/7.png" },
+  { name: "New York Fashion Week", logoSrc: "/8.png" },
 ];
 
 function BrandMark({ brand }: { brand: Brand }) {
   return (
-    <li className="flex w-full items-center justify-center px-6 py-6">
-      <img
-        src={brand.logoSrc}
-        alt={`${brand.name} logo`}
-        loading="lazy"
-        decoding="async"
-        className="block h-10 md:h-12 w-auto max-w-full object-contain"
-      />
+    <li className="group relative w-full">
+      <div
+        className={
+          "relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#f6f6f6] px-6 py-6 " +
+          "shadow-[0_0_0_1px_rgba(0,0,0,0.06)] transition-transform duration-300 group-hover:-translate-y-0.5"
+        }
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_30%,rgba(255,255,255,0.75),rgba(255,255,255,0))] opacity-70"
+        />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,rgba(0,0,0,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.06)_1px,transparent_1px)] [background-size:28px_28px]" />
+
+        <img
+          src={brand.logoSrc}
+          alt={`${brand.name} logo`}
+          loading="lazy"
+          decoding="async"
+          className="relative block h-10 md:h-11 w-auto max-w-full object-contain opacity-90 mix-blend-multiply"
+        />
+      </div>
     </li>
   );
 }
@@ -43,8 +56,8 @@ export function BrandsSection() {
           </h2>
         </header>
 
-        <div className="mt-12 rounded-3xl border border-black/10 bg-[#fafafa] px-6 py-8 md:px-10 md:py-10">
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-10 gap-y-10 items-center justify-items-center">
+        <div className="mt-12 rounded-3xl border border-white/10 bg-surface-alt/10 p-4 md:p-6">
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 items-stretch">
             {brands.map((brand) => (
               <BrandMark key={brand.name} brand={brand} />
             ))}
