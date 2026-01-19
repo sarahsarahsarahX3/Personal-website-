@@ -25,7 +25,7 @@ type TripPhoto = {
 
 const project = {
   title: "Discovery Channel × Mighty Cruise Ships",
-  subtitle: "Travel, Tourism, and Exploration Storytelling",
+  subtitle: "Travel Documentary",
   role: "Production Assistant",
   overview:
     "Led editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series, contributing to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world expedition challenges into compelling, broadcast-ready storytelling for a global audience.",
@@ -33,9 +33,12 @@ const project = {
     "A hybrid-powered expedition cruise ship meets extreme conditions, cutting-edge engineering, and human resilience at sea.",
   snapshot: [
     { label: "Format", value: "Broadcast Documentary Series" },
-    { label: "Episode Focus", value: "MS Roald Amundsen (hybrid-powered expedition ship)" },
-    { label: "Primary Goal", value: "Multimedia Storytelling" },
-    { label: "Focus Areas", value: "Travel · Tourism · Engineering · Environment · Expedition Challenges" },
+    { label: "Episode", value: 'Season 4, Episode 7: "MS Roald Amundsen"' },
+    {
+      label: "Primary Goal",
+      value: "Document the voyage of the world’s first hybrid-powered expedition cruise ship to Antarctica.",
+    },
+    { label: "Content Focus Areas", value: "Travel · Tourism · Expedition · Maritime Engineering · Environment" },
   ] satisfies SnapshotRow[],
   storytellingFocus: [
     "Translate complex systems into clear, audience-first narrative beats.",
@@ -238,6 +241,10 @@ function MobileJumpBar({
       className={cn("md:hidden sticky top-0 z-20", "bg-surface/85 backdrop-blur-md border-b border-white/10")}
     >
       <div className="mx-auto w-full max-w-6xl px-6 py-3">
+        <div className="mb-3 h-1 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
+          <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
+        </div>
+
         <div className="flex items-center gap-3">
           <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
 
@@ -266,10 +273,6 @@ function MobileJumpBar({
           <div className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
             {Math.round(progress * 100)}%
           </div>
-        </div>
-
-        <div className="mt-3 h-px w-full bg-white/10 overflow-hidden">
-          <div className="h-full bg-accent/80" style={{ width: `${progress * 100}%` }} />
         </div>
       </div>
     </nav>
@@ -922,7 +925,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
           <div className="min-w-0">
             <section id="overview" className="scroll-mt-16">
               <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #3</p>
-              <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">
+              <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl tracking-tight leading-[1.03]">
                 {project.title}
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>

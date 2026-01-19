@@ -64,7 +64,7 @@ export default async function WorkPage() {
     });
 
     projects.unshift({
-        title: "Procter & Gamble HairCode",
+        title: "Procter & Gamble x HairCode",
         category: "SEO & AEO",
         image: "/P%26G%20HairCode%20Project%20Thumbnail.png",
         size: "large",

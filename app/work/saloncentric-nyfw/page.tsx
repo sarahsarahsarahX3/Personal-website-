@@ -17,10 +17,10 @@ const deliverables = {
 
 const project = {
   title: "SalonCentric × New York Fashion Week",
-  subtitle: "Integrated Campaign and Content Production",
+  subtitle: "Integrated Brand Campaign",
   overview:
     "Led integrated campaign content for SalonCentric’s New York Fashion Week activation, including extending the live event into a multi-channel brand campaign across digital, social, and email. The campaign positioned SalonCentric as a thought leader and industry insider through culturally relevant storytelling, including coverage of the Black Beauty Excellence Luncheon.",
-  role: "Copywriter and Campaign Content Lead",
+  role: "Copywriter and Content Lead",
   objective:
     "Anchored brand communications and campaign storytelling in the energy and cultural relevance of New York Fashion Week by highlighting professional artistry, backstage access, and inclusive industry moments. Positioned SalonCentric as an insider brand connected to fashion’s most influential stage, balancing prestige storytelling with performance-aware copy across experiential, social, and owned channels.",
   messagingIntro:
@@ -570,8 +570,9 @@ export default function SalonCentricNyfwProjectPage() {
               <RailList ariaLabel="Content production points" items={[...project.productionBullets]} />
             </Section>
 
+            <div className="mt-16 border-t border-white/10" />
+
             <section id="results" aria-labelledby="results-title" className="scroll-mt-16 pt-10">
-              <div aria-hidden="true" className="mb-5 h-px w-16 bg-white/10" />
               <div className="flex items-end justify-between gap-6 pb-2">
                 <h2
                   id="results-title"
