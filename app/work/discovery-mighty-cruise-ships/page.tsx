@@ -117,7 +117,6 @@ const tripPhotos = [
   { src: "/P1020912.JPG", alt: "Mighty Cruise Ships expedition photo" },
   { src: "/f873d7ce-df5b-40c3-8ae5-503f74aafe41.jpg", alt: "Mighty Cruise Ships expedition photo" },
   { src: "/support.png", alt: "Mighty Cruise Ships expedition photo" },
-  { src: "/support%202.jpg", alt: "Mighty Cruise Ships expedition photo" },
 ] satisfies TripPhoto[];
 
 const marketingMaterials = [
@@ -1019,10 +1018,6 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                   <div aria-hidden="true" className="mx-auto mt-5 h-2 w-32 rounded-full bg-white/8" />
                 </div>
               </figure>
-
-              <div className="mt-10">
-                <TripPhotoGallery photos={tripPhotos} />
-              </div>
             </section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -1030,6 +1025,10 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
             <Section id="focus" title="Storytelling Focus" subtitle="Editorial clarity · documentary pacing">
               <RailList ariaLabel="Storytelling focus points" items={[...project.storytellingFocus]} />
             </Section>
+
+            <div className="mt-10">
+              <TripPhotoGallery photos={tripPhotos} />
+            </div>
 
             <div className="mt-16 border-t border-white/10" />
 
