@@ -133,67 +133,67 @@ const dailyPlanetClips = [
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1624452390937260%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1694189590630206",
+    title: "Shark Best Friend",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1694189590630206%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1682665248449307",
+    title: "Inside the Toronto Zoo’s IVF Clinic",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1682665248449307%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1679922312056934",
+    title: "The Clever Dog Lab",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1679922312056934%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1676770252372140",
+    title: "Australia’s Mary River Turtle",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1676770252372140%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1672868082762357",
+    title: "The Story of Ziggy Star, The Seal",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1672868082762357%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1670361973012968",
+    title: "The Big Montreal Biodome Move",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1670361973012968%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1670193526363146",
+    title: "Wildlife Photography with Chris Gillette",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1670193526363146%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1664543106928188",
+    title: "Discovering the Rariphotic Zone",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664543106928188%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1664522366930262",
+    title: "Saving the Santa Cruz Island Horses",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664522366930262%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1664477796934719",
+    title: "Ziyology: Master Sewers",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664477796934719%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1657508370964995",
+    title: "The Jazz Singers of the Sea",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1657508370964995%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1651594218223077",
+    title: "Gorilla Census",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1651594218223077%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Segment ID 1650908161625016",
+    title: "Artificial Penguin Nest",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1650908161625016%2F&width=720&show_text=false&height=405&appId",
   },
@@ -573,7 +573,7 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
           Add clips to the <span className="font-mono">dailyPlanetClips</span> array (supports local files or embed URLs).
         </p>
-        <div className="mt-6 flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+        <div className="mt-6 flex gap-3 overflow-x-auto pb-4">
           {Array.from({ length: 5 }).map((_, i) => (
             <div
               key={i}
@@ -625,7 +625,7 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
       <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Swipe or use arrows to browse →</p>
 
       <div className="relative mt-6">
-        <div ref={railRef} className="flex gap-3 overflow-x-auto pb-2 no-scrollbar snap-x snap-mandatory">
+        <div ref={railRef} className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory">
           {clips.map((clip, index) => (
             <button
               key={clip.src}
