@@ -120,6 +120,14 @@ const tripPhotos = [
   { src: "/support%202.jpg", alt: "Mighty Cruise Ships expedition photo" },
 ] satisfies TripPhoto[];
 
+const marketingMaterials = [
+  {
+    src: "/Mighty%20Cruise%20Ships%20Project%20Thumbnail.png",
+    alt: "Mighty Cruise Ships show poster",
+    caption: "Show poster",
+  },
+] satisfies TripPhoto[];
+
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
 
@@ -655,6 +663,238 @@ function TripPhotoGallery({ photos }: { photos: TripPhoto[] }) {
   );
 }
 
+function MarketingMaterialsGallery({ items }: { items: TripPhoto[] }) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const activeItem = activeIndex === null ? null : items[activeIndex];
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const previous = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+      previous?.focus?.();
+    };
+  }, [activeIndex]);
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setActiveIndex(null);
+        return;
+      }
+
+      if (!items.length) return;
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        setActiveIndex((value) => (value === null ? 0 : (value + 1) % items.length));
+      }
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        setActiveIndex((value) => (value === null ? 0 : (value - 1 + items.length) % items.length));
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [activeIndex, items]);
+
+  if (!items.length) {
+    return (
+      <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Marketing materials</p>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 assets</p>
+        </div>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
+          A space for posters, key art, and campaign assets.
+        </p>
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              aria-hidden="true"
+              className={cn(
+                "aspect-[3/4] rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent",
+                "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
+              )}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Marketing materials</p>
+        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{items.length} assets</p>
+      </div>
+
+      <div className="mt-6 md:hidden">
+        <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
+          {items.map((item, index) => (
+            <button
+              key={item.src}
+              type="button"
+              onClick={() => setActiveIndex(index)}
+              className={cn(
+                "snap-start shrink-0 w-[220px] sm:w-[260px]",
+                "group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20",
+                "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
+                "transition-colors hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+              aria-label={`Open asset ${index + 1}`}
+            >
+              <div className="relative aspect-[3/4] w-full">
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="absolute inset-0 h-full w-full object-contain p-3 transition-transform duration-700 group-hover:scale-[1.02]"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/25" />
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-6 hidden md:grid grid-cols-12 gap-3">
+        {items.map((item, index) => {
+          const isFeatured = index === 0;
+          return (
+            <button
+              key={item.src}
+              type="button"
+              onClick={() => setActiveIndex(index)}
+              className={cn(
+                "group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 text-left",
+                "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
+                "transition-colors hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                isFeatured ? "col-span-5 lg:col-span-4" : "col-span-7 lg:col-span-4",
+              )}
+              aria-label={`Open asset ${index + 1}`}
+            >
+              <div className={cn("relative w-full", isFeatured ? "aspect-[3/4]" : "aspect-[3/4]")}>
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="absolute inset-0 h-full w-full object-contain p-4 transition-transform duration-700 group-hover:scale-[1.02]"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_70%_at_50%_30%,rgba(255,255,255,0.06),rgba(0,0,0,0))]" />
+              </div>
+
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pb-4">
+                <p className="text-[11px] font-mono uppercase tracking-widest text-white/70">
+                  {item.caption ?? `Asset ${index + 1}`}
+                </p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {activeItem ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Expanded asset viewer"
+          className="fixed inset-0 z-50 overflow-y-auto bg-black/75 px-4 py-8"
+          onClick={() => setActiveIndex(null)}
+        >
+          <div className="mx-auto flex min-h-full w-full max-w-5xl items-center justify-center">
+            <div
+              className={cn(
+                "w-full overflow-hidden rounded-2xl border border-white/10 bg-surface/90 backdrop-blur",
+                "shadow-[0_30px_80px_rgba(0,0,0,0.6)]",
+                "flex max-h-[85vh] flex-col",
+                prefersReducedMotion ? "" : "transition-[transform,opacity] duration-200",
+              )}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                <p className="min-w-0 flex-1 truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                  Asset {activeIndex! + 1} of {items.length}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setActiveIndex(null)}
+                  className={cn(
+                    "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
+                    "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                >
+                  Close
+                </button>
+              </div>
+
+              <div className="min-h-0 flex-1 overflow-y-auto">
+                <div className="grid gap-4 p-4 md:grid-cols-[1fr_220px] md:gap-6 md:p-6">
+                  <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
+                    <img
+                      src={activeItem.src}
+                      alt={activeItem.alt}
+                      className="w-full h-auto max-h-[62vh] md:max-h-[66vh] object-contain"
+                    />
+                  </div>
+
+                  <div className="flex flex-col justify-between gap-4">
+                    <div>
+                      <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Label</p>
+                      <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+                        {activeItem.caption ?? activeItem.alt}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setActiveIndex((value) => (value === null ? 0 : (value - 1 + items.length) % items.length))
+                        }
+                        className={cn(
+                          "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                          "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                        )}
+                      >
+                        ← Prev
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveIndex((value) => (value === null ? 0 : (value + 1) % items.length))}
+                        className={cn(
+                          "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                          "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                        )}
+                      >
+                        Next →
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export default function DiscoveryMightyCruiseShipsProjectPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
@@ -795,6 +1035,9 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
             <Section id="support" title="Production & Editorial Support" subtitle="Support across production and editorial workflow">
               <RailList ariaLabel="Production and editorial support points" items={[...project.productionSupport]} />
+              <div className="mt-10">
+                <MarketingMaterialsGallery items={marketingMaterials} />
+              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
