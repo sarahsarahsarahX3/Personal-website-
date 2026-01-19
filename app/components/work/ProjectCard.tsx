@@ -25,6 +25,9 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
     const hasImage = typeof image === "string" && image.trim().length > 0;
     const imagePositionClassName =
         slug === "discovery-mighty-cruise-ships" ? "object-[50%_65%]" : "object-center";
+    const shouldItalicizeDiscoverySubtitle =
+        slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet";
+    const discoveryTitleParts = shouldItalicizeDiscoverySubtitle ? title.split(":") : null;
 
     return (
         <motion.article
@@ -90,7 +93,14 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                         </div>
 
                         <h3 className="mt-2 font-display text-[1.6rem] leading-[1.05] text-white/90 transition-colors group-hover:text-white">
-                            {title}
+                            {shouldItalicizeDiscoverySubtitle && discoveryTitleParts && discoveryTitleParts.length >= 2 ? (
+                                <>
+                                    <span>{discoveryTitleParts[0].trim()}:</span>{" "}
+                                    <em className="italic">{discoveryTitleParts.slice(1).join(":").trim()}</em>
+                                </>
+                            ) : (
+                                title
+                            )}
                         </h3>
 
                         {description ? (

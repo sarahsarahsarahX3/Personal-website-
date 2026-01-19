@@ -30,7 +30,7 @@ export default async function WorkPage() {
     }));
 
     projects.unshift({
-        title: "Discovery Channel × Mighty Cruise Ships",
+        title: "Discovery Channel: Mighty Cruise Ships",
         category: "Video Production",
         image: "/Mighty%20Cruise%20Ships%20Project%20Thumbnail.png",
         size: "small",
@@ -41,7 +41,7 @@ export default async function WorkPage() {
     });
 
     projects.splice(3, 0, {
-        title: "Discovery Channel × Daily Planet",
+        title: "Discovery Channel: Daily Planet",
         category: "Video Production",
         image: "/images/Discovery%20Channel.png",
         size: "small",
@@ -50,6 +50,7 @@ export default async function WorkPage() {
         description:
             "Production and editorial support for Discovery Channel’s flagship science and technology series, delivering fast-turn, multi-segment storytelling in a high-volume newsroom environment.",
     });
+
 
     projects.unshift({
         title: "SalonCentric × New York Fashion Week",
