@@ -27,6 +27,8 @@ type VideoClip = {
 type SocialEmbed = {
   title: string;
   src: string;
+  width?: number;
+  height?: number;
 };
 
 const project = {
@@ -201,10 +203,14 @@ const dailyPlanetFacebookPosts = [
   {
     title: "Daily Planet post · pfbid0HwW5AD7wBqbpNgSriZecxKbsZdsRNoFh2cRrKRJH74QpGrz6ZUzK7e2h4BpQbq4xl",
     src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fposts%2Fpfbid0HwW5AD7wBqbpNgSriZecxKbsZdsRNoFh2cRrKRJH74QpGrz6ZUzK7e2h4BpQbq4xl&show_text=true&width=500",
+    width: 500,
+    height: 714,
   },
   {
     title: "Daily Planet post · pfbid02j94QL4CWHWeJodh3AavAtjsm1SFP8k2QorWLB72x892JedEHayhspqUGA8xCVjzQl",
     src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fposts%2Fpfbid02j94QL4CWHWeJodh3AavAtjsm1SFP8k2QorWLB72x892JedEHayhspqUGA8xCVjzQl&show_text=true&width=500",
+    width: 500,
+    height: 751,
   },
 ] satisfies SocialEmbed[];
 
@@ -511,7 +517,7 @@ function TvFrame({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
+function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeClip = activeIndex === null ? null : clips[activeIndex];
@@ -738,6 +744,234 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
   );
 }
 
+function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeClip = clips[activeIndex] ?? clips[0];
+
+  useEffect(() => {
+    if (!clips.length) return;
+    if (activeIndex < 0 || activeIndex >= clips.length) setActiveIndex(0);
+  }, [activeIndex, clips.length]);
+
+  const onPrevious = () => setActiveIndex((value) => (clips.length ? (value - 1 + clips.length) % clips.length : 0));
+  const onNext = () => setActiveIndex((value) => (clips.length ? (value + 1) % clips.length : 0));
+
+  if (!clips.length) {
+    return (
+      <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">EPISODE SEGMENTS</p>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 segments</p>
+        </div>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
+          Add clips to the <span className="font-mono">dailyPlanetClips</span> array (supports local files or embed URLs).
+        </p>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              aria-hidden="true"
+              className={cn(
+                "aspect-video rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent",
+                "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
+              )}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">EPISODE SEGMENTS</p>
+        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} segments</p>
+      </div>
+      <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Select a segment to view.</p>
+
+      <div className="mt-6 grid gap-6 lg:grid-cols-[380px_1fr]">
+        <div className="lg:hidden">
+          <label
+            className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70"
+            htmlFor="daily-planet-segment-select"
+          >
+            Choose a segment
+          </label>
+          <div className="relative mt-2">
+            <select
+              id="daily-planet-segment-select"
+              value={String(activeIndex)}
+              onChange={(event) => setActiveIndex(Number(event.target.value))}
+              className={cn(
+                "w-full appearance-none rounded-2xl border border-white/10 bg-surface/40 px-4 py-3 pr-10",
+                "text-[11px] font-mono uppercase tracking-widest text-text-primary",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+              aria-label="Select a Daily Planet episode segment"
+            >
+              {clips.map((clip, index) => (
+                <option key={clip.src} value={String(index)}>
+                  {clip.title}
+                </option>
+              ))}
+            </select>
+            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary">
+              ⌄
+            </span>
+          </div>
+        </div>
+
+        <div className="hidden lg:block">
+          <div
+            className="max-h-[560px] overflow-auto pr-2"
+            role="listbox"
+            aria-label="Daily Planet episode segments"
+            onKeyDown={(event) => {
+              if (event.key === "ArrowDown") {
+                event.preventDefault();
+                onNext();
+              }
+              if (event.key === "ArrowUp") {
+                event.preventDefault();
+                onPrevious();
+              }
+            }}
+          >
+            <div className="space-y-2">
+              {clips.map((clip, index) => {
+                const isActive = index === activeIndex;
+                return (
+                  <button
+                    key={clip.src}
+                    type="button"
+                    role="option"
+                    aria-selected={isActive}
+                    onClick={() => setActiveIndex(index)}
+                    className={cn(
+                      "w-full rounded-2xl border bg-surface/40 p-3 text-left transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      isActive ? "border-white/25 bg-white/5" : "border-white/10 hover:border-white/20 hover:bg-white/5",
+                    )}
+                  >
+                    <div className="grid grid-cols-[132px_1fr] gap-4 items-center">
+                      <div className="relative aspect-video overflow-hidden rounded-xl border border-white/10 bg-black/30">
+                        {clip.kind === "embed" ? (
+                          <iframe
+                            src={clip.src}
+                            title=""
+                            aria-hidden="true"
+                            tabIndex={-1}
+                            className="absolute inset-0 h-full w-full pointer-events-none opacity-95"
+                            loading="lazy"
+                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                            allowFullScreen
+                          />
+                        ) : clip.poster ? (
+                          <img
+                            src={clip.poster}
+                            alt=""
+                            className="absolute inset-0 h-full w-full object-cover"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/8 to-transparent" aria-hidden="true" />
+                        )}
+                        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                        <div
+                          aria-hidden="true"
+                          className={cn(
+                            "absolute left-2 top-2 rounded-full border border-white/10 bg-black/35 px-2 py-1",
+                            "text-[10px] font-mono uppercase tracking-widest text-white/80",
+                          )}
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </div>
+                      </div>
+
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-mono uppercase tracking-widest text-text-secondary/70">
+                          Daily Planet Episode Segment
+                        </p>
+                        <p className="mt-1 text-sm leading-snug text-text-primary">{clip.title}</p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="min-w-0">
+          <WindowFrame title="Daily Planet Episode Segment">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">Daily Planet Episode Segment</p>
+                <h3 className="mt-2 font-display text-xl tracking-tight text-text-primary">{activeClip.title}</h3>
+              </div>
+
+              <div className="flex shrink-0 items-center gap-2">
+                <button
+                  type="button"
+                  onClick={onPrevious}
+                  className={cn(
+                    "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                    "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                  aria-label="Previous episode segment"
+                >
+                  ← Prev
+                </button>
+                <button
+                  type="button"
+                  onClick={onNext}
+                  className={cn(
+                    "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                    "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                  aria-label="Next episode segment"
+                >
+                  Next →
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+              {activeClip.kind === "embed" ? (
+                <div className="relative aspect-video w-full">
+                  <iframe
+                    src={activeClip.src}
+                    title={`Daily Planet Episode Segment - ${activeClip.title}`}
+                    className={cn("absolute inset-0 h-full w-full", prefersReducedMotion ? "" : "transition-opacity duration-300")}
+                    loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <video
+                  src={activeClip.src}
+                  className="h-full w-full"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster={activeClip.poster}
+                />
+              )}
+            </div>
+          </WindowFrame>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function FacebookPosts({ posts }: { posts: SocialEmbed[] }) {
   const hasAny = posts.length > 0;
 
@@ -769,20 +1003,25 @@ function FacebookPosts({ posts }: { posts: SocialEmbed[] }) {
       </div>
 
       <div className="mt-6 grid gap-3 md:grid-cols-2">
-        {posts.map((post) => (
-          <div key={post.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-            <div className="relative aspect-[3/4] w-full">
-              <iframe
-                src={post.src}
-                title={post.title}
-                className="absolute inset-0 h-full w-full pointer-events-none"
-                loading="lazy"
-                sandbox="allow-scripts allow-same-origin allow-popups"
-              />
-              <div aria-hidden="true" className="absolute inset-0 pointer-events-auto" />
+        {posts.map((post) => {
+          const width = post.width ?? 500;
+          const height = post.height ?? 740;
+          return (
+            <div key={post.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+              <div className="relative w-full" style={{ aspectRatio: `${width}/${height}` }}>
+                <iframe
+                  src={post.src}
+                  title={post.title}
+                  width={width}
+                  height={height}
+                  className="absolute inset-0 h-full w-full pointer-events-none"
+                  loading="lazy"
+                  sandbox="allow-scripts allow-same-origin"
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
