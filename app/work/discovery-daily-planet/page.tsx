@@ -31,33 +31,29 @@ type SocialEmbed = {
 
 const project = {
   title: "Discovery Channel: Daily Planet",
-  subtitle: "Broadcast Science and Technology Storytelling",
+  subtitle: "Science News Magazine Series",
   roleTitle: "Production Assistant",
   overview:
-    "Daily Planet is Discovery Channel’s flagship science and technology series. I supported ongoing, fast-paced production across multiple weekly segments, helping translate complex topics into clear, broadcast-ready storytelling.",
-  roleScope: [
-    "Supported producers, editors, and hosts in a broadcast newsroom environment.",
-    "Coordinated day-to-day production needs across multiple segments and timelines.",
-    "Maintained documentation, schedules, and deliverables to support consistent weekly delivery.",
-    "Helped keep scientific accuracy, tone, and clarity aligned across segments.",
-  ],
+    "Supported production and editorial workflows for Daily Planet, Discovery Channel’s flagship science and technology series. Contributed to fast-paced, high-volume broadcast production by helping translate complex scientific topics into clear, accurate, and engaging storytelling across multiple weekly segments.",
+  roleScope: ["Broadcast newsroom support for a daily science news program."],
   snapshot: [
-    { label: "Format", value: "Science News Magazine Television Show" },
-    { label: "Production model", value: "5x New Episodes Per Week" },
-    { label: "Focus", value: "Science · Technology · Innovation · Wildlife" },
+    { label: "Format", value: "Broadcast Television Series" },
+    { label: "Production Model", value: "5 Episodes Per Week" },
+    { label: "Viewership", value: "1.3M+ Weekly Viewers" },
+    { label: "Editorial Focus", value: "Science · Technology · Innovation · Wildlife" },
   ] satisfies SnapshotRow[],
   editorialFocus: [
-    "Translate complex science into accessible, audience-friendly storytelling.",
-    "Maintain accuracy, clarity, and pacing across multiple segment formats.",
-    "Support consistent narrative tone and editorial standards week to week.",
-    "Balance credibility with momentum to keep complex topics watchable.",
+    "Translated complex scientific concepts into accessible, audience-friendly narratives.",
+    "Maintained editorial accuracy, clarity, and pacing across varied segment formats.",
+    "Supported consistent tone and storytelling standards week to week.",
+    "Balanced scientific credibility with momentum to keep content engaging.",
   ],
   productionSupport: [
-    "Day-to-day production coordination across multiple weekly segments.",
-    "Research and scripting support, including source gathering and story inputs.",
-    "Asset management and documentation to support post-production workflows.",
+    "Coordinated day-to-day production needs across multiple segments and timelines.",
+    "Provided research and scripting support, including source gathering and story inputs.",
+    "Managed assets, documentation, and handoffs to support post-production workflows.",
     "Supported producers, editors, and hosts with schedules, notes, and deliverables.",
-    "Managed handoffs and details that keep high-volume delivery reliable and standards-aligned.",
+    "Helped ensure reliable, on-time delivery in a high-volume broadcast environment.",
   ],
   impactKpis: [
     {
@@ -116,7 +112,7 @@ const project = {
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
   { id: "role", label: "My Role" },
-  { id: "focus", label: "Editorial Focus" },
+  { id: "focus", label: "Editorial Approach" },
   { id: "support", label: "Production Support" },
   { id: "impact", label: "Impact" },
   { id: "tools", label: "Tools & Skills" },
@@ -814,10 +810,6 @@ export default function DiscoveryDailyPlanetProjectPage() {
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
-                  <div className="mt-8">
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
-                    <p className="mt-2 text-base text-text-secondary">{project.roleTitle}</p>
-                  </div>
                 </div>
 
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
@@ -865,13 +857,13 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="focus" title="Editorial & Storytelling Focus" subtitle="Accuracy · clarity · pacing">
+            <Section id="focus" title="Editorial Approach & Storytelling" subtitle="Accuracy · clarity · pacing">
               <RailList ariaLabel="Editorial and storytelling focus" items={[...project.editorialFocus]} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="support" title="Production & Editorial Support" subtitle="Coordination, research, and delivery support">
+            <Section id="support" title="Production Support" subtitle="Coordination, research, and delivery support">
               <RailList ariaLabel="Production and editorial support" items={[...project.productionSupport]} />
               <div className="mt-10">
                 <VideoClipsRail clips={dailyPlanetClips} />
