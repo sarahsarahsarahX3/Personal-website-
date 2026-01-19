@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/app/lib/utils";
 
 type SectionLink = { id: string; label: string };
@@ -521,6 +521,14 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeClip = activeIndex === null ? null : clips[activeIndex];
+  const railRef = useRef<HTMLDivElement | null>(null);
+
+  const segmentLabel = "Daily Planet Episode Segment";
+  const getDisplayTitle = (title: string, index: number) => {
+    const normalized = title.trim();
+    if (/^segment id\\b/i.test(normalized)) return `Episode Segment ${index + 1}`;
+    return normalized;
+  };
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -558,7 +566,7 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
     return (
       <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
         <div className="flex items-center justify-between gap-4">
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode segments</p>
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">EPISODE SEGMENTS</p>
           <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 segments</p>
         </div>
         <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Swipe to browse →</p>
@@ -585,13 +593,39 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
   return (
     <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode segments</p>
-        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} segments</p>
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">EPISODE SEGMENTS</p>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => railRef.current?.scrollBy({ left: -360, behavior: prefersReducedMotion ? "auto" : "smooth" })}
+            className={cn(
+              "hidden md:inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/30",
+              "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+            )}
+            aria-label="Scroll segments left"
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            onClick={() => railRef.current?.scrollBy({ left: 360, behavior: prefersReducedMotion ? "auto" : "smooth" })}
+            className={cn(
+              "hidden md:inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/30",
+              "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+            )}
+            aria-label="Scroll segments right"
+          >
+            →
+          </button>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} segments</p>
+        </div>
       </div>
-      <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Swipe to browse →</p>
+      <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Swipe or use arrows to browse →</p>
 
       <div className="relative mt-6">
-        <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar snap-x snap-mandatory">
+        <div ref={railRef} className="flex gap-3 overflow-x-auto pb-2 no-scrollbar snap-x snap-mandatory">
           {clips.map((clip, index) => (
             <button
               key={clip.src}
@@ -636,9 +670,8 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
               </div>
 
               <div className="px-4 py-3">
-                <p className="text-sm leading-snug text-text-primary/90 line-clamp-2">
-                  Daily Planet Episode Segment - {clip.title}
-                </p>
+                <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">{segmentLabel}</p>
+                <p className="mt-1 text-sm leading-snug text-text-primary/90 line-clamp-2">{getDisplayTitle(clip.title, index)}</p>
               </div>
             </button>
           ))}
@@ -666,21 +699,47 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
               )}
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
                 <p className="min-w-0 flex-1 truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
                   Clip {activeIndex! + 1} of {clips.length}
                 </p>
-                <button
-                  type="button"
-                  onClick={() => setActiveIndex(null)}
-                  className={cn(
-                    "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
-                    "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                  )}
-                >
-                  Close
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setActiveIndex((value) => (value === null ? 0 : (value - 1 + clips.length) % clips.length))}
+                    className={cn(
+                      "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
+                      "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                    )}
+                    aria-label="Previous episode segment"
+                  >
+                    ← Prev
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveIndex((value) => (value === null ? 0 : (value + 1) % clips.length))}
+                    className={cn(
+                      "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
+                      "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                    )}
+                    aria-label="Next episode segment"
+                  >
+                    Next →
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveIndex(null)}
+                    className={cn(
+                      "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
+                      "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                    )}
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
 
               <div className="min-h-0 flex-1 overflow-y-auto">
@@ -708,32 +767,10 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
                       />
                     )}
                   </div>
-                  <p className="mt-4 text-sm leading-relaxed text-text-secondary">{activeClip.title}</p>
-
-                  <div className="mt-6 flex items-center justify-between gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setActiveIndex((value) => (value === null ? 0 : (value - 1 + clips.length) % clips.length))}
-                      className={cn(
-                        "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
-                        "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                      )}
-                    >
-                      ← Previous
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setActiveIndex((value) => (value === null ? 0 : (value + 1) % clips.length))}
-                      className={cn(
-                        "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
-                        "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                      )}
-                    >
-                      Next →
-                    </button>
-                  </div>
+                  <p className="mt-4 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">{segmentLabel}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                    {getDisplayTitle(activeClip.title, activeIndex!)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -1008,15 +1045,33 @@ function FacebookPosts({ posts }: { posts: SocialEmbed[] }) {
           const height = post.height ?? 740;
           return (
             <div key={post.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-              <div className="relative w-full" style={{ aspectRatio: `${width}/${height}` }}>
+              <div
+                className={cn(
+                  "mx-auto w-full overflow-hidden",
+                  "[--embed-scale:0.62] sm:[--embed-scale:0.68] md:[--embed-scale:0.76]",
+                  "h-[calc(var(--embed-h)*var(--embed-scale)+24px)]",
+                )}
+                style={
+                  {
+                    ["--embed-w" as any]: `${width}px`,
+                    ["--embed-h" as any]: `${height}px`,
+                  } as CSSProperties
+                }
+              >
                 <iframe
                   src={post.src}
                   title={post.title}
                   width={width}
                   height={height}
-                  className="absolute inset-0 h-full w-full pointer-events-none"
+                  className="pointer-events-none"
                   loading="lazy"
                   sandbox="allow-scripts allow-same-origin"
+                  style={{
+                    width: "var(--embed-w)",
+                    height: "var(--embed-h)",
+                    transform: "scale(var(--embed-scale))",
+                    transformOrigin: "top left",
+                  }}
                 />
               </div>
             </div>
@@ -1198,7 +1253,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
               <div className="mt-10">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Final deliverables</p>
                 <div className="mt-6">
-                  <VideoClipsRail clips={dailyPlanetClips} />
+                  <LegacyVideoClipsRail clips={dailyPlanetClips} />
                 </div>
               </div>
               <div className="mt-10">
