@@ -133,7 +133,7 @@ const dailyPlanetClips = [
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1624452390937260%2F&width=720&show_text=false&height=405&appId",
   },
   {
-    title: "Shark Best Friend",
+    title: "Sharks: A Man’s Best Friend",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1694189590630206%2F&width=720&show_text=false&height=405&appId",
   },
@@ -644,7 +644,13 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
       <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Swipe or use arrows to browse →</p>
 
       <div className="relative mt-6">
-        <div ref={railRef} className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory">
+        <div
+          ref={railRef}
+          className={cn(
+            "flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory",
+            "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30",
+          )}
+        >
           {clips.map((clip, index) => (
             <button
               key={clip.src}
