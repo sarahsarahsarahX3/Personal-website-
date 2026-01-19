@@ -24,7 +24,7 @@ type TripPhoto = {
 };
 
 const project = {
-  title: "Discovery Channel × Mighty Cruise Ships",
+  title: "Discovery Channel: Mighty Cruise Ships",
   subtitle: "Travel Documentary",
   role: "Production Assistant",
   overview:
@@ -923,7 +923,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
             <section id="overview" className="scroll-mt-16">
               <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #3</p>
               <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">
-                {project.title}
+                <span>Discovery Channel:</span> <em className="italic">Mighty Cruise Ships</em>
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 

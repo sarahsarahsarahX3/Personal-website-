@@ -117,7 +117,7 @@ const sectionLinks: SectionLink[] = [
   { id: "focus", label: "Editorial Approach" },
   { id: "support", label: "Production Support" },
   { id: "impact", label: "Impact" },
-  { id: "tools", label: "Tools & Skills" },
+  { id: "tools", label: "Tools" },
 ];
 
 const headerImage = {
@@ -1187,16 +1187,19 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="focus" title="Editorial Approach & Storytelling" subtitle="Accuracy · clarity · pacing">
+            <Section id="focus" title="Editorial Approach & Storytelling">
               <RailList ariaLabel="Editorial and storytelling focus" items={[...project.editorialFocus]} />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="support" title="Production Support" subtitle="Coordination, research, and delivery support">
+            <Section id="support" title="Production Support">
               <RailList ariaLabel="Production and editorial support" items={[...project.productionSupport]} />
               <div className="mt-10">
-                <VideoClipsRail clips={dailyPlanetClips} />
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Final deliverables</p>
+                <div className="mt-6">
+                  <VideoClipsRail clips={dailyPlanetClips} />
+                </div>
               </div>
               <div className="mt-10">
                 <FacebookPosts posts={dailyPlanetFacebookPosts} />
@@ -1205,7 +1208,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Impact & Broadcast Performance" subtitle="Broadcast-safe KPIs">
+            <Section id="impact" title="Impact" subtitle="SELECT A KPI TO VIEW MORE">
               <div>
                 <ImpactAccordion items={project.impactKpis as unknown as ImpactKpi[]} activeId={activeImpactId} onSelect={setActiveImpactId} />
               </div>
@@ -1239,7 +1242,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
                 </div>
 
                 <div className="lg:col-span-7">
-                  <WindowFrame title="Impact & Broadcast Performance">
+                  <WindowFrame title="Impact">
                     <h3 className="font-display text-xl tracking-tight text-text-primary">{activeImpact?.title}</h3>
                     <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{activeImpact?.description}</p>
                   </WindowFrame>

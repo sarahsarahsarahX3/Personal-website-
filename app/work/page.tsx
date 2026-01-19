@@ -43,7 +43,7 @@ export default async function WorkPage() {
     projects.splice(3, 0, {
         title: "Discovery Channel: Daily Planet",
         category: "Video Production",
-        image: "/images/Discovery%20Channel.png",
+        image: "/Daily%20Planet%20Thumbnail.jpg",
         size: "small",
         slug: "discovery-daily-planet",
         tags: ["Video Production", "Brand Storytelling"],
