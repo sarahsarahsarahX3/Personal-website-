@@ -1,0 +1,610 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { cn } from "@/app/lib/utils";
+
+type SectionLink = { id: string; label: string };
+
+type SnapshotRow = {
+  label: string;
+  value: string;
+};
+
+type ImpactKpi = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+const project = {
+  title: "Discovery Channel × Daily Planet",
+  subtitle: "Broadcast Science and Technology Storytelling",
+  roleTitle: "Production Assistant",
+  overview:
+    "Daily Planet is Discovery Channel’s flagship science and technology series. I supported ongoing, fast-paced production across multiple weekly segments, helping translate complex topics into clear, broadcast-ready storytelling.",
+  roleScope: [
+    "Supported producers, editors, and hosts in a broadcast newsroom environment.",
+    "Coordinated day-to-day production needs across multiple segments and timelines.",
+    "Maintained documentation, schedules, and deliverables to support consistent weekly delivery.",
+    "Helped keep scientific accuracy, tone, and clarity aligned across segments.",
+  ],
+  snapshot: [
+    { label: "Format", value: "Weekly broadcast science program" },
+    { label: "Production model", value: "High-volume content production" },
+    { label: "Focus", value: "Science · technology · innovation" },
+  ] satisfies SnapshotRow[],
+  editorialFocus: [
+    "Translate complex science into accessible, audience-friendly storytelling.",
+    "Maintain accuracy, clarity, and pacing across multiple segment formats.",
+    "Support consistent narrative tone and editorial standards week to week.",
+    "Balance credibility with momentum to keep complex topics watchable.",
+  ],
+  productionSupport: [
+    "Day-to-day production coordination across multiple weekly segments.",
+    "Research and scripting support, including source gathering and story inputs.",
+    "Asset management and documentation to support post-production workflows.",
+    "Supported producers, editors, and hosts with schedules, notes, and deliverables.",
+    "Managed handoffs and details that keep high-volume delivery reliable and standards-aligned.",
+  ],
+  impactKpis: [
+    {
+      id: "weekly-delivery",
+      title: "Consistent Weekly Delivery",
+      description:
+        "Supported reliable, repeatable workflows that help a weekly program ship on time across multiple segments and production timelines.",
+    },
+    {
+      id: "editorial-credibility",
+      title: "Editorial Accuracy and Credibility",
+      description:
+        "Helped maintain science-first rigor through organized research inputs, careful documentation, and detail-oriented support during scripting and production.",
+    },
+    {
+      id: "production-reliability",
+      title: "Production Reliability at Scale",
+      description:
+        "Contributed to smooth coordination in a high-volume environment by keeping schedules, notes, and assets clean, findable, and ready for handoff.",
+    },
+    {
+      id: "audience-accessibility",
+      title: "Accessible Science Storytelling",
+      description:
+        "Supported clarity and pacing so complex science and technology topics stayed approachable for broad audiences without losing accuracy.",
+    },
+  ] satisfies ImpactKpi[],
+  tools: [
+    "Science storytelling",
+    "Broadcast production workflows",
+    "Editorial support",
+    "Research coordination",
+    "Asset management",
+    "Cross-functional collaboration",
+  ],
+} as const;
+
+const sectionLinks: SectionLink[] = [
+  { id: "overview", label: "Overview" },
+  { id: "role", label: "My Role" },
+  { id: "snapshot", label: "Project Snapshot" },
+  { id: "focus", label: "Editorial Focus" },
+  { id: "support", label: "Production Support" },
+  { id: "impact", label: "Impact" },
+  { id: "tools", label: "Tools & Skills" },
+];
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+    const update = () => setReduced(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      const doc = document.documentElement;
+      const scrollTop = window.scrollY || doc.scrollTop || 0;
+      const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      setProgress(Math.max(0, Math.min(1, scrollTop / max)));
+    };
+
+    const onScroll = () => {
+      window.cancelAnimationFrame(raf);
+      raf = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  return progress;
+}
+
+function useActiveSection(ids: string[]) {
+  const [activeId, setActiveId] = useState(ids[0] ?? "");
+
+  useEffect(() => {
+    if (!ids.length) return;
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => (a.boundingClientRect.top ?? 0) - (b.boundingClientRect.top ?? 0));
+        const id = (visible[0]?.target as HTMLElement | undefined)?.id;
+        if (id) setActiveId(id);
+      },
+      { rootMargin: "-25% 0px -65% 0px", threshold: [0, 0.1, 0.25] },
+    );
+
+    for (const el of elements) observer.observe(el);
+    return () => observer.disconnect();
+  }, [ids]);
+
+  return activeId;
+}
+
+function scrollToId(id: string, behavior: ScrollBehavior) {
+  const node = document.getElementById(id);
+  if (!node) return;
+  node.scrollIntoView({ behavior, block: "start" });
+}
+
+function MobileJumpBar({
+  items,
+  activeId,
+  progress,
+  onNavigate,
+}: {
+  items: SectionLink[];
+  activeId: string;
+  progress: number;
+  onNavigate: (id: string) => void;
+}) {
+  return (
+    <nav
+      aria-label="Jump to section"
+      className={cn("md:hidden sticky top-0 z-20", "bg-surface/85 backdrop-blur-md border-b border-white/10")}
+    >
+      <div className="mx-auto w-full max-w-6xl px-6 py-3">
+        <div className="flex items-center gap-3">
+          <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
+
+          <div className="relative min-w-0 flex-1">
+            <select
+              value={activeId}
+              onChange={(event) => onNavigate(event.target.value)}
+              className={cn(
+                "w-full appearance-none rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2 pr-10",
+                "text-[11px] font-mono uppercase tracking-widest text-text-primary",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+              aria-label="Select section"
+            >
+              {items.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary">
+              ⌄
+            </span>
+          </div>
+
+          <div className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+            {Math.round(progress * 100)}%
+          </div>
+        </div>
+
+        <div className="mt-3 h-px w-full bg-white/10 overflow-hidden">
+          <div className="h-full bg-accent/80" style={{ width: `${progress * 100}%` }} />
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function DesktopRail({
+  items,
+  activeId,
+  progress,
+  onNavigate,
+}: {
+  items: SectionLink[];
+  activeId: string;
+  progress: number;
+  onNavigate: (id: string) => void;
+}) {
+  return (
+    <aside className="hidden lg:block">
+      <div className="sticky top-28 space-y-6">
+        <div className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
+          <ul className="mt-4 space-y-2" role="list">
+            {items.map((item) => {
+              const isActive = item.id === activeId;
+              return (
+                <li key={item.id}>
+                  <button
+                    type="button"
+                    onClick={() => onNavigate(item.id)}
+                    className={cn(
+                      "w-full rounded-lg px-3 py-2 text-left transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      isActive
+                        ? "bg-white/5 border border-white/15 text-text-primary"
+                        : "border border-transparent text-text-secondary hover:text-text-primary hover:bg-white/5 hover:border-white/10",
+                    )}
+                  >
+                    <span className="text-sm tracking-tight">{item.label}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-5">
+            <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">
+              <span>Read</span>
+              <span>{Math.round(progress * 100)}%</span>
+            </div>
+            <div className="mt-2 h-px w-full bg-white/10 overflow-hidden">
+              <div className="h-full bg-accent/80" style={{ width: `${progress * 100}%` }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+function WindowFrame({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+      <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
+        </div>
+        <p className="min-w-0 flex-1 truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">{title}</p>
+        <span aria-hidden="true" className="h-6 w-6 rounded-full border border-white/10 bg-surface/40" />
+      </div>
+      <div className="p-4 md:p-5">{children}</div>
+    </div>
+  );
+}
+
+function Section({
+  id,
+  title,
+  subtitle,
+  children,
+  contentClassName,
+}: {
+  id: string;
+  title: string;
+  subtitle?: React.ReactNode;
+  children: React.ReactNode;
+  contentClassName?: string;
+}) {
+  return (
+    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-16 pt-10">
+      <header className="max-w-3xl">
+        <h2
+          id={`${id}-title`}
+          className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90"
+        >
+          {title}
+        </h2>
+        {subtitle ? <p className="mt-2 text-xs font-mono uppercase tracking-widest text-text-secondary/70">{subtitle}</p> : null}
+      </header>
+      <div className={cn("mt-8", contentClassName)}>{children}</div>
+    </section>
+  );
+}
+
+function RailList({ ariaLabel, items }: { ariaLabel: string; items: string[] }) {
+  return (
+    <div className="relative mt-10">
+      <span aria-hidden="true" className="absolute left-[30px] top-4 bottom-4 w-px bg-accent/25" />
+      <ol className="grid gap-2 text-sm md:text-base text-text-secondary" aria-label={ariaLabel}>
+        {items.map((item) => (
+          <li key={item}>
+            <div className="w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3">
+              <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
+                <span className="relative justify-self-center mt-[0.7rem]" aria-hidden="true">
+                  <span className="absolute inset-0 -m-[7px] rounded-full border border-white/10" />
+                  <span className="relative block h-2.5 w-2.5 rounded-full bg-accent/70" />
+                </span>
+                <span className="leading-relaxed">{item}</span>
+              </span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function ImpactAccordion({
+  items,
+  activeId,
+  onSelect,
+}: {
+  items: ImpactKpi[];
+  activeId: string;
+  onSelect: (id: string) => void;
+}) {
+  return (
+    <div className="grid gap-3 lg:hidden">
+      {items.map((item) => {
+        const isOpen = item.id === activeId;
+        return (
+          <div
+            key={item.id}
+            className={cn(
+              "rounded-2xl border border-white/10 bg-surface-alt/10 overflow-hidden",
+              "transition-colors",
+              isOpen ? "bg-white/5 border-white/20" : "bg-surface-alt/10",
+            )}
+          >
+            <button
+              type="button"
+              aria-expanded={isOpen}
+              aria-controls={`impact-accordion-panel-${item.id}`}
+              onClick={() => onSelect(isOpen ? "" : item.id)}
+              className={cn(
+                "group relative w-full px-5 py-4 pl-11 text-left",
+                "before:absolute before:left-5 before:top-6 before:h-2.5 before:w-2.5 before:rounded-full before:border before:transition-all before:duration-200",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                isOpen
+                  ? "before:border-accent/40 before:bg-accent/90 before:shadow-[0_0_0_4px_rgba(255,59,48,0.14)]"
+                  : "before:border-white/15 before:bg-transparent hover:before:border-white/25 hover:before:bg-white/10",
+              )}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <p className="font-display text-base leading-snug text-text-primary">{item.title}</p>
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-surface/40 text-text-secondary transition-transform duration-200",
+                    isOpen ? "rotate-180" : "rotate-0",
+                  )}
+                >
+                  ▾
+                </span>
+              </div>
+            </button>
+
+            <div
+              id={`impact-accordion-panel-${item.id}`}
+              aria-hidden={!isOpen}
+              className={cn(
+                "overflow-hidden",
+                "transition-[max-height,opacity,transform] duration-300",
+                isOpen ? "max-h-[999px] opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-1 pointer-events-none",
+              )}
+            >
+              <div className="px-5 pb-5">
+                <p className="text-[13px] leading-relaxed text-text-secondary">{item.description}</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function DiscoveryDailyPlanetProjectPage() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+  const progress = useScrollProgress();
+  const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
+
+  const snapshotCards = useMemo(() => project.snapshot, []);
+  const [activeImpactId, setActiveImpactId] = useState(project.impactKpis[0]?.id ?? "");
+  const activeImpact = useMemo(
+    () => project.impactKpis.find((item) => item.id === activeImpactId) ?? project.impactKpis[0],
+    [activeImpactId],
+  );
+
+  return (
+    <main className="min-h-screen bg-surface text-text-primary">
+      <MobileJumpBar items={sectionLinks} activeId={activeSection} progress={progress} onNavigate={(id) => scrollToId(id, scrollBehavior)} />
+
+      <div className="mx-auto w-full max-w-6xl px-6 pt-10 md:pt-16 pb-24 md:pb-32">
+        <header className="flex items-center">
+          <Link
+            href="/work"
+            className={cn(
+              "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+              "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+            )}
+          >
+            <span aria-hidden="true">←</span>
+            <span>Back to Projects</span>
+          </Link>
+        </header>
+
+        <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_280px]">
+          <div className="min-w-0">
+            <section className="scroll-mt-16" id="overview">
+              <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #4</p>
+              <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">{project.title}</h1>
+              <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
+
+              <div className="mt-12 grid gap-6 lg:grid-cols-2">
+                <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
+                  <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
+                </div>
+
+                <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Project snapshot</p>
+                  <div className="mt-5 grid gap-5">
+                    {snapshotCards.map((row) => (
+                      <div key={row.label} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
+                        <p className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/70">{row.label}</p>
+                        <p className="mt-2 text-base md:text-lg tracking-tight text-text-primary/90">{row.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="role" title="My Role" subtitle="Production Assistant · newsroom support">
+              <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{project.roleTitle}</p>
+                <RailList ariaLabel="Role scope" items={[...project.roleScope]} />
+              </div>
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="snapshot" title="Project Snapshot" subtitle="Weekly production · multi-segment delivery">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {project.snapshot.map((row) => (
+                  <div key={row.label} className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
+                    <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">{row.label}</p>
+                    <p className="mt-3 text-base tracking-tight text-text-primary/90">{row.value}</p>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="focus" title="Editorial & Storytelling Focus" subtitle="Accuracy · clarity · pacing">
+              <RailList ariaLabel="Editorial and storytelling focus" items={[...project.editorialFocus]} />
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="support" title="Production & Editorial Support" subtitle="Coordination, research, and delivery support">
+              <RailList ariaLabel="Production and editorial support" items={[...project.productionSupport]} />
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="impact" title="Impact & Broadcast Performance" subtitle="Broadcast-safe KPIs">
+              <div>
+                <ImpactAccordion items={project.impactKpis as unknown as ImpactKpi[]} activeId={activeImpactId} onSelect={setActiveImpactId} />
+              </div>
+
+              <div className="mt-8 hidden lg:grid grid-cols-1 gap-6 lg:grid-cols-12">
+                <div className="lg:col-span-5">
+                  <div className="space-y-2 rounded-2xl border border-white/10 bg-surface-alt/10 p-2">
+                    {project.impactKpis.map((item) => {
+                      const isActive = item.id === activeImpactId;
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => setActiveImpactId(item.id)}
+                          className={cn(
+                            "w-full rounded-xl px-4 py-3 text-left text-[13px] leading-snug transition-colors",
+                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                            isActive ? "bg-white/5 text-text-primary" : "text-text-secondary hover:text-text-primary hover:bg-white/5",
+                          )}
+                        >
+                          <div className="flex items-center justify-between gap-4">
+                            <span>{item.title}</span>
+                            <span aria-hidden="true" className={cn("text-text-secondary/50", isActive && "text-accent/80")}>
+                              ↗
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="lg:col-span-7">
+                  <WindowFrame title="Impact & Broadcast Performance">
+                    <h3 className="font-display text-xl tracking-tight text-text-primary">{activeImpact?.title}</h3>
+                    <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{activeImpact?.description}</p>
+                  </WindowFrame>
+                </div>
+              </div>
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
+                {project.tools.map((tool) => (
+                  <span
+                    key={tool}
+                    className={cn(
+                      "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
+                      "px-3 py-2 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
+                      "text-center leading-snug whitespace-normal",
+                      "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest sm:leading-normal sm:text-left",
+                    )}
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </Section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <footer className="pt-2">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <button
+                  type="button"
+                  onClick={() => scrollToId("overview", scrollBehavior)}
+                  className={cn(
+                    "inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2",
+                    "text-sm text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                >
+                  <span aria-hidden="true">↑</span>
+                  <span>Back to top</span>
+                </button>
+
+                <div className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
+                  {Math.round(progress * 100)}% read
+                </div>
+              </div>
+            </footer>
+          </div>
+
+          <DesktopRail items={sectionLinks} activeId={activeSection} progress={progress} onNavigate={(id) => scrollToId(id, scrollBehavior)} />
+        </div>
+      </div>
+    </main>
+  );
+}
+

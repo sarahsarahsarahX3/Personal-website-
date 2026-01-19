@@ -40,6 +40,17 @@ export default async function WorkPage() {
             "Editorial and production support for a Discovery Channel documentary episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship.",
     });
 
+    projects.splice(3, 0, {
+        title: "Discovery Channel × Daily Planet",
+        category: "Video Production",
+        image: "/images/Discovery%20Channel.png",
+        size: "small",
+        slug: "discovery-daily-planet",
+        tags: ["Video Production", "Brand Storytelling"],
+        description:
+            "Production and editorial support for Discovery Channel’s flagship science and technology series, delivering fast-turn, multi-segment storytelling in a high-volume newsroom environment.",
+    });
+
     projects.unshift({
         title: "SalonCentric × New York Fashion Week",
         category: "Campaigns",
