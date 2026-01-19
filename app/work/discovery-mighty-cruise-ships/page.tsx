@@ -125,6 +125,21 @@ const marketingMaterials = [
     alt: "Mighty Cruise Ships show poster",
     caption: "Show poster",
   },
+  {
+    src: "/MCS%20Apple%20Tv.png",
+    alt: "Mighty Cruise Ships marketing material",
+    caption: "Apple TV",
+  },
+  {
+    src: "/MCS%20City%20TV%20SS.png",
+    alt: "Mighty Cruise Ships marketing material",
+    caption: "City TV",
+  },
+  {
+    src: "/MCS%20tile%202.png",
+    alt: "Mighty Cruise Ships marketing material",
+    caption: "Digital tile",
+  },
 ] satisfies TripPhoto[];
 
 function usePrefersReducedMotion() {
