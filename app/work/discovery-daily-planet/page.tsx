@@ -123,7 +123,78 @@ const headerImage = {
   alt: "Daily Planet: Future Tech Week frame",
 } as const;
 
-const dailyPlanetClips = [] satisfies VideoClip[];
+const dailyPlanetClips = [
+  {
+    title: "Daily Planet segment · 1624452390937260",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1624452390937260%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1694189590630206",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1694189590630206%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1682665248449307",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1682665248449307%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1679922312056934",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1679922312056934%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1676770252372140",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1676770252372140%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1672868082762357",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1672868082762357%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1670361973012968",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1670361973012968%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1670193526363146",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1670193526363146%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1664543106928188",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664543106928188%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1664522366930262",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664522366930262%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1664477796934719",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1664477796934719%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1657508370964995",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1657508370964995%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1651594218223077",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1651594218223077%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Daily Planet segment · 1650908161625016",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1650908161625016%2F&width=720&show_text=false&height=405&appId",
+  },
+] satisfies VideoClip[];
 
 const dailyPlanetFacebookPosts = [] satisfies SocialEmbed[];
 
