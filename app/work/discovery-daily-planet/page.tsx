@@ -474,8 +474,8 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
     return (
       <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
         <div className="flex items-center justify-between gap-4">
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode clips</p>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 clips</p>
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode segments</p>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 segments</p>
         </div>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
           Add clips to the <span className="font-mono">dailyPlanetClips</span> array (supports local files or embed URLs).
@@ -500,8 +500,8 @@ function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
   return (
     <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode clips</p>
-        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} clips</p>
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode segments</p>
+        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} segments</p>
       </div>
 
       <div className="relative mt-6">
