@@ -43,10 +43,11 @@ const project = {
     { label: "Editorial Focus", value: "Science · Technology · Innovation · Wildlife" },
   ] satisfies SnapshotRow[],
   editorialFocus: [
+    "Contributed story ideas during daily editorial pitch meetings, shaping segment direction within a fast-paced broadcast newsroom.",
+    "Supported high-volume story segment development under tight, 24-hour production cycles and same-day delivery timelines.",
     "Translated complex scientific concepts into accessible, audience-friendly narratives.",
     "Maintained editorial accuracy, clarity, and pacing across varied segment formats.",
     "Supported consistent tone and storytelling standards week to week.",
-    "Balanced scientific credibility with momentum to keep content engaging.",
   ],
   productionSupport: [
     "Coordinated day-to-day production needs across multiple segments and timelines.",
