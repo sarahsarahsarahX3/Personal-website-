@@ -122,7 +122,7 @@ const sectionLinks: SectionLink[] = [
 
 const headerImage = {
   title: "Daily Planet: Future Tech Week",
-  src: "/Daily%20Planet%20-%20Future%20Tech%20Week.jpeg",
+  src: "/Daily%20Planet%20Set.jpg",
   alt: "Daily Planet: Future Tech Week frame",
 } as const;
 
