@@ -17,6 +17,18 @@ type ImpactKpi = {
   description: string;
 };
 
+type VideoClip = {
+  title: string;
+  src: string;
+  poster?: string;
+  kind: "file" | "embed";
+};
+
+type SocialEmbed = {
+  title: string;
+  src: string;
+};
+
 const project = {
   title: "Discovery Channel: Daily Planet",
   subtitle: "Broadcast Science and Technology Storytelling",
@@ -109,6 +121,18 @@ const sectionLinks: SectionLink[] = [
   { id: "impact", label: "Impact" },
   { id: "tools", label: "Tools & Skills" },
 ];
+
+const headerImage = {
+  title: "Daily Planet: Future Tech Week",
+  src: "/Daily%20Planet%20-%20Future%20Tech%20Week.jpeg",
+  alt: "Daily Planet: Future Tech Week frame",
+} as const;
+
+const dailyPlanetClips = [] satisfies VideoClip[];
+
+const dailyPlanetFacebookPosts = [] satisfies SocialEmbed[];
+
+const dailyPlanetImages = [] satisfies { src: string; alt: string }[];
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -372,6 +396,309 @@ function RailList({
   );
 }
 
+function TvFrame({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <figure
+      className={cn(
+        "overflow-hidden rounded-[28px]",
+        "border border-white/10 bg-[#0b0b0e]",
+        "shadow-[0_0_0_1px_rgba(255,255,255,0.04)]",
+      )}
+      aria-label="TV frame"
+    >
+      <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-black/35 px-5 py-3">
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className="h-2 w-2 rounded-full bg-white/25" />
+          <span className="h-2 w-2 rounded-full bg-white/20" />
+          <span className="h-2 w-2 rounded-full bg-white/15" />
+        </div>
+        <p className="min-w-0 flex-1 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/75 text-center">
+          {title}
+        </p>
+        <span aria-hidden="true" className="text-text-secondary/50">
+          ⏵
+        </span>
+      </div>
+
+      <div className="bg-black/20 p-5 md:p-6">
+        <div
+          className={cn(
+            "mx-auto w-full max-w-[920px]",
+            "rounded-[22px] border border-white/10 bg-black/30 overflow-hidden",
+            "ring-1 ring-inset ring-white/5",
+          )}
+        >
+          {children}
+        </div>
+
+        <div aria-hidden="true" className="mx-auto mt-5 h-2 w-32 rounded-full bg-white/8" />
+      </div>
+    </figure>
+  );
+}
+
+function VideoClipsRail({ clips }: { clips: VideoClip[] }) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const activeClip = activeIndex === null ? null : clips[activeIndex];
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const previous = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+      previous?.focus?.();
+    };
+  }, [activeIndex]);
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setActiveIndex(null);
+        return;
+      }
+      if (!clips.length) return;
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        setActiveIndex((value) => (value === null ? 0 : (value + 1) % clips.length));
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        setActiveIndex((value) => (value === null ? 0 : (value - 1 + clips.length) % clips.length));
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [activeIndex, clips]);
+
+  if (!clips.length) {
+    return (
+      <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode clips</p>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 clips</p>
+        </div>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
+          Add clips to the <span className="font-mono">dailyPlanetClips</span> array (supports local files or embed URLs).
+        </p>
+        <div className="mt-6 flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              aria-hidden="true"
+              className={cn(
+                "shrink-0 w-[240px] sm:w-[280px]",
+                "aspect-video rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent",
+                "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
+              )}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Episode clips</p>
+        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} clips</p>
+      </div>
+
+      <div className="relative mt-6">
+        <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar snap-x snap-mandatory">
+          {clips.map((clip, index) => (
+            <button
+              key={clip.src}
+              type="button"
+              onClick={() => setActiveIndex(index)}
+              className={cn(
+                "snap-start shrink-0 w-[240px] sm:w-[280px] md:w-[320px]",
+                "group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 text-left",
+                "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
+                "transition-colors hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+              )}
+              aria-label={`Open clip ${index + 1}`}
+            >
+              <div className="relative aspect-video w-full">
+                {clip.poster ? (
+                  <img
+                    src={clip.poster}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/8 to-black/0" aria-hidden="true" />
+                )}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/35" />
+                <div className="pointer-events-none absolute bottom-3 left-3 right-3 flex items-center justify-between gap-3">
+                  <span className="text-[11px] font-mono uppercase tracking-widest text-white/70">Clip {index + 1}</span>
+                  <span className="text-[11px] font-mono uppercase tracking-widest text-white/70">Play</span>
+                </div>
+              </div>
+
+              <div className="px-4 py-3">
+                <p className="text-sm leading-snug text-text-primary/90 line-clamp-2">{clip.title}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-surface-alt/10 to-transparent" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-alt/10 to-transparent" />
+      </div>
+
+      {activeClip ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Expanded clip viewer"
+          className="fixed inset-0 z-50 overflow-y-auto bg-black/75 px-4 py-8"
+          onClick={() => setActiveIndex(null)}
+        >
+          <div className="mx-auto flex min-h-full w-full max-w-5xl items-center justify-center">
+            <div
+              className={cn(
+                "w-full overflow-hidden rounded-2xl border border-white/10 bg-surface/90 backdrop-blur",
+                "shadow-[0_30px_80px_rgba(0,0,0,0.6)]",
+                "flex max-h-[85vh] flex-col",
+                prefersReducedMotion ? "" : "transition-[transform,opacity] duration-200",
+              )}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                <p className="min-w-0 flex-1 truncate text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                  Clip {activeIndex! + 1} of {clips.length}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setActiveIndex(null)}
+                  className={cn(
+                    "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3 py-1.5",
+                    "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                  )}
+                >
+                  Close
+                </button>
+              </div>
+
+              <div className="min-h-0 flex-1 overflow-y-auto">
+                <div className="p-4 md:p-6">
+                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                    {activeClip.kind === "embed" ? (
+                      <div className="relative aspect-video w-full">
+                        <iframe
+                          src={activeClip.src}
+                          title={activeClip.title}
+                          className="absolute inset-0 h-full w-full"
+                          loading="lazy"
+                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          allowFullScreen
+                        />
+                      </div>
+                    ) : (
+                      <video
+                        src={activeClip.src}
+                        className="h-full w-full"
+                        controls
+                        playsInline
+                        preload="metadata"
+                        poster={activeClip.poster}
+                      />
+                    )}
+                  </div>
+                  <p className="mt-4 text-sm leading-relaxed text-text-secondary">{activeClip.title}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function SocialAndImages({ posts, images }: { posts: SocialEmbed[]; images: { src: string; alt: string }[] }) {
+  const hasAny = posts.length > 0 || images.length > 0;
+
+  if (!hasAny) {
+    return (
+      <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Facebook posts + images</p>
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">0 items</p>
+        </div>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
+          Add 2 Facebook embed URLs to <span className="font-mono">dailyPlanetFacebookPosts</span> and add 2 images to{" "}
+          <span className="font-mono">dailyPlanetImages</span>.
+        </p>
+        <div className="mt-6 grid gap-3 md:grid-cols-2">
+          <div className="aspect-[4/3] rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent" aria-hidden="true" />
+          <div className="aspect-[4/3] rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent" aria-hidden="true" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Facebook posts + images</p>
+        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">
+          {posts.length + images.length} items
+        </p>
+      </div>
+
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-3">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Facebook posts</p>
+          <div className="grid gap-3">
+            {posts.map((post) => (
+              <div key={post.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                <div className="relative aspect-video w-full">
+                  <iframe
+                    src={post.src}
+                    title={post.title}
+                    className="absolute inset-0 h-full w-full"
+                    loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-3">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Images</p>
+          <div className="grid grid-cols-2 gap-3">
+            {images.map((img) => (
+              <div key={img.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                <div className="relative aspect-[4/3] w-full">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ImpactAccordion({
   items,
   activeId,
@@ -509,6 +836,26 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
+            <div className="pt-10">
+              <TvFrame title={headerImage.title}>
+                <div className="relative aspect-video w-full">
+                  <img
+                    src={headerImage.src}
+                    alt={headerImage.alt}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading="eager"
+                    decoding="async"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_70%_at_50%_30%,rgba(255,255,255,0.06),rgba(0,0,0,0))]"
+                  />
+                </div>
+              </TvFrame>
+            </div>
+
+            <div className="mt-16 border-t border-white/10" />
+
             <Section id="role" title="My Role" subtitle="Production Assistant · newsroom support">
               <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{project.roleTitle}</p>
@@ -526,6 +873,12 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <Section id="support" title="Production & Editorial Support" subtitle="Coordination, research, and delivery support">
               <RailList ariaLabel="Production and editorial support" items={[...project.productionSupport]} />
+              <div className="mt-10">
+                <VideoClipsRail clips={dailyPlanetClips} />
+              </div>
+              <div className="mt-10">
+                <SocialAndImages posts={dailyPlanetFacebookPosts} images={dailyPlanetImages} />
+              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
