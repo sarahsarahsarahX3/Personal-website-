@@ -196,7 +196,16 @@ const dailyPlanetClips = [
   },
 ] satisfies VideoClip[];
 
-const dailyPlanetFacebookPosts = [] satisfies SocialEmbed[];
+const dailyPlanetFacebookPosts = [
+  {
+    title: "Daily Planet post · pfbid0HwW5AD7wBqbpNgSriZecxKbsZdsRNoFh2cRrKRJH74QpGrz6ZUzK7e2h4BpQbq4xl",
+    src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fposts%2Fpfbid0HwW5AD7wBqbpNgSriZecxKbsZdsRNoFh2cRrKRJH74QpGrz6ZUzK7e2h4BpQbq4xl&show_text=true&width=500",
+  },
+  {
+    title: "Daily Planet post · pfbid02j94QL4CWHWeJodh3AavAtjsm1SFP8k2QorWLB72x892JedEHayhspqUGA8xCVjzQl",
+    src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fposts%2Fpfbid02j94QL4CWHWeJodh3AavAtjsm1SFP8k2QorWLB72x892JedEHayhspqUGA8xCVjzQl&show_text=true&width=500",
+  },
+] satisfies SocialEmbed[];
 
 const dailyPlanetImages = [] satisfies { src: string; alt: string }[];
 
