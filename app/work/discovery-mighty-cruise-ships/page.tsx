@@ -752,16 +752,16 @@ function MarketingMaterialsGallery({ items }: { items: TripPhoto[] }) {
         <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{items.length} assets</p>
       </div>
 
-      <div className="mt-6 md:hidden">
-        <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
+      <div className="relative mt-6">
+        <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar snap-x snap-mandatory">
           {items.map((item, index) => (
             <button
               key={item.src}
               type="button"
               onClick={() => setActiveIndex(index)}
               className={cn(
-                "snap-start shrink-0 w-[220px] sm:w-[260px]",
-                "group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20",
+                "snap-start shrink-0 w-[220px] sm:w-[260px] md:w-[300px] lg:w-[320px]",
+                "group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 text-left",
                 "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
                 "transition-colors hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
               )}
@@ -771,42 +771,11 @@ function MarketingMaterialsGallery({ items }: { items: TripPhoto[] }) {
                 <img
                   src={item.src}
                   alt={item.alt}
-                  className="absolute inset-0 h-full w-full object-contain p-3 transition-transform duration-700 group-hover:scale-[1.02]"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/25" />
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-6 hidden md:grid grid-cols-12 gap-3">
-        {items.map((item, index) => {
-          const isFeatured = index === 0;
-          return (
-            <button
-              key={item.src}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className={cn(
-                "group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 text-left",
-                "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
-                "transition-colors hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                isFeatured ? "col-span-5 lg:col-span-4" : "col-span-7 lg:col-span-4",
-              )}
-              aria-label={`Open asset ${index + 1}`}
-            >
-              <div className={cn("relative w-full", isFeatured ? "aspect-[3/4]" : "aspect-[3/4]")}>
-                <img
-                  src={item.src}
-                  alt={item.alt}
                   className="absolute inset-0 h-full w-full object-contain p-4 transition-transform duration-700 group-hover:scale-[1.02]"
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_70%_at_50%_30%,rgba(255,255,255,0.06),rgba(0,0,0,0))]" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/25" />
               </div>
 
               <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pb-4">
@@ -815,8 +784,11 @@ function MarketingMaterialsGallery({ items }: { items: TripPhoto[] }) {
                 </p>
               </div>
             </button>
-          );
-        })}
+          ))}
+        </div>
+
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-surface-alt/10 to-transparent" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-alt/10 to-transparent" />
       </div>
 
       {activeItem ? (
