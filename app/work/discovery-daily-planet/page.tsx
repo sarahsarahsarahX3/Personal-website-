@@ -341,9 +341,17 @@ function Section({
   );
 }
 
-function RailList({ ariaLabel, items }: { ariaLabel: string; items: string[] }) {
+function RailList({
+  ariaLabel,
+  items,
+  className,
+}: {
+  ariaLabel: string;
+  items: string[];
+  className?: string;
+}) {
   return (
-    <div className="relative mt-10">
+    <div className={cn("relative mt-10", className)}>
       <span aria-hidden="true" className="absolute left-[30px] top-4 bottom-4 w-px bg-accent/25" />
       <ol className="grid gap-2 text-sm md:text-base text-text-secondary" aria-label={ariaLabel}>
         {items.map((item) => (
@@ -504,7 +512,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
             <Section id="role" title="My Role" subtitle="Production Assistant · newsroom support">
               <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{project.roleTitle}</p>
-                <RailList ariaLabel="Role scope" items={[...project.roleScope]} />
+                <RailList ariaLabel="Role scope" items={[...project.roleScope]} className="mt-6" />
               </div>
             </Section>
 
