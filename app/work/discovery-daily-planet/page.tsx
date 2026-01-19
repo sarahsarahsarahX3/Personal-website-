@@ -111,7 +111,6 @@ const project = {
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
-  { id: "role", label: "My Role" },
   { id: "focus", label: "Editorial Approach" },
   { id: "support", label: "Production Support" },
   { id: "impact", label: "Impact" },
@@ -810,6 +809,13 @@ export default function DiscoveryDailyPlanetProjectPage() {
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
+                  <div className="mt-8 border-t border-white/10 pt-6">
+                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
+                    <p className="mt-2 text-base text-text-secondary">{project.roleTitle}</p>
+                    {project.roleScope[0] ? (
+                      <p className="mt-3 text-sm leading-relaxed text-text-secondary">{project.roleScope[0]}</p>
+                    ) : null}
+                  </div>
                 </div>
 
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
@@ -845,15 +851,6 @@ export default function DiscoveryDailyPlanetProjectPage() {
                 </div>
               </TvFrame>
             </div>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="role" title="My Role" subtitle="Production Assistant · newsroom support">
-              <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{project.roleTitle}</p>
-                <RailList ariaLabel="Role scope" items={[...project.roleScope]} className="mt-6" />
-              </div>
-            </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
