@@ -240,11 +240,11 @@ function MobileJumpBar({
       aria-label="Jump to section"
       className={cn("md:hidden sticky top-0 z-20", "bg-surface/85 backdrop-blur-md border-b border-white/10")}
     >
-      <div className="mx-auto w-full max-w-6xl px-6 py-3">
-        <div className="mb-3 h-1 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
-          <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
-        </div>
+      <div className="h-1 w-full bg-white/10 overflow-hidden" aria-hidden="true">
+        <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
+      </div>
 
+      <div className="mx-auto w-full max-w-6xl px-6 py-3">
         <div className="flex items-center gap-3">
           <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">On this page</p>
 
@@ -925,7 +925,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
           <div className="min-w-0">
             <section id="overview" className="scroll-mt-16">
               <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #3</p>
-              <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl tracking-tight leading-[1.03]">
+              <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-4xl lg:text-5xl tracking-tight leading-[1.03]">
                 {project.title}
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>

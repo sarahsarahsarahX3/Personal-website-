@@ -1221,6 +1221,9 @@ function MobileJumpBar({
         "bg-surface/85 backdrop-blur-md border-b border-white/10",
       )}
     >
+      <div className="h-1 w-full bg-white/10 overflow-hidden" aria-hidden="true">
+        <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
+      </div>
       <div className="mx-auto w-full max-w-6xl px-6 py-3">
         <div className="flex items-center gap-3">
           <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
@@ -1256,10 +1259,6 @@ function MobileJumpBar({
           <p className="shrink-0 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
             {Math.round(progress * 100)}%
           </p>
-        </div>
-
-        <div className="mt-3 h-1 rounded-full bg-white/10 overflow-hidden" aria-hidden="true">
-          <div className="h-full bg-accent/60" style={{ width: `${Math.round(progress * 100)}%` }} />
         </div>
       </div>
     </nav>
