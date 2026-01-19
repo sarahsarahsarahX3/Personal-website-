@@ -66,7 +66,7 @@ export function BrandsSection() {
             id="brands-title"
             className="text-xl md:text-2xl font-display tracking-tight text-text-secondary/70"
           >
-            Working With Industry Leaders
+            Working with Industry Leaders
           </h2>
         </header>
 

@@ -1,9 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import type { KeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import { cn } from "@/app/lib/utils";
-import styles from "./CoreSkillsSection.module.css";
 import type { CoreSkillVizId } from "@/app/components/home/CoreSkillViz";
 
 type ValueArea = {
@@ -65,58 +62,6 @@ const valueAreas: ValueArea[] = [
 ];
 
 export function CoreSkillsSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [openIndex, setOpenIndex] = useState(0);
-
-  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const pressStart = useRef<{ x: number; y: number } | null>(null);
-  const pressMoved = useRef(false);
-  const activeArea = useMemo(() => valueAreas[activeIndex] ?? valueAreas[0]!, [activeIndex]);
-
-  const onAccordionPointerDown = (event: ReactPointerEvent<HTMLButtonElement>) => {
-    pressStart.current = { x: event.clientX, y: event.clientY };
-    pressMoved.current = false;
-  };
-
-  const onAccordionPointerMove = (event: ReactPointerEvent<HTMLButtonElement>) => {
-    if (!pressStart.current) return;
-    const dx = Math.abs(event.clientX - pressStart.current.x);
-    const dy = Math.abs(event.clientY - pressStart.current.y);
-    if (dx + dy > 10) pressMoved.current = true;
-  };
-
-  const onAccordionPointerEnd = () => {
-    pressStart.current = null;
-  };
-
-  const shouldIgnoreAccordionActivate = () => {
-    const ignore = pressMoved.current;
-    pressMoved.current = false;
-    return ignore;
-  };
-
-  const onTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    const count = valueAreas.length;
-    if (count === 0) return;
-
-    const key = event.key;
-    const isVerticalNav = key === "ArrowDown" || key === "ArrowUp" || key === "Home" || key === "End";
-    if (!isVerticalNav) return;
-    event.preventDefault();
-
-    const nextIndex =
-      key === "Home"
-        ? 0
-        : key === "End"
-          ? count - 1
-          : key === "ArrowDown"
-            ? (activeIndex + 1) % count
-            : (activeIndex - 1 + count) % count;
-
-    setActiveIndex(nextIndex);
-    tabRefs.current[nextIndex]?.focus();
-  };
-
   return (
     <section aria-labelledby="where-i-create-value-title" className="py-24 md:py-32 lg:py-36">
       <div className="mx-auto w-full max-w-6xl px-6">
@@ -129,188 +74,44 @@ export function CoreSkillsSection() {
           </h2>
         </header>
 
-        <div className="mt-12 grid gap-10 md:grid-cols-[340px_minmax(0,708px)] md:gap-14">
-          {/* Left column: value areas */}
-          <div className="self-start">
-            {/* Mobile: accordion */}
-            <div className="md:hidden rounded-2xl border border-white/10 bg-surface-alt/10">
-              <ul role="list" className="divide-y divide-white/10">
-                {valueAreas.map((area, index) => {
-                  const isActive = index === activeIndex;
-                  const isOpen = index === openIndex;
-                  const triggerId = `value-acc-trigger-${area.id}`;
-                  const regionId = `value-acc-panel-${area.id}`;
+        <ul aria-label="Core skills" className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          {valueAreas.map((area) => (
+            <li key={area.id} className="group">
+              <div
+                className={cn(
+                  "relative h-full min-h-[140px] overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10 p-6",
+                  "transition-colors duration-300 hover:border-white/20 hover:bg-white/[0.06]",
+                )}
+              >
+                <div
+                  aria-hidden="true"
+                  className={cn(
+                    "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                    "bg-[radial-gradient(65%_65%_at_50%_35%,rgba(255,255,255,0.08),rgba(0,0,0,0))]",
+                  )}
+                />
+                <div
+                  aria-hidden="true"
+                  className={cn(
+                    "pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-accent/10 blur-2xl",
+                    "opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                  )}
+                />
 
-                  return (
-                    <li key={area.id} className="relative">
-                      <button
-                        id={triggerId}
-                        type="button"
-                        aria-expanded={isOpen}
-                        aria-controls={regionId}
-                        onPointerDown={onAccordionPointerDown}
-                        onPointerMove={onAccordionPointerMove}
-                        onPointerUp={onAccordionPointerEnd}
-                        onPointerCancel={onAccordionPointerEnd}
-                        onClick={() => {
-                          if (shouldIgnoreAccordionActivate()) return;
-                          setActiveIndex(index);
-                          setOpenIndex(index);
-                        }}
-                        className={cn(
-                          "group w-full text-left px-5 py-4 touch-pan-y",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-inset",
-                          "transition-colors duration-200",
-                          "border-l-2 border-l-transparent",
-                          isActive ? "bg-white/6 border-l-accent/80" : "hover:bg-white/3 hover:border-l-white/15",
-                        )}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-4 min-w-0">
-                            <span
-                              className={cn(
-                                "font-mono text-xs tracking-widest",
-                                isActive ? "text-accent/90" : "text-text-secondary/65 group-hover:text-text-secondary",
-                              )}
-                            >
-                              {area.index}
-                            </span>
-                            <span
-                              className={cn(
-                                "truncate text-[15px] tracking-tight",
-                                isActive ? "text-text-primary" : "text-text-secondary group-hover:text-text-primary",
-                              )}
-                            >
-                              {area.title}
-                            </span>
-                          </div>
-
-                          <span
-                            aria-hidden="true"
-                            className={cn(
-                              "h-6 w-px bg-white/10 transition-colors duration-200",
-                              isActive ? "bg-accent/55" : "bg-white/10 group-hover:bg-white/20",
-                            )}
-                          />
-                        </div>
-                      </button>
-
-                      <div
-                        id={regionId}
-                        role="region"
-                        aria-labelledby={triggerId}
-                        className={cn("px-5 pb-5 -mt-1", styles.accordion, isOpen && styles.accordionOpen)}
-                      >
-                        <div className={styles.accordionInner}>
-                          <div className="pt-3 text-sm leading-relaxed text-text-secondary">{area.description}</div>
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-
-            {/* Desktop: tabs */}
-            <div
-              role="tablist"
-              aria-label="Where I Create Value"
-              aria-orientation="vertical"
-              className="hidden md:block rounded-2xl border border-white/10 bg-surface-alt/10"
-            >
-              <ul role="list" className="divide-y divide-white/10">
-                {valueAreas.map((area, index) => {
-                  const isActive = index === activeIndex;
-                  const tabId = `value-tab-${area.id}`;
-
-                  return (
-                    <li key={area.id} className="relative">
-                      <button
-                        ref={(node) => {
-                          tabRefs.current[index] = node;
-                        }}
-                        id={tabId}
-                        type="button"
-                        role="tab"
-                        aria-selected={isActive}
-                        aria-controls="value-detail-panel"
-                        tabIndex={isActive ? 0 : -1}
-                        onKeyDown={onTabKeyDown}
-                        onFocus={() => setActiveIndex(index)}
-                        onMouseMove={() => setActiveIndex(index)}
-                        onClick={() => setActiveIndex(index)}
-                        className={cn(
-                          "group w-full text-left px-6 py-5",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-inset",
-                          "transition-colors duration-200",
-                          "border-l-2 border-l-transparent",
-                          isActive ? "bg-white/6 border-l-accent/80" : "hover:bg-white/3 hover:border-l-white/15",
-                        )}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-4 min-w-0">
-                            <span
-                              className={cn(
-                                "font-mono text-xs tracking-widest",
-                                isActive ? "text-accent/90" : "text-text-secondary/65 group-hover:text-text-secondary",
-                              )}
-                            >
-                              {area.index}
-                            </span>
-                            <span
-                              className={cn(
-                                "truncate text-[15px] tracking-tight",
-                                isActive ? "text-text-primary" : "text-text-secondary group-hover:text-text-primary",
-                              )}
-                            >
-                              {area.title}
-                            </span>
-                          </div>
-
-                          <span
-                            aria-hidden="true"
-                            className={cn(
-                              "h-6 w-px bg-white/10 transition-colors duration-200",
-                              isActive ? "bg-accent/55" : "bg-white/10 group-hover:bg-white/20",
-                            )}
-                          />
-                        </div>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-
-          {/* Right column: contextual content */}
-          <div className="hidden md:block">
-            <div
-              id="value-detail-panel"
-              role="tabpanel"
-              aria-labelledby={`value-tab-${activeArea.id}`}
-              className="rounded-2xl border border-white/10 bg-surface-alt/10 p-7 md:p-8"
-            >
-              <div key={activeArea.id} className={cn("flex h-full flex-col", styles.detailInner)}>
-                <div className="flex items-center gap-3 font-mono text-xs tracking-widest text-text-secondary/70">
-                  <span>{activeArea.index}</span>
-                  <span className="text-accent">Core Skill</span>
+                <div className="relative flex items-start justify-between gap-4">
+                  <div className="font-mono text-xs tracking-widest text-accent/90">{area.index}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-text-secondary/60">Core skill</div>
                 </div>
-                <h3 className="mt-3 text-2xl md:text-[28px] font-display tracking-tight">
-                  {activeArea.title}
+
+                <h3 className="relative mt-5 font-display text-lg md:text-xl leading-snug tracking-tight text-text-primary">
+                  {area.title}
                 </h3>
 
-                <p className="mt-6 text-base leading-relaxed text-text-secondary max-w-2xl">
-                  {activeArea.description}
-                </p>
+                <div aria-hidden="true" className="relative mt-6 h-px w-full bg-gradient-to-r from-white/15 via-white/5 to-transparent" />
               </div>
-            </div>
-
-            <div className="mt-4 hidden md:block font-mono text-[11px] tracking-widest uppercase text-text-secondary/55">
-              Use ↑/↓ to navigate
-            </div>
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

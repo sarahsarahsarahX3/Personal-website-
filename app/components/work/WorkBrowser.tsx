@@ -20,7 +20,6 @@ const categories = [
     "All",
     "Campaigns",
     "Content Strategy",
-    "SEO & AEO",
     "Copywriting",
     "Video Production",
     "Brand Storytelling",
