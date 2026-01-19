@@ -55,10 +55,22 @@ const project = {
         "Supported reliable, repeatable workflows that help a weekly program ship on time across multiple segments and production timelines.",
     },
     {
+      id: "multi-segment-throughput",
+      title: "Multi-Segment Throughput",
+      description:
+        "Supported fast-turn segment production by keeping moving parts organized, trackable, and ready for handoff across parallel storylines.",
+    },
+    {
       id: "editorial-credibility",
       title: "Editorial Accuracy and Credibility",
       description:
         "Helped maintain science-first rigor through organized research inputs, careful documentation, and detail-oriented support during scripting and production.",
+    },
+    {
+      id: "broadcast-standards",
+      title: "Broadcast Standards Alignment",
+      description:
+        "Supported clean delivery by maintaining documentation and asset organization that aligns with broadcast standards and post-production workflows.",
     },
     {
       id: "production-reliability",
@@ -71,6 +83,12 @@ const project = {
       title: "Accessible Science Storytelling",
       description:
         "Supported clarity and pacing so complex science and technology topics stayed approachable for broad audiences without losing accuracy.",
+    },
+    {
+      id: "tone-consistency",
+      title: "Consistent Editorial Tone",
+      description:
+        "Helped support a consistent narrative tone across segments by maintaining clear story inputs, notes, and documentation for producers and editors.",
     },
   ] satisfies ImpactKpi[],
   tools: [
@@ -607,4 +625,3 @@ export default function DiscoveryDailyPlanetProjectPage() {
     </main>
   );
 }
-
