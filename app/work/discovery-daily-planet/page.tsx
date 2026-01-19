@@ -121,9 +121,9 @@ const sectionLinks: SectionLink[] = [
 ];
 
 const headerImage = {
-  title: "Daily Planet: Future Tech Week",
+  title: "DAILY PLANET ON-SET STUDIO",
   src: "/Daily%20Planet%20Set.jpg",
-  alt: "Daily Planet: Future Tech Week frame",
+  alt: "Daily Planet on-set studio frame",
 } as const;
 
 const dailyPlanetClips = [
@@ -257,6 +257,25 @@ function useScrollProgress() {
   }, []);
 
   return progress;
+}
+
+function useContainerWidth<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const update = () => setWidth(node.getBoundingClientRect().width);
+    update();
+
+    const ro = new ResizeObserver(() => update());
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, []);
+
+  return { ref, width } as const;
 }
 
 function useActiveSection(ids: string[]) {
@@ -461,8 +480,8 @@ function RailList({
         {items.map((item) => (
           <li key={item}>
             <div className="w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3">
-              <span className="grid grid-cols-[28px_1fr] gap-4 items-start">
-                <span className="relative justify-self-center mt-[0.7rem]" aria-hidden="true">
+              <span className="grid grid-cols-[28px_1fr] gap-4 items-center">
+                <span className="relative justify-self-center self-center" aria-hidden="true">
                   <span className="absolute inset-0 -m-[7px] rounded-full border border-white/10" />
                   <span className="relative block h-2.5 w-2.5 rounded-full bg-accent/70" />
                 </span>
@@ -1040,43 +1059,44 @@ function FacebookPosts({ posts }: { posts: SocialEmbed[] }) {
       </div>
 
       <div className="mt-6 grid gap-3 md:grid-cols-2">
-        {posts.map((post) => {
-          const width = post.width ?? 500;
-          const height = post.height ?? 740;
-          return (
-            <div key={post.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-              <div
-                className={cn(
-                  "mx-auto w-full overflow-hidden",
-                  "[--embed-scale:0.62] sm:[--embed-scale:0.68] md:[--embed-scale:0.76]",
-                  "h-[calc(var(--embed-h)*var(--embed-scale)+24px)]",
-                )}
-                style={
-                  {
-                    ["--embed-w" as any]: `${width}px`,
-                    ["--embed-h" as any]: `${height}px`,
-                  } as CSSProperties
-                }
-              >
-                <iframe
-                  src={post.src}
-                  title={post.title}
-                  width={width}
-                  height={height}
-                  className="pointer-events-none"
-                  loading="lazy"
-                  sandbox="allow-scripts allow-same-origin"
-                  style={{
-                    width: "var(--embed-w)",
-                    height: "var(--embed-h)",
-                    transform: "scale(var(--embed-scale))",
-                    transformOrigin: "top left",
-                  }}
-                />
-              </div>
-            </div>
-          );
-        })}
+        {posts.map((post) => (
+          <FacebookPostCard key={post.src} post={post} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FacebookPostCard({ post }: { post: SocialEmbed }) {
+  const embedWidth = post.width ?? 500;
+  const embedHeight = post.height ?? 740;
+  const { ref, width: containerWidth } = useContainerWidth<HTMLDivElement>();
+
+  const maxScale = 0.92;
+  const fallbackWidth = 360;
+  const scale = Math.min(maxScale, (containerWidth || fallbackWidth) / embedWidth);
+  const scaledHeight = Math.round(embedHeight * scale);
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40 p-3">
+      <div ref={ref} className="overflow-hidden rounded-xl border border-white/10 bg-black/20">
+        <div className="relative w-full" style={{ height: scaledHeight }}>
+          <iframe
+            src={post.src}
+            title={post.title}
+            width={embedWidth}
+            height={embedHeight}
+            className="pointer-events-none absolute left-0 top-0"
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin"
+            style={{
+              width: embedWidth,
+              height: embedHeight,
+              transform: `scale(${scale})`,
+              transformOrigin: "top left",
+            }}
+          />
+        </div>
       </div>
     </div>
   );
