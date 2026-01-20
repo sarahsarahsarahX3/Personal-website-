@@ -51,12 +51,12 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
             <Link
                 href={`/work/${slug}`}
                 className={cn(
-                    "flex h-full w-full flex-col overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+                    "grid h-full w-full grid-rows-[minmax(0,1fr)_minmax(0,1fr)] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
                     className
                 )}
                 aria-label={`${title} project page`}
             >
-                <div className="relative h-[240px] overflow-hidden bg-surface-secondary sm:h-[250px] md:h-[260px]">
+                <div className="relative min-h-0 overflow-hidden bg-surface-secondary">
                     <div
                         className={cn(
                             "absolute inset-0 w-full h-full transition-transform duration-700",
@@ -92,8 +92,9 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/35" />
                 </div>
 
-                <div className="relative flex min-h-[160px] items-stretch justify-between gap-6 p-5 md:min-h-[180px] md:p-6">
-                    <div className="min-w-0">
+                <div className="relative min-h-0 overflow-hidden p-5 md:p-6">
+                    <div className="flex h-full min-h-0 items-stretch justify-between gap-6">
+                    <div className="min-w-0 min-h-0 flex flex-col">
                         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.24em]">
                             <span className="text-accent">Project {formatIndex(index)}</span>
                             <span className="text-white/25">•</span>
@@ -152,6 +153,7 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                                 />
                             </span>
                         </div>
+                    </div>
                     </div>
                 </div>
             </Link>
