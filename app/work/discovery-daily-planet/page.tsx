@@ -373,11 +373,13 @@ function DesktopRail({
   activeId,
   progress,
   onNavigate,
+  currentSlug,
 }: {
   items: SectionLink[];
   activeId: string;
   progress: number;
   onNavigate: (id: string) => void;
+  currentSlug: string;
 }) {
   return (
     <aside className="hidden lg:block">
@@ -414,6 +416,8 @@ function DesktopRail({
             })}
           </ul>
         </div>
+
+        <ProjectPager currentSlug={currentSlug} layout="rail" />
       </div>
     </aside>
   );
@@ -1376,11 +1380,15 @@ export default function DiscoveryDailyPlanetProjectPage() {
             </footer>
           </div>
 
-          <DesktopRail items={sectionLinks} activeId={activeSection} progress={progress} onNavigate={(id) => scrollToId(id, scrollBehavior)} />
+          <DesktopRail
+            items={sectionLinks}
+            activeId={activeSection}
+            progress={progress}
+            onNavigate={(id) => scrollToId(id, scrollBehavior)}
+            currentSlug="discovery-daily-planet"
+          />
         </div>
       </div>
-
-      <ProjectPager currentSlug="discovery-daily-planet" />
     </main>
   );
 }

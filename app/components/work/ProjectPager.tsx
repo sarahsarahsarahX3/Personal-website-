@@ -68,61 +68,61 @@ function NavCard({
   );
 }
 
-export function ProjectPager({ currentSlug }: { currentSlug: string }) {
+export function ProjectPager({
+  currentSlug,
+  layout = "rail",
+  className,
+}: {
+  currentSlug: string;
+  layout?: "rail" | "inline";
+  className?: string;
+}) {
   const index = PROJECT_NAV.findIndex((p) => p.slug === currentSlug);
   if (index === -1) return null;
 
   const prev = PROJECT_NAV[index - 1];
   const next = PROJECT_NAV[index + 1];
 
-  return (
-    <>
-      <div className="h-24 md:h-28" aria-hidden="true" />
-      <div
-        className={cn(
-          "fixed left-0 right-0 z-40",
-          "bottom-[calc(env(safe-area-inset-bottom)+6.5rem)]",
-        )}
-      >
-        <div className="mx-auto w-full max-w-6xl px-6">
-          <div className="grid grid-cols-2 gap-3">
-            {prev ? (
-              <NavCard
-                direction="prev"
-                href={`/work/${prev.slug}`}
-                title={prev.title}
-                thumbnail={prev.thumbnail}
-              />
-            ) : (
-              <NavCard
-                direction="prev"
-                href="/work"
-                title="Selected Work"
-                thumbnail={PROJECT_NAV[index].thumbnail}
-                disabled
-              />
-            )}
+  const containerClassName =
+    layout === "rail"
+      ? "grid gap-3"
+      : "mt-12 grid gap-3 sm:grid-cols-2";
 
-            {next ? (
-              <NavCard
-                direction="next"
-                href={`/work/${next.slug}`}
-                title={next.title}
-                thumbnail={next.thumbnail}
-              />
-            ) : (
-              <NavCard
-                direction="next"
-                href="/work"
-                title="Selected Work"
-                thumbnail={PROJECT_NAV[index].thumbnail}
-                disabled
-              />
-            )}
-          </div>
-        </div>
-      </div>
-    </>
+  return (
+    <div className={cn(containerClassName, className)}>
+      {prev ? (
+        <NavCard
+          direction="prev"
+          href={`/work/${prev.slug}`}
+          title={prev.title}
+          thumbnail={prev.thumbnail}
+        />
+      ) : (
+        <NavCard
+          direction="prev"
+          href="/work"
+          title="Selected Work"
+          thumbnail={PROJECT_NAV[index].thumbnail}
+          disabled
+        />
+      )}
+
+      {next ? (
+        <NavCard
+          direction="next"
+          href={`/work/${next.slug}`}
+          title={next.title}
+          thumbnail={next.thumbnail}
+        />
+      ) : (
+        <NavCard
+          direction="next"
+          href="/work"
+          title="Selected Work"
+          thumbnail={PROJECT_NAV[index].thumbnail}
+          disabled
+        />
+      )}
+    </div>
   );
 }
-
