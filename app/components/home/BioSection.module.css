@@ -12,19 +12,25 @@
 
 .headshot,
 .body {
-  opacity: calc(0.18 + (var(--bio-progress) * 0.82));
-  transform:
-    translateY(calc((1 - var(--bio-progress)) * 14px))
+  opacity: calc(0.42 + (var(--bio-progress) * 0.58));
+  transform: translate3d(0, calc((1 - var(--bio-progress)) * 20px), 0);
+  will-change: transform, opacity;
+}
+
+.headshot {
+  transform: translate3d(0, calc((1 - var(--bio-progress)) * 24px), 0)
     scale(calc(0.985 + (var(--bio-progress) * 0.015)));
   will-change: transform, opacity;
 }
 
+.body {
+  transform: translate3d(0, calc((1 - var(--bio-progress)) * 16px), 0);
+}
+
 .highlight {
   --p: clamp(0, calc((var(--bio-progress) - (var(--i, 0) * 0.085)) * 4), 1);
-  opacity: calc(0.1 + (var(--p) * 0.9));
-  transform:
-    translateY(calc((1 - var(--p)) * 12px))
-    scale(calc(0.985 + (var(--p) * 0.015)));
+  opacity: calc(0.28 + (var(--p) * 0.72));
+  transform: translate3d(0, calc((1 - var(--p)) * 18px), 0);
   will-change: transform, opacity;
 }
 

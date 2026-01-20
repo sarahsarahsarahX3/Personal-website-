@@ -142,7 +142,6 @@ function MarketsIcon() {
 export function BioSection() {
   const [headshotSrc, setHeadshotSrc] = useState("/images/IMG_8516_edited.jpg");
   const sectionRef = useRef<HTMLElement | null>(null);
-  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const element = sectionRef.current;
@@ -158,32 +157,62 @@ export function BioSection() {
 
     const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 
+    let raf: number | null = null;
+    let active = false;
+    let lastProgress = -1;
+
     const computeProgress = () => {
-      rafRef.current = null;
+      if (!active) return;
       const rect = element.getBoundingClientRect();
       const viewportHeight = window.innerHeight || 1;
 
-      const start = viewportHeight * 0.88;
-      const end = viewportHeight * 0.28;
+      const start = viewportHeight * 0.92;
+      const end = viewportHeight * 0.36;
       const raw = (start - rect.top) / (start - end);
       const progress = clamp01(raw);
 
-      element.style.setProperty("--bio-progress", progress.toFixed(3));
+      if (Math.abs(progress - lastProgress) > 0.002) {
+        element.style.setProperty("--bio-progress", progress.toFixed(3));
+        lastProgress = progress;
+      }
+
+      raf = window.requestAnimationFrame(computeProgress);
     };
 
-    const requestUpdate = () => {
-      if (rafRef.current != null) return;
-      rafRef.current = window.requestAnimationFrame(computeProgress);
+    const startLoop = () => {
+      if (active) return;
+      active = true;
+      lastProgress = -1;
+      raf = window.requestAnimationFrame(computeProgress);
     };
 
-    computeProgress();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    const stopLoop = () => {
+      active = false;
+      if (raf != null) window.cancelAnimationFrame(raf);
+      raf = null;
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) startLoop();
+        else stopLoop();
+      },
+      { root: null, rootMargin: "240px 0px 240px 0px", threshold: 0 },
+    );
+
+    observer.observe(element);
+
+    const onResize = () => {
+      if (!active) return;
+      lastProgress = -1;
+    };
+
+    window.addEventListener("resize", onResize);
 
     return () => {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      if (rafRef.current != null) window.cancelAnimationFrame(rafRef.current);
+      stopLoop();
+      observer.disconnect();
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
