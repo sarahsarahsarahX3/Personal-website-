@@ -11,7 +11,7 @@ type SnapshotCard = { title: string; value: string };
 const deliverables = {
   articlePdf: {
     title: "SalonCentric AANHPI Integrated Campaign Article",
-    fileName: undefined as string | undefined,
+    fileName: "SalonCentric Celebrates AANHPI Coffee & Culture Fireside Chat.pdf",
   },
 } as const;
 
@@ -25,12 +25,6 @@ const project = {
     { title: "Creator & Partner–Led Campaign", value: "CULTURAL MOMENT STORYTELLING" },
     { title: "Integrated Distribution", value: "ORGANIC · PAID · OWNED" },
     { title: "Brand & Community Focus", value: "AANHPI REPRESENTATION & VISIBILITY" },
-  ],
-  audience: [
-    { label: "B2B", value: "Licensed beauty professionals and salon decision-makers" },
-    { label: "DTC (Owned)", value: "SalonCentric web and email audiences" },
-    { label: "Influencer & Media Ecosystem", value: "Beauty creators and cultural partners" },
-    { label: "Industry", value: "Brand partners and professional community stakeholders" },
   ],
   strategyBullets: [
     "Selected creators based on audience relevance, cultural credibility, and brand alignment.",
@@ -61,7 +55,6 @@ const project = {
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
-  { id: "audience", label: "Audience" },
   { id: "strategy", label: "Strategy" },
   { id: "messaging", label: "Messaging" },
   { id: "deliverables", label: "Final Deliverables" },
@@ -523,69 +516,16 @@ export default function SalonCentricAanhpiProjectPage() {
               </div>
 
               <div className="mt-8">
-                <WindowFrame
-                  title="ARTICLE PREVIEW"
-                  actions={
-                    articlePdfHref ? (
-                      <a
-                        href={articlePdfHref}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={cn(
-                          "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
-                          "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                        )}
-                      >
-                        Open ↗
-                      </a>
-                    ) : null
-                  }
-                >
-                  <div className="rounded-2xl border border-white/10 bg-surface/40 overflow-hidden">
-                    <div
-                      className={cn(
-                        "h-[60vh] min-h-[420px] lg:h-[56vh] lg:min-h-[380px] w-full",
-                        "overflow-auto md:overflow-hidden",
-                      )}
-                      style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
-                    >
-                      {articlePdfPreviewSrc ? (
-                        isMobileView ? (
-                          <object
-                            data={articlePdfPreviewSrc}
-                            type="application/pdf"
-                            aria-label={deliverables.articlePdf.title}
-                            className="h-full w-full"
-                          >
-                            <iframe title={deliverables.articlePdf.title} src={articlePdfPreviewSrc} className="h-full w-full border-0" />
-                          </object>
-                        ) : (
-                          <iframe title={deliverables.articlePdf.title} src={articlePdfPreviewSrc} className="h-full w-full border-0" />
-                        )
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                          Add a PDF file
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </WindowFrame>
+                <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-5 md:p-6">
+                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                    Article PDF preview
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                    This project includes a digital article preview in the Final Deliverables section.
+                  </p>
+                </div>
               </div>
             </section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="audience" title="Target Audience" contentClassName="mt-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                {project.audience.map((aud) => (
-                  <div key={aud.label} className="rounded-2xl border border-white/10 bg-surface-alt/10 p-5">
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">{aud.label}</p>
-                    <p className="mt-2 text-sm md:text-base leading-relaxed text-text-secondary">{aud.value}</p>
-                  </div>
-                ))}
-              </div>
-            </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
@@ -602,15 +542,87 @@ export default function SalonCentricAanhpiProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="deliverables" title="Final Deliverables" contentClassName="mt-6">
+              <WindowFrame
+                title="ARTICLE PREVIEW"
+                actions={
+                  articlePdfHref ? (
+                    <a
+                      href={articlePdfHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
+                        "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      )}
+                    >
+                      Open ↗
+                    </a>
+                  ) : null
+                }
+              >
+                <div className="rounded-2xl border border-white/10 bg-surface/40 overflow-hidden">
+                  <div
+                    className={cn(
+                      "h-[75vh] min-h-[520px] lg:h-[60vh] lg:min-h-[420px] w-full",
+                      "overflow-auto md:overflow-hidden",
+                    )}
+                    style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+                  >
+                    {articlePdfPreviewSrc ? (
+                      isMobileView ? (
+                        <object
+                          data={articlePdfHref}
+                          type="application/pdf"
+                          aria-label={deliverables.articlePdf.title}
+                          className="h-full w-full"
+                        >
+                          <iframe title={deliverables.articlePdf.title} src={articlePdfHref} className="h-full w-full border-0" />
+                        </object>
+                      ) : (
+                        <iframe title={deliverables.articlePdf.title} src={articlePdfPreviewSrc} className="h-full w-full border-0" />
+                      )
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                        Add a PDF file
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </WindowFrame>
+
               <WindowFrame title="SOCIAL MEDIA POSTS + IMAGES">
                 <div className="grid gap-4 md:grid-cols-2">
                   {[
-                    { title: "Social post placeholder", description: "Add a post image or screenshot." },
-                    { title: "Social post placeholder", description: "Add a post image or screenshot." },
-                    { title: "Campaign image placeholder", description: "Add a campaign image." },
-                    { title: "Campaign image placeholder", description: "Add a campaign image." },
+                    {
+                      title: "Social video",
+                      kind: "video" as const,
+                      src: "/AANHPI Social Video 1.mov",
+                      ariaLabel: "AANHPI social video 1",
+                    },
+                    {
+                      title: "Social video",
+                      kind: "video" as const,
+                      src: "/AANHPI Soical Video 2.mov",
+                      ariaLabel: "AANHPI social video 2",
+                    },
+                    {
+                      title: "Campaign image",
+                      kind: "image" as const,
+                      src: "/AANHPI Soical Post.png",
+                      ariaLabel: "AANHPI social post image 1",
+                    },
+                    {
+                      title: "Campaign image",
+                      kind: "image" as const,
+                      src: "/AANHPI Soical Post 2.png",
+                      ariaLabel: "AANHPI social post image 2",
+                    },
                   ].map((item, index) => (
-                    <div key={`${item.title}-${index}`} className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
+                    <div
+                      key={`${item.title}-${index}`}
+                      className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10"
+                    >
                       <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface/40 px-4 py-3">
                         <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
                           {item.title}
@@ -620,8 +632,33 @@ export default function SalonCentricAanhpiProjectPage() {
                         </span>
                       </div>
                       <div className="p-4">
-                        <div className="flex aspect-[16/10] w-full items-center justify-center rounded-2xl border border-white/10 bg-surface/40 px-6 text-center text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                          {item.description}
+                        <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                          <div className="relative aspect-[16/10] w-full bg-black/20">
+                            {item.kind === "video" ? (
+                              <video
+                                src={item.src}
+                                controls
+                                playsInline
+                                preload="metadata"
+                                className="h-full w-full object-cover"
+                                aria-label={item.ariaLabel}
+                              />
+                            ) : (
+                              <img
+                                src={item.src}
+                                alt={item.ariaLabel}
+                                className="h-full w-full object-contain"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            )}
+
+                            <div
+                              aria-hidden="true"
+                              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
+                            />
+                            <div aria-hidden="true" className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -681,4 +718,3 @@ export default function SalonCentricAanhpiProjectPage() {
     </main>
   );
 }
-
