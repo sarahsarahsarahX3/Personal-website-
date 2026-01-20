@@ -142,25 +142,50 @@ function MarketsIcon() {
 export function BioSection() {
   const [headshotSrc, setHeadshotSrc] = useState("/images/IMG_8516_edited.jpg");
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [isRevealed, setIsRevealed] = useState(false);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const element = sectionRef.current;
     if (!element) return;
-    if (isRevealed) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-        setIsRevealed(true);
-        observer.disconnect();
-      },
-      { root: null, rootMargin: "0px 0px -10% 0px", threshold: 0.25 },
-    );
+    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const prefersReducedMotion = Boolean(media?.matches);
 
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [isRevealed]);
+    if (prefersReducedMotion) {
+      element.style.setProperty("--bio-progress", "1");
+      return;
+    }
+
+    const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
+
+    const computeProgress = () => {
+      rafRef.current = null;
+      const rect = element.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+
+      const start = viewportHeight * 0.88;
+      const end = viewportHeight * 0.28;
+      const raw = (start - rect.top) / (start - end);
+      const progress = clamp01(raw);
+
+      element.style.setProperty("--bio-progress", progress.toFixed(3));
+    };
+
+    const requestUpdate = () => {
+      if (rafRef.current != null) return;
+      rafRef.current = window.requestAnimationFrame(computeProgress);
+    };
+
+    computeProgress();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      if (rafRef.current != null) window.cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   const highlights = [
     { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
@@ -174,7 +199,6 @@ export function BioSection() {
   return (
     <section
       ref={sectionRef}
-      data-revealed={isRevealed ? "true" : "false"}
       aria-labelledby="home-bio-title"
       className={`pt-32 pb-16 md:pt-44 md:pb-20 lg:pt-48 lg:pb-24 ${styles.section}`}
     >
