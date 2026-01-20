@@ -25,7 +25,7 @@ function BrandMark({ brand }: { brand: Brand }) {
       <div
         className={cn(
           "relative flex items-center justify-center",
-          "h-[156px] sm:h-[160px] md:h-[176px] lg:h-[192px]",
+          "h-[176px] sm:h-[184px] md:h-[204px] lg:h-[224px]",
           "rounded-2xl border border-white/10 bg-surface-alt/10",
           "transition-colors duration-300",
           "hover:border-white/20 hover:bg-white/[0.06]",
@@ -37,8 +37,8 @@ function BrandMark({ brand }: { brand: Brand }) {
           loading="lazy"
           decoding="async"
           className={cn(
-            "block w-auto max-w-[92%] object-contain",
-            "h-24 sm:h-24 md:h-28 lg:h-32",
+            "block w-auto max-w-[94%] object-contain",
+            "h-28 sm:h-28 md:h-32 lg:h-36",
             "opacity-70 transition-[opacity,filter,transform] duration-300",
             "grayscale brightness-125 contrast-125 invert",
             "group-hover:opacity-100 group-hover:brightness-150 group-hover:contrast-150 group-hover:scale-[1.02]",
@@ -87,7 +87,11 @@ export function BrandsSection() {
   }, []);
 
   return (
-    <section id="brands" aria-labelledby="brands-title" className="pt-10 pb-28 md:pt-14 md:pb-36 lg:pt-16 lg:pb-40">
+    <section
+      id="brands"
+      aria-labelledby="brands-title"
+      className="pt-10 pb-44 md:pt-14 md:pb-52 lg:pt-16 lg:pb-60"
+    >
       <div className="mx-auto w-full max-w-6xl px-6">
         <header
           className={cn(

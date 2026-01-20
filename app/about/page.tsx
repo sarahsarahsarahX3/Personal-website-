@@ -40,7 +40,7 @@ export default function AboutPage() {
             </section>
 
             {/* Content Side (Right on Desktop) */}
-            <section className="w-full md:w-1/2 min-h-screen flex items-center p-8 md:p-20 pt-20">
+            <section className="w-full md:w-1/2 min-h-screen flex items-center p-8 md:p-20 pt-20 pb-32 md:pb-20">
                 <div className="max-w-xl">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
