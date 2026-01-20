@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./BioSection.module.css";
 
@@ -141,6 +141,27 @@ function MarketsIcon() {
 
 export function BioSection() {
   const [headshotSrc, setHeadshotSrc] = useState("/images/IMG_8516_edited.jpg");
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isRevealed, setIsRevealed] = useState(false);
+
+  useEffect(() => {
+    const element = sectionRef.current;
+    if (!element) return;
+    if (isRevealed) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        setIsRevealed(true);
+        observer.disconnect();
+      },
+      { root: null, rootMargin: "0px 0px -10% 0px", threshold: 0.25 },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [isRevealed]);
+
   const highlights = [
     { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
     { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 100 Companies" },
@@ -151,10 +172,15 @@ export function BioSection() {
   ] as const;
 
   return (
-    <section aria-labelledby="home-bio-title" className="pt-32 pb-16 md:pt-44 md:pb-20 lg:pt-48 lg:pb-24">
+    <section
+      ref={sectionRef}
+      data-revealed={isRevealed ? "true" : "false"}
+      aria-labelledby="home-bio-title"
+      className={`pt-32 pb-16 md:pt-44 md:pb-20 lg:pt-48 lg:pb-24 ${styles.section}`}
+    >
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
-          <figure className="col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block">
+          <figure className={`col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block ${styles.headshot}`}>
             <div className="relative aspect-[4/5] w-full max-w-[260px] sm:max-w-[320px] rounded-3xl ring-1 ring-inset ring-white/15 overflow-hidden">
               <Image
                 src={headshotSrc}
@@ -168,7 +194,7 @@ export function BioSection() {
             </div>
           </figure>
 
-          <div className="col-span-12 md:col-span-7 md:col-start-6">
+          <div className={`col-span-12 md:col-span-7 md:col-start-6 ${styles.body}`}>
             <div className="relative max-w-[60ch] mx-auto text-center md:mx-0 md:text-left">
               <h2 id="home-bio-title" className="sr-only">
                 About
@@ -187,10 +213,11 @@ export function BioSection() {
                 aria-label="Highlights"
                 className="mt-6 grid grid-cols-2 gap-5 sm:gap-x-10 sm:gap-y-10"
               >
-                {highlights.map(({ key, Icon, value, label }) => (
+                {highlights.map(({ key, Icon, value, label }, index) => (
                   <li
                     key={key}
-                    className="w-full text-text-secondary"
+                    className={`w-full text-text-secondary ${styles.highlight}`}
+                    style={{ ["--i" as string]: String(index) }}
                   >
                     <div className="grid grid-cols-[40px_1fr] items-start gap-3 sm:grid-cols-[44px_1fr] sm:gap-4">
                       <Icon />
