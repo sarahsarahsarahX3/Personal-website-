@@ -1385,7 +1385,9 @@ export default function DiscoveryDailyPlanetProjectPage() {
         </div>
       </div>
 
-      <ProjectPager currentSlug="discovery-daily-planet" layout="fixed" />
+      <div className="mx-auto w-full max-w-6xl px-6">
+        <ProjectPager currentSlug="discovery-daily-planet" layout="inline" />
+      </div>
     </main>
   );
 }

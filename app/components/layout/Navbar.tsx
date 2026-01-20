@@ -17,15 +17,12 @@ const navItems = [
 
 export function Navbar() {
     const pathname = usePathname();
-    const isWorkDetailPage = pathname.startsWith("/work/") && pathname !== "/work";
 
     return (
         <div
             className={cn(
                 "fixed left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-auto max-w-md md:max-w-none",
-                isWorkDetailPage
-                    ? "bottom-[calc(env(safe-area-inset-bottom)+2rem+6rem)]"
-                    : "bottom-[calc(env(safe-area-inset-bottom)+2rem)]"
+                "bottom-[calc(env(safe-area-inset-bottom)+2rem)]"
             )}
         >
             <motion.nav

@@ -1889,7 +1889,9 @@ export default function PAndGBeautyContentHubProjectPage() {
         </div>
       </div>
 
-      <ProjectPager currentSlug="p-and-g-beauty-content-hub" layout="fixed" />
+      <div className="mx-auto w-full max-w-6xl px-6">
+        <ProjectPager currentSlug="p-and-g-beauty-content-hub" layout="inline" />
+      </div>
     </main>
   );
 }

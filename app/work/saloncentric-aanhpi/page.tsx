@@ -1081,7 +1081,9 @@ export default function SalonCentricAanhpiProjectPage() {
         </div>
       </div>
 
-      <ProjectPager currentSlug="saloncentric-aanhpi" layout="fixed" />
+      <div className="mx-auto w-full max-w-6xl px-6">
+        <ProjectPager currentSlug="saloncentric-aanhpi" layout="inline" />
+      </div>
     </main>
   );
 }

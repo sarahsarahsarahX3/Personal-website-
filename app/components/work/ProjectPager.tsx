@@ -70,7 +70,7 @@ function NavCard({
 
 export function ProjectPager({
   currentSlug,
-  layout = "fixed",
+  layout = "inline",
   className,
 }: {
   currentSlug: string;
@@ -87,7 +87,7 @@ export function ProjectPager({
     layout === "rail" ? "grid gap-3" : "grid gap-3 sm:grid-cols-2";
 
   const grid = (
-    <div className={cn(gridClassName, className)}>
+    <div className={cn(gridClassName, layout !== "inline" ? className : undefined)}>
       {prev ? (
         <NavCard
           direction="prev"
@@ -125,7 +125,11 @@ export function ProjectPager({
   );
 
   if (layout === "inline") {
-    return <div className={cn("mt-12", className)}>{grid}</div>;
+    return (
+      <div className={cn("mt-12 pb-[calc(env(safe-area-inset-bottom)+7rem)]", className)}>
+        {grid}
+      </div>
+    );
   }
 
   if (layout === "rail") {

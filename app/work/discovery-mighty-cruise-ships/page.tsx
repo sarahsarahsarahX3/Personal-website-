@@ -1116,7 +1116,9 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
         </div>
       </div>
 
-      <ProjectPager currentSlug="discovery-mighty-cruise-ships" layout="fixed" />
+      <div className="mx-auto w-full max-w-6xl px-6">
+        <ProjectPager currentSlug="discovery-mighty-cruise-ships" layout="inline" />
+      </div>
     </main>
   );
 }

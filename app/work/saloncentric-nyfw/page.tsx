@@ -819,7 +819,9 @@ export default function SalonCentricNyfwProjectPage() {
         </div>
       </div>
 
-      <ProjectPager currentSlug="saloncentric-nyfw" layout="fixed" />
+      <div className="mx-auto w-full max-w-6xl px-6">
+        <ProjectPager currentSlug="saloncentric-nyfw" layout="inline" />
+      </div>
     </main>
   );
 }
