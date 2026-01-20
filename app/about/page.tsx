@@ -2,6 +2,28 @@
 
 import { motion } from "framer-motion";
 
+function AccentMark({ children }: { children: React.ReactNode }) {
+    return (
+        <span className="relative inline-flex">
+            <span className="relative z-10 text-text-primary">{children}</span>
+            <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-x-1 bottom-[0.08em] h-[0.7em] rounded-sm bg-accent/10"
+            />
+            <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-x-1 bottom-[0.08em] h-px bg-accent/40"
+            />
+        </span>
+    );
+}
+
+function MetricLead({ children }: { children: React.ReactNode }) {
+    return (
+        <span className="font-mono text-[13px] uppercase tracking-widest text-accent/90">{children}</span>
+    );
+}
+
 export default function AboutPage() {
     return (
         <main className="min-h-screen bg-surface flex flex-col md:flex-row">
@@ -39,7 +61,7 @@ export default function AboutPage() {
             </section>
 
             {/* Content Side (Right on Desktop) */}
-            <section className="w-full md:w-1/2 min-h-screen flex items-center p-8 md:p-20 pt-20 pb-32 md:pb-20">
+            <section className="w-full md:w-1/2 min-h-screen flex items-center p-8 md:p-20 pt-20 pb-32 md:pb-32 lg:pb-40">
                 <div className="max-w-xl">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -56,26 +78,52 @@ export default function AboutPage() {
                         className="space-y-6 text-lg text-text-secondary leading-relaxed"
                     >
                         <p>
-                            I’m Sarah Dawson, a marketing professional who leads content, campaign, and editorial initiatives for brands across integrated channels. My work focuses on building clear, consistent messaging and executing at scale across content systems, campaigns, and brand communications.
+                            I’m Sarah Dawson, a marketing professional who leads{" "}
+                            <AccentMark>content, campaign, and editorial initiatives</AccentMark> for brands across integrated channels. My work focuses on building{" "}
+                            <AccentMark>clear, consistent messaging</AccentMark> and executing at scale across{" "}
+                            <AccentMark>content systems, campaigns, and brand communications</AccentMark>.
                         </p>
                         <p>
-                            Over the past seven years, I’ve worked with Fortune 100 companies and established brands in beauty, retail, media, and science. I’ve delivered high-impact work across digital, social, editorial, broadcast, and experiential platforms. My background spans growth marketing, editorial operations, and integrated campaigns, which allows me to move between strategy and execution while staying focused on outcomes.
+                            Over the past seven years, I’ve worked with <AccentMark>Fortune 100 companies</AccentMark> and established brands in beauty, retail, media, and science. I’ve delivered high-impact work across digital, social, editorial, broadcast, and experiential platforms. My background spans{" "}
+                            <AccentMark>growth marketing</AccentMark>, <AccentMark>editorial operations</AccentMark>, and <AccentMark>integrated campaigns</AccentMark>, which allows me to move between strategy and execution while staying focused on outcomes.
                         </p>
                         <div className="pt-2">
                             <p className="text-base font-mono uppercase tracking-widest text-text-secondary/70">
                                 My career highlights include:
                             </p>
-                            <ul className="mt-4 space-y-3 pl-5 text-lg leading-relaxed text-text-secondary list-disc">
-                                <li>7+ years of experience leading content, campaign, and editorial initiatives.</li>
-                                <li>
-                                    Fortune 100 experience, partnering with three Fortune 100 companies across beauty, retail, and media.
+                            <ul className="mt-5 grid gap-3">
+                                <li className="grid grid-cols-[12px_1fr] gap-4">
+                                    <span aria-hidden="true" className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent/70" />
+                                    <span><MetricLead>7+</MetricLead> years of experience leading content, campaign, and editorial initiatives.</span>
                                 </li>
-                                <li>15M+ total views generated across digital, social, editorial, and broadcast platforms.</li>
-                                <li>1,000+ assets delivered annually, supporting large-scale, multichannel programs.</li>
-                                <li>50+ brand and partner collaborations, including creators, influencers, and strategic partners.</li>
-                                <li>Global market experience, spanning U.S., Canadian, and international audiences.</li>
-                                <li>Broadcast media contributor for Discovery Channel properties, including Daily Planet and Mighty Cruise Ships.</li>
-                                <li>SEO-led editorial growth expertise, building content systems designed for long-term performance.</li>
+                                <li className="grid grid-cols-[12px_1fr] gap-4">
+                                    <span aria-hidden="true" className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent/70" />
+                                    <span><MetricLead>Fortune 100</MetricLead> experience, partnering with three Fortune 100 companies across beauty, retail, and media.</span>
+                                </li>
+                                <li className="grid grid-cols-[12px_1fr] gap-4">
+                                    <span aria-hidden="true" className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent/70" />
+                                    <span><MetricLead>15M+</MetricLead> total views generated across digital, social, editorial, and broadcast platforms.</span>
+                                </li>
+                                <li className="grid grid-cols-[12px_1fr] gap-4">
+                                    <span aria-hidden="true" className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent/70" />
+                                    <span><MetricLead>1,000+</MetricLead> assets delivered annually, supporting large-scale, multichannel programs.</span>
+                                </li>
+                                <li className="grid grid-cols-[12px_1fr] gap-4">
+                                    <span aria-hidden="true" className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent/70" />
+                                    <span><MetricLead>50+</MetricLead> brand and partner collaborations, including creators, influencers, and strategic partners.</span>
+                                </li>
+                                <li className="grid grid-cols-[12px_1fr] gap-4">
+                                    <span aria-hidden="true" className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent/70" />
+                                    <span><MetricLead>Global</MetricLead> market experience, spanning U.S., Canadian, and international audiences.</span>
+                                </li>
+                                <li className="grid grid-cols-[12px_1fr] gap-4">
+                                    <span aria-hidden="true" className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent/70" />
+                                    <span><MetricLead>Broadcast</MetricLead> media contributor for Discovery Channel properties, including Daily Planet and Mighty Cruise Ships.</span>
+                                </li>
+                                <li className="grid grid-cols-[12px_1fr] gap-4">
+                                    <span aria-hidden="true" className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent/70" />
+                                    <span><MetricLead>SEO-led</MetricLead> editorial growth expertise, building content systems designed for long-term performance.</span>
+                                </li>
                             </ul>
                         </div>
                         <p>
