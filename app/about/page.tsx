@@ -45,7 +45,7 @@ export default function AboutPage() {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-7xl font-display mb-8 leading-tight"
+                        className="text-4xl md:text-6xl font-display mb-8 leading-tight"
                     >
                         Hi, I’m Sarah Dawson.
                     </motion.h1>
@@ -57,7 +57,7 @@ export default function AboutPage() {
                         className="space-y-6 text-lg text-text-secondary leading-relaxed"
                     >
                         <p>
-                            I’m a marketing professional who focuses on clear messaging, strong execution, and work that actually performs. I’ve spent the last several years helping brands figure out what they need to say, how to say it, and where it should live, across content, campaigns, and brand communications.
+                            I’m a marketing professional focused on developing and executing content, campaigns, and brand messaging that drive measurable results. I’ve spent the last several years helping brands figure out what they need to say, how to say it, and where it should live, across content, campaigns, and brand communications.
                         </p>
                         <p>
                             My background spans growth marketing, editorial, and integrated campaigns, which means I’m comfortable moving between data, strategy, and creative work without losing the thread. I care about structure, consistency, and outcomes, and I’m especially good at turning complex ideas into messaging people can understand and act on.
