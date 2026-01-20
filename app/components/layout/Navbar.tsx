@@ -22,7 +22,7 @@ export function Navbar() {
         <div
             className={cn(
                 "fixed left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-auto max-w-md md:max-w-none",
-                "bottom-[calc(env(safe-area-inset-bottom)+2rem)]"
+                "bottom-[calc(env(safe-area-inset-bottom)+1.25rem)]"
             )}
         >
             <motion.nav
