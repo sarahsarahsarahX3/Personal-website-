@@ -809,8 +809,8 @@ export default function SalonCentricNyfwProjectPage() {
               </div>
             </footer>
 
-            <div className="max-w-[728px]">
-              <ProjectPager currentSlug="saloncentric-nyfw" layout="inline" className="mt-16" />
+            <div className="w-full max-w-[784px]">
+              <ProjectPager currentSlug="saloncentric-nyfw" layout="inline" />
             </div>
           </div>
 

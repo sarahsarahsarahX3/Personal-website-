@@ -1879,8 +1879,8 @@ export default function PAndGBeautyContentHubProjectPage() {
               </div>
             </footer>
 
-            <div className="max-w-[728px]">
-              <ProjectPager currentSlug="p-and-g-beauty-content-hub" layout="inline" className="mt-16" />
+            <div className="w-full max-w-[784px]">
+              <ProjectPager currentSlug="p-and-g-beauty-content-hub" layout="inline" />
             </div>
           </div>
 

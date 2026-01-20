@@ -1106,8 +1106,8 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
               </div>
             </footer>
 
-            <div className="max-w-[728px]">
-              <ProjectPager currentSlug="discovery-mighty-cruise-ships" layout="inline" className="mt-16" />
+            <div className="w-full max-w-[784px]">
+              <ProjectPager currentSlug="discovery-mighty-cruise-ships" layout="inline" />
             </div>
           </div>
 

@@ -1375,8 +1375,8 @@ export default function DiscoveryDailyPlanetProjectPage() {
               </div>
             </footer>
 
-            <div className="max-w-[728px]">
-              <ProjectPager currentSlug="discovery-daily-planet" layout="inline" className="mt-16" />
+            <div className="w-full max-w-[784px]">
+              <ProjectPager currentSlug="discovery-daily-planet" layout="inline" />
             </div>
           </div>
 
