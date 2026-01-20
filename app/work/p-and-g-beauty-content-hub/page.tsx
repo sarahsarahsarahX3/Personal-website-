@@ -22,7 +22,7 @@ type Metric = {
 };
 
 const project = {
-  title: "Procter & Gamble HairCode",
+  title: "Procter & Gamble - HairCode",
   subtitle: "Content Strategy and Growth Marketing",
   overview:
     "Developed and optimized SEO-driven editorial content for HairCode, Procter & Gamble’s consumer-facing content hub, across beauty, health, and wellness topics. The work focused on driving sustainable organic growth and search visibility in highly competitive categories.",

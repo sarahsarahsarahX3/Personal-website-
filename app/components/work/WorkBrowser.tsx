@@ -22,7 +22,7 @@ const categories = [
     "Content Strategy",
     "Copywriting",
     "Multimedia Production",
-    "Brand Storytelling",
+    "Editorial Operations",
 ];
 
 export function WorkBrowser({ projects }: { projects: Project[] }) {

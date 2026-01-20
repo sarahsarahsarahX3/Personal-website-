@@ -36,7 +36,7 @@ export default async function WorkPage() {
         size: "small",
         slug: "discovery-mighty-cruise-ships",
         tags: ["Multimedia Production", "Brand Storytelling"],
-        year: "",
+        year: "2020",
         description:
             "Editorial and production support for a Discovery Channel documentary episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship.",
     });
@@ -48,14 +48,14 @@ export default async function WorkPage() {
         size: "small",
         slug: "discovery-daily-planet",
         tags: ["Multimedia Production", "Brand Storytelling"],
-        year: "",
+        year: "2018",
         description:
             "Production and editorial support for Discovery Channel’s flagship science and technology series, delivering fast-turn, multi-segment storytelling in a high-volume newsroom environment.",
     });
 
 
     projects.unshift({
-        title: "SalonCentric × New York Fashion Week",
+        title: "SalonCentric x New York Fashion Week SS 2024",
         category: "Campaigns",
         image: "/NYFW%20Project%20thumbnail.png",
         size: "small",
@@ -67,25 +67,25 @@ export default async function WorkPage() {
     });
 
     projects.unshift({
-        title: "Procter & Gamble x HairCode",
-        category: "SEO & AEO",
+        title: "Procter & Gamble - HairCode",
+        category: "Content Strategy",
         image: "/HairCode%20thumbnail%204.png",
         size: "large",
         slug: "p-and-g-beauty-content-hub",
-        tags: ["SEO & AEO", "Content Strategy", "Copywriting", "Brand Storytelling"],
+        tags: ["Content Strategy", "Copywriting", "Brand Storytelling"],
         year: "2025",
         description:
             "SEO-led editorial growth program for HairCode, Procter & Gamble Beauty’s brand-owned content hub.",
     });
 
     projects.push({
-        title: "SalonCentric AANHPI Integrated Campaign",
+        title: "SalonCentric x AANHPI Heritage Month Event",
         category: "Campaigns",
         image: "/AANHPI%20Project_Poster.png",
         size: "small",
         slug: "saloncentric-aanhpi",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
-        year: "",
+        year: "2024",
         description:
             "Influencer and brand partner content for SalonCentric’s AANHPI integrated campaign with creator-led storytelling and multi-channel amplification across owned, organic, and paid platforms.",
     });

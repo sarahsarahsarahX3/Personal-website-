@@ -31,7 +31,7 @@ const artistSpotlightPdfs: PdfItem[] = [
 ];
 
 const project = {
-  title: "SalonCentric AANHPI Integrated Campaign",
+  title: "SalonCentric x AANHPI Heritage Month Event",
   subtitle: "Integrated Campaign & Influencer Marketing",
   overview:
     "Led influencer and brand partner content for SalonCentric’s AANHPI integrated campaign, using creator-led storytelling to support cultural relevance, brand credibility, and community engagement. The campaign paired authentic voices with clear brand messaging and multi-channel amplification across owned, organic, and paid platforms.",
@@ -735,7 +735,7 @@ export default function SalonCentricAanhpiProjectPage() {
                       </span>
                     </div>
                     <div className="p-4">
-                      <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
+                      <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory md:justify-center md:overflow-visible md:pb-0 md:snap-none">
                         {[
                           { src: "/AANHPI Soical Video 2.mov", label: "AANHPI Instagram reel 2" },
                           { src: "/AANHPI Social Video 1.mov", label: "AANHPI Instagram reel 1" },
@@ -807,7 +807,7 @@ export default function SalonCentricAanhpiProjectPage() {
 
                             <div className="p-2">
                               <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                                <div className="relative aspect-[4/5] w-full bg-surface/20">
+                                <div className="relative aspect-[326/408] w-full bg-surface/20">
                                   <img
                                     src={post.src}
                                     alt={post.alt}
@@ -834,7 +834,7 @@ export default function SalonCentricAanhpiProjectPage() {
                 </div>
               </WindowFrame>
 
-              <WindowFrame title="AANHPI ARTIST SPOTLIGHT PDFs">
+              <WindowFrame title="AANHPI ARTIST SPOTLIGHT ARTICLES">
                 {(() => {
                   const items = artistSpotlightPdfs.map((pdf) => ({
                     ...pdf,
@@ -1033,7 +1033,7 @@ export default function SalonCentricAanhpiProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Results & Impact" contentClassName="mt-6">
+            <Section id="impact" title="Impact" contentClassName="mt-6">
               <RailList ariaLabel="Results and impact points" items={[...project.resultsBullets]} />
             </Section>
 
