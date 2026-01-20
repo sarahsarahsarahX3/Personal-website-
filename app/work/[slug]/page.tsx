@@ -3,6 +3,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { ProjectPager } from "@/app/components/work/ProjectPager";
 
 export default async function ProjectPage({ params }: { params: { slug: string } }) {
     const { slug } = params;
@@ -175,6 +176,8 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                     </div>
                 </div>
             </div>
+
+            <ProjectPager currentSlug={slug} />
         </article>
     );
 }

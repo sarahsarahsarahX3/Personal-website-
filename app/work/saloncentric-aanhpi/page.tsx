@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/app/lib/utils";
+import { ProjectPager } from "@/app/components/work/ProjectPager";
 
 type SectionLink = { id: string; label: string };
 
@@ -1079,6 +1080,8 @@ export default function SalonCentricAanhpiProjectPage() {
           />
         </div>
       </div>
+
+      <ProjectPager currentSlug="saloncentric-aanhpi" />
     </main>
   );
 }

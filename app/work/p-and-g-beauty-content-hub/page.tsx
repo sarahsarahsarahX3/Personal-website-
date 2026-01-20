@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/app/lib/utils";
+import { ProjectPager } from "@/app/components/work/ProjectPager";
 
 type SectionLink = { id: string; label: string };
 
@@ -1887,6 +1888,8 @@ export default function PAndGBeautyContentHubProjectPage() {
           />
         </div>
       </div>
+
+      <ProjectPager currentSlug="p-and-g-beauty-content-hub" />
     </main>
   );
 }

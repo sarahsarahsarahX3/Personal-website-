@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/app/lib/utils";
+import { ProjectPager } from "@/app/components/work/ProjectPager";
 
 type SectionLink = { id: string; label: string };
 
@@ -1378,6 +1379,8 @@ export default function DiscoveryDailyPlanetProjectPage() {
           <DesktopRail items={sectionLinks} activeId={activeSection} progress={progress} onNavigate={(id) => scrollToId(id, scrollBehavior)} />
         </div>
       </div>
+
+      <ProjectPager currentSlug="discovery-daily-planet" />
     </main>
   );
 }
