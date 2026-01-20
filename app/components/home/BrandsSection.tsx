@@ -60,14 +60,18 @@ function BrandMark({ brand }: { brand: Brand }) {
 
 export function BrandsSection() {
   const [isInView, setIsInView] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    if (prefersReduced) {
-      setIsInView(true);
-      return;
-    }
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+    const update = () => setReducedMotion(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
+  useEffect(() => {
     const section = document.getElementById("brands");
     if (!section) return;
 
@@ -75,7 +79,7 @@ export function BrandsSection() {
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) setIsInView(true);
       },
-      { rootMargin: "-10% 0px -30% 0px", threshold: [0, 0.15] },
+      { rootMargin: "-15% 0px -45% 0px", threshold: [0, 0.1, 0.2] },
     );
 
     observer.observe(section);
@@ -88,13 +92,15 @@ export function BrandsSection() {
         <header
           className={cn(
             "max-w-3xl mx-auto text-center",
-            "transition-[opacity,transform] duration-700 ease-out",
-            isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
+            "will-change-transform will-change-opacity",
+            "transition-[opacity,transform] duration-1000 ease-out",
+            reducedMotion ? "transition-opacity duration-700" : "",
+            isInView ? "opacity-100 translate-y-0" : reducedMotion ? "opacity-0" : "opacity-0 translate-y-6",
           )}
         >
           <h2
             id="brands-title"
-            className="text-xl md:text-2xl font-display tracking-tight text-text-secondary/70"
+            className="text-2xl md:text-3xl font-display tracking-tight text-text-primary/90"
           >
             Working with Industry Leaders
           </h2>
@@ -103,8 +109,10 @@ export function BrandsSection() {
         <div
           className={cn(
             "mt-8 md:mt-10 rounded-3xl bg-surface-alt/10 p-4 md:p-6",
-            "transition-[opacity,transform] duration-700 ease-out delay-150",
-            isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
+            "will-change-transform will-change-opacity",
+            "transition-[opacity,transform] duration-1000 ease-out delay-150",
+            reducedMotion ? "transition-opacity duration-700 delay-100" : "",
+            isInView ? "opacity-100 translate-y-0" : reducedMotion ? "opacity-0" : "opacity-0 translate-y-6",
           )}
         >
           <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
