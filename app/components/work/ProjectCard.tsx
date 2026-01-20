@@ -24,7 +24,11 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
     const isRemoteImage = typeof image === "string" && /^https?:\/\//.test(image);
     const hasImage = typeof image === "string" && image.trim().length > 0;
     const imagePositionClassName =
-        slug === "discovery-mighty-cruise-ships" ? "object-[50%_65%]" : "object-center";
+        slug === "discovery-mighty-cruise-ships"
+            ? "object-[50%_65%]"
+            : slug === "saloncentric-aanhpi"
+                ? "object-[50%_18%]"
+                : "object-center";
     const shouldItalicizeDiscoverySubtitle =
         slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet";
     const discoveryTitleParts = shouldItalicizeDiscoverySubtitle ? title.split(":") : null;

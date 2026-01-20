@@ -24,7 +24,7 @@ function BrandMark({ brand }: { brand: Brand }) {
       <div
         className={cn(
           "relative flex items-center justify-center",
-          "h-[92px] sm:h-[110px] md:h-[124px] lg:h-[136px]",
+          "h-[118px] sm:h-[110px] md:h-[124px] lg:h-[136px]",
           "rounded-2xl border border-white/10 bg-surface-alt/10",
           "transition-colors duration-300",
           "hover:border-white/20 hover:bg-white/[0.06]",
@@ -37,7 +37,7 @@ function BrandMark({ brand }: { brand: Brand }) {
           decoding="async"
           className={cn(
             "block w-auto max-w-[86%] object-contain",
-            "h-12 sm:h-14 md:h-16 lg:h-20",
+            "h-16 sm:h-14 md:h-16 lg:h-20",
             "opacity-70 transition-[opacity,filter,transform] duration-300",
             "grayscale brightness-125 contrast-125 invert",
             "group-hover:opacity-100 group-hover:brightness-150 group-hover:contrast-150 group-hover:scale-[1.02]",
