@@ -10,7 +10,7 @@ export default function LabPage() {
             <FlowField />
 
             {/* Overlay Content */}
-            <div className="relative z-10 w-full h-screen flex flex-col justify-between p-8 md:p-20 pointer-events-none">
+            <div className="relative z-10 w-full min-h-[100svh] flex flex-col justify-between p-8 pb-[calc(7rem+env(safe-area-inset-bottom))] md:p-20 md:pb-20 pointer-events-none">
 
                 {/* Header */}
                 <header>
