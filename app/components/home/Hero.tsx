@@ -32,7 +32,7 @@ export function Hero() {
 
                     <div className="relative w-full">
                         <h1
-                            className="w-full text-center text-[11vw] leading-[0.85] font-display font-medium tracking-tight cursor-default mix-blend-exclusion"
+                            className="w-full text-center text-[10.2vw] md:text-[9.6vw] leading-[0.86] font-display font-medium tracking-[-0.02em] cursor-default mix-blend-exclusion"
                         >
                             <span className="block overflow-hidden">
                                 <motion.span
