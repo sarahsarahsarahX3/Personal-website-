@@ -27,7 +27,7 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
         slug === "discovery-mighty-cruise-ships"
             ? "object-[50%_65%]"
             : slug === "saloncentric-aanhpi"
-                ? "object-[50%_18%]"
+                ? "object-[50%_6%]"
                 : "object-center";
     const shouldItalicizeDiscoverySubtitle =
         slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet";

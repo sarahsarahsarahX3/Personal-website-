@@ -724,106 +724,113 @@ export default function SalonCentricAanhpiProjectPage() {
               </WindowFrame>
 
               <WindowFrame title="SOCIAL MEDIA POSTS + IMAGES">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {[
-                    {
-                      title: "INSTAGRAM REEL",
-                      kind: "video" as const,
-                      src: "/AANHPI Soical Video 2.mov",
-                      ariaLabel: "AANHPI Instagram reel 2",
-                    },
-                    {
-                      title: "INSTAGRAM REEL",
-                      kind: "video" as const,
-                      src: "/AANHPI Social Video 1.mov",
-                      ariaLabel: "AANHPI Instagram reel 1",
-                    },
-                    {
-                      title: "SOCIAL POST SCREENSHOT",
-                      kind: "image" as const,
-                      src: "/AANHPI Soical Post.png",
-                      ariaLabel: "AANHPI social post screenshot 1",
-                    },
-                    {
-                      title: "SOCIAL POST SCREENSHOT",
-                      kind: "image" as const,
-                      src: "/AANHPI Soical Post 2.png",
-                      ariaLabel: "AANHPI social post screenshot 2",
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={`${item.title}-${index}`}
-                      className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10"
-                    >
-                      <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface/40 px-4 py-3">
-                        <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                          {item.title}
-                        </p>
-                        <span aria-hidden="true" className="text-text-secondary/50">
-                          ⌄
-                        </span>
-                      </div>
-                      <div className="p-4">
-                        <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                          {item.kind === "video" ? (
-                            <div className="relative aspect-[9/16] w-full bg-black/30">
-                              <VideoWithAutoPoster src={item.src} ariaLabel={item.ariaLabel} />
+                <div className="grid gap-6">
+                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
+                    <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface/40 px-4 py-3">
+                      <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                        INSTAGRAM REELS
+                      </p>
+                      <span aria-hidden="true" className="text-text-secondary/50">
+                        ⌄
+                      </span>
+                    </div>
+                    <div className="p-4">
+                      <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
+                        {[
+                          { src: "/AANHPI Soical Video 2.mov", label: "AANHPI Instagram reel 2" },
+                          { src: "/AANHPI Social Video 1.mov", label: "AANHPI Instagram reel 1" },
+                        ].map((reel) => (
+                          <div
+                            key={reel.src}
+                            className={cn(
+                              "snap-start shrink-0",
+                              "w-[220px] sm:w-[260px] md:w-[300px]",
+                              "rounded-[26px] border border-white/10 bg-black/30 overflow-hidden",
+                            )}
+                          >
+                            <div className="relative aspect-[9/16] w-full">
+                              <VideoWithAutoPoster src={reel.src} ariaLabel={reel.label} />
                               <div
                                 aria-hidden="true"
-                                className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
+                                className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/55 to-black/0"
                               />
                               <div
                                 aria-hidden="true"
-                                className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                                className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/55 to-black/0"
                               />
-                            </div>
-                          ) : (
-                            <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/20">
-                              <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
-                                <div className="flex min-w-0 items-center gap-3">
-                                  <span
-                                    aria-hidden="true"
-                                    className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
-                                  />
-                                  <div className="min-w-0">
-                                    <p className="truncate text-[10px] font-mono uppercase tracking-widest text-text-secondary/70">
-                                      Instagram
-                                    </p>
-                                    <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
-                                  </div>
-                                </div>
-                                <span aria-hidden="true" className="text-text-secondary/60">
-                                  •••
+                              <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2">
+                                <span className="inline-flex items-center rounded-full border border-white/15 bg-black/35 px-2 py-1 text-[10px] font-mono uppercase tracking-widest text-white/80">
+                                  Reel
                                 </span>
                               </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-2 text-[11px] text-text-secondary/70">Swipe to view reels.</p>
+                    </div>
+                  </div>
 
-                              <div className="p-2">
-                                <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                                  <div className="relative aspect-[16/10] w-full bg-surface/20">
-                                    <img
-                                      src={item.src}
-                                      alt={item.ariaLabel}
-                                      className="h-full w-full object-contain p-3"
-                                      loading="lazy"
-                                      decoding="async"
-                                    />
-                                    <div
-                                      aria-hidden="true"
-                                      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
-                                    />
-                                    <div
-                                      aria-hidden="true"
-                                      className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
-                                    />
-                                  </div>
+                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10">
+                    <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface/40 px-4 py-3">
+                      <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                        SOCIAL POST SCREENSHOTS
+                      </p>
+                      <span aria-hidden="true" className="text-text-secondary/50">
+                        ⌄
+                      </span>
+                    </div>
+                    <div className="p-4">
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        {[
+                          { src: "/AANHPI Soical Post.png", alt: "AANHPI social post screenshot 1" },
+                          { src: "/AANHPI Soical Post 2.png", alt: "AANHPI social post screenshot 2" },
+                        ].map((post) => (
+                          <div key={post.src} className="overflow-hidden rounded-2xl border border-white/10 bg-surface/30">
+                            <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                              <div className="flex min-w-0 items-center gap-3">
+                                <span
+                                  aria-hidden="true"
+                                  className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
+                                />
+                                <div className="min-w-0">
+                                  <p className="truncate text-[10px] font-mono uppercase tracking-widest text-text-secondary/70">
+                                    Instagram
+                                  </p>
+                                  <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
+                                </div>
+                              </div>
+                              <span aria-hidden="true" className="text-text-secondary/60">
+                                •••
+                              </span>
+                            </div>
+
+                            <div className="p-2">
+                              <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                                <div className="relative aspect-[4/5] w-full bg-surface/20">
+                                  <img
+                                    src={post.src}
+                                    alt={post.alt}
+                                    className="h-full w-full object-contain"
+                                    loading="lazy"
+                                    decoding="async"
+                                  />
+                                  <div
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
+                                  />
+                                  <div
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                                  />
                                 </div>
                               </div>
                             </div>
-                          )}
-                        </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
               </WindowFrame>
 
@@ -840,6 +847,91 @@ export default function SalonCentricAanhpiProjectPage() {
                       ? active.href
                       : `${active.href}#page=1&view=FitH&toolbar=0&navpanes=0`
                     : undefined;
+
+                  if (isMobileView) {
+                    return (
+                      <div className="grid gap-3">
+                        {items.map((pdf) => {
+                          const isOpen = pdf.id === active?.id;
+                          return (
+                            <div
+                              key={pdf.id}
+                              className="overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10"
+                            >
+                              <button
+                                type="button"
+                                onClick={() => setActiveArtistPdfId(isOpen ? "" : pdf.id)}
+                                aria-expanded={isOpen}
+                                className={cn(
+                                  "flex w-full items-start justify-between gap-4 px-4 py-3 text-left",
+                                  "transition-colors hover:bg-white/[0.04]",
+                                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                                )}
+                              >
+                                <span className="min-w-0">
+                                  <span className="block truncate text-sm tracking-tight text-text-primary">
+                                    {pdf.title}
+                                  </span>
+                                  <span className="mt-1 block text-[10px] font-mono uppercase tracking-widest text-text-secondary/60">
+                                    {pdf.href ? "Tap to preview" : "Add a PDF file"}
+                                  </span>
+                                </span>
+                                <span aria-hidden="true" className="mt-1 text-text-secondary/70">
+                                  {isOpen ? "–" : "+"}
+                                </span>
+                              </button>
+
+                              {isOpen ? (
+                                <div className="border-t border-white/10 bg-surface/30 p-3">
+                                  <div className="mb-3 flex items-center justify-between gap-3">
+                                    <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                                      Preview
+                                    </p>
+                                    {pdf.href ? (
+                                      <a
+                                        href={pdf.href}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className={cn(
+                                          "inline-flex h-8 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
+                                          "text-[11px] font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                                        )}
+                                      >
+                                        Open ↗
+                                      </a>
+                                    ) : null}
+                                  </div>
+
+                                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                                    <div
+                                      className="h-[70vh] min-h-[520px] w-full overflow-auto"
+                                      style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+                                    >
+                                      {pdf.href ? (
+                                        <object
+                                          data={pdf.href}
+                                          type="application/pdf"
+                                          aria-label={pdf.title}
+                                          className="h-full w-full"
+                                        >
+                                          <iframe title={pdf.title} src={pdf.href} className="h-full w-full border-0" />
+                                        </object>
+                                      ) : (
+                                        <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                                          Add a PDF file
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : null}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  }
 
                   return (
                     <div className="grid gap-4 lg:grid-cols-[360px_1fr]">
