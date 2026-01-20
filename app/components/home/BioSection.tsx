@@ -185,20 +185,20 @@ export function BioSection() {
 
               <ul
                 aria-label="Highlights"
-                className="mt-6 grid grid-cols-2 gap-4 sm:gap-5 md:gap-6"
+                className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10"
               >
                 {highlights.map(({ key, Icon, value, label }) => (
                   <li
                     key={key}
-                    className="w-full px-1 py-2 text-text-secondary md:px-0 md:py-3"
+                    className="w-full text-text-secondary"
                   >
-                    <div className="grid grid-cols-[48px_1fr] items-center gap-4">
+                    <div className="grid grid-cols-[44px_1fr] items-start gap-4">
                       <Icon />
                       <div className="min-w-0">
-                        <div className="min-h-[2.2rem] text-2xl md:text-3xl leading-tight text-text-primary whitespace-nowrap">
+                        <div className="text-xl leading-tight text-text-primary sm:text-2xl md:text-3xl">
                           {value}
                         </div>
-                        <div className="mt-2 min-h-[2.2rem] text-xs uppercase leading-snug tracking-widest text-text-secondary/70 whitespace-nowrap">
+                        <div className="mt-2 text-[11px] uppercase leading-snug tracking-[0.22em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
                           {label}
                         </div>
                       </div>

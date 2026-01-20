@@ -5,6 +5,13 @@
   display: block;
 }
 
+@media (max-width: 640px) {
+  .icon {
+    width: 44px;
+    height: 44px;
+  }
+}
+
 .stroke {
   fill: none;
   stroke: currentColor;
