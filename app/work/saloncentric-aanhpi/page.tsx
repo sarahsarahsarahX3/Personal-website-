@@ -516,14 +516,55 @@ export default function SalonCentricAanhpiProjectPage() {
               </div>
 
               <div className="mt-8">
-                <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-5 md:p-6">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                    Article PDF preview
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-                    This project includes a digital article preview in the Final Deliverables section.
-                  </p>
-                </div>
+                <figure className="overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10">
+                  <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface/40 px-4 py-3">
+                    <div className="flex items-center gap-2" aria-hidden="true">
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
+                    </div>
+                    <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                      AANHPI campaign poster
+                    </p>
+                    <a
+                      href="/AANHPI%20Project_Poster.png"
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        "inline-flex h-8 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
+                        "text-[11px] font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                      )}
+                    >
+                      Open ↗
+                    </a>
+                  </div>
+
+                  <div className="bg-surface/30">
+                    <div className="mx-auto w-full max-w-[560px] px-4 py-5 md:px-6 md:py-7">
+                      <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                        <div className="relative aspect-[1429/2000] w-full bg-surface/20">
+                          <img
+                            src="/AANHPI%20Project_Poster.png"
+                            alt="SalonCentric AANHPI campaign poster"
+                            className="h-full w-full object-contain"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
+                          />
+                          <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <figcaption className="sr-only">AANHPI campaign poster image</figcaption>
+                </figure>
               </div>
             </section>
 

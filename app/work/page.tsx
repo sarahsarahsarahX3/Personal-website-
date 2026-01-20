@@ -81,7 +81,7 @@ export default async function WorkPage() {
     projects.push({
         title: "SalonCentric AANHPI Integrated Campaign",
         category: "Campaigns",
-        image: "/images/SalonCentric.png",
+        image: "/AANHPI%20Project_Poster.png",
         size: "small",
         slug: "saloncentric-aanhpi",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling", "Content Strategy"],
