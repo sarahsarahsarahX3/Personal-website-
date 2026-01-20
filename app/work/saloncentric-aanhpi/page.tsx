@@ -592,7 +592,7 @@ export default function SalonCentricAanhpiProjectPage() {
               </WindowFrame>
 
               <WindowFrame title="SOCIAL MEDIA POSTS + IMAGES">
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   {[
                     {
                       title: "Social video",
@@ -633,7 +633,12 @@ export default function SalonCentricAanhpiProjectPage() {
                       </div>
                       <div className="p-4">
                         <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                          <div className="relative aspect-[16/10] w-full bg-black/20">
+                          <div
+                            className={cn(
+                              "relative w-full overflow-hidden",
+                              item.kind === "video" ? "aspect-[9/16] bg-black/30" : "aspect-[4/5] bg-surface-alt/10",
+                            )}
+                          >
                             {item.kind === "video" ? (
                               <video
                                 src={item.src}
@@ -647,7 +652,7 @@ export default function SalonCentricAanhpiProjectPage() {
                               <img
                                 src={item.src}
                                 alt={item.ariaLabel}
-                                className="h-full w-full object-contain"
+                                className="h-full w-full object-contain p-3"
                                 loading="lazy"
                                 decoding="async"
                               />
