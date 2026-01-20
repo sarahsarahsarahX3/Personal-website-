@@ -418,9 +418,11 @@ function VideoWithAutoPoster({
     if (!video) return;
 
     let canceled = false;
+    let captured = false;
 
     const capture = () => {
       if (canceled) return;
+      if (captured) return;
       if (!video.videoWidth || !video.videoHeight) return;
 
       try {
@@ -431,20 +433,38 @@ function VideoWithAutoPoster({
         if (!ctx) return;
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
-        if (!canceled && dataUrl) setPoster(dataUrl);
+        if (!canceled && dataUrl) {
+          setPoster(dataUrl);
+          captured = true;
+        }
       } catch {
         // ignore capture errors
       }
     };
 
-    const onLoadedData = () => {
-      window.requestAnimationFrame(() => capture());
+    const seekToCoverFrame = () => {
+      if (canceled || captured) return;
+      try {
+        const duration = Number.isFinite(video.duration) ? video.duration : 0;
+        const targetTime = duration > 0 ? Math.min(0.12, duration * 0.02) : 0.12;
+        if (video.currentTime !== targetTime) video.currentTime = targetTime;
+      } catch {
+        // ignore seek errors
+      }
     };
 
-    if (video.readyState >= 2) onLoadedData();
+    const onLoadedMetadata = () => seekToCoverFrame();
+    const onSeeked = () => window.requestAnimationFrame(() => capture());
+    const onLoadedData = () => window.requestAnimationFrame(() => capture());
+
+    if (video.readyState >= 1) onLoadedMetadata();
+    video.addEventListener("loadedmetadata", onLoadedMetadata);
+    video.addEventListener("seeked", onSeeked);
     video.addEventListener("loadeddata", onLoadedData);
     return () => {
       canceled = true;
+      video.removeEventListener("loadedmetadata", onLoadedMetadata);
+      video.removeEventListener("seeked", onSeeked);
       video.removeEventListener("loadeddata", onLoadedData);
     };
   }, [src]);
@@ -778,11 +798,11 @@ export default function SalonCentricAanhpiProjectPage() {
 
                               <div className="p-2">
                                 <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                                  <div className="relative aspect-[4/5] w-full bg-surface/20">
+                                  <div className="relative aspect-[16/10] w-full bg-surface/20">
                                     <img
                                       src={item.src}
                                       alt={item.ariaLabel}
-                                      className="h-full w-full object-contain"
+                                      className="h-full w-full object-contain p-3"
                                       loading="lazy"
                                       decoding="async"
                                     />
