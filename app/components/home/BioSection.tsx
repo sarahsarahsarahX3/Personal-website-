@@ -147,7 +147,7 @@ export function BioSection() {
     { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets / Year" },
     { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views" },
     { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand Partnerships" },
-    { key: "markets", Icon: MarketsIcon, value: "Global, U.S., & Canadian", label: "Markets" },
+    { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "U.S. & CANADA" },
   ] as const;
 
   return (
@@ -192,13 +192,13 @@ export function BioSection() {
                     key={key}
                     className="w-full px-1 py-2 text-text-secondary md:px-0 md:py-3"
                   >
-                    <div className="grid grid-cols-[44px_1fr] items-center gap-4">
+                    <div className="grid grid-cols-[48px_1fr] items-center gap-4">
                       <Icon />
                       <div className="min-w-0">
-                        <div className="min-h-[2.2rem] text-2xl md:text-3xl leading-tight text-text-primary">
+                        <div className="min-h-[2.2rem] text-2xl md:text-3xl leading-tight text-text-primary whitespace-nowrap">
                           {value}
                         </div>
-                        <div className="mt-2 min-h-[2.2rem] text-xs uppercase leading-snug tracking-widest text-text-secondary/70">
+                        <div className="mt-2 min-h-[2.2rem] text-xs uppercase leading-snug tracking-widest text-text-secondary/70 whitespace-nowrap">
                           {label}
                         </div>
                       </div>

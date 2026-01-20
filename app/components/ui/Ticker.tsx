@@ -7,10 +7,11 @@ interface TickerProps {
     items: string[];
     direction?: "left" | "right";
     speed?: number;
+    showSeparator?: boolean;
     className?: string;
 }
 
-export function Ticker({ items, direction = "left", speed = 20, className }: TickerProps) {
+export function Ticker({ items, direction = "left", speed = 20, showSeparator = true, className }: TickerProps) {
     return (
         <div className={cn("relative flex overflow-hidden whitespace-nowrap mask-gradient-x", className)}>
             <motion.div
@@ -25,7 +26,11 @@ export function Ticker({ items, direction = "left", speed = 20, className }: Tic
                 {[...items, ...items, ...items, ...items].map((item, i) => ( // Repeat 4x to ensure smooth loop
                     <span
                         key={i}
-                        className="text-sm font-light tracking-widest uppercase text-text-secondary/60 px-6 after:inline-block after:align-middle after:ml-6 after:content-['•'] after:text-text-secondary/25"
+                        className={cn(
+                            "text-sm font-light tracking-widest uppercase text-text-secondary/60 px-6",
+                            showSeparator &&
+                                "after:inline-block after:align-middle after:ml-6 after:content-['•'] after:text-text-secondary/25"
+                        )}
                     >
                         {item}
                     </span>

@@ -24,7 +24,7 @@ export function Hero() {
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
                             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                            className="text-text-secondary text-lg md:text-xl font-light tracking-wide"
+                            className="w-full text-center text-text-secondary text-lg md:text-xl font-light tracking-wide"
                         >
                             WELCOME
                         </motion.p>
@@ -74,6 +74,7 @@ export function Hero() {
                         "Growth",
                     ]}
                     speed={90}
+                    showSeparator={false}
                 />
             </motion.div>
         </section>
