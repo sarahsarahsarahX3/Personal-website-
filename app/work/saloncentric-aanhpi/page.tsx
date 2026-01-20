@@ -22,9 +22,12 @@ const deliverables = {
 } as const;
 
 const artistSpotlightPdfs: PdfItem[] = [
-  { id: "aanhpi-artist-spotlight-1", title: "AANHPI Artist Spotlight PDF", fileName: undefined },
-  { id: "aanhpi-artist-spotlight-2", title: "AANHPI Artist Spotlight PDF", fileName: undefined },
-  { id: "aanhpi-artist-spotlight-3", title: "AANHPI Artist Spotlight PDF", fileName: undefined },
+  { id: "mark-dolan", title: "Artist Spotlight: Mark Dolan", fileName: "Artist Spotlight: Mark Dolan.pdf" },
+  { id: "emily-chen", title: "Artist Spotlight: Emily Chen", fileName: "Artist Spotlight: Emily Chen.pdf" },
+  { id: "alyx-liu", title: "Artist Spotlight: Alyx Liu", fileName: "Artist Spotlight: Alyx Liu.pdf" },
+  { id: "nick-barose", title: "Artist Spotlight: Nick Barose", fileName: "Artist Spotlight: Nick Barose.pdf" },
+  { id: "philip-wolff", title: "Artist Spotlight: Philip Wolff", fileName: "Artist Spotlight: Philip Wolff.pdf" },
+  { id: "winnie-huang", title: "Artist Spotlight: Winnie Huang", fileName: "Artist Spotlight: Winnie Huang.pdf" },
 ];
 
 const project = {
@@ -601,25 +604,14 @@ export default function SalonCentricAanhpiProjectPage() {
                         <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
                         <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
                       </div>
-                      <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                    <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
                       Asian American, Native Hawaiian, and Pacific Islander (AANHPI) CAMPAIGN POSTER
-                      </p>
-                      <a
-                        href="/AANHPI%20Project_Poster.png"
-                        target="_blank"
-                      rel="noreferrer"
-                      className={cn(
-                        "inline-flex h-8 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
-                        "text-[11px] font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                      )}
-                    >
-                      Open ↗
-                    </a>
+                    </p>
+                    <span aria-hidden="true" className="h-6 w-6 rounded-full border border-white/10 bg-surface/40" />
                   </div>
 
                   <div className="bg-surface/30">
-                    <div className="mx-auto w-full max-w-[560px] px-4 py-5 md:px-6 md:py-7">
+                    <div className="mx-auto w-full max-w-[500px] py-5 md:py-7">
                       <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
                         <div className="relative aspect-[1429/2000] w-full bg-surface/20">
                           <img
