@@ -129,7 +129,7 @@ export function ProjectPager({
       <div
         className={cn(
           "mt-8 md:mt-10",
-          "pb-[calc(env(safe-area-inset-bottom)+20rem)] md:pb-[calc(env(safe-area-inset-bottom)+7rem)]",
+          "pb-[calc(env(safe-area-inset-bottom)+8rem)] md:pb-[calc(env(safe-area-inset-bottom)+6rem)]",
           className,
         )}
       >
