@@ -26,9 +26,13 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
     const imagePositionClassName =
         slug === "discovery-mighty-cruise-ships"
             ? "object-[50%_65%]"
+            : slug === "discovery-daily-planet"
+                ? "object-[82%_42%]"
             : slug === "saloncentric-aanhpi"
                 ? "object-[50%_6%]"
                 : "object-center";
+    const baseImageScaleClassName = slug === "discovery-daily-planet" ? "scale-[1.06]" : "";
+    const hoverImageScaleClassName = slug === "discovery-daily-planet" ? "group-hover:scale-[1.09]" : "group-hover:scale-[1.03]";
     const shouldItalicizeDiscoverySubtitle =
         slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet";
     const discoveryTitleParts = shouldItalicizeDiscoverySubtitle ? title.split(":") : null;
@@ -53,7 +57,13 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                 aria-label={`${title} project page`}
             >
                 <div className="relative flex-1 overflow-hidden bg-surface-secondary">
-                    <div className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-[1.03]">
+                    <div
+                        className={cn(
+                            "absolute inset-0 w-full h-full transition-transform duration-700",
+                            baseImageScaleClassName,
+                            hoverImageScaleClassName
+                        )}
+                    >
                         {!hasImage ? (
                             <div
                                 className="w-full h-full bg-gradient-to-b from-white/5 to-transparent"

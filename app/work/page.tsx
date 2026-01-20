@@ -55,7 +55,7 @@ export default async function WorkPage() {
 
 
     projects.unshift({
-        title: "SalonCentric x New York Fashion Week SS 2024",
+        title: "SalonCentric x New York Fashion",
         category: "Campaigns",
         image: "/NYFW%20Project%20thumbnail.png",
         size: "small",
@@ -79,7 +79,7 @@ export default async function WorkPage() {
     });
 
     projects.push({
-        title: "SalonCentric x AANHPI Heritage Month Event",
+        title: "SalonCentric x AANHPI Heritage Month",
         category: "Campaigns",
         image: "/AANHPI%20Project_Poster.png",
         size: "small",
@@ -98,7 +98,7 @@ export default async function WorkPage() {
                         Selected Work
                     </h1>
                     <p className="text-text-secondary text-xl max-w-xl animate-fade-in-up delay-200">
-                        A curation of campaigns, strategies, and digital content that moved the needle and defined culture.
+                        A selection of work across campaigns, content, and digital platforms.
                     </p>
                 </header>
 

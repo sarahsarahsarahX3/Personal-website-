@@ -31,7 +31,7 @@ const artistSpotlightPdfs: PdfItem[] = [
 ];
 
 const project = {
-  title: "SalonCentric x AANHPI Heritage Month Event",
+  title: "SalonCentric x AANHPI Heritage Month",
   subtitle: "Integrated Campaign & Influencer Marketing",
   overview:
     "Led influencer and brand partner content for SalonCentric’s AANHPI integrated campaign, using creator-led storytelling to support cultural relevance, brand credibility, and community engagement. The campaign paired authentic voices with clear brand messaging and multi-channel amplification across owned, organic, and paid platforms.",
