@@ -18,7 +18,7 @@ export function Hero() {
 
             {/* Main Content */}
             <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center pb-24 md:pb-0">
-                <motion.div style={{ y, opacity }} className="w-full max-w-4xl space-y-6">
+                <motion.div style={{ y, opacity }} className="w-full max-w-6xl space-y-6">
                     <div className="overflow-hidden">
                         <motion.p
                             initial={{ y: "100%" }}
@@ -32,9 +32,9 @@ export function Hero() {
 
                     <div className="relative w-full">
                         <h1
-                            className="w-full text-center text-[10.2vw] md:text-[9.6vw] leading-[0.86] font-display font-medium tracking-[-0.02em] cursor-default mix-blend-exclusion"
+                            className="w-full text-center text-[clamp(3.5rem,8vw,10rem)] leading-[0.9] font-display font-medium tracking-[-0.02em] cursor-default mix-blend-exclusion"
                         >
-                            <span className="block overflow-hidden">
+                            <span className="block overflow-hidden py-[0.06em]">
                                 <motion.span
                                     initial={{ y: "100%" }}
                                     animate={{ y: 0 }}
