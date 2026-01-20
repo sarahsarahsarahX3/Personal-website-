@@ -177,9 +177,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                 </div>
             </div>
 
-            <div className="container mx-auto px-6 pb-24">
-                <ProjectPager currentSlug={slug} layout="inline" />
-            </div>
+            <ProjectPager currentSlug={slug} layout="fixed" />
         </article>
     );
 }

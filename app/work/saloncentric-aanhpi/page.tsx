@@ -315,13 +315,11 @@ function DesktopRail({
   activeId,
   progress,
   onNavigate,
-  currentSlug,
 }: {
   items: SectionLink[];
   activeId: string;
   progress: number;
   onNavigate: (id: string) => void;
-  currentSlug: string;
 }) {
   return (
     <aside className="hidden lg:block sticky top-14 self-start">
@@ -361,8 +359,6 @@ function DesktopRail({
             })}
           </ul>
         </div>
-
-        <ProjectPager currentSlug={currentSlug} layout="rail" />
       </div>
     </aside>
   );
@@ -1081,10 +1077,11 @@ export default function SalonCentricAanhpiProjectPage() {
             activeId={activeSection}
             progress={progress}
             onNavigate={(id) => scrollToId(id, scrollBehavior)}
-            currentSlug="saloncentric-aanhpi"
           />
         </div>
       </div>
+
+      <ProjectPager currentSlug="saloncentric-aanhpi" layout="fixed" />
     </main>
   );
 }

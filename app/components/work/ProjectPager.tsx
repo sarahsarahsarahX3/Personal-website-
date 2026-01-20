@@ -70,11 +70,11 @@ function NavCard({
 
 export function ProjectPager({
   currentSlug,
-  layout = "rail",
+  layout = "fixed",
   className,
 }: {
   currentSlug: string;
-  layout?: "rail" | "inline";
+  layout?: "fixed" | "rail" | "inline";
   className?: string;
 }) {
   const index = PROJECT_NAV.findIndex((p) => p.slug === currentSlug);
@@ -83,13 +83,11 @@ export function ProjectPager({
   const prev = PROJECT_NAV[index - 1];
   const next = PROJECT_NAV[index + 1];
 
-  const containerClassName =
-    layout === "rail"
-      ? "grid gap-3"
-      : "mt-12 grid gap-3 sm:grid-cols-2";
+  const gridClassName =
+    layout === "rail" ? "grid gap-3" : "grid gap-3 sm:grid-cols-2";
 
-  return (
-    <div className={cn(containerClassName, className)}>
+  const grid = (
+    <div className={cn(gridClassName, className)}>
       {prev ? (
         <NavCard
           direction="prev"
@@ -124,5 +122,25 @@ export function ProjectPager({
         />
       )}
     </div>
+  );
+
+  if (layout === "inline") {
+    return <div className={cn("mt-12", className)}>{grid}</div>;
+  }
+
+  if (layout === "rail") {
+    return grid;
+  }
+
+  // fixed
+  return (
+    <>
+      <div className="h-[84px] md:h-[96px]" aria-hidden="true" />
+      <div className={cn("fixed inset-x-0 bottom-0 z-40", "pb-[calc(env(safe-area-inset-bottom)+0.75rem)]")}>
+        <div className="mx-auto w-full max-w-6xl px-6">
+          {grid}
+        </div>
+      </div>
+    </>
   );
 }
