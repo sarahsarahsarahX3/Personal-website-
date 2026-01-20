@@ -8,12 +8,24 @@ type SectionLink = { id: string; label: string };
 
 type SnapshotCard = { title: string; value: string };
 
+type PdfItem = {
+  id: string;
+  title: string;
+  fileName?: string;
+};
+
 const deliverables = {
   articlePdf: {
     title: "SalonCentric AANHPI Integrated Campaign Article",
     fileName: "SalonCentric Celebrates AANHPI Coffee & Culture Fireside Chat.pdf",
   },
 } as const;
+
+const artistSpotlightPdfs: PdfItem[] = [
+  { id: "aanhpi-artist-spotlight-1", title: "AANHPI Artist Spotlight PDF", fileName: undefined },
+  { id: "aanhpi-artist-spotlight-2", title: "AANHPI Artist Spotlight PDF", fileName: undefined },
+  { id: "aanhpi-artist-spotlight-3", title: "AANHPI Artist Spotlight PDF", fileName: undefined },
+];
 
 const project = {
   title: "SalonCentric AANHPI Integrated Campaign",
@@ -386,6 +398,10 @@ function WindowFrame({
   );
 }
 
+function getPublicFileHref(fileName?: string) {
+  return fileName ? `/${encodeURIComponent(fileName)}` : undefined;
+}
+
 function RailList({
   ariaLabel,
   items,
@@ -430,7 +446,7 @@ export default function SalonCentricAanhpiProjectPage() {
 
   const articlePdfHref = useMemo(() => {
     const fileName = deliverables.articlePdf.fileName;
-    return fileName ? `/${encodeURIComponent(fileName)}` : undefined;
+    return getPublicFileHref(fileName);
   }, []);
 
   const articlePdfPreviewSrc = useMemo(() => {
@@ -636,28 +652,28 @@ export default function SalonCentricAanhpiProjectPage() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   {[
                     {
-                      title: "Social video",
-                      kind: "video" as const,
-                      src: "/AANHPI Social Video 1.mov",
-                      ariaLabel: "AANHPI social video 1",
-                    },
-                    {
-                      title: "Social video",
+                      title: "Instagram reel",
                       kind: "video" as const,
                       src: "/AANHPI Soical Video 2.mov",
-                      ariaLabel: "AANHPI social video 2",
+                      ariaLabel: "AANHPI Instagram reel 2",
                     },
                     {
-                      title: "Campaign image",
+                      title: "Instagram reel",
+                      kind: "video" as const,
+                      src: "/AANHPI Social Video 1.mov",
+                      ariaLabel: "AANHPI Instagram reel 1",
+                    },
+                    {
+                      title: "Social post screenshot",
                       kind: "image" as const,
                       src: "/AANHPI Soical Post.png",
-                      ariaLabel: "AANHPI social post image 1",
+                      ariaLabel: "AANHPI social post screenshot 1",
                     },
                     {
-                      title: "Campaign image",
+                      title: "Social post screenshot",
                       kind: "image" as const,
                       src: "/AANHPI Soical Post 2.png",
-                      ariaLabel: "AANHPI social post image 2",
+                      ariaLabel: "AANHPI social post screenshot 2",
                     },
                   ].map((item, index) => (
                     <div
@@ -690,13 +706,47 @@ export default function SalonCentricAanhpiProjectPage() {
                                 aria-label={item.ariaLabel}
                               />
                             ) : (
-                              <img
-                                src={item.src}
-                                alt={item.ariaLabel}
-                                className="h-full w-full object-contain p-3"
-                                loading="lazy"
-                                decoding="async"
-                              />
+                              <div className="h-full w-full">
+                                <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                                  <div className="flex min-w-0 items-center gap-3">
+                                    <span
+                                      aria-hidden="true"
+                                      className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
+                                    />
+                                    <div className="min-w-0">
+                                      <p className="truncate text-[10px] font-mono uppercase tracking-widest text-text-secondary/70">
+                                        Instagram
+                                      </p>
+                                      <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
+                                    </div>
+                                  </div>
+                                  <span aria-hidden="true" className="text-text-secondary/60">
+                                    •••
+                                  </span>
+                                </div>
+
+                                <div className="p-2">
+                                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                                    <div className="relative aspect-[4/5] w-full bg-surface/20">
+                                      <img
+                                        src={item.src}
+                                        alt={item.ariaLabel}
+                                        className="h-full w-full object-contain"
+                                        loading="lazy"
+                                        decoding="async"
+                                      />
+                                      <div
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
+                                      />
+                                      <div
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             )}
 
                             <div
@@ -709,6 +759,59 @@ export default function SalonCentricAanhpiProjectPage() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </WindowFrame>
+
+              <WindowFrame title="AANHPI ARTIST SPOTLIGHT PDFs">
+                <div className="grid gap-3">
+                  {artistSpotlightPdfs.map((pdf) => {
+                    const href = getPublicFileHref(pdf.fileName);
+                    return (
+                      <div
+                        key={pdf.id}
+                        className={cn(
+                          "flex flex-col gap-3 rounded-2xl border border-white/10 bg-surface-alt/10 p-4",
+                          "sm:flex-row sm:items-center sm:justify-between",
+                        )}
+                      >
+                        <div className="min-w-0">
+                          <p className="truncate text-sm tracking-tight text-text-primary">{pdf.title}</p>
+                          <p className="mt-1 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                            {href ? "PDF ready" : "Add a PDF file"}
+                          </p>
+                        </div>
+                        {href ? (
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className={cn(
+                              "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-4",
+                              "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                            )}
+                          >
+                            Open ↗
+                          </a>
+                        ) : (
+                          <span
+                            className={cn(
+                              "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/20 px-4",
+                              "text-xs font-mono uppercase tracking-widest text-text-secondary/50",
+                            )}
+                            aria-disabled="true"
+                          >
+                            Open ↗
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                  <p className="text-[11px] text-text-secondary/70">
+                    Add additional PDFs by placing them in <span className="font-mono">public/</span> and updating{" "}
+                    <span className="font-mono">artistSpotlightPdfs</span> in this file.
+                  </p>
                 </div>
               </WindowFrame>
             </Section>
