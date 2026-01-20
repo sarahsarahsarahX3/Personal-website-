@@ -66,14 +66,12 @@ export default function AboutPage() {
                                 MY CAREER HIGHLIGHTS INCLUDE:
                             </p>
                             <ul className="mt-4 space-y-3 pl-5 text-lg leading-relaxed text-text-secondary list-disc">
-                                <li>7+ years of experience leading content, campaign, and editorial initiatives.</li>
-                                <li>Fortune 100 experience, partnering with three Fortune 100 companies across beauty, retail, and media.</li>
-                                <li>15M+ total views generated across digital, social, editorial, and broadcast platforms.</li>
-                                <li>1,000+ assets delivered annually, supporting large-scale, multichannel programs.</li>
-                                <li>50+ brand and partner collaborations, including creators, influencers, and strategic partners.</li>
-                                <li>Global market experience, spanning U.S., Canadian, and international audiences.</li>
-                                <li>Broadcast media contributor for Discovery Channel properties, including Daily Planet and Mighty Cruise Ships.</li>
-                                <li>SEO-led editorial growth expertise, building content systems designed for long-term performance.</li>
+                                <li>7+ years leading content, campaign, and editorial initiatives.</li>
+                                <li>Fortune 100 brand experience across beauty, retail, and media.</li>
+                                <li>15M+ views generated across digital, social, editorial, and broadcast.</li>
+                                <li>1,000+ assets delivered annually across multichannel programs.</li>
+                                <li>50+ brand and partner collaborations, including creators and influencers.</li>
+                                <li>Global market experience across U.S., Canadian, and international audiences.</li>
                             </ul>
                         </div>
                         <p>
