@@ -21,7 +21,7 @@ const categories = [
     "Campaigns",
     "Content Strategy",
     "Copywriting",
-    "Video Production",
+    "Multimedia Production",
     "Brand Storytelling",
 ];
 
