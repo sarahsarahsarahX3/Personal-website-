@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
-import { Ticker } from "@/app/components/ui/Ticker";
 import { Constellation } from "@/app/components/home/Constellation";
 
 export function Hero() {
@@ -60,23 +59,7 @@ export function Hero() {
                 </motion.div>
             </div>
 
-            {/* Footer Ticker */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-                className="w-full border-y border-white/5 py-5"
-            >
-                <Ticker
-                    items={[
-                        "Strategy",
-                        "Storytelling",
-                        "Growth",
-                    ]}
-                    speed={90}
-                    showSeparator={false}
-                />
-            </motion.div>
+            <div className="w-full" aria-hidden="true" />
         </section>
     );
 }
