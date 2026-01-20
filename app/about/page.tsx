@@ -47,10 +47,7 @@ export default function AboutPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-5xl md:text-7xl font-display mb-8 leading-tight"
                     >
-                        Hi, I&apos;m Sarah Dawson.
-                        <span className="block text-xl md:text-2xl font-sans text-text-secondary mt-4 font-normal">
-                            Marketing Strategist & Creative Director
-                        </span>
+                        Hi, I’m Sarah Dawson.
                     </motion.h1>
 
                     <motion.div
@@ -60,13 +57,13 @@ export default function AboutPage() {
                         className="space-y-6 text-lg text-text-secondary leading-relaxed"
                     >
                         <p>
-                            I operate at the intersection of data and daydreaming. For the past decade, I've helped brands find their voice in a crowded digital landscape, not by shouting louder, but by speaking more clearly.
+                            I’m a marketing professional who focuses on clear messaging, strong execution, and work that actually performs. I’ve spent the last several years helping brands figure out what they need to say, how to say it, and where it should live, across content, campaigns, and brand communications.
                         </p>
                         <p>
-                            My approach is rooted in "Narrative Architecture"—building campaigns that have structural integrity, designed to withstand the shifting winds of algorithms and trends.
+                            My background spans growth marketing, editorial, and integrated campaigns, which means I’m comfortable moving between data, strategy, and creative work without losing the thread. I care about structure, consistency, and outcomes, and I’m especially good at turning complex ideas into messaging people can understand and act on.
                         </p>
                         <p>
-                            When I'm not dissecting user behavior, I'm experimenting with creative coding, collecting vintage design annuals, or searching for the perfect espresso.
+                            For inquiries or collaboration, please get in touch via the contact page.
                         </p>
                     </motion.div>
 
