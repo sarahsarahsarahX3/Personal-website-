@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 export default function AboutPage() {
     return (
@@ -47,7 +46,7 @@ export default function AboutPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-4xl md:text-6xl font-display mb-8 leading-tight"
                     >
-                        Hi, I’m Sarah Dawson.
+                        About
                     </motion.h1>
 
                     <motion.div
@@ -57,13 +56,30 @@ export default function AboutPage() {
                         className="space-y-6 text-lg text-text-secondary leading-relaxed"
                     >
                         <p>
-                            I’m a marketing professional focused on developing and executing content, campaigns, and brand messaging that drive measurable results. I’ve spent the last several years helping brands figure out what they need to say, how to say it, and where it should live, across content, campaigns, and brand communications.
+                            I’m Sarah Dawson, a marketing professional who leads content, campaign, and editorial initiatives for brands across integrated channels. My work focuses on building clear, consistent messaging and executing at scale across content systems, campaigns, and brand communications.
                         </p>
                         <p>
-                            My background spans growth marketing, editorial, and integrated campaigns, which means I’m comfortable moving between data, strategy, and creative work without losing the thread. I care about structure, consistency, and outcomes, and I’m especially good at turning complex ideas into messaging people can understand and act on.
+                            Over the past seven years, I’ve worked with Fortune 100 companies and established brands in beauty, retail, media, and science. I’ve delivered high-impact work across digital, social, editorial, broadcast, and experiential platforms. My background spans growth marketing, editorial operations, and integrated campaigns, which allows me to move between strategy and execution while staying focused on outcomes.
                         </p>
+                        <div className="pt-2">
+                            <p className="text-base font-mono uppercase tracking-widest text-text-secondary/70">
+                                My career highlights include:
+                            </p>
+                            <ul className="mt-4 space-y-3 pl-5 text-lg leading-relaxed text-text-secondary list-disc">
+                                <li>7+ years of experience leading content, campaign, and editorial initiatives.</li>
+                                <li>
+                                    Fortune 100 experience, partnering with three Fortune 100 companies across beauty, retail, and media.
+                                </li>
+                                <li>15M+ total views generated across digital, social, editorial, and broadcast platforms.</li>
+                                <li>1,000+ assets delivered annually, supporting large-scale, multichannel programs.</li>
+                                <li>50+ brand and partner collaborations, including creators, influencers, and strategic partners.</li>
+                                <li>Global market experience, spanning U.S., Canadian, and international audiences.</li>
+                                <li>Broadcast media contributor for Discovery Channel properties, including Daily Planet and Mighty Cruise Ships.</li>
+                                <li>SEO-led editorial growth expertise, building content systems designed for long-term performance.</li>
+                            </ul>
+                        </div>
                         <p>
-                            For inquiries or collaboration, please get in touch via the contact page.
+                            If you’re interested in working together, you can reach me through the contact page via email or LinkedIn.
                         </p>
                     </motion.div>
 
