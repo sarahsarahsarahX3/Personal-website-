@@ -73,8 +73,8 @@ const sectionLinks: SectionLink[] = [
   { id: "strategy", label: "Strategy" },
   { id: "messaging", label: "Messaging" },
   { id: "deliverables", label: "Final Deliverables" },
-  { id: "impact", label: "Results & Impact" },
-  { id: "tools", label: "Tools & Skills" },
+  { id: "impact", label: "Impact" },
+  { id: "tools", label: "Tools" },
 ];
 
 function usePrefersReducedMotion() {
@@ -523,6 +523,7 @@ export default function SalonCentricAanhpiProjectPage() {
   const isMobileView = useIsMobileView();
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
+  const [activeArtistPdfId, setActiveArtistPdfId] = useState<string>(artistSpotlightPdfs[0]?.id ?? "");
 
   const snapshotCards = useMemo<SnapshotCard[]>(
     () => project.snapshot.map((item) => ({ title: item.title, value: item.value })),
@@ -624,14 +625,14 @@ export default function SalonCentricAanhpiProjectPage() {
                         <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
                         <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
                       </div>
-                    <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                      Asian American, Native Hawaiian, and Pacific Islander (AANHPI) CAMPAIGN POSTER
-                    </p>
-                    <span aria-hidden="true" className="h-6 w-6 rounded-full border border-white/10 bg-surface/40" />
+                      <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                      AANHPI CAMPAIGN POSTER
+                      </p>
+                      <span aria-hidden="true" className="h-6 w-6 rounded-full border border-white/10 bg-surface/40" />
                   </div>
 
                   <div className="bg-surface/30">
-                    <div className="mx-auto w-full max-w-[500px] py-5 md:py-7">
+                    <div className="mx-auto w-full max-w-[420px] py-5 md:py-7">
                       <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
                         <div className="relative aspect-[1429/2000] w-full bg-surface/20">
                           <img
@@ -827,56 +828,114 @@ export default function SalonCentricAanhpiProjectPage() {
               </WindowFrame>
 
               <WindowFrame title="AANHPI ARTIST SPOTLIGHT PDFs">
-                <div className="grid gap-3">
-                  {artistSpotlightPdfs.map((pdf) => {
-                    const href = getPublicFileHref(pdf.fileName);
-                    return (
-                      <div
-                        key={pdf.id}
-                        className={cn(
-                          "flex flex-col gap-3 rounded-2xl border border-white/10 bg-surface-alt/10 p-4",
-                          "sm:flex-row sm:items-center sm:justify-between",
-                        )}
-                      >
-                        <div className="min-w-0">
-                          <p className="truncate text-sm tracking-tight text-text-primary">{pdf.title}</p>
-                          <p className="mt-1 text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                            {href ? "PDF ready" : "Add a PDF file"}
-                          </p>
-                        </div>
-                        {href ? (
-                          <a
-                            href={href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={cn(
-                              "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-4",
-                              "text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                            )}
-                          >
-                            Open ↗
-                          </a>
-                        ) : (
-                          <span
-                            className={cn(
-                              "inline-flex h-9 items-center justify-center rounded-full border border-white/10 bg-surface/20 px-4",
-                              "text-xs font-mono uppercase tracking-widest text-text-secondary/50",
-                            )}
-                            aria-disabled="true"
-                          >
-                            Open ↗
-                          </span>
-                        )}
-                      </div>
-                    );
-                  })}
+                {(() => {
+                  const items = artistSpotlightPdfs.map((pdf) => ({
+                    ...pdf,
+                    href: getPublicFileHref(pdf.fileName),
+                  }));
+                  const active =
+                    items.find((item) => item.id === activeArtistPdfId) ?? items[0] ?? null;
+                  const previewSrc = active?.href
+                    ? isMobileView
+                      ? active.href
+                      : `${active.href}#page=1&view=FitH&toolbar=0&navpanes=0`
+                    : undefined;
 
-                  <p className="text-[11px] text-text-secondary/70">
-                    Add additional PDFs by placing them in <span className="font-mono">public/</span> and updating{" "}
-                    <span className="font-mono">artistSpotlightPdfs</span> in this file.
-                  </p>
-                </div>
+                  return (
+                    <div className="grid gap-4 lg:grid-cols-[360px_1fr]">
+                      <div className="grid gap-2">
+                        {items.map((pdf) => {
+                          const isActive = pdf.id === active?.id;
+                          return (
+                            <button
+                              key={pdf.id}
+                              type="button"
+                              onClick={() => setActiveArtistPdfId(pdf.id)}
+                              aria-pressed={isActive}
+                              className={cn(
+                                "w-full rounded-2xl border bg-surface-alt/10 p-4 text-left transition-colors",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                                isActive
+                                  ? "border-white/20 bg-white/[0.06] text-text-primary"
+                                  : "border-white/10 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/[0.06]",
+                              )}
+                            >
+                              <p className="text-sm tracking-tight">{pdf.title}</p>
+                              <p className="mt-1 text-[10px] font-mono uppercase tracking-widest text-text-secondary/60">
+                                {pdf.href ? "Preview available" : "Add a PDF file"}
+                              </p>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      <div className="min-w-0">
+                        <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                          <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                            <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                              Preview
+                            </p>
+                            {active?.href ? (
+                              <a
+                                href={active.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                className={cn(
+                                  "inline-flex h-8 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
+                                  "text-[11px] font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+                                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                                )}
+                              >
+                                Open ↗
+                              </a>
+                            ) : (
+                              <span aria-hidden="true" className="h-6 w-6 rounded-full border border-white/10 bg-surface/40" />
+                            )}
+                          </div>
+
+                          <div className="bg-surface/30">
+                            <div
+                              className={cn(
+                                "h-[60vh] min-h-[420px] lg:h-[520px] w-full",
+                                "overflow-auto md:overflow-hidden",
+                              )}
+                              style={{ WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+                            >
+                              {previewSrc ? (
+                                isMobileView ? (
+                                  <object
+                                    data={active?.href}
+                                    type="application/pdf"
+                                    aria-label={active?.title ?? "Artist spotlight PDF preview"}
+                                    className="h-full w-full"
+                                  >
+                                    <iframe
+                                      title={active?.title ?? "Artist spotlight PDF preview"}
+                                      src={active?.href}
+                                      className="h-full w-full border-0"
+                                      loading="lazy"
+                                    />
+                                  </object>
+                                ) : (
+                                  <iframe
+                                    title={active?.title ?? "Artist spotlight PDF preview"}
+                                    src={previewSrc}
+                                    className="h-full w-full border-0"
+                                    loading="lazy"
+                                  />
+                                )
+                              ) : (
+                                <div className="flex h-full w-full items-center justify-center px-6 text-center text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                                  Add a PDF file
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
               </WindowFrame>
             </Section>
 
