@@ -29,7 +29,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Floating Text Mesh effect */}
-                <div className="relative z-10 text-center mix-blend-difference">
+                <div className="relative z-10 text-center mix-blend-difference md:-translate-y-8">
                     <h2 className="text-[10vw] font-display leading-none text-white opacity-80">
                         VISION
                         <br />
