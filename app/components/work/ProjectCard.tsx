@@ -82,53 +82,54 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/35" />
                 </div>
 
-                <div className="relative flex items-stretch justify-between gap-6 p-5 md:p-6">
-                    <div className="flex min-w-0 flex-1 flex-col">
-                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.24em]">
-                            <span className="text-accent">Project {formatIndex(index)}</span>
-                            <span className="text-white/25">•</span>
-                            <span className="text-white/70">{category}</span>
-                            {year ? (
-                                <>
-                                    <span className="text-white/25">•</span>
-                                    <span className="text-white/50">{year}</span>
-                                </>
-                            ) : null}
-                        </div>
-
-                        <h3 className="mt-2 font-display text-[1.6rem] leading-[1.05] text-white/90 transition-colors group-hover:text-white">
-                            {shouldItalicizeDiscoverySubtitle && discoveryTitleParts && discoveryTitleParts.length >= 2 ? (
-                                <>
-                                    <span>{discoveryTitleParts[0].trim()}:</span>{" "}
-                                    <em className="italic">{discoveryTitleParts.slice(1).join(":").trim()}</em>
-                                </>
-                            ) : (
-                                title
-                            )}
-                        </h3>
-
-                        {description ? (
-                            <p
-                                className="mt-3 text-sm leading-relaxed text-text-secondary"
-                                style={{
-                                    display: "-webkit-box",
-                                    WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 2,
-                                    overflow: "hidden",
-                                }}
-                            >
-                                {description}
-                            </p>
+                <div className="relative p-5 md:p-6">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.24em]">
+                        <span className="text-accent">Project {formatIndex(index)}</span>
+                        <span className="text-white/25">•</span>
+                        <span className="text-white/70">{category}</span>
+                        {year ? (
+                            <>
+                                <span className="text-white/25">•</span>
+                                <span className="text-white/50">{year}</span>
+                            </>
                         ) : null}
                     </div>
 
-                    <div className="flex shrink-0 flex-col justify-end">
-                        <div className="mt-6 flex items-center gap-2 text-white/70 transition-colors group-hover:text-white md:mt-8">
+                    <h3 className="mt-2 font-display text-[1.6rem] leading-[1.05] text-white/90 transition-colors group-hover:text-white">
+                        {shouldItalicizeDiscoverySubtitle && discoveryTitleParts && discoveryTitleParts.length >= 2 ? (
+                            <>
+                                <span>{discoveryTitleParts[0].trim()}:</span>{" "}
+                                <em className="italic">{discoveryTitleParts.slice(1).join(":").trim()}</em>
+                            </>
+                        ) : (
+                            title
+                        )}
+                    </h3>
+
+                    {description ? (
+                        <p
+                            className="mt-3 text-sm leading-relaxed text-text-secondary"
+                            style={{
+                                display: "-webkit-box",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: 2,
+                                overflow: "hidden",
+                            }}
+                        >
+                            {description}
+                        </p>
+                    ) : null}
+
+                    <div className="mt-6 flex justify-end">
+                        <div className="flex items-center gap-2 text-white/70 transition-colors group-hover:text-white">
                             <span className="text-xs uppercase tracking-[0.2em] text-white/40 group-hover:text-white/60">
                                 View
                             </span>
                             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur-md transition-transform duration-300 group-hover:scale-105">
-                                <ArrowUpRight size={18} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                                <ArrowUpRight
+                                    size={18}
+                                    className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                                />
                             </span>
                         </div>
                     </div>
