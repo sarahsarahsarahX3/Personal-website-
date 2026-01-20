@@ -36,6 +36,7 @@ export default async function WorkPage() {
         size: "small",
         slug: "discovery-mighty-cruise-ships",
         tags: ["Video Production", "Brand Storytelling"],
+        year: "",
         description:
             "Editorial and production support for a Discovery Channel documentary episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship.",
     });
@@ -47,6 +48,7 @@ export default async function WorkPage() {
         size: "small",
         slug: "discovery-daily-planet",
         tags: ["Video Production", "Brand Storytelling"],
+        year: "",
         description:
             "Production and editorial support for Discovery Channel’s flagship science and technology series, delivering fast-turn, multi-segment storytelling in a high-volume newsroom environment.",
     });
@@ -74,6 +76,18 @@ export default async function WorkPage() {
         year: "2025",
         description:
             "SEO-led editorial growth program for HairCode, Procter & Gamble Beauty’s brand-owned content hub.",
+    });
+
+    projects.push({
+        title: "SalonCentric AANHPI Integrated Campaign",
+        category: "Campaigns",
+        image: "/images/SalonCentric.png",
+        size: "small",
+        slug: "saloncentric-aanhpi",
+        tags: ["Campaigns", "Copywriting", "Brand Storytelling", "Content Strategy"],
+        year: "",
+        description:
+            "Influencer and brand partner content for SalonCentric’s AANHPI integrated campaign with creator-led storytelling and multi-channel amplification across owned, organic, and paid platforms.",
     });
 
     return (
