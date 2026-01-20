@@ -70,26 +70,6 @@ export default function AboutPage() {
                         </p>
                     </motion.div>
 
-                    <div className="mt-16 grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-widest mb-4 text-white">Services</h3>
-                            <ul className="space-y-2 text-text-secondary">
-                                <li>Brand Strategy</li>
-                                <li>Creative Direction</li>
-                                <li>Digital Growth</li>
-                                <li>Content Architecture</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-widest mb-4 text-white">Select Clients</h3>
-                            <ul className="space-y-2 text-text-secondary">
-                                <li>Spotify</li>
-                                <li>Aesop</li>
-                                <li>Polestar</li>
-                                <li>Monocle</li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </section>
         </main>

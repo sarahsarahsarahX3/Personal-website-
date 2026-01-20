@@ -60,7 +60,7 @@ export default async function WorkPage() {
         image: "/NYFW%20Project%20thumbnail.png",
         size: "small",
         slug: "saloncentric-nyfw",
-        tags: ["Campaigns", "Content Strategy", "Copywriting", "Brand Storytelling"],
+        tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
         year: "2024",
         description:
             "Integrated campaign content production translating a live NYFW activation into coordinated digital, social, and email storytelling.",
@@ -84,7 +84,7 @@ export default async function WorkPage() {
         image: "/AANHPI%20Project_Poster.png",
         size: "small",
         slug: "saloncentric-aanhpi",
-        tags: ["Campaigns", "Copywriting", "Brand Storytelling", "Content Strategy"],
+        tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
         year: "",
         description:
             "Influencer and brand partner content for SalonCentric’s AANHPI integrated campaign with creator-led storytelling and multi-channel amplification across owned, organic, and paid platforms.",

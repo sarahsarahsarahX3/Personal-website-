@@ -143,7 +143,7 @@ export function BioSection() {
   const [headshotSrc, setHeadshotSrc] = useState("/images/IMG_8516_edited.jpg");
 
   return (
-    <section aria-labelledby="home-bio-title" className="py-32 md:py-44 lg:py-48">
+    <section aria-labelledby="home-bio-title" className="pt-32 pb-16 md:pt-44 md:pb-20 lg:pt-48 lg:pb-24">
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
           <figure className="col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block">
