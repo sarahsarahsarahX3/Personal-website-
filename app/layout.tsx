@@ -34,10 +34,8 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${inter.variable} antialiased bg-surface text-text-primary font-sans selection:bg-accent selection:text-surface`}
       >
-        <SmoothScroll>
-          <Navbar />
-          {children}
-        </SmoothScroll>
+        <Navbar />
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );
