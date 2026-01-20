@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/app/lib/utils";
 
 type SectionLink = { id: string; label: string };
@@ -398,6 +398,68 @@ function WindowFrame({
   );
 }
 
+function VideoWithAutoPoster({
+  src,
+  ariaLabel,
+  className,
+}: {
+  src: string;
+  ariaLabel: string;
+  className?: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [poster, setPoster] = useState<string>();
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    let canceled = false;
+
+    const capture = () => {
+      if (canceled) return;
+      if (!video.videoWidth || !video.videoHeight) return;
+
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+        if (!canceled && dataUrl) setPoster(dataUrl);
+      } catch {
+        // ignore capture errors
+      }
+    };
+
+    const onLoadedData = () => {
+      window.requestAnimationFrame(() => capture());
+    };
+
+    if (video.readyState >= 2) onLoadedData();
+    video.addEventListener("loadeddata", onLoadedData);
+    return () => {
+      canceled = true;
+      video.removeEventListener("loadeddata", onLoadedData);
+    };
+  }, [src]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      poster={poster}
+      controls
+      playsInline
+      preload="metadata"
+      className={cn("h-full w-full object-cover", className)}
+      aria-label={ariaLabel}
+    />
+  );
+}
+
 function getPublicFileHref(fileName?: string) {
   return fileName ? `/${encodeURIComponent(fileName)}` : undefined;
 }
@@ -533,18 +595,18 @@ export default function SalonCentricAanhpiProjectPage() {
 
               <div className="mt-8">
                 <figure className="overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10">
-                  <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface/40 px-4 py-3">
-                    <div className="flex items-center gap-2" aria-hidden="true">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
-                    </div>
-                    <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
-                      AANHPI campaign poster
-                    </p>
-                    <a
-                      href="/AANHPI%20Project_Poster.png"
-                      target="_blank"
+                    <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface/40 px-4 py-3">
+                      <div className="flex items-center gap-2" aria-hidden="true">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
+                      </div>
+                      <p className="min-w-0 truncate text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                      Asian American, Native Hawaiian, and Pacific Islander (AANHPI) CAMPAIGN POSTER
+                      </p>
+                      <a
+                        href="/AANHPI%20Project_Poster.png"
+                        target="_blank"
                       rel="noreferrer"
                       className={cn(
                         "inline-flex h-8 items-center justify-center rounded-full border border-white/10 bg-surface/40 px-3",
@@ -652,25 +714,25 @@ export default function SalonCentricAanhpiProjectPage() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   {[
                     {
-                      title: "Instagram reel",
+                      title: "INSTAGRAM REEL",
                       kind: "video" as const,
                       src: "/AANHPI Soical Video 2.mov",
                       ariaLabel: "AANHPI Instagram reel 2",
                     },
                     {
-                      title: "Instagram reel",
+                      title: "INSTAGRAM REEL",
                       kind: "video" as const,
                       src: "/AANHPI Social Video 1.mov",
                       ariaLabel: "AANHPI Instagram reel 1",
                     },
                     {
-                      title: "Social post screenshot",
+                      title: "SOCIAL POST SCREENSHOT",
                       kind: "image" as const,
                       src: "/AANHPI Soical Post.png",
                       ariaLabel: "AANHPI social post screenshot 1",
                     },
                     {
-                      title: "Social post screenshot",
+                      title: "SOCIAL POST SCREENSHOT",
                       kind: "image" as const,
                       src: "/AANHPI Soical Post 2.png",
                       ariaLabel: "AANHPI social post screenshot 2",
@@ -690,71 +752,61 @@ export default function SalonCentricAanhpiProjectPage() {
                       </div>
                       <div className="p-4">
                         <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                          <div
-                            className={cn(
-                              "relative w-full overflow-hidden",
-                              item.kind === "video" ? "aspect-[9/16] bg-black/30" : "aspect-[4/5] bg-surface-alt/10",
-                            )}
-                          >
-                            {item.kind === "video" ? (
-                              <video
-                                src={item.src}
-                                controls
-                                playsInline
-                                preload="metadata"
-                                className="h-full w-full object-cover"
-                                aria-label={item.ariaLabel}
+                          {item.kind === "video" ? (
+                            <div className="relative aspect-[9/16] w-full bg-black/30">
+                              <VideoWithAutoPoster src={item.src} ariaLabel={item.ariaLabel} />
+                              <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
                               />
-                            ) : (
-                              <div className="h-full w-full">
-                                <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
-                                  <div className="flex min-w-0 items-center gap-3">
-                                    <span
-                                      aria-hidden="true"
-                                      className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
-                                    />
-                                    <div className="min-w-0">
-                                      <p className="truncate text-[10px] font-mono uppercase tracking-widest text-text-secondary/70">
-                                        Instagram
-                                      </p>
-                                      <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
-                                    </div>
+                              <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                              />
+                            </div>
+                          ) : (
+                            <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/20">
+                              <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-surface-alt/10 px-4 py-3">
+                                <div className="flex min-w-0 items-center gap-3">
+                                  <span
+                                    aria-hidden="true"
+                                    className="h-9 w-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888]"
+                                  />
+                                  <div className="min-w-0">
+                                    <p className="truncate text-[10px] font-mono uppercase tracking-widest text-text-secondary/70">
+                                      Instagram
+                                    </p>
+                                    <p className="truncate text-sm tracking-tight text-text-primary">saloncentric</p>
                                   </div>
-                                  <span aria-hidden="true" className="text-text-secondary/60">
-                                    •••
-                                  </span>
                                 </div>
+                                <span aria-hidden="true" className="text-text-secondary/60">
+                                  •••
+                                </span>
+                              </div>
 
-                                <div className="p-2">
-                                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                                    <div className="relative aspect-[4/5] w-full bg-surface/20">
-                                      <img
-                                        src={item.src}
-                                        alt={item.ariaLabel}
-                                        className="h-full w-full object-contain"
-                                        loading="lazy"
-                                        decoding="async"
-                                      />
-                                      <div
-                                        aria-hidden="true"
-                                        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
-                                      />
-                                      <div
-                                        aria-hidden="true"
-                                        className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
-                                      />
-                                    </div>
+                              <div className="p-2">
+                                <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
+                                  <div className="relative aspect-[4/5] w-full bg-surface/20">
+                                    <img
+                                      src={item.src}
+                                      alt={item.ariaLabel}
+                                      className="h-full w-full object-contain"
+                                      loading="lazy"
+                                      decoding="async"
+                                    />
+                                    <div
+                                      aria-hidden="true"
+                                      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
+                                    />
+                                    <div
+                                      aria-hidden="true"
+                                      className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                                    />
                                   </div>
                                 </div>
                               </div>
-                            )}
-
-                            <div
-                              aria-hidden="true"
-                              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.18]"
-                            />
-                            <div aria-hidden="true" className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
-                          </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
