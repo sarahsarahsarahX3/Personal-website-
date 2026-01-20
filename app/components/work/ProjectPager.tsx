@@ -126,7 +126,13 @@ export function ProjectPager({
 
   if (layout === "inline") {
     return (
-      <div className={cn("mt-12 pb-[calc(env(safe-area-inset-bottom)+7rem)]", className)}>
+      <div
+        className={cn(
+          "mt-10 md:mt-12",
+          "pb-[calc(env(safe-area-inset-bottom)+20rem)] md:pb-[calc(env(safe-area-inset-bottom)+7rem)]",
+          className,
+        )}
+      >
         {grid}
       </div>
     );

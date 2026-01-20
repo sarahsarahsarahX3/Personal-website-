@@ -1105,6 +1105,10 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                 </div>
               </div>
             </footer>
+
+            <div className="max-w-[728px]">
+              <ProjectPager currentSlug="discovery-mighty-cruise-ships" layout="inline" className="mt-16" />
+            </div>
           </div>
 
           <DesktopRail
@@ -1114,10 +1118,6 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
             onNavigate={(id) => scrollToId(id, scrollBehavior)}
           />
         </div>
-      </div>
-
-      <div className="mx-auto w-full max-w-6xl px-6">
-        <ProjectPager currentSlug="discovery-mighty-cruise-ships" layout="inline" />
       </div>
     </main>
   );

@@ -1070,6 +1070,10 @@ export default function SalonCentricAanhpiProjectPage() {
                 </div>
               </div>
             </footer>
+
+            <div className="max-w-[728px]">
+              <ProjectPager currentSlug="saloncentric-aanhpi" layout="inline" className="mt-16" />
+            </div>
           </div>
 
           <DesktopRail
@@ -1079,10 +1083,6 @@ export default function SalonCentricAanhpiProjectPage() {
             onNavigate={(id) => scrollToId(id, scrollBehavior)}
           />
         </div>
-      </div>
-
-      <div className="mx-auto w-full max-w-6xl px-6">
-        <ProjectPager currentSlug="saloncentric-aanhpi" layout="inline" />
       </div>
     </main>
   );
