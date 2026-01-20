@@ -30,7 +30,7 @@ const project = {
   objective:
     "Increase monthly organic traffic and search visibility for P&G Beauty’s owned content platform while delivering clear, expert-validated educational content designed to perform sustainably over time.",
   strategyIntro:
-    "Design a content system to drive sustainable organic growth by:",
+    "Designed a content system to drive sustainable organic growth by:",
   strategyBullets: [
     "Mapping topics to high-intent user queries and audience needs.",
     "Structuring content for clarity, scannability, and discoverability.",
