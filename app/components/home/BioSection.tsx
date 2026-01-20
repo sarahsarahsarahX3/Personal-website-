@@ -141,6 +141,14 @@ function MarketsIcon() {
 
 export function BioSection() {
   const [headshotSrc, setHeadshotSrc] = useState("/images/IMG_8516_edited.jpg");
+  const highlights = [
+    { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
+    { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 100 Companies" },
+    { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets / Year" },
+    { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views" },
+    { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand Partnerships" },
+    { key: "markets", Icon: MarketsIcon, value: "Global, U.S., & Canadian", label: "Markets" },
+  ] as const;
 
   return (
     <section aria-labelledby="home-bio-title" className="pt-32 pb-16 md:pt-44 md:pb-20 lg:pt-48 lg:pb-24">
@@ -177,65 +185,26 @@ export function BioSection() {
 
               <ul
                 aria-label="Highlights"
-                className="mt-10 grid grid-cols-2 gap-x-10 gap-y-12 justify-items-center md:justify-items-start"
+                className="mt-6 grid grid-cols-2 gap-4 sm:gap-5 md:gap-6"
               >
-                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
-                  <YearsIcon />
-                  <div className="min-w-0">
-                    <div className="text-2xl md:text-3xl text-text-primary leading-none">7+</div>
-                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Years of Experience
+                {highlights.map(({ key, Icon, value, label }) => (
+                  <li
+                    key={key}
+                    className="w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-4 text-text-secondary md:px-5 md:py-5"
+                  >
+                    <div className="grid grid-cols-[44px_1fr] items-center gap-4">
+                      <Icon />
+                      <div className="min-w-0">
+                        <div className="min-h-[2.2rem] text-2xl md:text-3xl leading-tight text-text-primary">
+                          {value}
+                        </div>
+                        <div className="mt-2 min-h-[2.2rem] text-xs uppercase leading-snug tracking-widest text-text-secondary/70">
+                          {label}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </li>
-
-                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
-                  <BrandsIcon />
-                  <div className="min-w-0">
-                    <div className="text-2xl md:text-3xl text-text-primary leading-none">3</div>
-                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Fortune 100 Companies
-                    </div>
-                  </div>
-                </li>
-
-                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
-                  <AssetsIcon />
-                  <div className="min-w-0">
-                    <div className="text-2xl md:text-3xl text-text-primary leading-none">1,000+</div>
-                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Assets / Year
-                    </div>
-                  </div>
-                </li>
-
-                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
-                  <ViewsIcon />
-                  <div className="min-w-0">
-                    <div className="text-2xl md:text-3xl text-text-primary leading-none">15M+</div>
-                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">Views</div>
-                  </div>
-                </li>
-
-                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
-                  <CollaborationIcon />
-                  <div className="min-w-0">
-                    <div className="text-2xl md:text-3xl text-text-primary leading-none">50+</div>
-                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Brand Partnerships
-                    </div>
-                  </div>
-                </li>
-
-                <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
-                  <MarketsIcon />
-                  <div className="min-w-0">
-                    <div className="text-2xl md:text-3xl text-text-primary leading-none">Global, U.S., &amp; Canadian</div>
-                    <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Markets
-                    </div>
-                  </div>
-                </li>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
