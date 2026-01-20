@@ -56,7 +56,7 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                 )}
                 aria-label={`${title} project page`}
             >
-                <div className="relative flex-1 overflow-hidden bg-surface-secondary">
+                <div className="relative h-[240px] overflow-hidden bg-surface-secondary sm:h-[250px] md:h-[260px]">
                     <div
                         className={cn(
                             "absolute inset-0 w-full h-full transition-transform duration-700",
@@ -106,7 +106,15 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                             ) : null}
                         </div>
 
-                        <h3 className="mt-2 font-display text-[1.6rem] leading-[1.05] text-white/90 transition-colors group-hover:text-white">
+                        <h3
+                            className="mt-2 font-display text-[1.6rem] leading-[1.05] text-white/90 transition-colors group-hover:text-white"
+                            style={{
+                                display: "-webkit-box",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: 2,
+                                overflow: "hidden",
+                            }}
+                        >
                             {shouldItalicizeDiscoverySubtitle && discoveryTitleParts && discoveryTitleParts.length >= 2 ? (
                                 <>
                                     <span>{discoveryTitleParts[0].trim()}:</span>{" "}
