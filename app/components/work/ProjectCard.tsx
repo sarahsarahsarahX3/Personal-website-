@@ -93,21 +93,28 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                 </div>
 
                 <div className="relative min-h-0 overflow-hidden p-5 md:p-6">
-                    <div className="flex h-full min-h-0 items-stretch justify-between gap-6">
-                    <div className="min-w-0 min-h-0 flex flex-col">
-                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.24em]">
-                            <span className="text-accent">Project {formatIndex(index)}</span>
-                            <span className="text-white/25">•</span>
-                            <span className="text-white/70">{category}</span>
+                    <div className="grid h-full min-h-0 grid-rows-[auto_auto_1fr_auto] gap-4">
+                        <div className="flex min-w-0 items-center gap-2 text-xs uppercase tracking-[0.24em] text-white/70">
+                            <span className="shrink-0 text-accent">Project {formatIndex(index)}</span>
+                            <span className="shrink-0 text-white/25">•</span>
+                            <span className="min-w-0 truncate text-white/70">{category}</span>
                             {year ? (
                                 <>
-                                    <span className="text-white/25">•</span>
-                                    <span className="text-white/50">{year}</span>
+                                    <span className="shrink-0 text-white/25">•</span>
+                                    <span className="shrink-0 text-white/50">{year}</span>
                                 </>
                             ) : null}
                         </div>
 
-                        <h3 className="mt-2 font-display text-[1.35rem] leading-[1.15] text-white/90 transition-colors group-hover:text-white sm:text-[1.5rem] md:text-[1.6rem]">
+                        <h3
+                            className="font-display text-[1.35rem] leading-[1.15] text-white/90 transition-colors group-hover:text-white sm:text-[1.5rem] md:text-[1.6rem]"
+                            style={{
+                                display: "-webkit-box",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: 2,
+                                overflow: "hidden",
+                            }}
+                        >
                             {shouldItalicizeDiscoverySubtitle && discoveryTitleParts && discoveryTitleParts.length >= 2 ? (
                                 <>
                                     <span>{discoveryTitleParts[0].trim()}:</span>{" "}
@@ -120,7 +127,7 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
 
                         {description ? (
                             <p
-                                className="mt-3 max-w-[60ch] text-sm leading-relaxed text-text-secondary"
+                                className="max-w-[60ch] text-sm leading-relaxed text-text-secondary"
                                 style={{
                                     display: "-webkit-box",
                                     WebkitBoxOrient: "vertical",
@@ -131,10 +138,8 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                                 {description}
                             </p>
                         ) : null}
-                    </div>
 
-                    <div className="flex shrink-0 flex-col justify-end">
-                        <div className="flex items-center gap-2 text-white/70 transition-colors group-hover:text-white">
+                        <div className="mt-auto flex items-center justify-end gap-2 text-white/70 transition-colors group-hover:text-white">
                             <span className="text-xs uppercase tracking-[0.2em] text-white/40 group-hover:text-white/60">
                                 View
                             </span>
@@ -145,7 +150,6 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                                 />
                             </span>
                         </div>
-                    </div>
                     </div>
                 </div>
             </Link>
