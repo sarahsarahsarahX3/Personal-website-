@@ -166,22 +166,25 @@ export function BioSection() {
                 About
               </h2>
               <p className="text-xl md:text-2xl leading-snug tracking-tight text-text-primary">
-                Hello, my name is Sarah Dawson.
+                Hi, I’m Sarah Dawson.
               </p>
               <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
-                I specialize in creating marketing-led content that strengthens brand voice, grows audiences, and performs across channels.
+                I lead content, campaign, and editorial initiatives for brands across integrated channels.
+              </p>
+              <p className="mt-10 text-xs font-mono uppercase tracking-widest text-text-secondary/70">
+                My career highlights include:
               </p>
 
               <ul
                 aria-label="Highlights"
-                className="mt-12 grid grid-cols-2 gap-x-10 gap-y-12 justify-items-center md:justify-items-start"
+                className="mt-10 grid grid-cols-2 gap-x-10 gap-y-12 justify-items-center md:justify-items-start"
               >
                 <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
                   <YearsIcon />
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">7+</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Years Experience
+                      Years of Experience
                     </div>
                   </div>
                 </li>
@@ -201,7 +204,7 @@ export function BioSection() {
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">1,000+</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Assets Delivered Annually
+                      Assets / Year
                     </div>
                   </div>
                 </li>
@@ -219,7 +222,7 @@ export function BioSection() {
                   <div className="min-w-0">
                     <div className="text-2xl md:text-3xl text-text-primary leading-none">50+</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
-                      Brand Collaborations
+                      Brand Partnerships
                     </div>
                   </div>
                 </li>
@@ -227,7 +230,7 @@ export function BioSection() {
                 <li className="flex flex-col items-center gap-3 text-center text-text-secondary md:flex-row md:items-start md:gap-4 md:text-left">
                   <MarketsIcon />
                   <div className="min-w-0">
-                    <div className="text-2xl md:text-3xl text-text-primary leading-none">Global, U.S., and Canadian</div>
+                    <div className="text-2xl md:text-3xl text-text-primary leading-none">Global, U.S., &amp; Canadian</div>
                     <div className="mt-2 text-xs uppercase tracking-widest text-text-secondary/70">
                       Markets
                     </div>
