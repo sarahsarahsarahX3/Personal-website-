@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function AboutPage() {
     return (
@@ -41,6 +42,19 @@ export default function AboutPage() {
             {/* Content Side (Right on Desktop) */}
             <section className="w-full md:w-1/2 min-h-screen flex items-center p-8 md:p-20 pt-20 pb-32 md:pb-32 lg:pb-40">
                 <div className="max-w-xl">
+                    <figure className="mb-10">
+                        <div className="relative aspect-[4/5] w-full max-w-[260px] rounded-3xl overflow-hidden ring-1 ring-inset ring-white/15 bg-surface-alt/10">
+                            <Image
+                                src="/images/IMG_8516_edited.jpg"
+                                alt="Headshot of Sarah Dawson"
+                                fill
+                                sizes="260px"
+                                className="object-cover"
+                                priority
+                            />
+                        </div>
+                    </figure>
+
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}

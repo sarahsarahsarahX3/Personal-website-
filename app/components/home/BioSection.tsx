@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import styles from "./BioSection.module.css";
 
 function YearsIcon() {
@@ -140,7 +139,6 @@ function MarketsIcon() {
 }
 
 export function BioSection() {
-  const [headshotSrc, setHeadshotSrc] = useState("/images/IMG_8516_edited.jpg");
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -233,21 +231,7 @@ export function BioSection() {
     >
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
-          <figure className={`col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block ${styles.headshot}`}>
-            <div className="relative aspect-[4/5] w-full max-w-[260px] sm:max-w-[320px] rounded-3xl ring-1 ring-inset ring-white/15 overflow-hidden">
-              <Image
-                src={headshotSrc}
-                alt="Headshot of Sarah Dawson"
-                fill
-                sizes="(min-width: 768px) 320px, 60vw"
-                className="object-cover"
-                priority
-                onError={() => setHeadshotSrc("/images/IMG_5668_edited.jpg")}
-              />
-            </div>
-          </figure>
-
-          <div className={`col-span-12 md:col-span-7 md:col-start-6 ${styles.body}`}>
+          <div className={`col-span-12 md:col-span-10 md:col-start-2 ${styles.body}`}>
             <div className="relative max-w-[60ch] mx-auto text-center md:mx-0 md:text-left">
               <h2 id="home-bio-title" className="sr-only">
                 About
