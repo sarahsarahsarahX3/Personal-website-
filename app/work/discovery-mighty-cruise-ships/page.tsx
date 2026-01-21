@@ -29,17 +29,18 @@ const project = {
   subtitle: "Travel Documentary",
   role: "Production Assistant",
   overview:
-    "Led editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series, contributing to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world expedition challenges into compelling, broadcast-ready storytelling for a global audience.",
+    "Led editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series. Contributed to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world tourism expeditions into compelling storytelling for a global audience.",
   logline:
     "A hybrid-powered expedition cruise ship meets extreme conditions, cutting-edge engineering, and human resilience at sea.",
   snapshot: [
-    { label: "Format", value: "Broadcast Documentary Series" },
+    { label: "Format", value: "Documentary Series" },
     { label: "Episode", value: 'Season 4, Episode 7: "MS Roald Amundsen"' },
     {
       label: "Primary Goal",
-      value: "Document the voyage of the world’s first hybrid-powered expedition cruise ship to Antarctica.",
+      value: "Document the world’s first hybrid-powered cruise ship on its voyage across Antarctica.",
     },
-    { label: "Content Focus Areas", value: "Travel · Tourism · Expedition · Maritime Engineering · Environment" },
+    { label: "Content Categories", value: "Travel · Tourism · Expedition · Maritime Engineering · Environment" },
+    { label: "Distribution", value: "Aired in 150+ countries" },
   ] satisfies SnapshotRow[],
   storytellingFocus: [
     "Translate complex systems into clear, audience-first narrative beats.",
