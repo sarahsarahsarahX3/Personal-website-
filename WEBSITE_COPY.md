@@ -14,7 +14,7 @@ This file collects the visible on-site copy (headings, paragraphs, labels, lists
 
 ### Bio
 - Hi, I’m Sarah Dawson.
-- I lead content, campaign, and editorial initiatives for brands across integrated channels.
+- Creating impactful content, campaigns, and editorial initiatives for leading global brands.
 
 Highlights:
 - 7+ — Years of Experience

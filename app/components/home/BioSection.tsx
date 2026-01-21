@@ -340,7 +340,7 @@ export function BioSection() {
     <section
       ref={sectionRef}
       aria-labelledby="home-bio-title"
-      className={`pt-20 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20 ${styles.section}`}
+      className={`pt-28 pb-16 md:pt-36 md:pb-20 lg:pt-40 lg:pb-24 ${styles.section}`}
     >
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
@@ -350,16 +350,14 @@ export function BioSection() {
                 <h2 id="home-bio-title" className="sr-only">
                   About
                 </h2>
-                <p className="font-display text-2xl md:text-3xl leading-[1.1] tracking-tight text-text-primary">
-                  <span className="text-text-secondary/70">Hi, I’m </span>
-                  <span className="relative inline-block">
-                    Sarah Dawson
-                    <span aria-hidden="true" className="absolute left-0 right-0 -bottom-1 h-px bg-accent/60" />
-                  </span>
-                  <span className="text-text-secondary/70">.</span>
+                <p
+                  data-text="Hi, I’m Sarah Dawson."
+                  className={`font-display text-2xl md:text-3xl leading-[1.1] tracking-tight text-text-primary ${styles.headline}`}
+                >
+                  Hi, I’m Sarah Dawson.
                 </p>
                 <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">
-                  I lead content, campaign, and editorial initiatives for brands across integrated channels.
+                  Creating impactful content, campaigns, and editorial initiatives for leading global brands.
                 </p>
               </div>
 
