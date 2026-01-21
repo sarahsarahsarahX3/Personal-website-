@@ -64,7 +64,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
 
             <motion.div
                 layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[460px] items-stretch"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[460px] md:auto-rows-[500px] items-stretch"
             >
                 <AnimatePresence mode="popLayout">
                     {filteredProjects.map((project, index) => (

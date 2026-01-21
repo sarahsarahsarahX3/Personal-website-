@@ -134,7 +134,7 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                                 style={{
                                     display: "-webkit-box",
                                     WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 2,
+                                    WebkitLineClamp: 3,
                                     overflow: "hidden",
                                 }}
                             >
