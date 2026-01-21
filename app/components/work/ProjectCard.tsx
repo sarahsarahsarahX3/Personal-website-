@@ -36,6 +36,7 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
     const shouldItalicizeDiscoverySubtitle =
         slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet";
     const discoveryTitleParts = shouldItalicizeDiscoverySubtitle ? title.split(":") : null;
+    const italicizeWholeTitle = slug === "discovery-mighty-cruise-ships" && !title.includes(":");
 
     return (
         <motion.article
@@ -120,6 +121,8 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                                     <span>{discoveryTitleParts[0].trim()}:</span>{" "}
                                     <em className="italic">{discoveryTitleParts.slice(1).join(":").trim()}</em>
                                 </>
+                            ) : italicizeWholeTitle ? (
+                                <em className="italic">{title}</em>
                             ) : (
                                 title
                             )}

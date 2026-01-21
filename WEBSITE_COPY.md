@@ -54,16 +54,16 @@ Project tile labels:
 - View
 
 Projects listed on the Selected Work page:
-- Discovery Channel: Mighty Cruise Ships (Multimedia Production · 2020)
-  - Editorial and production support for a Discovery Channel documentary episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship.
+- Mighty Cruise Ships (Multimedia Production · 2020)
+  - A documentary exploring the world’s first hybrid-powered cruise ship.
 - SalonCentric x New York Fashion (Campaigns · 2024)
-  - Integrated campaign content production translating a live NYFW activation into coordinated digital, social, and email storytelling.
+  - A live fashion week activation and multi-channel brand campaign.
 - Procter & Gamble - HairCode (Content Strategy · 2025)
-  - SEO-led editorial growth program for HairCode, Procter & Gamble Beauty’s brand-owned content hub.
+  - An editorial content hub focused on hair science and education.
 - SalonCentric x AANHPI Heritage Month (Campaigns · 2024)
-  - Influencer and brand partner content for SalonCentric’s AANHPI integrated campaign with creator-led storytelling and multi-channel amplification across owned, organic, and paid platforms.
+  - An integrated campaign celebrating AANHPI Heritage Month.
 - Discovery Channel: Daily Planet (Multimedia Production · 2018)
-  - Production and editorial support for Discovery Channel’s flagship science and technology series, delivering fast-turn, multi-segment storytelling in a high-volume newsroom environment.
+  - A television series covering breaking news in science, tech, innovation, and wildlife.
 
 ## Articles (/insights)
 - Articles

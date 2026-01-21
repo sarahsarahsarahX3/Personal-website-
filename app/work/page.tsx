@@ -30,7 +30,7 @@ export default async function WorkPage() {
     }));
 
     projects.unshift({
-        title: "Discovery Channel: Mighty Cruise Ships",
+        title: "Mighty Cruise Ships",
         category: "Multimedia Production",
         image: "/Mighty%20Cruise%20Ships%20Project%20Thumbnail.png",
         size: "small",
@@ -38,7 +38,7 @@ export default async function WorkPage() {
         tags: ["Multimedia Production", "Brand Storytelling"],
         year: "2020",
         description:
-            "Editorial and production support for a Discovery Channel documentary episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship.",
+            "A documentary exploring the world’s first hybrid-powered cruise ship.",
     });
 
     projects.splice(3, 0, {
@@ -50,7 +50,7 @@ export default async function WorkPage() {
         tags: ["Multimedia Production", "Brand Storytelling"],
         year: "2018",
         description:
-            "Production and editorial support for Discovery Channel’s flagship science and technology series, delivering fast-turn, multi-segment storytelling in a high-volume newsroom environment.",
+            "A television series covering breaking news in science, tech, innovation, and wildlife.",
     });
 
 
@@ -63,7 +63,7 @@ export default async function WorkPage() {
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
         year: "2024",
         description:
-            "Integrated campaign content production translating a live NYFW activation into coordinated digital, social, and email storytelling.",
+            "A live fashion week activation and multi-channel brand campaign.",
     });
 
     projects.unshift({
@@ -75,7 +75,7 @@ export default async function WorkPage() {
         tags: ["Content Strategy", "Copywriting", "Brand Storytelling"],
         year: "2025",
         description:
-            "SEO-led editorial growth program for HairCode, Procter & Gamble Beauty’s brand-owned content hub.",
+            "An editorial content hub focused on hair science and education.",
     });
 
     projects.push({
@@ -87,7 +87,7 @@ export default async function WorkPage() {
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
         year: "2024",
         description:
-            "Influencer and brand partner content for SalonCentric’s AANHPI integrated campaign with creator-led storytelling and multi-channel amplification across owned, organic, and paid platforms.",
+            "An integrated campaign celebrating AANHPI Heritage Month.",
     });
 
     return (
