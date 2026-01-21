@@ -90,6 +90,17 @@ export default async function WorkPage() {
             "An integrated campaign celebrating AANHPI Heritage Month.",
     });
 
+    projects.push({
+        title: "Digital Editorial Content Hub",
+        category: "Editorial Operations",
+        image: "/HairCode%20Thumbnial%203.png",
+        size: "small",
+        slug: "digital-editorial-content-hub",
+        tags: ["Editorial Operations", "Content Strategy"],
+        description:
+            "Managed an editorial hub with governance, workflow, and publishing systems.",
+    });
+
     return (
         <main className="min-h-screen pt-32 pb-40 px-6">
             <div className="container mx-auto">

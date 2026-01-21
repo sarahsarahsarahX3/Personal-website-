@@ -11,6 +11,11 @@ export const PROJECT_NAV: ProjectNavItem[] = [
     thumbnail: "/HairCode%20thumbnail%204.png",
   },
   {
+    slug: "digital-editorial-content-hub",
+    title: "Digital Editorial Content Hub",
+    thumbnail: "/HairCode%20Thumbnial%203.png",
+  },
+  {
     slug: "saloncentric-nyfw",
     title: "SalonCentric x New York Fashion",
     thumbnail: "/NYFW%20Project%20thumbnail.png",
@@ -31,4 +36,3 @@ export const PROJECT_NAV: ProjectNavItem[] = [
     thumbnail: "/images/AANHPI%207.png",
   },
 ];
-
