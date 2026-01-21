@@ -20,12 +20,12 @@ const project = {
   title: "SalonCentric × New York Fashion Week",
   subtitle: "Integrated Brand Campaign",
   overview:
-    "Led integrated campaign content for SalonCentric’s New York Fashion Week activation, including extending the live event into a multi-channel brand campaign across digital, social, and email. The campaign positioned SalonCentric as a thought leader and industry insider through culturally relevant storytelling, including coverage of the Black Beauty Excellence Luncheon.",
-  role: "Copywriter and Content Lead",
+    "Developed integrated campaign content for SalonCentric’s New York Fashion Week activation, which extended the live event into a cohesive, multi-channel brand campaign across digital, social, and email. This campaign positioned SalonCentric as a thought leader and industry insider by producing culturally relevant storytelling, including coverage of the Black Beauty Excellence Luncheon.",
+  role: "Copywriter and Digital Content Producer",
   objective:
     "Anchored brand communications and campaign storytelling in the energy and cultural relevance of New York Fashion Week by highlighting professional artistry, backstage access, and inclusive industry moments. Positioned SalonCentric as an insider brand connected to fashion’s most influential stage, balancing prestige storytelling with performance-aware copy across experiential, social, and owned channels.",
   messagingIntro:
-    "Define a campaign narrative that transformed NYFW moments into scalable, multi-channel brand storytelling by:",
+    "Defined a campaign narrative that transformed NYFW moments into multi-channel brand storytelling, including:",
   messagingBullets: [
     "Spotlighting professional artists through runway and backstage access.",
     "Positioning SalonCentric as a thought leader through clear, consistent brand communications during fashion’s most influential moment.",
@@ -47,9 +47,9 @@ const project = {
     { label: "Industry", value: "Educators, brand partners, and key stakeholders" },
   ],
   snapshot: [
-    { title: "Total Campaign Impressions", value: "1M+" },
-    { title: "Multi-Channel Activation", value: "EXPERIENTIAL · SOCIAL · EDITORIAL · EMAIL · DIGITAL · PAID · OWNED · PR" },
-    { title: "Headlining Industry Moment", value: "ALIGNED WITH NEW YORK FASHION WEEK" },
+    { title: "Campaign Impressions", value: "1M+" },
+    { title: "Event, Social, Email, Digital, Media, and Public Relations", value: "Multi-Channel Touchpoints" },
+    { title: "Headlining industry moments at New York Fashion Week.", value: "Event Storytelling & Live Coverage" },
   ],
   channels: ["Experiential", "Social", "Email", "Digital", "Paid", "PR"],
   tools: [
@@ -181,25 +181,6 @@ function Pill({ children }: { children: React.ReactNode }) {
     >
       {children}
     </span>
-  );
-}
-
-function SquiggleMark({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 10"
-      className={cn("h-2.5 w-5 shrink-0 text-accent/90", className)}
-    >
-      <path
-        d="M1 6 C4 1 8 9 12 4 C16 -1 20 9 23 4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
 
@@ -433,13 +414,7 @@ export default function SalonCentricNyfwProjectPage() {
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
 
   const snapshotCards = useMemo<SnapshotCard[]>(
-    () =>
-      project.snapshot.map((item) => {
-        if (item.title === "Multi-Channel Activation" || item.title === "Headlining Industry Moment") {
-          return { title: item.value, value: item.title };
-        }
-        return { title: item.title, value: item.value };
-      }),
+    () => project.snapshot.map((item) => ({ title: item.title, value: item.value })),
     [],
   );
 
@@ -503,8 +478,7 @@ export default function SalonCentricNyfwProjectPage() {
                     {snapshotCards.map((card) => (
                       <div key={card.title}>
                         <p className="font-display text-[24px] leading-none">{card.value}</p>
-                        <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                          <SquiggleMark />
+                        <p className="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                           {card.title}
                         </p>
                       </div>
