@@ -18,7 +18,7 @@ const deliverables = {
 
 const project = {
   title: "SalonCentric × New York Fashion Week",
-  subtitle: "Integrated Brand Campaign",
+  subtitle: "Integrated Campaign",
   overview:
     "Developed integrated campaign content for SalonCentric’s New York Fashion Week activation, which extended the live event into a cohesive, multi-channel brand campaign across digital, social, and email. This campaign positioned SalonCentric as a thought leader and industry insider by producing culturally relevant storytelling, including coverage of the Black Beauty Excellence Luncheon.",
   role: "Copywriter and Digital Content Producer",

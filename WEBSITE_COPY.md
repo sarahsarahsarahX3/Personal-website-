@@ -198,7 +198,7 @@ Source: SEMrush (U.S. & Global data).
 
 ## Project #2
 ### SalonCentric × New York Fashion Week
-Integrated Brand Campaign
+Integrated Campaign
 
 Overview
 Developed integrated campaign content for SalonCentric’s New York Fashion Week activation, which extended the live event into a cohesive, multi-channel brand campaign across digital, social, and email. This campaign positioned SalonCentric as a thought leader and industry insider by producing culturally relevant storytelling, including coverage of the Black Beauty Excellence Luncheon.
