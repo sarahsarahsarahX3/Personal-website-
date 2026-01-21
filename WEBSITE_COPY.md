@@ -209,7 +209,8 @@ Copywriter and Digital Content Producer
 Campaign Snapshot
 - Campaign Impressions: 1M+
 - Multi-Channel Touchpoints: Event, Social, Email, Digital, Media, and Public Relations
-- Event Storytelling & Live Coverage: Headlining industry moments at New York Fashion Week.
+- Event Storytelling: Covering headlining industry moments at New York Fashion Week.
+- Influencer Collaborations: Spotlighting the beauty industry’s top talent.
 
 Campaign Objective
 Anchored brand communications and campaign storytelling in the energy and cultural relevance of New York Fashion Week by highlighting professional artistry, backstage access, and inclusive industry moments. Positioned SalonCentric as an insider brand connected to fashion’s most influential stage, balancing prestige storytelling with performance-aware copy across experiential, social, and owned channels.

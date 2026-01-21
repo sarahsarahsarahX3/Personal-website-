@@ -49,7 +49,11 @@ const project = {
   snapshot: [
     { title: "Campaign Impressions", value: "1M+" },
     { title: "Event, Social, Email, Digital, Media, and Public Relations", value: "Multi-Channel Touchpoints" },
-    { title: "Headlining industry moments at New York Fashion Week.", value: "Event Storytelling & Live Coverage" },
+    {
+      title: "Covering headlining industry moments at New York Fashion Week.",
+      value: "Event Storytelling",
+    },
+    { title: "Spotlighting the beauty industry’s top talent.", value: "Influencer Collaborations" },
   ],
   channels: ["Experiential", "Social", "Email", "Digital", "Paid", "PR"],
   tools: [
