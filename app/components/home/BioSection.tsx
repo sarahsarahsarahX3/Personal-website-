@@ -345,19 +345,22 @@ export function BioSection() {
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
           <div className={`col-span-12 md:col-span-10 md:col-start-2 ${styles.body}`}>
-            <div className="relative max-w-[60ch] mx-auto text-center">
-              <h2 id="home-bio-title" className="sr-only">
-                About
-              </h2>
-              <p className="text-xl md:text-2xl leading-snug tracking-tight text-text-primary">
-                Hi, I’m Sarah Dawson.
-              </p>
-              <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
-                I lead content, campaign, and editorial initiatives for brands across integrated channels.
-              </p>
+            <div className="relative mx-auto text-center">
+              <div className="mx-auto max-w-[60ch]">
+                <h2 id="home-bio-title" className="sr-only">
+                  About
+                </h2>
+                <p className="text-2xl md:text-3xl leading-snug tracking-tight text-text-primary">
+                  Hi, I’m Sarah Dawson.
+                </p>
+                <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
+                  I lead content, campaign, and editorial initiatives for brands across integrated channels.
+                </p>
+              </div>
+
               <ul
                 aria-label="Highlights"
-                className="mt-6 grid grid-cols-2 gap-5 sm:gap-x-10 sm:gap-y-10"
+                className="mt-10 mx-auto grid max-w-4xl grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-10 sm:gap-y-10 md:grid-cols-3 md:gap-x-12"
               >
                 {HIGHLIGHTS.map(({ key, Icon, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
