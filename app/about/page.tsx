@@ -9,7 +9,7 @@ export default function AboutPage() {
             {/* Visual Side (Left on Desktop) */}
             <section className="w-full md:w-1/2 h-[50vh] md:h-auto relative overflow-hidden bg-black flex items-center justify-center">
                 {/* Abstract "WebGL-like" CSS composition */}
-                <div className="absolute inset-0 opacity-50">
+                <div className="absolute inset-0 opacity-40">
                     <motion.div
                         animate={{
                             rotate: [0, 360],
@@ -29,32 +29,42 @@ export default function AboutPage() {
                     />
                 </div>
 
-                {/* Floating Text Mesh effect */}
-                <div className="relative z-10 text-center mix-blend-difference md:-translate-y-8">
-                    <h2 className="text-[10vw] font-display leading-none text-white opacity-80">
-                        VISION
-                        <br />
-                        ARY
-                    </h2>
-                </div>
+                <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60"
+                />
+
+                <figure className="relative z-10 w-full px-8 md:px-14">
+                    <div className="mx-auto w-full max-w-[360px] md:max-w-[420px]">
+                        <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20">
+                            <Image
+                                src="/images/IMG_8516_edited.jpg"
+                                alt="Headshot of Sarah Dawson"
+                                fill
+                                sizes="(min-width: 768px) 420px, 70vw"
+                                className="object-cover saturate-[0.98] contrast-[1.02]"
+                                priority
+                            />
+                            <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_55%_at_50%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]"
+                            />
+                            <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.22]"
+                            />
+                            <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                            />
+                        </div>
+                    </div>
+                </figure>
             </section>
 
             {/* Content Side (Right on Desktop) */}
             <section className="w-full md:w-1/2 min-h-screen flex items-center p-8 md:p-20 pt-20 pb-32 md:pb-32 lg:pb-40">
                 <div className="max-w-xl">
-                    <figure className="mb-10">
-                        <div className="relative aspect-[4/5] w-full max-w-[260px] rounded-3xl overflow-hidden ring-1 ring-inset ring-white/15 bg-surface-alt/10">
-                            <Image
-                                src="/images/IMG_8516_edited.jpg"
-                                alt="Headshot of Sarah Dawson"
-                                fill
-                                sizes="260px"
-                                className="object-cover"
-                                priority
-                            />
-                        </div>
-                    </figure>
-
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
