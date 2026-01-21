@@ -245,7 +245,7 @@ Tools
 
 ## Project #3
 ### Discovery Channel: Mighty Cruise Ships
-Travel Documentary
+Travel Documentary Series
 
 Overview
 Led editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series. Contributed to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world tourism expeditions into compelling storytelling for a global audience.
@@ -254,7 +254,6 @@ My Role
 Production Assistant
 
 Project Snapshot
-- Format: Documentary Series
 - Primary Goal: Document the world’s first hybrid-powered cruise ship on its voyage across Antarctica.
 - Content Categories: Travel · Tourism · Expedition · Maritime Engineering · Environment
 - Distribution: Aired in 150+ countries
@@ -281,7 +280,7 @@ Marketing Materials
 - Digital tile
 
 Episode Visuals
-Mighty Cruise Ships: Roald Amundsen (Season 4, Ep 7) Commercial Preview
+“Roald Amundsen” (Season 4, Ep 7): Commercial Preview
 
 Impact
 - International Distribution: Supported editorial packaging and deliverables suitable for international broadcast distribution and localization workflows.
