@@ -4,14 +4,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/app/lib/utils";
-import { Home, Briefcase, BookOpen, FlaskConical, Mail, User } from "lucide-react";
+import { Home, Briefcase, BookOpen, Mail, User } from "lucide-react";
 
 const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Work", href: "/work", icon: Briefcase },
     { name: "Articles", href: "/insights", icon: BookOpen },
     { name: "About", href: "/about", icon: User },
-    { name: "Lab", href: "/lab", icon: FlaskConical },
     { name: "Contact", href: "/contact", icon: Mail },
 ];
 
