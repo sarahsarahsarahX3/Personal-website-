@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 function ArrowUpIcon() {
@@ -59,9 +58,6 @@ export function HomeFooter() {
             <h2 className="mt-3 font-display text-3xl md:text-4xl tracking-tight leading-[1.05]">
               Thanks for scrolling.
             </h2>
-            <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary max-w-[62ch]">
-              Explore selected projects, published work, and the systems behind the execution.
-            </p>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-7">
@@ -79,46 +75,7 @@ export function HomeFooter() {
               </button>
             </div>
 
-            <nav aria-label="Footer navigation" className="mt-6 grid grid-cols-2 gap-3 text-sm">
-              <Link
-                href="/work"
-                className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-surface/30 px-4 py-3 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors"
-              >
-                <span className="font-mono uppercase tracking-widest text-[11px]">Work</span>
-                <span aria-hidden="true" className="text-text-secondary/60 group-hover:text-text-primary/80">
-                  ↗
-                </span>
-              </Link>
-              <Link
-                href="/insights"
-                className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-surface/30 px-4 py-3 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors"
-              >
-                <span className="font-mono uppercase tracking-widest text-[11px]">Articles</span>
-                <span aria-hidden="true" className="text-text-secondary/60 group-hover:text-text-primary/80">
-                  ↗
-                </span>
-              </Link>
-              <Link
-                href="/about"
-                className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-surface/30 px-4 py-3 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors"
-              >
-                <span className="font-mono uppercase tracking-widest text-[11px]">About</span>
-                <span aria-hidden="true" className="text-text-secondary/60 group-hover:text-text-primary/80">
-                  ↗
-                </span>
-              </Link>
-              <Link
-                href="/contact"
-                className="group inline-flex items-center justify-between rounded-2xl border border-white/10 bg-surface/30 px-4 py-3 text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors"
-              >
-                <span className="font-mono uppercase tracking-widest text-[11px]">Contact</span>
-                <span aria-hidden="true" className="text-text-secondary/60 group-hover:text-text-primary/80">
-                  ↗
-                </span>
-              </Link>
-            </nav>
-
-            <div className="mt-7 border-t border-white/10 pt-6">
+            <div className="mt-6 border-t border-white/10 pt-6">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <a
                   href="mailto:dawsone.sarah@gmail.com"
@@ -143,12 +100,8 @@ export function HomeFooter() {
           <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
             © {year} Sarah Dawson
           </p>
-          <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
-            Built for clarity and performance
-          </p>
         </div>
       </div>
     </footer>
   );
 }
-
