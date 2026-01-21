@@ -2,15 +2,136 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 export default function AboutPage() {
     const prefersReducedMotion = useReducedMotion();
+    const containerRef = useRef<HTMLElement | null>(null);
+    const headshotRef = useRef<HTMLDivElement | null>(null);
+    const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
+
+    useEffect(() => {
+        const container = containerRef.current;
+        const node = headshotRef.current;
+        if (!container || !node) return;
+
+        const update = () => {
+            const containerRect = container.getBoundingClientRect();
+            const rect = node.getBoundingClientRect();
+            if (!rect.width || !rect.height) return;
+
+            const next = {
+                x: rect.left - containerRect.left + rect.width / 2,
+                y: rect.top - containerRect.top + rect.height / 2,
+            };
+
+            setAnchor((prev) => {
+                if (!prev) return next;
+                if (Math.abs(prev.x - next.x) > 0.5 || Math.abs(prev.y - next.y) > 0.5) return next;
+                return prev;
+            });
+        };
+
+        update();
+
+        let raf = 0;
+        const schedule = () => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(update);
+        };
+
+        const resizeObserver = new ResizeObserver(() => schedule());
+        resizeObserver.observe(node);
+        resizeObserver.observe(container);
+        window.addEventListener("resize", schedule);
+
+        return () => {
+            resizeObserver.disconnect();
+            window.removeEventListener("resize", schedule);
+            cancelAnimationFrame(raf);
+        };
+    }, []);
 
     return (
-        <main className="relative min-h-screen bg-surface flex flex-col md:flex-row overflow-hidden">
+        <main ref={containerRef} className="relative min-h-screen bg-surface flex flex-col md:flex-row overflow-hidden">
             {/* Full-bleed background (across both columns) */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
                 <div className="absolute inset-0 bg-black/80" />
+                {/* Rotating bar visual anchored to headshot center */}
+                <motion.svg
+                    aria-hidden="true"
+                    viewBox="0 0 100 100"
+                    className="absolute h-[150vmax] w-[150vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.62] mix-blend-screen transform-gpu"
+                    animate={prefersReducedMotion ? undefined : { rotate: 360 }}
+                    transition={prefersReducedMotion ? undefined : { duration: 42, repeat: Infinity, ease: "linear" }}
+                    style={{
+                        left: anchor ? `${anchor.x}px` : "50%",
+                        top: anchor ? `${anchor.y}px` : "50%",
+                        willChange: "transform",
+                    }}
+                >
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="36"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.20)"
+                        strokeWidth="0.22"
+                        strokeDasharray="0.6 1.6"
+                    />
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="36"
+                        fill="none"
+                        stroke="rgba(255,59,48,0.70)"
+                        strokeWidth="0.34"
+                        strokeDasharray="8 28"
+                        strokeLinecap="round"
+                    />
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="22"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.14)"
+                        strokeWidth="0.22"
+                        strokeDasharray="0.6 2.2"
+                    />
+                    <circle cx="50" cy="50" r="1.25" fill="rgba(255,255,255,0.16)" />
+                </motion.svg>
+                <motion.svg
+                    aria-hidden="true"
+                    viewBox="0 0 100 100"
+                    className="absolute h-[170vmax] w-[170vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.36] mix-blend-screen transform-gpu"
+                    animate={prefersReducedMotion ? undefined : { rotate: -360 }}
+                    transition={prefersReducedMotion ? undefined : { duration: 64, repeat: Infinity, ease: "linear" }}
+                    style={{
+                        left: anchor ? `${anchor.x}px` : "50%",
+                        top: anchor ? `${anchor.y}px` : "50%",
+                        willChange: "transform",
+                    }}
+                >
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="44"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.10)"
+                        strokeWidth="0.20"
+                        strokeDasharray="0.6 2.6"
+                    />
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="44"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.12)"
+                        strokeWidth="0.22"
+                        strokeDasharray="2 16"
+                        strokeLinecap="round"
+                    />
+                </motion.svg>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/15 to-black/55" />
                 <div className="absolute inset-y-0 left-0 w-[70%] bg-[radial-gradient(60%_65%_at_30%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]" />
             </div>
@@ -19,46 +140,10 @@ export default function AboutPage() {
             <section className="relative z-10 w-full md:w-1/2 h-[52vh] md:h-auto flex items-center justify-center px-8 md:px-14">
                 <figure className="w-full">
                     <div className="mx-auto w-full max-w-[300px] md:max-w-[360px]">
-                        {/* Rotating rings anchored to the headshot center (no masks/filters to avoid flicker) */}
-                        <motion.svg
-                            aria-hidden="true"
-                            viewBox="0 0 100 100"
-                            className="pointer-events-none absolute left-1/2 top-1/2 h-[110vmax] w-[110vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.55] mix-blend-screen transform-gpu"
-                            animate={prefersReducedMotion ? undefined : { rotate: 360 }}
-                            transition={prefersReducedMotion ? undefined : { duration: 36, repeat: Infinity, ease: "linear" }}
-                            style={{ willChange: "transform" }}
+                        <div
+                            ref={headshotRef}
+                            className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
                         >
-                            <circle
-                                cx="50"
-                                cy="50"
-                                r="30"
-                                fill="none"
-                                stroke="rgba(255,255,255,0.22)"
-                                strokeWidth="0.22"
-                                strokeDasharray="0.6 1.6"
-                            />
-                            <circle
-                                cx="50"
-                                cy="50"
-                                r="30"
-                                fill="none"
-                                stroke="rgba(255,59,48,0.55)"
-                                strokeWidth="0.28"
-                                strokeDasharray="6 22"
-                                strokeLinecap="round"
-                            />
-                            <circle
-                                cx="50"
-                                cy="50"
-                                r="18"
-                                fill="none"
-                                stroke="rgba(255,255,255,0.16)"
-                                strokeWidth="0.22"
-                                strokeDasharray="0.6 2.1"
-                            />
-                        </motion.svg>
-
-                        <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20">
                             <Image
                                 src="/images/IMG_8516_edited.jpg"
                                 alt="Headshot of Sarah Dawson"
