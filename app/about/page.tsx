@@ -8,46 +8,47 @@ export default function AboutPage() {
 
     return (
         <main className="relative min-h-screen bg-surface flex flex-col md:flex-row overflow-hidden">
-            {/* Full-bleed animated background (across both columns) */}
+            {/* Full-bleed background (across both columns) */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
                 <div className="absolute inset-0 bg-black/80" />
-                <div className="absolute inset-0 opacity-40">
-                    <motion.div
-                        animate={
-                            prefersReducedMotion
-                                ? undefined
-                                : {
-                                      rotate: [0, 360],
-                                      scale: [1, 1.2, 1],
-                                      filter: ["hue-rotate(0deg)", "hue-rotate(90deg)", "hue-rotate(0deg)"],
-                                  }
-                        }
-                        transition={
-                            prefersReducedMotion ? undefined : { duration: 20, repeat: Infinity, ease: "linear" }
-                        }
-                        className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] opacity-30 blur-3xl"
-                    />
-                    <motion.div
-                        animate={
-                            prefersReducedMotion
-                                ? undefined
-                                : {
-                                      rotate: [360, 0],
-                                      scale: [1.2, 1, 1.2],
-                                  }
-                        }
-                        transition={
-                            prefersReducedMotion ? undefined : { duration: 15, repeat: Infinity, ease: "linear" }
-                        }
-                        className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[conic-gradient(from_180deg,transparent_0_340deg,var(--color-accent)_360deg)] opacity-20 blur-3xl mix-blend-screen"
-                    />
-                </div>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/15 to-black/55" />
                 <div className="absolute inset-y-0 left-0 w-[70%] bg-[radial-gradient(60%_65%_at_30%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]" />
             </div>
 
             {/* Visual Side (Left on Desktop) */}
             <section className="relative z-10 w-full md:w-1/2 h-[52vh] md:h-auto flex items-center justify-center px-8 md:px-14">
+                {/* Rotating bars anchored to headshot center */}
+                <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+                    <motion.div
+                        animate={prefersReducedMotion ? undefined : { rotate: 360 }}
+                        transition={prefersReducedMotion ? undefined : { duration: 26, repeat: Infinity, ease: "linear" }}
+                        className="absolute left-1/2 top-1/2 h-[1100px] w-[1100px] -translate-x-1/2 -translate-y-1/2 opacity-35 blur-2xl transform-gpu"
+                        style={{
+                            background:
+                                "conic-gradient(from 0deg, rgba(255,255,255,0) 0deg 320deg, rgba(255,255,255,0.55) 360deg)",
+                            WebkitMaskImage:
+                                "radial-gradient(circle, transparent 0 52%, rgba(0,0,0,1) 56% 66%, transparent 70%)",
+                            maskImage:
+                                "radial-gradient(circle, transparent 0 52%, rgba(0,0,0,1) 56% 66%, transparent 70%)",
+                            willChange: "transform",
+                        }}
+                    />
+                    <motion.div
+                        animate={prefersReducedMotion ? undefined : { rotate: -360 }}
+                        transition={prefersReducedMotion ? undefined : { duration: 34, repeat: Infinity, ease: "linear" }}
+                        className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 opacity-30 blur-2xl transform-gpu"
+                        style={{
+                            background:
+                                "conic-gradient(from 180deg, rgba(255,59,48,0) 0deg 330deg, rgba(255,59,48,0.55) 360deg)",
+                            WebkitMaskImage:
+                                "radial-gradient(circle, transparent 0 50%, rgba(0,0,0,1) 54% 62%, transparent 66%)",
+                            maskImage:
+                                "radial-gradient(circle, transparent 0 50%, rgba(0,0,0,1) 54% 62%, transparent 66%)",
+                            willChange: "transform",
+                        }}
+                    />
+                </div>
+
                 <figure className="w-full">
                     <div className="mx-auto w-full max-w-[300px] md:max-w-[360px]">
                         <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20">
