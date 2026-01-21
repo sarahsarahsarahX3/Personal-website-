@@ -308,10 +308,24 @@ export function BioSection() {
         const t = Math.min(1, Math.max(0, (now - startTime) / durationMs));
         const eased = easeOutCubic(t);
 
+        if (t >= 1) {
+          const final: Record<string, number> = {};
+          for (const [key, config] of activeConfigs) final[key] = config.target;
+          setCounters(final);
+          return;
+        }
+
         const next: Record<string, number> = {};
         for (const [key, config] of activeConfigs) {
           const current = config.target * eased;
-          next[key] = config.decimals ? Number(current.toFixed(config.decimals)) : Math.round(current);
+
+          if (!config.decimals) {
+            next[key] = Math.floor(current);
+            continue;
+          }
+
+          const scale = Math.pow(10, config.decimals);
+          next[key] = Math.floor(current * scale) / scale;
         }
 
         setCounters(next);
