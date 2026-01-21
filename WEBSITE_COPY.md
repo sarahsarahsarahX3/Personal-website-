@@ -86,14 +86,6 @@ I’m Sarah Dawson, a marketing professional who leads content, campaign, and ed
 
 Over the past seven years, I’ve worked with Fortune 100 companies and established brands in beauty, retail, media, and science. I’ve delivered high-impact work across digital, social, editorial, broadcast, and experiential platforms. My background spans growth marketing, editorial operations, and integrated campaigns, which allows me to move between strategy and execution while staying focused on outcomes.
 
-MY CAREER HIGHLIGHTS INCLUDE:
-- 7+ years leading content, campaign, and editorial initiatives.
-- Fortune 100 brand experience across beauty, retail, and media.
-- 15M+ views generated across digital, social, editorial, and broadcast.
-- 1,000+ assets delivered annually across multichannel programs.
-- 50+ brand and partner collaborations, including creators and influencers.
-- Global market experience across U.S., Canadian, and international audiences.
-
 If you’re interested in working together, you can reach me through the contact page via email or LinkedIn.
 
 ## Contact (/contact)

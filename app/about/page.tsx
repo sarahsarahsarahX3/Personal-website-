@@ -61,19 +61,6 @@ export default function AboutPage() {
                         <p>
                             Over the past seven years, I’ve worked with Fortune 100 companies and established brands in beauty, retail, media, and science. I’ve delivered high-impact work across digital, social, editorial, broadcast, and experiential platforms. My background spans growth marketing, editorial operations, and integrated campaigns, which allows me to move between strategy and execution while staying focused on outcomes.
                         </p>
-                        <div className="pt-2">
-                            <p className="text-base font-mono uppercase tracking-widest text-accent">
-                                MY CAREER HIGHLIGHTS INCLUDE:
-                            </p>
-                            <ul className="mt-4 space-y-3 pl-5 text-lg leading-relaxed text-text-secondary list-disc">
-                                <li>7+ years leading content, campaign, and editorial initiatives.</li>
-                                <li>Fortune 100 brand experience across beauty, retail, and media.</li>
-                                <li>15M+ views generated across digital, social, editorial, and broadcast.</li>
-                                <li>1,000+ assets delivered annually across multichannel programs.</li>
-                                <li>50+ brand and partner collaborations, including creators and influencers.</li>
-                                <li>Global market experience across U.S., Canadian, and international audiences.</li>
-                            </ul>
-                        </div>
                         <p>
                             If you’re interested in working together, you can reach me through the contact page via email or LinkedIn.
                         </p>
