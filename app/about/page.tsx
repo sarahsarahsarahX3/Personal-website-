@@ -17,40 +17,47 @@ export default function AboutPage() {
 
             {/* Visual Side (Left on Desktop) */}
             <section className="relative z-10 w-full md:w-1/2 h-[52vh] md:h-auto flex items-center justify-center px-8 md:px-14">
-                {/* Rotating bars anchored to headshot center */}
-                <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-                    <motion.div
-                        animate={prefersReducedMotion ? undefined : { rotate: 360 }}
-                        transition={prefersReducedMotion ? undefined : { duration: 26, repeat: Infinity, ease: "linear" }}
-                        className="absolute left-1/2 top-1/2 h-[1100px] w-[1100px] -translate-x-1/2 -translate-y-1/2 opacity-35 blur-2xl transform-gpu"
-                        style={{
-                            background:
-                                "conic-gradient(from 0deg, rgba(255,255,255,0) 0deg 320deg, rgba(255,255,255,0.55) 360deg)",
-                            WebkitMaskImage:
-                                "radial-gradient(circle, transparent 0 52%, rgba(0,0,0,1) 56% 66%, transparent 70%)",
-                            maskImage:
-                                "radial-gradient(circle, transparent 0 52%, rgba(0,0,0,1) 56% 66%, transparent 70%)",
-                            willChange: "transform",
-                        }}
-                    />
-                    <motion.div
-                        animate={prefersReducedMotion ? undefined : { rotate: -360 }}
-                        transition={prefersReducedMotion ? undefined : { duration: 34, repeat: Infinity, ease: "linear" }}
-                        className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 opacity-30 blur-2xl transform-gpu"
-                        style={{
-                            background:
-                                "conic-gradient(from 180deg, rgba(255,59,48,0) 0deg 330deg, rgba(255,59,48,0.55) 360deg)",
-                            WebkitMaskImage:
-                                "radial-gradient(circle, transparent 0 50%, rgba(0,0,0,1) 54% 62%, transparent 66%)",
-                            maskImage:
-                                "radial-gradient(circle, transparent 0 50%, rgba(0,0,0,1) 54% 62%, transparent 66%)",
-                            willChange: "transform",
-                        }}
-                    />
-                </div>
-
                 <figure className="w-full">
                     <div className="mx-auto w-full max-w-[300px] md:max-w-[360px]">
+                        {/* Rotating rings anchored to the headshot center (no masks/filters to avoid flicker) */}
+                        <motion.svg
+                            aria-hidden="true"
+                            viewBox="0 0 100 100"
+                            className="pointer-events-none absolute left-1/2 top-1/2 h-[110vmax] w-[110vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.55] mix-blend-screen transform-gpu"
+                            animate={prefersReducedMotion ? undefined : { rotate: 360 }}
+                            transition={prefersReducedMotion ? undefined : { duration: 36, repeat: Infinity, ease: "linear" }}
+                            style={{ willChange: "transform" }}
+                        >
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="30"
+                                fill="none"
+                                stroke="rgba(255,255,255,0.22)"
+                                strokeWidth="0.22"
+                                strokeDasharray="0.6 1.6"
+                            />
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="30"
+                                fill="none"
+                                stroke="rgba(255,59,48,0.55)"
+                                strokeWidth="0.28"
+                                strokeDasharray="6 22"
+                                strokeLinecap="round"
+                            />
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="18"
+                                fill="none"
+                                stroke="rgba(255,255,255,0.16)"
+                                strokeWidth="0.22"
+                                strokeDasharray="0.6 2.1"
+                            />
+                        </motion.svg>
+
                         <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20">
                             <Image
                                 src="/images/IMG_8516_edited.jpg"
