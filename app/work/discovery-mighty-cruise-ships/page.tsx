@@ -29,7 +29,7 @@ const project = {
   subtitle: "Travel Documentary Series",
   role: "Production Assistant",
   overview:
-    "Led editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series. Contributed to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world tourism expeditions into compelling storytelling for a global audience.",
+    "Provided editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series. Contributed to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world tourism expeditions into compelling storytelling for a global audience.",
   logline:
     "A hybrid-powered expedition cruise ship meets extreme conditions, cutting-edge engineering, and human resilience at sea.",
   snapshot: [
@@ -924,14 +924,20 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
             <section id="overview" className="scroll-mt-16">
               <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #3</p>
               <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">
-                <span>Discovery Channel:</span> <em className="italic">Mighty Cruise Ships</em>
+                <em className="italic">Mighty Cruise Ships</em>
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
               <div className="mt-12 grid gap-6 lg:grid-cols-2">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
-                  <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
+                  <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">
+                    Provided editorial and production support for <em className="italic">Mighty Cruise Ships</em>, a
+                    Discovery Channel documentary series. Contributed to the episode featuring the MS Roald Amundsen,
+                    the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex
+                    engineering, environmental innovation, and real-world tourism expeditions into compelling
+                    storytelling for a global audience.
+                  </p>
 
                   <div className="mt-8">
                     <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
