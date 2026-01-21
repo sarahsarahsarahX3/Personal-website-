@@ -38,9 +38,11 @@ const project = {
     "Developed influencer and brand partner content for SalonCentric’s Asian American, Native Hawaiian, and Pacific Islander (AANHPI) Heritage Month campaign, using creator-led storytelling to support cultural relevance, brand credibility, and community engagement. The campaign paired authentic voices with clear brand messaging and multi-channel amplification across owned, organic, and paid platforms.",
   role: "Copywriter",
   snapshot: [
-    { title: "Creator & Partner–Led Campaign", value: "CULTURAL MOMENT STORYTELLING" },
-    { title: "Integrated Distribution", value: "ORGANIC · PAID · OWNED" },
-    { title: "Brand & Community Focus", value: "AANHPI REPRESENTATION & VISIBILITY" },
+    { title: "Integrated Cultural Marketing", value: "AANHPI brand activations and live interviews" },
+    { title: "Inclusive Brand Storytelling", value: "Authentic AANHPI voices and lived experiences" },
+    { title: "Influencer Partnerships", value: "Collaborations with AANHPI beauty creators" },
+    { title: "Multi-Channel Touchpoints", value: "Social, digital, and paid campaign rollout" },
+    { title: "Beauty Professional Spotlights", value: "Featuring AANHPI stylists and industry leaders" },
   ],
   strategyBullets: [
     "Selected creators based on audience relevance, cultural credibility, and brand alignment.",
@@ -594,8 +596,7 @@ export default function SalonCentricAanhpiProjectPage() {
                     {snapshotCards.map((card) => (
                       <div key={card.title}>
                         <p className="font-display text-[22px] leading-none">{card.value}</p>
-                        <p className="mt-2 flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                          <SquiggleMark />
+                        <p className="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
                           {card.title}
                         </p>
                       </div>

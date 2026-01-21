@@ -372,9 +372,11 @@ My Role
 Copywriter
 
 Campaign Snapshot
-- Creator & Partner–Led Campaign: CULTURAL MOMENT STORYTELLING
-- Integrated Distribution: ORGANIC · PAID · OWNED
-- Brand & Community Focus: AANHPI REPRESENTATION & VISIBILITY
+- Integrated Cultural Marketing: AANHPI brand activations and live interviews
+- Inclusive Brand Storytelling: Authentic AANHPI voices and lived experiences
+- Influencer Partnerships: Collaborations with AANHPI beauty creators
+- Multi-Channel Touchpoints: Social, digital, and paid campaign rollout
+- Beauty Professional Spotlights: Featuring AANHPI stylists and industry leaders
 
 Campaign Strategy
 - Selected creators based on audience relevance, cultural credibility, and brand alignment.
