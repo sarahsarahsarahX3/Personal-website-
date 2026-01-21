@@ -350,19 +350,15 @@ export function BioSection() {
                 <h2 id="home-bio-title" className="sr-only">
                   About
                 </h2>
-                <p className="font-display text-2xl md:text-3xl leading-[1.1] tracking-tight text-text-primary">
-                  <span className="text-text-secondary/70">Hi, I’m </span>
-                  <span className="relative inline-block">
-                    Sarah Dawson
-                    <span
-                      aria-hidden="true"
-                      className="absolute left-0 right-0 -bottom-1 h-px bg-accent/60"
-                    />
-                  </span>
-                  <span className="text-text-secondary/70">.</span>
+                <p className="text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/70">
+                  Hi, I’m <span className="text-text-primary/90">Sarah Dawson</span>
                 </p>
-                <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">
-                  I lead content, campaign, and editorial initiatives for brands across integrated channels.
+                <p className="mt-4 font-display text-3xl md:text-4xl leading-[1.05] tracking-tight text-text-primary">
+                  I lead{" "}
+                  <span className="text-accent/90">content</span>,{" "}
+                  <span className="text-accent/90">campaign</span>, and{" "}
+                  <span className="text-accent/90">editorial</span> initiatives{" "}
+                  <span className="text-text-secondary/75">for brands across integrated channels.</span>
                 </p>
               </div>
 
