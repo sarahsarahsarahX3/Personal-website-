@@ -1,7 +1,51 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./BioSection.module.css";
+
+type Highlight = {
+  key: string;
+  Icon: () => React.ReactNode;
+  value: string;
+  label: string;
+};
+
+type CounterConfig = {
+  target: number;
+  prefix: string;
+  suffix: string;
+  useGrouping: boolean;
+  decimals: number;
+};
+
+function parseCounterValue(raw: string): CounterConfig | null {
+  const value = raw.trim();
+  const match = value.match(/^([^\d]*)([\d,]+(?:\.\d+)?)(.*)$/);
+  if (!match) return null;
+
+  const [, prefix, numberRaw, suffix] = match;
+  const numeric = Number(numberRaw.replace(/,/g, ""));
+  if (!Number.isFinite(numeric)) return null;
+
+  const decimals = numberRaw.includes(".") ? numberRaw.split(".")[1]?.length ?? 0 : 0;
+  const useGrouping = numberRaw.includes(",") || numeric >= 1000;
+
+  return { target: numeric, prefix, suffix: suffix.trim(), useGrouping, decimals };
+}
+
+function formatCounterValue(value: number, config: CounterConfig) {
+  const formatter = new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: config.decimals,
+    minimumFractionDigits: config.decimals,
+    useGrouping: config.useGrouping,
+  });
+
+  return `${config.prefix}${formatter.format(value)}${config.suffix}`;
+}
+
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3);
+}
 
 function YearsIcon() {
   return (
@@ -138,8 +182,24 @@ function MarketsIcon() {
   );
 }
 
+const HIGHLIGHTS: readonly Highlight[] = [
+  { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
+  { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 100 Companies" },
+  { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets / Year" },
+  { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views" },
+  { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand Partnerships" },
+  { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "U.S. & CANADA" },
+] as const;
+
 export function BioSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [counters, setCounters] = useState<Record<string, number>>({});
+  const hasAnimated = useRef(false);
+
+  const counterConfigs = useMemo(() => {
+    const entries = HIGHLIGHTS.map((item) => [item.key, parseCounterValue(item.value)] as const);
+    return Object.fromEntries(entries) as Record<string, CounterConfig | null>;
+  }, []);
 
   useEffect(() => {
     const element = sectionRef.current;
@@ -214,14 +274,67 @@ export function BioSection() {
     };
   }, []);
 
-  const highlights = [
-    { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
-    { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 100 Companies" },
-    { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets / Year" },
-    { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views" },
-    { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand Partnerships" },
-    { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "U.S. & CANADA" },
-  ] as const;
+  useEffect(() => {
+    const element = sectionRef.current;
+    if (!element) return;
+
+    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const prefersReducedMotion = Boolean(media?.matches);
+
+    const activeConfigs = Object.entries(counterConfigs).filter(([, config]) => Boolean(config)) as Array<
+      [string, CounterConfig]
+    >;
+
+    if (!activeConfigs.length) return;
+
+    if (prefersReducedMotion) {
+      const final: Record<string, number> = {};
+      for (const [key, config] of activeConfigs) final[key] = config.target;
+      setCounters(final);
+      hasAnimated.current = true;
+      return;
+    }
+
+    let raf = 0;
+
+    const start = () => {
+      if (hasAnimated.current) return;
+      hasAnimated.current = true;
+
+      const durationMs = 1200;
+      const startTime = performance.now();
+
+      const tick = (now: number) => {
+        const t = Math.min(1, Math.max(0, (now - startTime) / durationMs));
+        const eased = easeOutCubic(t);
+
+        const next: Record<string, number> = {};
+        for (const [key, config] of activeConfigs) {
+          const current = config.target * eased;
+          next[key] = config.decimals ? Number(current.toFixed(config.decimals)) : Math.round(current);
+        }
+
+        setCounters(next);
+
+        if (t < 1) raf = window.requestAnimationFrame(tick);
+      };
+
+      raf = window.requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) start();
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(raf);
+    };
+  }, [counterConfigs]);
 
   return (
     <section
@@ -246,7 +359,14 @@ export function BioSection() {
                 aria-label="Highlights"
                 className="mt-6 grid grid-cols-2 gap-5 sm:gap-x-10 sm:gap-y-10"
               >
-                {highlights.map(({ key, Icon, value, label }, index) => (
+                {HIGHLIGHTS.map(({ key, Icon, value, label }, index) => {
+                  const counterConfig = counterConfigs[key];
+                  const displayValue =
+                    counterConfig && typeof counters[key] === "number"
+                      ? formatCounterValue(counters[key], counterConfig)
+                      : value;
+
+                  return (
                   <li
                     key={key}
                     className={`w-full text-text-secondary ${styles.highlight}`}
@@ -256,7 +376,7 @@ export function BioSection() {
                       <Icon />
                       <div className="min-w-0">
                         <div className="text-lg leading-tight text-text-primary sm:text-2xl md:text-3xl">
-                          {value}
+                          {displayValue}
                         </div>
                         <div className="mt-2 text-[10px] uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
                           {label}
@@ -264,7 +384,8 @@ export function BioSection() {
                       </div>
                     </div>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             </div>
           </div>

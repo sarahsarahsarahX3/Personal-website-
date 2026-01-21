@@ -1,47 +1,61 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 export default function AboutPage() {
+    const prefersReducedMotion = useReducedMotion();
+
     return (
-        <main className="min-h-screen bg-surface flex flex-col md:flex-row">
-            {/* Visual Side (Left on Desktop) */}
-            <section className="w-full md:w-1/2 h-[50vh] md:h-auto relative overflow-hidden bg-black flex items-center justify-center">
-                {/* Abstract "WebGL-like" CSS composition */}
+        <main className="relative min-h-screen bg-surface flex flex-col md:flex-row overflow-hidden">
+            {/* Full-bleed animated background (across both columns) */}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+                <div className="absolute inset-0 bg-black/80" />
                 <div className="absolute inset-0 opacity-40">
                     <motion.div
-                        animate={{
-                            rotate: [0, 360],
-                            scale: [1, 1.2, 1],
-                            filter: ["hue-rotate(0deg)", "hue-rotate(90deg)", "hue-rotate(0deg)"]
-                        }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        animate={
+                            prefersReducedMotion
+                                ? undefined
+                                : {
+                                      rotate: [0, 360],
+                                      scale: [1, 1.2, 1],
+                                      filter: ["hue-rotate(0deg)", "hue-rotate(90deg)", "hue-rotate(0deg)"],
+                                  }
+                        }
+                        transition={
+                            prefersReducedMotion ? undefined : { duration: 20, repeat: Infinity, ease: "linear" }
+                        }
                         className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] opacity-30 blur-3xl"
                     />
                     <motion.div
-                        animate={{
-                            rotate: [360, 0],
-                            scale: [1.2, 1, 1.2],
-                        }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        animate={
+                            prefersReducedMotion
+                                ? undefined
+                                : {
+                                      rotate: [360, 0],
+                                      scale: [1.2, 1, 1.2],
+                                  }
+                        }
+                        transition={
+                            prefersReducedMotion ? undefined : { duration: 15, repeat: Infinity, ease: "linear" }
+                        }
                         className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[conic-gradient(from_180deg,transparent_0_340deg,var(--color-accent)_360deg)] opacity-20 blur-3xl mix-blend-screen"
                     />
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/15 to-black/55" />
+                <div className="absolute inset-y-0 left-0 w-[70%] bg-[radial-gradient(60%_65%_at_30%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]" />
+            </div>
 
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60"
-                />
-
-                <figure className="relative z-10 w-full px-8 md:px-14">
-                    <div className="mx-auto w-full max-w-[360px] md:max-w-[420px]">
+            {/* Visual Side (Left on Desktop) */}
+            <section className="relative z-10 w-full md:w-1/2 h-[52vh] md:h-auto flex items-center justify-center px-8 md:px-14">
+                <figure className="w-full">
+                    <div className="mx-auto w-full max-w-[300px] md:max-w-[360px]">
                         <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20">
                             <Image
                                 src="/images/IMG_8516_edited.jpg"
                                 alt="Headshot of Sarah Dawson"
                                 fill
-                                sizes="(min-width: 768px) 420px, 70vw"
+                                sizes="(min-width: 768px) 360px, 70vw"
                                 className="object-cover saturate-[0.98] contrast-[1.02]"
                                 priority
                             />
@@ -63,7 +77,7 @@ export default function AboutPage() {
             </section>
 
             {/* Content Side (Right on Desktop) */}
-            <section className="w-full md:w-1/2 min-h-screen flex items-center p-8 md:p-20 pt-20 pb-32 md:pb-32 lg:pb-40">
+            <section className="relative z-10 w-full md:w-1/2 min-h-screen flex items-center p-8 md:p-20 pt-20 pb-32 md:pb-32 lg:pb-40 bg-surface/85 backdrop-blur-md md:bg-transparent md:backdrop-blur-0">
                 <div className="max-w-xl">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
