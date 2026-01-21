@@ -301,7 +301,7 @@ export function BioSection() {
       if (hasAnimated.current) return;
       hasAnimated.current = true;
 
-      const durationMs = 1200;
+      const durationMs = 1800;
       const startTime = performance.now();
 
       const tick = (now: number) => {
