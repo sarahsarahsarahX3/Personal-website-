@@ -595,9 +595,9 @@ export default function SalonCentricAanhpiProjectPage() {
                   <div className="mt-5 grid gap-5">
                     {snapshotCards.map((card) => (
                       <div key={card.title}>
-                        <p className="font-display text-[22px] leading-none">{card.value}</p>
+                        <p className="font-display text-[22px] leading-none">{card.title}</p>
                         <p className="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                          {card.title}
+                          {card.value}
                         </p>
                       </div>
                     ))}
