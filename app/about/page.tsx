@@ -146,7 +146,7 @@ export default function AboutPage() {
                     <section aria-label="Portrait" className="relative">
                         <figure className="relative">
                             <div className="lg:-ml-4 xl:-ml-8">
-                                <div className="mx-auto w-full max-w-[320px] md:max-w-[360px] lg:mx-0">
+                                <div className="mx-auto w-full max-w-[292px] sm:max-w-[320px] md:max-w-[360px] lg:mx-0">
                                     <div
                                         ref={headshotRef}
                                         className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
@@ -185,14 +185,12 @@ export default function AboutPage() {
                         <div className="max-w-xl">
                             <div className="space-y-6 text-lg leading-relaxed text-text-secondary">
                                 <p>
-                                    I’m Sarah Dawson, a marketing professional who leads content, campaign, and editorial initiatives for brands across integrated channels. My work focuses on building clear, consistent messaging and executing at scale across content systems, campaigns, and brand communications.
+                                    I am a marketing professional who spearheads content, campaign, and editorial initiatives for top global brands across integrated channels. My work focuses on building clear, consistent messaging and executing at scale across content systems, campaigns, and brand communications.
                                 </p>
                                 <p>
                                     Over the past seven years, I’ve worked with Fortune 100 companies and established brands in beauty, retail, media, and science. I’ve delivered high-impact work across digital, social, editorial, broadcast, and experiential platforms. My background spans growth marketing, editorial operations, and integrated campaigns, which allows me to move between strategy and execution while staying focused on outcomes.
                                 </p>
-                                <p>
-                                    If you’re interested in working together, you can reach me through the contact page via email or LinkedIn.
-                                </p>
+                                <p>If you’re interested in working together, you can reach me through the contact page via email or LinkedIn.</p>
                             </div>
 
                             <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -202,9 +200,6 @@ export default function AboutPage() {
                                 >
                                     Contact
                                 </a>
-                                <span className="text-xs font-mono uppercase tracking-widest text-text-secondary/60">
-                                    Available for freelance and contract work
-                                </span>
                             </div>
                         </div>
                     </section>
