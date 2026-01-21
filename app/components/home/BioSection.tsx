@@ -350,17 +350,25 @@ export function BioSection() {
                 <h2 id="home-bio-title" className="sr-only">
                   About
                 </h2>
-                <p className="text-2xl md:text-3xl leading-snug tracking-tight text-text-primary">
-                  Hi, I’m Sarah Dawson.
+                <p className="font-display text-2xl md:text-3xl leading-[1.1] tracking-tight text-text-primary">
+                  <span className="text-text-secondary/70">Hi, I’m </span>
+                  <span className="relative inline-block">
+                    Sarah Dawson
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-0 right-0 -bottom-1 h-px bg-accent/60"
+                    />
+                  </span>
+                  <span className="text-text-secondary/70">.</span>
                 </p>
-                <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
+                <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">
                   I lead content, campaign, and editorial initiatives for brands across integrated channels.
                 </p>
               </div>
 
               <ul
                 aria-label="Highlights"
-                className="mt-10 mx-auto grid max-w-4xl grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-10 sm:gap-y-10 md:grid-cols-3 md:gap-x-12"
+                className="mt-9 mx-auto grid max-w-4xl grid-cols-2 gap-x-6 gap-y-8 sm:mt-10 sm:gap-x-10 sm:gap-y-10 md:grid-cols-3 md:gap-x-12"
               >
                 {HIGHLIGHTS.map(({ key, Icon, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
