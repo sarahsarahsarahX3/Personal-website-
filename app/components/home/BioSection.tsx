@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import styles from "./BioSection.module.css";
+import { CoreSkillViz } from "@/app/components/home/CoreSkillViz";
 
 function YearsIcon() {
   return (
@@ -231,7 +232,45 @@ export function BioSection() {
     >
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
-          <div className={`col-span-12 md:col-span-10 md:col-start-2 ${styles.body}`}>
+          <figure
+            className={`col-span-12 sm:col-span-6 md:col-span-4 md:col-start-2 flex justify-center md:block ${styles.headshot}`}
+            aria-label="Interactive visual"
+          >
+            <div className="w-full max-w-[260px] sm:max-w-[320px]">
+              <div className="overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface/40 px-4 py-3">
+                  <div className="flex items-center gap-2" aria-hidden="true">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]/90" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/90" />
+                  </div>
+                  <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/70">
+                    Story System
+                  </p>
+                  <span aria-hidden="true" className="text-text-secondary/50">
+                    ⌄
+                  </span>
+                </div>
+
+                <div className="relative aspect-[4/5] w-full bg-surface/30">
+                  <CoreSkillViz
+                    id="brand-storytelling"
+                    className="absolute inset-0 opacity-95"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.04] to-black/[0.22]"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                  />
+                </div>
+              </div>
+            </div>
+          </figure>
+
+          <div className={`col-span-12 md:col-span-7 md:col-start-6 ${styles.body}`}>
             <div className="relative max-w-[60ch] mx-auto text-center md:mx-0 md:text-left">
               <h2 id="home-bio-title" className="sr-only">
                 About
