@@ -29,7 +29,7 @@ export function Navbar() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
                 className={cn(
-                    "flex items-center justify-between md:justify-center gap-1 md:gap-2 p-2 rounded-full",
+                    "flex items-center justify-center gap-1 md:gap-2 p-2 rounded-full",
                     "bg-surface/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 overflow-x-auto md:overflow-x-visible md:overflow-visible no-scrollbar"
                 )}
             >
@@ -42,7 +42,8 @@ export function Navbar() {
                             key={item.name}
                             href={item.href}
                             className={cn(
-                                "relative flex items-center justify-center px-3 py-3 md:px-4 rounded-full transition-colors duration-300 group shrink-0",
+                                "relative flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-300 group shrink-0",
+                                "md:h-auto md:w-auto md:px-4 md:py-3",
                                 isActive ? "text-surface" : "text-text-secondary hover:text-text-primary"
                             )}
                         >
@@ -59,7 +60,7 @@ export function Navbar() {
                                 <span
                                     className={cn(
                                         "text-sm font-medium transition-all duration-300",
-                                        isActive ? "inline-block" : "hidden md:hidden group-hover:md:inline-block"
+                                        "hidden md:hidden group-hover:md:inline-block group-focus-visible:md:inline-block"
                                     )}
                                 >
                                     {item.name}
