@@ -33,9 +33,9 @@ const artistSpotlightPdfs: PdfItem[] = [
 
 const project = {
   title: "SalonCentric x AANHPI Heritage Month",
-  subtitle: "Integrated Campaign & Influencer Marketing",
+  subtitle: "Integrated Campaign",
   overview:
-    "Led influencer and brand partner content for SalonCentric’s AANHPI integrated campaign, using creator-led storytelling to support cultural relevance, brand credibility, and community engagement. The campaign paired authentic voices with clear brand messaging and multi-channel amplification across owned, organic, and paid platforms.",
+    "Developed influencer and brand partner content for SalonCentric’s Asian American, Native Hawaiian, and Pacific Islander (AANHPI) Heritage Month campaign, using creator-led storytelling to support cultural relevance, brand credibility, and community engagement. The campaign paired authentic voices with clear brand messaging and multi-channel amplification across owned, organic, and paid platforms.",
   role: "Copywriter",
   snapshot: [
     { title: "Creator & Partner–Led Campaign", value: "CULTURAL MOMENT STORYTELLING" },
@@ -619,7 +619,7 @@ export default function SalonCentricAanhpiProjectPage() {
               </div>
 
               <div className="mt-8">
-                <figure className="overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10">
+                <figure className="mx-auto w-full overflow-hidden rounded-3xl border border-white/10 bg-surface-alt/10 md:max-w-[520px]">
                     <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-surface/40 px-4 py-3">
                       <div className="flex items-center gap-2" aria-hidden="true">
                         <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/90" />
@@ -808,7 +808,7 @@ export default function SalonCentricAanhpiProjectPage() {
 
                             <div className="p-2">
                               <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface/40">
-                                <div className="relative aspect-[326/408] w-full bg-surface/20">
+                                <div className="relative aspect-[673/594] w-full bg-surface/20">
                                   <img
                                     src={post.src}
                                     alt={post.alt}

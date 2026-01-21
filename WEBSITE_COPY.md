@@ -363,10 +363,10 @@ Tools & Skills
 
 ## Project #5
 ### SalonCentric x AANHPI Heritage Month
-Integrated Campaign & Influencer Marketing
+Integrated Campaign
 
 Overview
-Led influencer and brand partner content for SalonCentric’s AANHPI integrated campaign, using creator-led storytelling to support cultural relevance, brand credibility, and community engagement. The campaign paired authentic voices with clear brand messaging and multi-channel amplification across owned, organic, and paid platforms.
+Developed influencer and brand partner content for SalonCentric’s Asian American, Native Hawaiian, and Pacific Islander (AANHPI) Heritage Month campaign, using creator-led storytelling to support cultural relevance, brand credibility, and community engagement. The campaign paired authentic voices with clear brand messaging and multi-channel amplification across owned, organic, and paid platforms.
 
 My Role
 Copywriter
