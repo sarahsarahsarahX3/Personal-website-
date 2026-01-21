@@ -15,7 +15,6 @@ This file collects the visible on-site copy (headings, paragraphs, labels, lists
 ### Bio
 - Hi, I’m Sarah Dawson.
 - I lead content, campaign, and editorial initiatives for brands across integrated channels.
-- My career highlights include:
 
 Highlights:
 - 7+ — Years of Experience
@@ -68,7 +67,7 @@ Projects listed on the Selected Work page:
 
 ## Articles (/insights)
 - Articles
-- A collection of brand communications, editorial features, and published articles.
+- Published work across brand and editorial.
 
 Article list UI labels:
 - Open
@@ -155,7 +154,7 @@ Article Preview (PDFs)
 - The Evolution of ‘90s Haircut Styles From Grunge to Glam
 
 Results
-SELECT A KPI TO VIEW THE DATA.
+Select a KPI for details.
 
 - Left tab: 250K+ Monthly Organic Sessions
   - KPI title: Monthly Organic Sessions
@@ -344,7 +343,7 @@ FACEBOOK POSTS + IMAGES
 - Daily Planet post · pfbid02j94QL4CWHWeJodh3AavAtjsm1SFP8k2QorWLB72x892JedEHayhspqUGA8xCVjzQl
 
 Impact
-SELECT A KPI TO VIEW MORE
+Select a KPI for details.
 - Consistent Weekly Delivery: Supported reliable, repeatable workflows that help a weekly program ship on time across multiple segments and production timelines.
 - Multi-Segment Throughput: Supported fast-turn segment production by keeping moving parts organized, trackable, and ready for handoff across parallel storylines.
 - Editorial Accuracy and Credibility: Helped maintain science-first rigor through organized research inputs, careful documentation, and detail-oriented support during scripting and production.

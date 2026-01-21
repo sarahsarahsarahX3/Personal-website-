@@ -1290,7 +1290,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Impact" subtitle="SELECT A KPI TO VIEW MORE">
+            <Section id="impact" title="Impact" subtitle="Select a KPI for details.">
               <div>
                 <ImpactAccordion items={project.impactKpis as unknown as ImpactKpi[]} activeId={activeImpactId} onSelect={setActiveImpactId} />
               </div>

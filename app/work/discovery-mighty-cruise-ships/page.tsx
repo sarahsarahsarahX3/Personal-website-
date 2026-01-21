@@ -1029,7 +1029,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Impact" subtitle="Impact & Broadcast Reach">
+            <Section id="impact" title="Impact" subtitle="Select a KPI for details.">
               <div>
                 <ImpactAccordion items={project.impactKpis as unknown as ImpactKpi[]} activeId={activeImpactId} onSelect={setActiveImpactId} />
               </div>

@@ -258,10 +258,6 @@ export function BioSection() {
               <p className="mt-5 text-base md:text-lg leading-relaxed text-text-secondary">
                 I lead content, campaign, and editorial initiatives for brands across integrated channels.
               </p>
-              <p className="mt-10 text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                My career highlights include:
-              </p>
-
               <ul
                 aria-label="Highlights"
                 className="mt-6 grid grid-cols-2 gap-5 sm:gap-x-10 sm:gap-y-10"

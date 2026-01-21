@@ -1841,7 +1841,7 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="results" title="Results" subtitle="SELECT A KPI TO VIEW THE DATA.">
+            <Section id="results" title="Results" subtitle="Select a KPI for details.">
               <MetricTabs metrics={metrics} />
               <p className="mt-6 text-xs text-text-secondary/70">Source: SEMrush (U.S. &amp; Global data).</p>
             </Section>
