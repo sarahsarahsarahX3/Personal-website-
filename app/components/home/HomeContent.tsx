@@ -10,7 +10,7 @@ export function HomeContent() {
     <main className="bg-surface text-text-primary min-h-[200vh]">
       <Hero />
       <BioSection />
-      <SectionTransition className="mt-16 md:mt-20 lg:mt-24">
+      <SectionTransition>
         <BrandsSection />
       </SectionTransition>
     </main>

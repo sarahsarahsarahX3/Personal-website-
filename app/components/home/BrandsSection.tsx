@@ -90,7 +90,7 @@ export function BrandsSection() {
     <section
       id="brands"
       aria-labelledby="brands-title"
-      className="pt-10 pb-44 md:pt-14 md:pb-52 lg:pt-16 lg:pb-60"
+      className="pt-20 pb-36 md:pt-24 md:pb-44 lg:pt-28 lg:pb-48"
     >
       <div className="mx-auto w-full max-w-6xl px-6">
         <header

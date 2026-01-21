@@ -340,7 +340,7 @@ export function BioSection() {
     <section
       ref={sectionRef}
       aria-labelledby="home-bio-title"
-      className={`pt-32 pb-16 md:pt-44 md:pb-20 lg:pt-48 lg:pb-24 ${styles.section}`}
+      className={`pt-20 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20 ${styles.section}`}
     >
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
