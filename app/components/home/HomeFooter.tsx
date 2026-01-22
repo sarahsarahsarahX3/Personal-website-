@@ -35,7 +35,7 @@ export function HomeFooter() {
   };
 
   return (
-    <footer className="relative border-t border-white/10 bg-surface/40">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-surface/40">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_60%_at_20%_10%,rgba(255,255,255,0.08),rgba(0,0,0,0))]"
