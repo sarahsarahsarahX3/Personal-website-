@@ -136,13 +136,13 @@ export default function AboutPage() {
                 <div className="absolute inset-y-0 left-0 w-[70%] bg-[radial-gradient(60%_65%_at_30%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]" />
             </div>
 
-            <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-24 pb-28 md:pt-28 md:pb-32 lg:pt-32 lg:pb-36">
+            <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-20 pb-24 md:pt-22 md:pb-28 lg:pt-24 lg:pb-32">
                 <header className="max-w-2xl">
                     <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
                     <h1 className="mt-3 font-display text-4xl md:text-6xl tracking-tight leading-[1.03]">About</h1>
                 </header>
 
-                <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16 items-start">
+                <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16 items-start">
                     <section aria-label="Portrait" className="relative">
                         <figure className="relative">
                             <div className="lg:-ml-4 xl:-ml-8">
@@ -180,7 +180,7 @@ export default function AboutPage() {
 
                     <section
                         aria-label="Bio"
-                        className="lg:pt-10 lg:border-l lg:border-white/10 lg:pl-10"
+                        className="lg:pt-6 lg:border-l lg:border-white/10 lg:pl-10"
                     >
                         <div className="max-w-xl">
                             <div className="space-y-6 text-lg leading-relaxed text-text-secondary">

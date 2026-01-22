@@ -357,10 +357,10 @@ export function BioSection() {
                   Hi, I’m Sarah Dawson.
                 </p>
                 <p
-                  data-text="I specialize in creating impactful content, campaigns, and editorial initiatives for leading global brands."
+                  data-text="I specialize in creating impactful content, campaigns, and editorial initiatives for top global brands."
                   className={`mt-4 text-base md:text-lg leading-relaxed text-text-secondary ${styles.subheading}`}
                 >
-                  I specialize in creating impactful content, campaigns, and editorial initiatives for leading global brands.
+                  I specialize in creating impactful content, campaigns, and editorial initiatives for top global brands.
                 </p>
               </div>
 
