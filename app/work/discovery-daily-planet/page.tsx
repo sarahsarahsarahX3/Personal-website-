@@ -35,7 +35,7 @@ type SocialEmbed = {
 const project = {
   title: "Discovery Channel: Daily Planet",
   subtitle: "Science News Magazine Series",
-  roleTitle: "Production Assistant",
+  roleTitle: "Production Intern",
   overview:
     "Supported production and editorial workflows for Daily Planet, Discovery Channel’s flagship science and technology series. Contributed to fast-paced, high-volume broadcast production by helping translate complex scientific topics into clear, accurate, and engaging storytelling across multiple weekly segments.",
   roleScope: ["Broadcast newsroom support for a daily science news program."],
