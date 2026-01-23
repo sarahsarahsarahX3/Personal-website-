@@ -35,14 +35,25 @@ const project = {
   title: "SalonCentric x AANHPI Heritage Month",
   subtitle: "Integrated Campaign",
   overview:
-    "Developed influencer and brand partner content for SalonCentric’s Asian American, Native Hawaiian, and Pacific Islander (AANHPI) Heritage Month campaign, using creator-led storytelling to support cultural relevance, brand credibility, and community engagement. The campaign paired authentic voices with clear brand messaging and multi-channel amplification across owned, organic, and paid platforms.",
+    "Developed editorial content to support SalonCentric’s Asian American, Native Hawaiian, and Pacific Islander (AANHPI) Heritage Month campaign. The campaign integrated influencer storytelling, brand partnerships, and multi-channel activation to drive cultural relevance and meaningful audience engagement. It included a live event, influencer interviews, and experiential activations, including a hands-on Ikebana workshop and a curated matcha bar.",
   role: "Copywriter",
   snapshot: [
-    { title: "Integrated Cultural Marketing", value: "AANHPI brand activations and live interviews" },
-    { title: "Inclusive Brand Storytelling", value: "Authentic AANHPI voices and lived experiences" },
-    { title: "Influencer Partnerships", value: "Collaborations with AANHPI beauty creators" },
-    { title: "Multi-Channel Touchpoints", value: "Social, digital, and paid campaign rollout" },
-    { title: "Beauty Professional Spotlights", value: "Featuring AANHPI stylists and industry leaders" },
+    {
+      title: "Campaign Ownership",
+      value: "Owned the strategy and execution across experiential, influencer, and editorial components.",
+    },
+    {
+      title: "Experiential Event",
+      value: "Delivered a live, in-person event with moderated interviews and hands-on cultural programming.",
+    },
+    {
+      title: "Creator Partnerships",
+      value: "Selected and partnered with AANHPI creators to ensure authentic, brand-safe storytelling.",
+    },
+    {
+      title: "Community Engagement",
+      value: "Strengthened brand credibility and trust within the professional beauty community.",
+    },
   ],
   strategyBullets: [
     "Selected creators based on audience relevance, cultural credibility, and brand alignment.",
@@ -594,16 +605,16 @@ export default function SalonCentricAanhpiProjectPage() {
                     Campaign snapshot
                   </p>
 
-                  <div className="mt-5 grid gap-5">
-                    {snapshotCards.map((card) => (
-                      <div key={card.title}>
-                        <p className="font-display text-[22px] leading-none">{card.title}</p>
-                        <p className="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/80">
-                          {card.value}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+	                  <div className="mt-5 grid gap-5">
+	                    {snapshotCards.map((card) => (
+	                      <div key={card.title}>
+	                        <p className="font-display text-[22px] leading-none">{card.title}</p>
+	                        <p className="mt-2 text-xs sm:text-sm leading-relaxed text-text-secondary/80">
+	                          {card.value}
+	                        </p>
+	                      </div>
+	                    ))}
+	                  </div>
 
                   <div className="mt-auto pt-8">
                     <button
@@ -677,7 +688,12 @@ export default function SalonCentricAanhpiProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="deliverables" title="Final Deliverables" contentClassName="mt-6">
+	            <Section
+	              id="deliverables"
+	              title="Final Deliverables"
+	              subtitle="A snapshot of the experiential, editorial, and influencer-led content that brought the campaign to life."
+	              contentClassName="mt-6"
+	            >
               <WindowFrame
                 title="ARTICLE PREVIEW"
                 actions={
