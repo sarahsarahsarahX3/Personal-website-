@@ -17,8 +17,8 @@ type PdfItem = {
 
 const deliverables = {
   articlePdf: {
-    title: "SalonCentric AANHPI Integrated Campaign Article",
-    fileName: "SalonCentric Celebrates AANHPI Coffee & Culture Fireside Chat.pdf",
+    title: "SalonCentric AANHPI Heritage Month Article",
+    fileName: "images/SalonCentric AANHPI Heritage Month Article.pdf",
   },
 } as const;
 
@@ -487,7 +487,9 @@ function VideoWithAutoPoster({
 }
 
 function getPublicFileHref(fileName?: string) {
-  return fileName ? `/${encodeURIComponent(fileName)}` : undefined;
+  if (!fileName) return undefined;
+  const normalized = fileName.replace(/^\/+/, "");
+  return `/${normalized.split("/").map(encodeURIComponent).join("/")}`;
 }
 
 function RailList({
