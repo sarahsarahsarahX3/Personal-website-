@@ -398,8 +398,7 @@ export function BioSection() {
 	              </ul>
 
 	              <p className="mt-8 md:mt-12 text-xs md:text-sm leading-relaxed text-text-secondary/60">
-	                Metrics reflect cumulative impact across broadcast, digital, and editorial work for enterprise
-	                brands.
+	                Metrics reflect cumulative impact across broadcast, digital, and editorial work.
 	              </p>
 	            </div>
 	          </div>
