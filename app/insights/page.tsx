@@ -22,6 +22,14 @@ export default async function InsightsPage() {
         performance: article.performance
     }));
 
+    // Move "The 9 Best Sunscreens For Your Client’s Skin Concerns" to the end of the list.
+    const sunscreensSlug = "new-article-9";
+    const sunscreensIndex = formattedArticles.findIndex((article) => article.slug === sunscreensSlug);
+    if (sunscreensIndex !== -1) {
+        const [sunscreensArticle] = formattedArticles.splice(sunscreensIndex, 1);
+        if (sunscreensArticle) formattedArticles.push(sunscreensArticle);
+    }
+
     return (
         <main className="min-h-screen pt-32 pb-40 px-6">
             <div className="container mx-auto">
