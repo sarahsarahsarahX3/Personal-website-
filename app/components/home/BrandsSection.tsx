@@ -104,7 +104,7 @@ export function BrandsSection() {
         >
           <h2
             id="brands-title"
-            className="text-2xl md:text-3xl font-display tracking-tight text-text-primary/90"
+            className="text-3xl md:text-3xl font-display tracking-tight text-text-primary/90"
           >
             Working with Industry Leaders
           </h2>

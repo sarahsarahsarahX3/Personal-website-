@@ -183,12 +183,12 @@ function MarketsIcon() {
 }
 
 const HIGHLIGHTS: readonly Highlight[] = [
-  { key: "years", Icon: YearsIcon, value: "7+", label: "– Years of Experience" },
-  { key: "fortune", Icon: BrandsIcon, value: "3", label: "– Fortune 100 Companies" },
-  { key: "views", Icon: ViewsIcon, value: "15M+", label: "– Views Generated" },
-  { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "– Brand & Creator Partnerships" },
-  { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "– Assets Produced Annually" },
-  { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "– U.S. & Canada" },
+  { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
+  { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 100 Companies" },
+  { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views Generated" },
+  { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand & Creator Partnerships" },
+  { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets Produced Annually" },
+  { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "U.S. & Canada" },
 ] as const;
 
 export function BioSection() {
@@ -350,12 +350,12 @@ export function BioSection() {
                 <h2 id="home-bio-title" className="sr-only">
                   About
                 </h2>
-                <p
-                  data-text="Hi, I’m Sarah Dawson."
-                  className={`font-display text-2xl md:text-3xl leading-[1.1] tracking-tight text-text-primary ${styles.headline}`}
-                >
-                  Hi, I’m Sarah Dawson.
-                </p>
+	                <p
+	                  data-text="Hi, I’m Sarah Dawson."
+	                  className={`font-display text-3xl md:text-3xl leading-[1.1] tracking-tight text-text-primary ${styles.headline}`}
+	                >
+	                  Hi, I’m Sarah Dawson.
+	                </p>
                 <p
                   data-text="I specialize in creating impactful content, campaigns, and editorial initiatives for top global brands."
                   className={`mt-4 text-base md:text-lg leading-relaxed text-text-secondary ${styles.subheading}`}
@@ -387,7 +387,7 @@ export function BioSection() {
 	                        <div className="text-lg leading-tight text-text-primary sm:text-2xl md:text-3xl">
 	                          {displayValue}
 	                        </div>
-	                        <div className="mt-2 text-[10px] font-mono leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
+	                        <div className="mt-2 text-[10px] font-mono uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
 	                          {label}
 	                        </div>
 	                      </div>
@@ -397,7 +397,7 @@ export function BioSection() {
 	                })}
 	              </ul>
 
-	              <p className="mt-8 text-xs leading-relaxed text-text-secondary/60">
+	              <p className="mt-8 md:mt-12 text-xs md:text-sm leading-relaxed text-text-secondary/60">
 	                Metrics reflect cumulative impact across broadcast, digital, and editorial work for enterprise
 	                brands.
 	              </p>
