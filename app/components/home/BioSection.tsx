@@ -183,12 +183,12 @@ function MarketsIcon() {
 }
 
 const HIGHLIGHTS: readonly Highlight[] = [
-  { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
-  { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 100 Companies" },
-  { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views Generated" },
-  { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand Partnerships" },
-  { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets Produced Annually" },
-  { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "U.S. & CANADA" },
+  { key: "years", Icon: YearsIcon, value: "7+", label: "– Years of Experience" },
+  { key: "fortune", Icon: BrandsIcon, value: "3", label: "– Fortune 100 Companies" },
+  { key: "views", Icon: ViewsIcon, value: "15M+", label: "– Views Generated" },
+  { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "– Brand & Creator Partnerships" },
+  { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "– Assets Produced Annually" },
+  { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "– U.S. & Canada" },
 ] as const;
 
 export function BioSection() {
@@ -364,10 +364,10 @@ export function BioSection() {
                 </p>
               </div>
 
-              <ul
-                aria-label="Highlights"
-                className="mt-9 mx-auto grid max-w-4xl grid-cols-2 gap-x-6 gap-y-8 sm:mt-10 sm:gap-x-10 sm:gap-y-10 md:grid-cols-3 md:gap-x-12"
-              >
+	              <ul
+	                aria-label="Highlights"
+	                className="mt-9 mx-auto grid max-w-4xl grid-cols-2 gap-x-6 gap-y-8 sm:mt-10 sm:gap-x-10 sm:gap-y-10 md:grid-cols-3 md:gap-x-12"
+	              >
                 {HIGHLIGHTS.map(({ key, Icon, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
                   const displayValue =
@@ -384,21 +384,26 @@ export function BioSection() {
                     <div className="grid grid-cols-[40px_1fr] items-start gap-3 sm:grid-cols-[44px_1fr] sm:gap-4">
                       <Icon />
                       <div className="min-w-0">
-                        <div className="text-lg leading-tight text-text-primary sm:text-2xl md:text-3xl">
-                          {displayValue}
-                        </div>
-                        <div className="mt-2 text-[10px] uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
-                          {label}
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-        </div>
+	                        <div className="text-lg leading-tight text-text-primary sm:text-2xl md:text-3xl">
+	                          {displayValue}
+	                        </div>
+	                        <div className="mt-2 text-[10px] font-mono leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
+	                          {label}
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </li>
+	                  );
+	                })}
+	              </ul>
+
+	              <p className="mt-8 text-xs leading-relaxed text-text-secondary/60">
+	                Metrics reflect cumulative impact across broadcast, digital, and editorial work for enterprise
+	                brands.
+	              </p>
+	            </div>
+	          </div>
+	        </div>
       </div>
     </section>
   );
