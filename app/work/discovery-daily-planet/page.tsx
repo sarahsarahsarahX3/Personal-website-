@@ -35,15 +35,15 @@ type SocialEmbed = {
 const project = {
   title: "Discovery Channel: Daily Planet",
   subtitle: "Science News Magazine Series",
-  roleTitle: "Production Intern",
+  roleTitle: "Production Assistant (Internship)",
   overview:
     "Supported production and editorial workflows for Daily Planet, Discovery Channel’s flagship science and technology series. Contributed to fast-paced, high-volume broadcast production by helping translate complex scientific topics into clear, accurate, and engaging storytelling across multiple weekly segments.",
-  roleScope: ["Broadcast newsroom support for a daily science news program."],
+  roleScope: [],
   snapshot: [
-    { label: "Format", value: "Broadcast Television Series" },
-    { label: "Production Model", value: "5 Episodes Per Week" },
-    { label: "Viewership", value: "1.3M+ Weekly Viewers" },
-    { label: "Editorial Focus", value: "Science · Technology · Innovation · Wildlife" },
+    { label: "Format", value: "Television broadcast series" },
+    { label: "Production Model", value: "Five episodes per week" },
+    { label: "Viewership", value: "1.3M+ weekly viewers" },
+    { label: "Editorial Focus", value: "Science · Technology · Innovation · Animal · Wildlife · Environment" },
   ] satisfies SnapshotRow[],
   editorialFocus: [
     "Contributed story ideas during daily editorial pitch meetings, shaping segment direction within a fast-paced broadcast newsroom.",
@@ -122,9 +122,9 @@ const sectionLinks: SectionLink[] = [
 ];
 
 const headerImage = {
-  title: "DAILY PLANET ON-SET STUDIO",
+  title: "DAILY PLANET SOUNDSTAGE",
   src: "/Daily%20Planet%20Set.jpg",
-  alt: "Daily Planet on-set studio frame",
+  alt: "Daily Planet soundstage frame",
 } as const;
 
 const dailyPlanetClips = [
