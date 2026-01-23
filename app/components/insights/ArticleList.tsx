@@ -251,7 +251,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
             {showBackToTop ? (
                 <button
                     type="button"
-                    className="fixed bottom-28 right-6 z-50 px-4 py-2 rounded-full border border-white/10 bg-surface/80 backdrop-blur-xl text-xs uppercase tracking-widest text-text-secondary hover:bg-white/10 hover:border-white/20 hover:text-text-primary transition-colors"
+                    className="fixed right-6 z-40 bottom-[calc(env(safe-area-inset-bottom)+7rem)] md:bottom-28 px-4 py-2 rounded-full border border-white/10 bg-surface/80 backdrop-blur-xl text-xs uppercase tracking-widest text-text-secondary hover:bg-white/10 hover:border-white/20 hover:text-text-primary transition-colors"
                     onClick={() => {
                         emitAnalytics("back_to_top_click", {});
                         window.scrollTo({ top: 0, behavior: "smooth" });
