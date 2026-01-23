@@ -52,14 +52,6 @@ export function HomeFooter() {
       <div className="relative mx-auto w-full max-w-6xl px-6 pt-16 pb-28 md:pt-20 md:pb-20">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
           <div className="max-w-2xl">
-            <button
-              type="button"
-              onClick={scrollToTop}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/40 px-4 py-2 text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
-            >
-              <ArrowUpIcon />
-              Back to top
-            </button>
             <h2 className="mt-3 font-display text-3xl md:text-4xl tracking-tight leading-[1.05]">
               Thanks for scrolling.
             </h2>
@@ -67,9 +59,14 @@ export function HomeFooter() {
 
           <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-7">
             <div className="flex items-center justify-between gap-4">
-              <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                Quick Links
-              </p>
+              <button
+                type="button"
+                onClick={scrollToTop}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/40 px-4 py-2 text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+              >
+                <ArrowUpIcon />
+                Back to top
+              </button>
             </div>
 
             <div className="mt-6 border-t border-white/10 pt-6">
