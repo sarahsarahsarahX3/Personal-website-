@@ -38,7 +38,7 @@ const project = {
   roleTitle: "Production Assistant (Internship)",
   overview:
     "Supported production and editorial workflows for Daily Planet, Discovery Channel’s flagship science and technology series. Contributed to fast-paced, high-volume broadcast production by helping translate complex scientific topics into clear, accurate, and engaging storytelling across multiple weekly segments.",
-  roleScope: [],
+  roleScope: [] as string[],
   snapshot: [
     { label: "Format", value: "Television broadcast series" },
     { label: "Production Model", value: "Five episodes per week" },
