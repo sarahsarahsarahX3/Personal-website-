@@ -98,7 +98,7 @@ export default async function WorkPage() {
                         Selected Work
                     </h1>
                     <p className="text-text-secondary text-xl max-w-xl md:max-w-none md:whitespace-nowrap animate-fade-in-up delay-200">
-                        A selection of work across campaigns, content, and digital platforms.
+                        Explore a selection of my work across campaigns, content, and digital platforms.
                     </p>
                 </header>
 
