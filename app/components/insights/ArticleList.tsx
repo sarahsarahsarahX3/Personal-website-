@@ -22,6 +22,27 @@ interface Article {
     performance?: string[];
 }
 
+function ArticleThumbnail({ src, alt }: { src: string; alt: string }) {
+    const fallbackSrc = "/images/IMG_5668_edited.jpg";
+    const [currentSrc, setCurrentSrc] = useState(src);
+
+    useEffect(() => {
+        setCurrentSrc(src);
+    }, [src]);
+
+    return (
+        <Image
+            src={currentSrc}
+            alt={alt}
+            fill
+            className="object-cover object-center"
+            sizes="(min-width: 768px) 240px, calc(100vw - 5rem)"
+            quality={75}
+            onError={() => setCurrentSrc(fallbackSrc)}
+        />
+    );
+}
+
 function isHiddenTag(tag: string) {
     const normalized = tag.trim().toLowerCase();
     return normalized === "thought leadership" || normalized === "though leadership";
@@ -141,13 +162,9 @@ export function ArticleList({ articles }: { articles: Article[] }) {
 
                                 <div className="grid grid-cols-1 md:grid-cols-[240px_1fr_auto] gap-6 md:items-center">
                                     <div className="relative overflow-hidden rounded-lg bg-surface-secondary aspect-[4/3] shrink-0">
-                                        <Image
+                                        <ArticleThumbnail
                                             src={article.thumbnail ?? "/images/IMG_5668_edited.jpg"}
                                             alt={`${article.title} thumbnail`}
-                                            fill
-                                            className="object-cover object-center"
-                                            sizes="(min-width: 768px) 240px, calc(100vw - 5rem)"
-                                            quality={75}
                                         />
                                     </div>
 
