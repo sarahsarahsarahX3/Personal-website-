@@ -55,6 +55,30 @@ export default async function InsightsPage() {
         else kept.push(article);
     });
 
+    // Manual ordering adjustments (small nudges without fully resorting the page).
+    const shiftDownRequests = [
+        { link: "https://www.probeautycentral.saloncentric.com/artist-spotlight-philip-wolff", by: 5 },
+    ] as const;
+
+    function shiftDown<T extends { link?: string }>(items: T[], link: string, by: number) {
+        if (by <= 0) return items;
+        const index = items.findIndex((item) => item.link === link);
+        if (index === -1) return items;
+
+        const nextIndex = Math.min(index + by, items.length - 1);
+        if (nextIndex === index) return items;
+
+        const clone = [...items];
+        const [entry] = clone.splice(index, 1);
+        clone.splice(nextIndex, 0, entry);
+        return clone;
+    }
+
+    const adjustedKept = shiftDownRequests.reduce(
+        (items, request) => shiftDown(items, request.link, request.by),
+        kept
+    );
+
     moved.sort((a, b) => {
         const ai = a.link ? moveIndex.get(a.link) : undefined;
         const bi = b.link ? moveIndex.get(b.link) : undefined;
@@ -64,7 +88,7 @@ export default async function InsightsPage() {
         return ai - bi;
     });
 
-    const orderedArticles = [...kept, ...moved];
+    const orderedArticles = [...adjustedKept, ...moved];
 
     return (
         <main className="min-h-screen pt-32 pb-40 px-6">
