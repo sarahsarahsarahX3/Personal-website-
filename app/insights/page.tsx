@@ -22,12 +22,20 @@ export default async function InsightsPage() {
         performance: article.performance
     }));
 
+    // Remove specific articles from the landing page.
+    const hiddenLinks = new Set([
+        "https://www.probeautycentral.saloncentric.com/aanhpi-coffee-and-culture-fireside-chat",
+        "https://www.probeautycentral.saloncentric.com/national-lipstick-day-2023",
+    ]);
+
+    const visibleArticles = formattedArticles.filter((article) => !hiddenLinks.has(article.link));
+
     // Move "The 9 Best Sunscreens For Your Client’s Skin Concerns" to the end of the list.
     const sunscreensSlug = "new-article-9";
-    const sunscreensIndex = formattedArticles.findIndex((article) => article.slug === sunscreensSlug);
+    const sunscreensIndex = visibleArticles.findIndex((article) => article.slug === sunscreensSlug);
     if (sunscreensIndex !== -1) {
-        const [sunscreensArticle] = formattedArticles.splice(sunscreensIndex, 1);
-        if (sunscreensArticle) formattedArticles.push(sunscreensArticle);
+        const [sunscreensArticle] = visibleArticles.splice(sunscreensIndex, 1);
+        if (sunscreensArticle) visibleArticles.push(sunscreensArticle);
     }
 
     return (
@@ -42,7 +50,7 @@ export default async function InsightsPage() {
                     </p>
                 </header>
 
-                <ArticleList articles={formattedArticles} />
+                <ArticleList articles={visibleArticles} />
             </div>
         </main>
     );
