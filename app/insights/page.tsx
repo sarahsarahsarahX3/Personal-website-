@@ -25,7 +25,9 @@ export default async function InsightsPage() {
     // Remove specific articles from the landing page.
     const hiddenLinks = new Set([
         "https://www.probeautycentral.saloncentric.com/aanhpi-coffee-and-culture-fireside-chat",
+        "https://www.probeautycentral.saloncentric.com/maria-nila-bee-friendly-year",
         "https://www.probeautycentral.saloncentric.com/national-lipstick-day-2023",
+        "https://www.probeautycentral.saloncentric.com/trevor-project-itsa10-partnership",
     ]);
 
     const visibleArticles = formattedArticles.filter((article) => !hiddenLinks.has(article.link));
