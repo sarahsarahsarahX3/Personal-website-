@@ -80,7 +80,7 @@ export function ProjectCard({
             <Link
                 href={`/work/${slug}`}
                 className={cn(
-                    "grid h-full w-full grid-rows-[minmax(0,1fr)_minmax(0,1fr)] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
+                    "grid h-full w-full grid-rows-[minmax(0,0.9fr)_minmax(0,1.1fr)] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
                     className
                 )}
                 aria-label={`${title} project page`}
@@ -121,8 +121,8 @@ export function ProjectCard({
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/35" />
                 </div>
 
-                <div className="relative min-h-0 overflow-hidden p-5 md:p-6">
-                    <div className="flex h-full min-h-0 flex-col gap-4">
+                <div className="relative min-h-0 overflow-hidden border-t border-white/10 bg-surface/15 p-5 md:p-6">
+                    <div className="flex h-full min-h-0 flex-col gap-3">
                         <div className="flex min-w-0 items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/70">
                             <span className="shrink-0 text-accent">Project {displayIndex}</span>
                             <span className="shrink-0 text-text-secondary/30">ᐧ</span>
@@ -175,18 +175,20 @@ export function ProjectCard({
                         ) : null}
 
                         {displayTags ? (
-                            <div className="flex flex-wrap items-center gap-2 text-xs">
-                                <span className="text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/60">
+                            <div className="flex min-w-0 items-center gap-2 text-xs">
+                                <span className="shrink-0 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/60">
                                     Tags:
                                 </span>
-                                {displayTags.slice(0, 6).map((tag) => (
-                                    <span
-                                        key={tag}
-                                        className="inline-flex items-center rounded-full border border-white/10 bg-surface/40 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-text-secondary/80"
-                                    >
-                                        {tag}
-                                    </span>
-                                ))}
+                                <div className="flex min-w-0 flex-1 flex-nowrap items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+                                    {displayTags.slice(0, 6).map((tag) => (
+                                        <span
+                                            key={tag}
+                                            className="shrink-0 inline-flex items-center rounded-full border border-white/10 bg-surface/40 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-text-secondary/80"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
                         ) : null}
 
