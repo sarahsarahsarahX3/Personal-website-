@@ -12,6 +12,10 @@ interface Project {
     size?: "large" | "small" | "tall";
     slug: string;
     tags?: string[];
+    contentTags?: string[];
+    brand?: string;
+    number?: number;
+    filterCategory?: "Campaign" | "Editorial" | "Production" | "Strategy";
     year?: string;
     description?: string;
 }
@@ -30,23 +34,13 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
     const filteredProjects = projects.filter((project) => {
         if (activeCategory === "All") return true;
 
-        const tags = project.tags ?? [];
+        const filterCategory = project.filterCategory;
+        if (filterCategory) return filterCategory === activeCategory;
 
-        if (activeCategory === "Campaign") {
-            return project.category === "Campaigns" || tags.includes("Campaigns");
-        }
-
-        if (activeCategory === "Editorial") {
-            return project.category === "Editorial Operations" || tags.includes("Editorial Operations") || tags.includes("Copywriting");
-        }
-
-        if (activeCategory === "Production") {
-            return project.category === "Multimedia Production" || tags.includes("Multimedia Production");
-        }
-
-        if (activeCategory === "Strategy") {
-            return project.category === "Content Strategy" || tags.includes("Content Strategy") || tags.includes("SEO & AEO");
-        }
+        if (activeCategory === "Campaign") return project.category === "Campaigns";
+        if (activeCategory === "Editorial") return project.category === "Editorial Operations";
+        if (activeCategory === "Production") return project.category === "Multimedia Production";
+        if (activeCategory === "Strategy") return project.category === "Content Strategy";
 
         return false;
     });
@@ -96,12 +90,15 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                         >
                             <ProjectCard
                                 index={index}
+                                number={project.number}
                                 image={project.image}
                                 title={project.title}
+                                brand={project.brand}
                                 category={project.category}
                                 slug={project.slug}
                                 year={project.year}
                                 description={project.description}
+                                contentTags={project.contentTags ?? project.tags}
                                 className="h-full"
                             />
                         </motion.div>

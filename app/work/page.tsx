@@ -8,6 +8,10 @@ type WorkProject = {
     size?: "large" | "small" | "tall";
     slug: string;
     tags?: string[];
+    contentTags?: string[];
+    brand?: string;
+    number?: number;
+    filterCategory?: "Campaign" | "Editorial" | "Production" | "Strategy";
     year?: string;
     description?: string;
 };
@@ -31,23 +35,29 @@ export default async function WorkPage() {
 
     projects.unshift({
         title: "Mighty Cruise Ships",
+        brand: "Discovery Channel",
         category: "Multimedia Production",
         image: "/Mighty%20Cruise%20Ships%20Project%20Thumbnail.png",
         size: "small",
         slug: "discovery-mighty-cruise-ships",
         tags: ["Multimedia Production", "Brand Storytelling"],
+        number: 3,
+        filterCategory: "Production",
         year: "2020",
         description:
             "A documentary exploring the world’s first hybrid-powered cruise ship.",
     });
 
     projects.splice(3, 0, {
-        title: "Discovery Channel: Daily Planet",
+        title: "Daily Planet",
+        brand: "Discovery Channel",
         category: "Multimedia Production",
         image: "/Daily%20Planet%20-%20Future%20Tech%20Week.jpeg",
         size: "small",
         slug: "discovery-daily-planet",
         tags: ["Multimedia Production", "Brand Storytelling"],
+        number: 4,
+        filterCategory: "Production",
         year: "2018",
         description:
             "A television series covering breaking news in science, tech, innovation, and wildlife.",
@@ -55,36 +65,46 @@ export default async function WorkPage() {
 
 
     projects.unshift({
-        title: "SalonCentric x New York Fashion",
+        title: "New York Fashion Week SS 2024",
+        brand: "SalonCentric",
         category: "Campaigns",
         image: "/NYFW%20Project%20thumbnail.png",
         size: "small",
         slug: "saloncentric-nyfw",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
+        number: 2,
+        filterCategory: "Campaign",
         year: "2024",
         description:
             "A live fashion week activation and multi-channel brand campaign.",
     });
 
     projects.unshift({
-        title: "Procter & Gamble - HairCode",
+        title: "HairCode Content Hub",
+        brand: "Procter & Gamble",
         category: "Content Strategy",
         image: "/HairCode%20thumbnail%204.png",
         size: "large",
         slug: "p-and-g-beauty-content-hub",
         tags: ["Content Strategy", "Copywriting", "Brand Storytelling"],
+        contentTags: ["SEO", "AEO", "Editorial", "Service Journalism"],
+        number: 1,
+        filterCategory: "Strategy",
         year: "2025",
         description:
             "An editorial content hub focused on hair science and education.",
     });
 
     projects.push({
-        title: "SalonCentric x AANHPI Heritage Month",
+        title: "AANHPI Heritage Month",
+        brand: "SalonCentric",
         category: "Campaigns",
         image: "/images/Thumbnail_New_AANHPI.png",
         size: "small",
         slug: "saloncentric-aanhpi",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
+        number: 5,
+        filterCategory: "Campaign",
         year: "2024",
         description:
             "An integrated campaign celebrating AANHPI Heritage Month.",

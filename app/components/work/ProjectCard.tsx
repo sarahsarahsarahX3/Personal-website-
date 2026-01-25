@@ -10,17 +10,41 @@ interface ProjectCardProps {
     category: string;
     image?: string;
     index: number;
+    number?: number;
+    brand?: string;
+    contentTags?: string[];
     slug: string;
     year?: string;
     description?: string;
     className?: string; // Add className prop
 }
 
-function formatIndex(index: number) {
-    return String(index + 1).padStart(2, "0");
+function formatIndex(value: number) {
+    return String(value).padStart(2, "0");
 }
 
-export function ProjectCard({ title, category, image, index, slug, year, description, className }: ProjectCardProps) {
+function formatCategoryLabel(category: string) {
+    const normalized = category.trim().toLowerCase();
+    if (normalized === "campaigns") return "Campaign";
+    if (normalized === "content strategy") return "Strategy";
+    if (normalized === "editorial operations") return "Editorial";
+    if (normalized === "multimedia production") return "Production";
+    return category;
+}
+
+export function ProjectCard({
+    title,
+    category,
+    image,
+    index,
+    number,
+    brand,
+    contentTags,
+    slug,
+    year,
+    description,
+    className,
+}: ProjectCardProps) {
     const isRemoteImage = typeof image === "string" && /^https?:\/\//.test(image);
     const hasImage = typeof image === "string" && image.trim().length > 0;
     const imagePositionClassName =
@@ -36,7 +60,11 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
     const shouldItalicizeDiscoverySubtitle =
         slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet";
     const discoveryTitleParts = shouldItalicizeDiscoverySubtitle ? title.split(":") : null;
-    const italicizeWholeTitle = slug === "discovery-mighty-cruise-ships" && !title.includes(":");
+    const italicizeWholeTitle =
+        (slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet") && !title.includes(":");
+    const displayCategory = formatCategoryLabel(category);
+    const displayIndex = formatIndex(number ?? index + 1);
+    const displayTags = (contentTags ?? []).length > 0 ? contentTags : undefined;
 
     return (
         <motion.article
@@ -94,14 +122,14 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                 </div>
 
                 <div className="relative min-h-0 overflow-hidden p-5 md:p-6">
-                    <div className="grid h-full min-h-0 grid-rows-[auto_auto_1fr_auto] gap-4">
+                    <div className="flex h-full min-h-0 flex-col gap-4">
                         <div className="flex min-w-0 items-center gap-2 text-xs uppercase tracking-[0.24em] text-white/70">
-                            <span className="shrink-0 text-accent">Project {formatIndex(index)}</span>
-                            <span className="shrink-0 text-white/25">•</span>
-                            <span className="min-w-0 truncate text-white/70">{category}</span>
+                            <span className="shrink-0 text-accent">Project {displayIndex}</span>
+                            <span className="shrink-0 text-white/25">ᐧ</span>
+                            <span className="min-w-0 truncate text-white/70">{displayCategory}</span>
                             {year ? (
                                 <>
-                                    <span className="shrink-0 text-white/25">•</span>
+                                    <span className="shrink-0 text-white/25">ᐧ</span>
                                     <span className="shrink-0 text-white/50">{year}</span>
                                 </>
                             ) : null}
@@ -128,6 +156,10 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                             )}
                         </h3>
 
+                        {brand ? (
+                            <p className="text-sm tracking-tight text-text-secondary">{brand}</p>
+                        ) : null}
+
                         {description ? (
                             <p
                                 className="max-w-[60ch] text-sm leading-relaxed text-text-secondary"
@@ -140,6 +172,22 @@ export function ProjectCard({ title, category, image, index, slug, year, descrip
                             >
                                 {description}
                             </p>
+                        ) : null}
+
+                        {displayTags ? (
+                            <div className="flex flex-wrap items-center gap-2 text-xs">
+                                <span className="text-xs font-mono uppercase tracking-[0.24em] text-white/50">
+                                    Tags:
+                                </span>
+                                {displayTags.slice(0, 6).map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-white/70"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
                         ) : null}
 
                         <div className="mt-auto flex items-center justify-end gap-2 text-white/70 transition-colors group-hover:text-white">
