@@ -1184,6 +1184,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
   const progress = useScrollProgress();
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
+  const roleScopeSummary = project.roleScope.at(0);
 
   const snapshotCards = useMemo(() => project.snapshot, []);
   const [activeImpactId, setActiveImpactId] = useState(project.impactKpis[0]?.id ?? "");
@@ -1224,14 +1225,14 @@ export default function DiscoveryDailyPlanetProjectPage() {
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
-                  <div className="mt-8 border-t border-white/10 pt-6">
-                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
-                    <p className="mt-2 text-base text-text-secondary">{project.roleTitle}</p>
-                    {project.roleScope[0] ? (
-                      <p className="mt-3 text-sm leading-relaxed text-text-secondary">{project.roleScope[0]}</p>
-                    ) : null}
-                  </div>
-                </div>
+	                  <div className="mt-8 border-t border-white/10 pt-6">
+	                    <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
+	                    <p className="mt-2 text-base text-text-secondary">{project.roleTitle}</p>
+	                    {roleScopeSummary ? (
+	                      <p className="mt-3 text-sm leading-relaxed text-text-secondary">{roleScopeSummary}</p>
+	                    ) : null}
+	                  </div>
+	                </div>
 
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Project snapshot</p>
