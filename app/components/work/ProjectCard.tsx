@@ -73,7 +73,7 @@ export function ProjectCard({
             transition={{ delay: index * 0.1, duration: 0.5 }}
             viewport={{ once: true }}
             className={cn(
-                "group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/40 transition-colors hover:border-white/20",
+                "group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-alt/10 transition-colors hover:border-white/20",
                 className
             )}
         >
@@ -123,20 +123,20 @@ export function ProjectCard({
 
                 <div className="relative min-h-0 overflow-hidden p-5 md:p-6">
                     <div className="flex h-full min-h-0 flex-col gap-4">
-                        <div className="flex min-w-0 items-center gap-2 text-xs uppercase tracking-[0.24em] text-white/70">
+                        <div className="flex min-w-0 items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/70">
                             <span className="shrink-0 text-accent">Project {displayIndex}</span>
-                            <span className="shrink-0 text-white/25">ᐧ</span>
-                            <span className="min-w-0 truncate text-white/70">{displayCategory}</span>
+                            <span className="shrink-0 text-text-secondary/30">ᐧ</span>
+                            <span className="min-w-0 truncate text-text-secondary/70">{displayCategory}</span>
                             {year ? (
                                 <>
-                                    <span className="shrink-0 text-white/25">ᐧ</span>
-                                    <span className="shrink-0 text-white/50">{year}</span>
+                                    <span className="shrink-0 text-text-secondary/30">ᐧ</span>
+                                    <span className="shrink-0 text-text-secondary/60">{year}</span>
                                 </>
                             ) : null}
                         </div>
 
                         <h3
-                            className="font-display text-[1.35rem] leading-[1.15] text-white/90 transition-colors group-hover:text-white sm:text-[1.5rem] md:text-[1.6rem]"
+                            className="font-display text-[1.35rem] leading-[1.15] text-text-primary/90 transition-colors group-hover:text-text-primary sm:text-[1.5rem] md:text-[1.6rem]"
                             style={{
                                 display: "-webkit-box",
                                 WebkitBoxOrient: "vertical",
@@ -176,13 +176,13 @@ export function ProjectCard({
 
                         {displayTags ? (
                             <div className="flex flex-wrap items-center gap-2 text-xs">
-                                <span className="text-xs font-mono uppercase tracking-[0.24em] text-white/50">
+                                <span className="text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/60">
                                     Tags:
                                 </span>
                                 {displayTags.slice(0, 6).map((tag) => (
                                     <span
                                         key={tag}
-                                        className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-white/70"
+                                        className="inline-flex items-center rounded-full border border-white/10 bg-surface/40 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-text-secondary/80"
                                     >
                                         {tag}
                                     </span>
@@ -190,11 +190,11 @@ export function ProjectCard({
                             </div>
                         ) : null}
 
-                        <div className="mt-auto flex items-center justify-end gap-2 text-white/70 transition-colors group-hover:text-white">
-                            <span className="text-xs uppercase tracking-[0.2em] text-white/40 group-hover:text-white/60">
+                        <div className="mt-auto flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
+                            <span className="text-xs font-mono uppercase tracking-[0.2em] text-text-secondary/60 group-hover:text-text-secondary/80">
                                 View
                             </span>
-                            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 backdrop-blur-md transition-transform duration-300 group-hover:scale-105">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-surface/40 backdrop-blur-md transition-transform duration-300 group-hover:scale-105">
                                 <ArrowUpRight
                                     size={18}
                                     className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
