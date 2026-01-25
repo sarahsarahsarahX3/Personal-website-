@@ -18,21 +18,38 @@ interface Project {
 
 const categories = [
     "All",
-    "Campaigns",
-    "Content Strategy",
-    "Copywriting",
-    "Multimedia Production",
-    "Editorial Operations",
+    "Campaign",
+    "Editorial",
+    "Production",
+    "Strategy",
 ];
 
 export function WorkBrowser({ projects }: { projects: Project[] }) {
     const [activeCategory, setActiveCategory] = useState("All");
 
-    const filteredProjects = projects.filter(project =>
-        activeCategory === "All" ||
-        project.category === activeCategory ||
-        (project.tags ?? []).includes(activeCategory)
-    );
+    const filteredProjects = projects.filter((project) => {
+        if (activeCategory === "All") return true;
+
+        const tags = project.tags ?? [];
+
+        if (activeCategory === "Campaign") {
+            return project.category === "Campaigns" || tags.includes("Campaigns");
+        }
+
+        if (activeCategory === "Editorial") {
+            return project.category === "Editorial Operations" || tags.includes("Editorial Operations") || tags.includes("Copywriting");
+        }
+
+        if (activeCategory === "Production") {
+            return project.category === "Multimedia Production" || tags.includes("Multimedia Production");
+        }
+
+        if (activeCategory === "Strategy") {
+            return project.category === "Content Strategy" || tags.includes("Content Strategy") || tags.includes("SEO & AEO");
+        }
+
+        return false;
+    });
 
     return (
         <>
