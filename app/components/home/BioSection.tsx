@@ -184,7 +184,7 @@ function MarketsIcon() {
 
 const HIGHLIGHTS: readonly Highlight[] = [
   { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
-  { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 100 Companies" },
+  { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 500 Brands" },
   { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views Generated" },
   { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand & Creator Partnerships" },
   { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets Produced Annually" },
