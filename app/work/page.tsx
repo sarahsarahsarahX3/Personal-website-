@@ -34,49 +34,52 @@ export default async function WorkPage() {
     }));
 
     projects.unshift({
-        title: "Mighty Cruise Ships",
+        title: "Mighty Cruise Ships, “MS Roald Amundsen”",
         brand: "Discovery Channel",
         category: "Multimedia Production",
         image: "/Mighty%20Cruise%20Ships%20Project%20Thumbnail.png",
         size: "small",
         slug: "discovery-mighty-cruise-ships",
         tags: ["Multimedia Production", "Brand Storytelling"],
+        contentTags: ["Documentary Production", "Travel Journalism", "Global Audience"],
         number: 3,
         filterCategory: "Production",
         year: "2020",
         description:
-            "A documentary exploring the world’s first hybrid-powered cruise ship.",
+            "A documentary featuring the world’s first hybrid-powered cruise ship and its voyage across Antarctica.",
     });
 
     projects.splice(3, 0, {
-        title: "Daily Planet",
+        title: "Daily Planet, Season 23",
         brand: "Discovery Channel",
         category: "Multimedia Production",
         image: "/Daily%20Planet%20-%20Future%20Tech%20Week.jpeg",
         size: "small",
         slug: "discovery-daily-planet",
         tags: ["Multimedia Production", "Brand Storytelling"],
+        contentTags: ["Science Journalism", "Broadcast Production", "Editorial"],
         number: 4,
         filterCategory: "Production",
         year: "2018",
         description:
-            "A television series covering breaking news in science, tech, innovation, and wildlife.",
+            "A television series delivering news and features on science, technology, innovation, wildlife, and environmental discovery.",
     });
 
 
     projects.unshift({
-        title: "New York Fashion Week SS 2024",
-        brand: "SalonCentric",
+        title: "SalonCentric x New York Fashion Week",
+        brand: "L’Oréal USA",
         category: "Campaigns",
         image: "/NYFW%20Project%20thumbnail.png",
         size: "small",
         slug: "saloncentric-nyfw",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
+        contentTags: ["Editorial", "Brand Journalism", "Cultural Storytelling"],
         number: 2,
         filterCategory: "Campaign",
         year: "2024",
         description:
-            "A live fashion week activation and multi-channel brand campaign.",
+            "An integrated brand campaign covering a trailblazing cultural event for SalonCentric at NYFW.",
     });
 
     projects.unshift({
@@ -92,22 +95,23 @@ export default async function WorkPage() {
         filterCategory: "Strategy",
         year: "2025",
         description:
-            "An editorial content hub focused on hair science and education.",
+            "An editorial content hub focused on hair science and product education.",
     });
 
     projects.push({
-        title: "AANHPI Heritage Month",
-        brand: "SalonCentric",
+        title: "SalonCentric x AANHPI Heritage Month",
+        brand: "L’Oréal USA",
         category: "Campaigns",
         image: "/images/Thumbnail_New_AANHPI.png",
         size: "small",
         slug: "saloncentric-aanhpi",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
+        contentTags: ["Integrated Campaigns", "Cultural Storytelling", "Experiential Events", "Influencer Partnerships"],
         number: 5,
         filterCategory: "Campaign",
         year: "2024",
         description:
-            "An integrated campaign celebrating AANHPI Heritage Month.",
+            "A cultural storytelling campaign integrating influencer voices, brand partnerships, and experiential activation.",
     });
 
     return (
