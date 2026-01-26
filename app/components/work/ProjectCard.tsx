@@ -193,7 +193,7 @@ export function ProjectCard({
                             >
                                 {displayTags.slice(0, 6).map((tag) => (
                                     <li key={tag} className="shrink-0">
-                                        <span className="inline-flex items-center rounded-full border border-white/10 bg-surface/40 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-text-secondary/80">
+                                        <span className="inline-flex items-center rounded-full border border-white/10 bg-surface/40 px-2 py-0.5 text-[9px] font-mono uppercase tracking-[0.22em] text-text-secondary/80">
                                             {tag}
                                         </span>
                                     </li>
