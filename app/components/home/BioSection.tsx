@@ -257,7 +257,7 @@ export function BioSection() {
 
 	              <ul
 	                aria-label="Highlights"
-	                className={`mt-12 mx-auto grid w-full max-w-5xl grid-cols-2 gap-x-10 gap-y-10 text-center sm:gap-x-14 sm:gap-y-12 md:grid-cols-3 md:gap-x-16 md:gap-y-14 md:text-left ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
+	                className={`mt-14 mx-auto grid w-full max-w-5xl grid-cols-2 items-start justify-items-center gap-x-10 gap-y-10 text-center sm:mt-16 sm:gap-x-14 sm:gap-y-12 md:grid-cols-3 md:justify-items-start md:gap-x-16 md:gap-y-14 md:text-left lg:gap-x-20 lg:gap-y-16 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
 	              >
                 {HIGHLIGHTS.map(({ key, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
@@ -269,14 +269,14 @@ export function BioSection() {
                   return (
                   <li
                     key={key}
-                    className={`w-full ${styles.metric}`}
+                    className={`w-full max-w-[22ch] md:max-w-none ${styles.metric}`}
                     style={{ ["--i" as string]: String(index) }}
                   >
                     <div className="min-w-0">
                       <div className="font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-none text-text-primary">
                         {displayValue}
                       </div>
-                      <div className="mt-3 text-[10px] sm:text-xs font-mono uppercase tracking-[0.22em] text-text-secondary/70">
+                      <div className="mt-2.5 text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] text-text-secondary/75 leading-snug">
                         {label}
                       </div>
                     </div>
