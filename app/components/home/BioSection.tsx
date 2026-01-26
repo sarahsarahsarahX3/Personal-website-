@@ -366,7 +366,7 @@ export function BioSection() {
 
 	              <ul
 	                aria-label="Highlights"
-	                className="mt-9 mx-auto grid w-full max-w-6xl grid-cols-2 gap-x-8 gap-y-10 sm:mt-10 sm:gap-x-12 sm:gap-y-12 md:grid-cols-3 md:gap-x-14"
+	                className="mt-10 mx-auto grid w-full max-w-6xl grid-cols-2 gap-4 sm:gap-5 md:mt-12 md:grid-cols-3 md:gap-6"
 	              >
                 {HIGHLIGHTS.map(({ key, Icon, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
@@ -381,16 +381,18 @@ export function BioSection() {
                     className={`w-full text-text-secondary ${styles.highlight}`}
                     style={{ ["--i" as string]: String(index) }}
                   >
-                    <div className="flex flex-col items-center text-center gap-3 sm:gap-4">
-                      <div className={styles.metricIcon} aria-hidden="true">
-                        <Icon />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="font-display text-2xl leading-none text-text-primary sm:text-3xl">
-                          {displayValue}
+                    <div className="group h-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-4 transition-colors hover:border-white/20 hover:bg-white/5 sm:px-5 sm:py-5">
+                      <div className="flex flex-col items-center text-center gap-3 sm:gap-4 md:flex-row md:items-center md:text-left">
+                        <div className={styles.metricIcon} aria-hidden="true">
+                          <Icon />
                         </div>
-                        <div className="mt-2 min-h-[2.4em] text-[10px] font-mono uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:min-h-0 sm:text-xs sm:tracking-widest">
-                          {label}
+                        <div className="min-w-0">
+                          <div className="font-display text-2xl leading-none text-text-primary sm:text-3xl">
+                            {displayValue}
+                          </div>
+                          <div className="mt-2 min-h-[2.8em] text-[10px] font-mono uppercase leading-snug tracking-[0.14em] text-text-secondary/75 sm:text-[11px] sm:tracking-[0.18em] md:min-h-0 md:tracking-[0.2em]">
+                            {label}
+                          </div>
                         </div>
                       </div>
                     </div>
