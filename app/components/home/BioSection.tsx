@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./BioSection.module.css";
 
 type Highlight = {
@@ -47,182 +47,138 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-function useSvgId(prefix: string) {
-  const raw = useId();
-  return `${prefix}-${raw.replace(/[:]/g, "")}`;
-}
-
-function IconShell({
-  uid,
-  dur = "8s",
-  delay = "0s",
-  children,
-}: {
-  uid: string;
-  dur?: string;
-  delay?: string;
-  children: React.ReactNode;
-}) {
+function YearsIcon() {
   return (
-    <svg
-      viewBox="0 0 48 48"
-      className={styles.icon}
-      aria-hidden="true"
-      style={{ ["--iconDur" as string]: dur, ["--iconDelay" as string]: delay }}
-    >
-      <defs>
-        <radialGradient id={`${uid}-panel`} cx="32%" cy="28%" r="84%">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.10)" />
-          <stop offset="40%" stopColor="rgba(255,255,255,0.05)" />
-          <stop offset="70%" stopColor="rgba(255,255,255,0.02)" />
-          <stop offset="100%" stopColor="rgba(0,0,0,0)" />
-        </radialGradient>
-
-        <linearGradient id={`${uid}-border`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.14)" />
-          <stop offset="55%" stopColor="rgba(255,255,255,0.06)" />
-          <stop offset="75%" stopColor="rgba(255,59,48,0.25)" />
-          <stop offset="100%" stopColor="rgba(255,59,48,0.06)" />
-        </linearGradient>
-
-        <linearGradient id={`${uid}-ink`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.88)" />
-          <stop offset="65%" stopColor="rgba(255,255,255,0.70)" />
-          <stop offset="100%" stopColor="rgba(255,59,48,0.72)" />
-        </linearGradient>
-
-        <filter id={`${uid}-glow`} x="-50%" y="-50%" width="200%" height="200%">
-          <feDropShadow dx="0" dy="2.5" stdDeviation="3" floodColor="rgba(0,0,0,0.55)" floodOpacity="1" />
-          <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="rgba(255,59,48,0.10)" floodOpacity="1" />
-        </filter>
-
-        <clipPath id={`${uid}-clip`}>
-          <rect x="6" y="6" width="36" height="36" rx="12" />
-        </clipPath>
-      </defs>
-
-      <g filter={`url(#${uid}-glow)`}>
-        <rect x="6" y="6" width="36" height="36" rx="12" fill={`url(#${uid}-panel)`} className={styles.panelBase} />
-        <rect
-          x="6"
-          y="6"
-          width="36"
-          height="36"
-          rx="12"
-          fill="none"
-          stroke={`url(#${uid}-border)`}
-          strokeWidth="1.2"
-          className={styles.panelBorder}
-        />
-
-        <g clipPath={`url(#${uid}-clip)`}>
-          <g className={styles.glyphWrap}>{children}</g>
-          <path
-            d="M-10 8 L20 -10 L60 30 L30 52 Z"
-            className={styles.sheen}
-            fill="rgba(255,255,255,0.08)"
-          />
-        </g>
-
-        <circle cx="14" cy="14" r="1.6" className={styles.accentDot} />
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
+      <path d="M24 14v10l7 4" className={styles.stroke} />
+      <g className={styles.orbit}>
+        <circle cx="24" cy="8" r="2.2" className={styles.accentFill} />
       </g>
     </svg>
   );
 }
 
-function YearsIcon() {
-  const uid = useSvgId("bio-years");
-  return (
-    <IconShell uid={uid} dur="9.5s" delay="-1.4s">
-      <circle cx="24" cy="24" r="10" className={styles.strokeMuted} />
-      <path d="M24 24V16.5" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
-      <path d="M24 24L30 27" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.86" />
-      <circle cx="24" cy="24" r="2.1" className={styles.coreDot} />
-      <circle
-        cx="24"
-        cy="24"
-        r="10"
-        className={styles.traceRing}
-        strokeLinecap="round"
-        strokeDasharray="6 52"
-      />
-    </IconShell>
-  );
-}
-
 function BrandsIcon() {
-  const uid = useSvgId("bio-fortune");
   return (
-    <IconShell uid={uid} dur="10.5s" delay="-2.1s">
-      <path
-        d="M24 14.5l9.2 5.3v9.1L24 33.4l-9.2-4.5v-9.1L24 14.5Z"
-        className={styles.strokeMuted}
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <rect x="12" y="12" width="24" height="24" rx="8" className={styles.strokeSoft} />
+      <rect
+        x="16"
+        y="20"
+        width="4"
+        height="14"
+        rx="2"
+        className={styles.drift}
+        style={{ ["--delay" as string]: "0s" }}
+        fill="currentColor"
+        opacity="0.55"
       />
-      <path d="M20 25.2v6.6" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
-      <path d="M24 22.2v9.6" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.95" />
-      <path d="M28 23.8v8" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.8" />
-      <path
-        d="M24 14.5l9.2 5.3v9.1L24 33.4l-9.2-4.5v-9.1L24 14.5Z"
-        className={styles.tracePath}
-        strokeDasharray="3 11"
+      <rect
+        x="22"
+        y="16"
+        width="4"
+        height="18"
+        rx="2"
+        className={styles.drift}
+        style={{ ["--delay" as string]: "-0.6s" }}
+        fill="currentColor"
+        opacity="0.55"
       />
-    </IconShell>
+      <rect
+        x="28"
+        y="22"
+        width="4"
+        height="12"
+        rx="2"
+        className={styles.drift}
+        style={{ ["--delay" as string]: "-1.2s" }}
+        fill="currentColor"
+        opacity="0.55"
+      />
+      <path d="M18 36h12" className={styles.accentStroke} />
+    </svg>
   );
 }
 
 function ViewsIcon() {
-  const uid = useSvgId("bio-views");
   return (
-    <IconShell uid={uid} dur="8.6s" delay="-1.7s">
-      <path d="M16 28c3.6-7 7 2.6 9.2-0.6 2.2-3.2 5.8-9.2 11.8-3.2" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
-      <path d="M16 22h20" className={styles.strokeMuted} strokeDasharray="2 5" />
-      <path
-        d="M16 28c3.6-7 7 2.6 9.2-0.6 2.2-3.2 5.8-9.2 11.8-3.2"
-        className={styles.tracePath}
-        strokeDasharray="3 11"
-      />
-      <circle cx="16" cy="28" r="1.4" className={styles.coreDot} style={{ opacity: 0.55 }} />
-      <circle cx="25.2" cy="27.4" r="1.4" className={styles.coreDot} style={{ opacity: 0.35 }} />
-    </IconShell>
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <rect x="10" y="14" width="28" height="20" rx="6" className={styles.strokeSoft} />
+      <path d="M16 20h16" className={styles.stroke} />
+      <path d="M16 24h12" className={styles.strokeSoft} />
+      <path d="M16 28h14" className={styles.strokeSoft} />
+      <g className={styles.scan}>
+        <path d="M14 19h20" className={styles.accentStroke} />
+      </g>
+    </svg>
   );
 }
 
 function CollaborationIcon() {
-  const uid = useSvgId("bio-collab");
   return (
-    <IconShell uid={uid} dur="9.2s" delay="-2.4s">
-      <circle cx="20.5" cy="25" r="7" className={styles.strokeMuted} />
-      <circle cx="27.5" cy="23" r="7" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.92" />
-      <path d="M23.8 20.2c2.2 0 4 1.8 4 4" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.7" />
-      <circle cx="27.5" cy="23" r="7" className={styles.traceRing} strokeDasharray="7 60" strokeLinecap="round" />
-    </IconShell>
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <path d="M16 28l8-10 8 10" className={styles.strokeSoft} />
+      <path d="M16 28h16" className={styles.strokeSoft} />
+      <circle
+        cx="16"
+        cy="28"
+        r="2.6"
+        className={styles.pulse}
+        style={{ ["--delay" as string]: "0s" }}
+        fill="currentColor"
+        opacity="0.6"
+      />
+      <circle
+        cx="24"
+        cy="18"
+        r="2.6"
+        className={styles.pulse}
+        style={{ ["--delay" as string]: "-1.2s" }}
+        fill="currentColor"
+        opacity="0.6"
+      />
+      <circle
+        cx="32"
+        cy="28"
+        r="2.6"
+        className={styles.pulse}
+        style={{ ["--delay" as string]: "-2.4s" }}
+        fill="currentColor"
+        opacity="0.6"
+      />
+      <circle cx="24" cy="33" r="2.2" className={styles.accentFill} />
+    </svg>
   );
 }
 
 function AssetsIcon() {
-  const uid = useSvgId("bio-assets");
   return (
-    <IconShell uid={uid} dur="10.8s" delay="-1.1s">
-      <rect x="15" y="16" width="18" height="15" rx="4" className={styles.strokeMuted} />
-      <rect x="17.5" y="18.5" width="18" height="15" rx="4" className={styles.strokeMuted} opacity="0.55" />
-      <rect x="20" y="21" width="18" height="15" rx="4" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
-      <path d="M23.5 27h10" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.72" />
-      <rect x="20" y="21" width="18" height="15" rx="4" className={styles.tracePath} strokeDasharray="3 11" />
-    </IconShell>
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <rect x="14" y="12" width="20" height="24" rx="6" className={styles.strokeSoft} />
+      <path d="M18 18h12" className={styles.stroke} />
+      <path d="M18 22h9" className={styles.strokeSoft} />
+      <path d="M18 26h12" className={styles.strokeSoft} />
+      <path d="M18 30h10" className={styles.strokeSoft} />
+      <g className={styles.scan}>
+        <path d="M16 16h16" className={styles.accentStroke} />
+      </g>
+    </svg>
   );
 }
 
 function MarketsIcon() {
-  const uid = useSvgId("bio-markets");
   return (
-    <IconShell uid={uid} dur="11.6s" delay="-2.8s">
-      <circle cx="24" cy="24" r="10" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
-      <path d="M14 24h20" className={styles.strokeMuted} />
-      <path d="M24 14c4.4 4.7 4.4 14.3 0 20" className={styles.strokeMuted} />
-      <path d="M24 14c-4.4 4.7-4.4 14.3 0 20" className={styles.strokeMuted} opacity="0.65" />
-      <path d="M16.5 18.3c3.2-2.7 12.8-2.7 15 0" className={styles.strokeMuted} strokeDasharray="1.5 3.6" />
-      <circle cx="24" cy="24" r="10" className={styles.traceRing} strokeDasharray="5 54" strokeLinecap="round" />
-    </IconShell>
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
+      <path d="M8 24h32" className={styles.strokeSoft} />
+      <path d="M24 8c6 6 6 26 0 32" className={styles.strokeSoft} />
+      <path d="M24 8c-6 6-6 26 0 32" className={styles.strokeSoft} />
+      <g className={styles.orbit}>
+        <circle cx="24" cy="8" r="2.1" className={styles.accentFill} />
+      </g>
+      <path d="M16 31c2.2 2.2 5 3.4 8 3.4 3 0 5.8-1.2 8-3.4" className={styles.accentStroke} />
+    </svg>
   );
 }
 

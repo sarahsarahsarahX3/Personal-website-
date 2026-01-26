@@ -1,13 +1,8 @@
 .icon {
-  --iconDur: 8s;
-  --iconDelay: 0s;
-  width: 56px;
-  height: 56px;
+  --dur: 8s;
+  width: 48px;
+  height: 48px;
   display: block;
-  color: rgba(255, 255, 255, 0.82);
-  transition: filter 250ms ease, color 250ms ease, transform 250ms ease;
-  transform: translate3d(0, 0, 0);
-  will-change: transform, filter;
 }
 
 .section {
@@ -93,120 +88,118 @@
   will-change: transform, opacity;
 }
 
-.highlight:hover .icon {
-  color: rgba(255, 255, 255, 0.9);
-  filter: drop-shadow(0 0 18px rgba(255, 59, 48, 0.14));
-  transform: translate3d(0, -1px, 0);
+@media (max-width: 640px) {
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
 }
 
-.panelBase {
-  opacity: 0.95;
+.stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.7;
 }
 
-.panelBorder {
+.strokeSoft {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.35;
+}
+
+.accentStroke {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+
+.accentFill {
+  fill: var(--color-accent);
   opacity: 0.9;
 }
 
-@media (max-width: 640px) {
-  .icon {
-    width: 46px;
-    height: 46px;
-  }
+.orbit {
+  transform-origin: 24px 24px;
+  animation: rotate var(--dur) linear infinite;
 }
 
-.glyphWrap {
+.scan {
+  transform-origin: 24px 24px;
+  animation: scan var(--dur) cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.pulse {
   transform-origin: center;
-  transform-box: fill-box;
-  animation: float calc(var(--iconDur) * 0.9) ease-in-out infinite;
-  animation-delay: var(--iconDelay);
+  animation: pulse var(--dur) cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation-delay: var(--delay, 0s);
 }
 
-.strokeMain {
-  fill: none;
-  stroke-width: 1.65;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.92;
-}
-
-.strokeMuted {
-  fill: none;
-  stroke-width: 1.35;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.22;
-}
-
-.traceRing,
-.tracePath {
-  fill: none;
-  stroke: rgba(255, 59, 48, 0.75);
-  stroke-width: 1.55;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.5;
-  stroke-dashoffset: 0;
-  animation: trace var(--iconDur) linear infinite;
-  animation-delay: var(--iconDelay);
-}
-
-.coreDot {
-  fill: rgba(255, 59, 48, 0.86);
-  filter: drop-shadow(0 0 8px rgba(255, 59, 48, 0.22));
-}
-
-.accentDot {
-  fill: rgba(255, 59, 48, 0.9);
-  filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.25));
-}
-
-.sheen {
-  opacity: 0.06;
+.drift {
   transform-origin: center;
-  transform-box: fill-box;
-  animation: sheen calc(var(--iconDur) * 1.15) ease-in-out infinite;
-  animation-delay: var(--iconDelay);
+  animation: drift var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
 }
 
-.highlight:hover .sheen {
-  opacity: 0.12;
-}
-
-@keyframes trace {
+@keyframes rotate {
   from {
-    stroke-dashoffset: 0;
+    transform: rotate(0deg);
   }
   to {
-    stroke-dashoffset: -220;
+    transform: rotate(360deg);
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
+@keyframes scan {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
   }
   50% {
-    transform: translate3d(0, -0.8px, 0) rotate(-0.6deg);
+    transform: translateY(10px);
+    opacity: 0.85;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10px);
+    opacity: 0;
   }
 }
 
-@keyframes sheen {
+@keyframes pulse {
   0%,
   100% {
-    transform: translate3d(-14px, 0, 0) rotate(12deg);
+    transform: scale(1);
+    opacity: 0.55;
   }
   50% {
-    transform: translate3d(16px, 0, 0) rotate(12deg);
+    transform: scale(1.12);
+    opacity: 0.95;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .glyphWrap,
-  .traceRing,
-  .tracePath,
-  .sheen {
-    animation: none !important;
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-2px);
+    opacity: 0.9;
   }
 }
 
@@ -226,5 +219,12 @@
   .subheading::after {
     opacity: 0 !important;
     transform: none !important;
+  }
+
+  .orbit,
+  .scan,
+  .pulse,
+  .drift {
+    animation: none;
   }
 }
