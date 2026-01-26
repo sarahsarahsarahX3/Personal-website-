@@ -6,6 +6,37 @@
   color: rgba(255, 255, 255, 0.88);
 }
 
+.metricIcon {
+  position: relative;
+  overflow: hidden;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(255, 59, 48, 0.08) inset,
+    0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.metricIcon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120px 90px at 30% 20%, rgba(255, 255, 255, 0.06), transparent 55%),
+    radial-gradient(120px 90px at 70% 80%, rgba(255, 59, 48, 0.10), transparent 58%);
+  opacity: 0.9;
+}
+
+.metricIcon > * {
+  position: relative;
+  z-index: 1;
+}
+
 .section {
   overflow: clip;
   --bio-progress: 0;
@@ -93,6 +124,15 @@
   .icon {
     width: 46px;
     height: 46px;
+  }
+
+  .metricIcon {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    box-shadow:
+      0 0 0 1px rgba(255, 59, 48, 0.08) inset,
+      0 14px 32px rgba(0, 0, 0, 0.34);
   }
 }
 

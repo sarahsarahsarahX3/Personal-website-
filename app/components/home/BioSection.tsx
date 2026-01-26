@@ -382,12 +382,14 @@ export function BioSection() {
                     style={{ ["--i" as string]: String(index) }}
                   >
                     <div className="flex flex-col items-center text-center gap-3 sm:gap-4">
-                      <Icon />
+                      <div className={styles.metricIcon} aria-hidden="true">
+                        <Icon />
+                      </div>
                       <div className="min-w-0">
                         <div className="font-display text-2xl leading-none text-text-primary sm:text-3xl">
                           {displayValue}
                         </div>
-                        <div className="mt-2 text-[10px] font-mono uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
+                        <div className="mt-2 min-h-[2.4em] text-[10px] font-mono uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:min-h-0 sm:text-xs sm:tracking-widest">
                           {label}
                         </div>
                       </div>
