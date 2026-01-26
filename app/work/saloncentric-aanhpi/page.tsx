@@ -691,7 +691,7 @@ export default function SalonCentricAanhpiProjectPage() {
 	            <Section
 	              id="deliverables"
 	              title="Final Deliverables"
-	              subtitle="A snapshot of the experiential, editorial, and influencer-led content that brought the campaign to life."
+	              subtitle="A snapshot of the experiential, editorial, and influencer content that brought the campaign to life."
 	              contentClassName="mt-6"
 	            >
               <WindowFrame

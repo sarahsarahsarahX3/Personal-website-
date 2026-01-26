@@ -113,6 +113,15 @@
   opacity: 0.35;
 }
 
+.strokeFaint {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.18;
+}
+
 .accentStroke {
   fill: none;
   stroke: var(--color-accent);
@@ -120,11 +129,18 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   opacity: 0.75;
+  filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.25));
 }
 
 .accentFill {
   fill: var(--color-accent);
   opacity: 0.9;
+  filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.25));
+}
+
+.dash {
+  stroke-dashoffset: 0;
+  animation: dash var(--dur) linear infinite;
 }
 
 .orbit {
@@ -203,6 +219,15 @@
   }
 }
 
+@keyframes dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .headshot,
   .body,
@@ -224,7 +249,8 @@
   .orbit,
   .scan,
   .pulse,
-  .drift {
+  .drift,
+  .dash {
     animation: none;
   }
 }

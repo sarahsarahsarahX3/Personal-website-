@@ -50,10 +50,31 @@ function easeOutCubic(t: number) {
 function YearsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <circle
+        cx="24"
+        cy="24"
+        r="19"
+        className={`${styles.strokeFaint} ${styles.dash}`}
+        strokeDasharray="1.2 4.8"
+      />
       <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
-      <path d="M24 14v10l7 4" className={styles.stroke} />
+      <circle
+        cx="24"
+        cy="24"
+        r="16"
+        className={`${styles.accentStroke} ${styles.dash}`}
+        strokeDasharray="14 160"
+        style={{ opacity: 0.55 }}
+      />
+      <circle cx="24" cy="24" r="12.5" className={styles.strokeFaint} strokeDasharray="0.8 4.1" />
+      <path d="M24 13.5v10.8l7.4 4.3" className={styles.stroke} />
+      <path d="M24 10.5v2.5" className={styles.strokeFaint} />
+      <path d="M24 35v2.5" className={styles.strokeFaint} />
+      <path d="M10.5 24h2.5" className={styles.strokeFaint} />
+      <path d="M35 24h2.5" className={styles.strokeFaint} />
       <g className={styles.orbit}>
-        <circle cx="24" cy="8" r="2.2" className={styles.accentFill} />
+        <circle cx="24" cy="6.5" r="2" className={styles.accentFill} />
+        <circle cx="24" cy="41.5" r="1.3" className={styles.accentFill} style={{ opacity: 0.55 }} />
       </g>
     </svg>
   );
@@ -62,7 +83,17 @@ function YearsIcon() {
 function BrandsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <circle
+        cx="24"
+        cy="24"
+        r="19"
+        className={`${styles.strokeFaint} ${styles.dash}`}
+        strokeDasharray="1.2 4.8"
+      />
       <rect x="12" y="12" width="24" height="24" rx="8" className={styles.strokeSoft} />
+      <rect x="15" y="15" width="18" height="18" rx="6" className={styles.strokeFaint} strokeDasharray="1.1 3.2" />
+      <path d="M16 18h16" className={styles.strokeFaint} strokeDasharray="2.4 3.4" />
+      <path d="M16 30h16" className={styles.strokeFaint} strokeDasharray="2.4 3.4" />
       <rect
         x="16"
         y="20"
@@ -74,6 +105,7 @@ function BrandsIcon() {
         fill="currentColor"
         opacity="0.55"
       />
+      <circle cx="18" cy="20" r="1.1" className={styles.accentFill} style={{ opacity: 0.55 }} />
       <rect
         x="22"
         y="16"
@@ -85,6 +117,7 @@ function BrandsIcon() {
         fill="currentColor"
         opacity="0.55"
       />
+      <circle cx="24" cy="16" r="1.1" className={styles.accentFill} style={{ opacity: 0.55 }} />
       <rect
         x="28"
         y="22"
@@ -96,7 +129,11 @@ function BrandsIcon() {
         fill="currentColor"
         opacity="0.55"
       />
+      <circle cx="30" cy="22" r="1.1" className={styles.accentFill} style={{ opacity: 0.55 }} />
       <path d="M18 36h12" className={styles.accentStroke} />
+      <g className={styles.scan}>
+        <path d="M14 19h20" className={styles.accentStroke} style={{ opacity: 0.35 }} />
+      </g>
     </svg>
   );
 }
@@ -105,9 +142,21 @@ function ViewsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
       <rect x="10" y="14" width="28" height="20" rx="6" className={styles.strokeSoft} />
+      <path d="M14 18v12" className={styles.strokeFaint} />
+      <path d="M34 18v12" className={styles.strokeFaint} />
+      <path d="M16 22h16" className={styles.strokeFaint} />
+      <path d="M16 26h16" className={styles.strokeFaint} />
       <path d="M16 20h16" className={styles.stroke} />
       <path d="M16 24h12" className={styles.strokeSoft} />
       <path d="M16 28h14" className={styles.strokeSoft} />
+      <path
+        d="M16 29c3-6 6-2 8-4s5-7 8-3"
+        className={styles.accentStroke}
+        style={{ opacity: 0.6 }}
+      />
+      <circle cx="16" cy="29" r="1.2" className={styles.accentFill} style={{ opacity: 0.55 }} />
+      <circle cx="24" cy="25" r="1.2" className={styles.accentFill} style={{ opacity: 0.55 }} />
+      <circle cx="32" cy="22" r="1.2" className={styles.accentFill} style={{ opacity: 0.55 }} />
       <g className={styles.scan}>
         <path d="M14 19h20" className={styles.accentStroke} />
       </g>
@@ -118,11 +167,19 @@ function ViewsIcon() {
 function CollaborationIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <path d="M16 28l8-10 8 10" className={styles.strokeSoft} />
-      <path d="M16 28h16" className={styles.strokeSoft} />
       <circle
-        cx="16"
-        cy="28"
+        cx="24"
+        cy="24"
+        r="19"
+        className={`${styles.strokeFaint} ${styles.dash}`}
+        strokeDasharray="1.2 4.8"
+      />
+      <path d="M15.5 29l8.5-11 8.5 11" className={styles.strokeSoft} />
+      <path d="M15.5 29h17" className={styles.strokeSoft} />
+      <path d="M18 22c3.2-4 8.8-4 12 0" className={styles.strokeFaint} strokeDasharray="1.2 2.4" />
+      <circle
+        cx="15.5"
+        cy="29"
         r="2.6"
         className={styles.pulse}
         style={{ ["--delay" as string]: "0s" }}
@@ -139,15 +196,18 @@ function CollaborationIcon() {
         opacity="0.6"
       />
       <circle
-        cx="32"
-        cy="28"
+        cx="32.5"
+        cy="29"
         r="2.6"
         className={styles.pulse}
         style={{ ["--delay" as string]: "-2.4s" }}
         fill="currentColor"
         opacity="0.6"
       />
-      <circle cx="24" cy="33" r="2.2" className={styles.accentFill} />
+      <circle cx="24" cy="34" r="2.2" className={styles.accentFill} />
+      <g className={styles.orbit} style={{ ["--dur" as string]: "10s" }}>
+        <circle cx="24" cy="6.5" r="1.6" className={styles.accentFill} style={{ opacity: 0.45 }} />
+      </g>
     </svg>
   );
 }
@@ -155,14 +215,24 @@ function CollaborationIcon() {
 function AssetsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <rect x="14" y="12" width="20" height="24" rx="6" className={styles.strokeSoft} />
-      <path d="M18 18h12" className={styles.stroke} />
-      <path d="M18 22h9" className={styles.strokeSoft} />
-      <path d="M18 26h12" className={styles.strokeSoft} />
-      <path d="M18 30h10" className={styles.strokeSoft} />
+      <circle
+        cx="24"
+        cy="24"
+        r="19"
+        className={`${styles.strokeFaint} ${styles.dash}`}
+        strokeDasharray="1.2 4.8"
+      />
+      <rect x="12" y="10" width="20" height="24" rx="6" className={styles.strokeFaint} />
+      <rect x="16" y="12.5" width="20" height="25.5" rx="7" className={styles.strokeSoft} />
+      <path d="M20 18.5h12" className={styles.stroke} />
+      <path d="M20 22.5h9" className={styles.strokeSoft} />
+      <path d="M20 26.5h12" className={styles.strokeSoft} />
+      <path d="M20 30.5h10" className={styles.strokeSoft} />
+      <path d="M20 34.5h8" className={styles.strokeFaint} strokeDasharray="1.2 2.8" />
       <g className={styles.scan}>
-        <path d="M16 16h16" className={styles.accentStroke} />
+        <path d="M18 16.5h16" className={styles.accentStroke} />
       </g>
+      <path d="M18 38h12" className={styles.accentStroke} style={{ opacity: 0.55 }} />
     </svg>
   );
 }
@@ -170,14 +240,23 @@ function AssetsIcon() {
 function MarketsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <circle
+        cx="24"
+        cy="24"
+        r="19"
+        className={`${styles.strokeFaint} ${styles.dash}`}
+        strokeDasharray="1.2 4.8"
+      />
       <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
       <path d="M8 24h32" className={styles.strokeSoft} />
       <path d="M24 8c6 6 6 26 0 32" className={styles.strokeSoft} />
       <path d="M24 8c-6 6-6 26 0 32" className={styles.strokeSoft} />
       <g className={styles.orbit}>
-        <circle cx="24" cy="8" r="2.1" className={styles.accentFill} />
+        <circle cx="24" cy="6.5" r="2.1" className={styles.accentFill} />
+        <circle cx="41.5" cy="24" r="1.3" className={styles.accentFill} style={{ opacity: 0.5 }} />
       </g>
       <path d="M16 31c2.2 2.2 5 3.4 8 3.4 3 0 5.8-1.2 8-3.4" className={styles.accentStroke} />
+      <path d="M14 18c3.6-3.2 16.4-3.2 20 0" className={styles.strokeFaint} strokeDasharray="1.2 2.8" />
     </svg>
   );
 }
