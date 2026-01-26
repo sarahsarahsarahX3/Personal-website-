@@ -357,16 +357,16 @@ export function BioSection() {
 	                  Hi, I’m Sarah Dawson.
 	                </p>
                 <p
-                  data-text="I specialize in creating impactful content, campaigns, and editorial initiatives for top global brands."
-                  className={`mt-4 text-base md:text-lg leading-relaxed text-text-secondary ${styles.subheading}`}
+                  data-text="MY TRACK RECORD"
+                  className={`mt-5 text-xs font-mono uppercase tracking-[0.26em] text-text-secondary/75 ${styles.subheading}`}
                 >
-                  I specialize in creating impactful content, campaigns, and editorial initiatives for top global brands.
+                  MY TRACK RECORD
                 </p>
               </div>
 
 	              <ul
 	                aria-label="Highlights"
-	                className="mt-9 mx-auto grid max-w-4xl grid-cols-2 gap-x-6 gap-y-8 sm:mt-10 sm:gap-x-10 sm:gap-y-10 md:grid-cols-3 md:gap-x-12"
+	                className="mt-9 mx-auto grid w-full max-w-6xl grid-cols-2 gap-x-8 gap-y-10 sm:mt-10 sm:gap-x-12 sm:gap-y-12 md:grid-cols-3 md:gap-x-14"
 	              >
                 {HIGHLIGHTS.map(({ key, Icon, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
@@ -381,17 +381,17 @@ export function BioSection() {
                     className={`w-full text-text-secondary ${styles.highlight}`}
                     style={{ ["--i" as string]: String(index) }}
                   >
-                    <div className="grid grid-cols-[40px_1fr] items-start gap-3 sm:grid-cols-[44px_1fr] sm:gap-4">
+                    <div className="flex flex-col items-center text-center gap-3 sm:gap-4">
                       <Icon />
                       <div className="min-w-0">
-	                        <div className="text-lg leading-tight text-text-primary sm:text-2xl md:text-3xl">
-	                          {displayValue}
-	                        </div>
-	                        <div className="mt-2 text-[10px] font-mono uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
-	                          {label}
-	                        </div>
-	                      </div>
-	                    </div>
+                        <div className="font-display text-2xl leading-none text-text-primary sm:text-3xl">
+                          {displayValue}
+                        </div>
+                        <div className="mt-2 text-[10px] font-mono uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
+                          {label}
+                        </div>
+                      </div>
+                    </div>
 	                  </li>
 	                  );
 	                })}

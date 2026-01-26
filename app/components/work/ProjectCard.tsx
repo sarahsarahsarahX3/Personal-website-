@@ -167,7 +167,7 @@ export function ProjectCard({
                         </h3>
 
                         {brand ? (
-                            <p className="shrink-0 text-[1.05rem] leading-snug tracking-tight text-text-secondary md:text-[1.1rem]">
+                            <p className="shrink-0 text-[1.12rem] leading-snug tracking-tight text-text-secondary md:text-[1.2rem]">
                                 {brand}
                             </p>
                         ) : null}
@@ -178,7 +178,7 @@ export function ProjectCard({
                                 style={{
                                     display: "-webkit-box",
                                     WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 3,
+                                    WebkitLineClamp: 4,
                                     overflow: "hidden",
                                 }}
                             >
@@ -192,8 +192,11 @@ export function ProjectCard({
                                 aria-label="Tags"
                             >
                                 {displayTags.slice(0, 6).map((tag) => (
-                                    <li key={tag} className="shrink-0">
-                                        <span className="inline-flex items-center rounded-full border border-white/10 bg-surface/40 px-2 py-0.5 text-[9px] font-mono uppercase tracking-[0.22em] text-text-secondary/80">
+                                    <li key={tag} className="min-w-0 max-w-full">
+                                        <span
+                                            title={tag}
+                                            className="inline-flex max-w-full items-center rounded-full border border-white/10 bg-surface/40 px-2 py-0.5 text-[8px] font-mono uppercase tracking-[0.18em] text-text-secondary/80 truncate"
+                                        >
                                             {tag}
                                         </span>
                                     </li>

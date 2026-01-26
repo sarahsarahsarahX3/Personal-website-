@@ -118,7 +118,7 @@ export default async function WorkPage() {
         <main className="min-h-screen pt-32 pb-40 px-6">
             <div className="container mx-auto">
                 <header className="mb-12">
-                    <h1 className="text-6xl md:text-8xl font-display mb-6 animate-fade-in-up">
+                    <h1 className="text-6xl md:text-7xl font-display mb-6 animate-fade-in-up">
                         Selected Work
                     </h1>
                     <p className="text-text-secondary text-xl max-w-xl md:max-w-none md:whitespace-nowrap animate-fade-in-up delay-200">
