@@ -47,9 +47,19 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-function YearsIcon() {
+function HudBase({ id }: { id: string }) {
+  const scanId = `bio-hud-scanlines-${id}`;
+
   return (
-    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+    <>
+      <defs>
+        <pattern id={scanId} width="4" height="6" patternUnits="userSpaceOnUse">
+          <path d="M0 0H4" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+          <path d="M0 3H4" stroke="rgba(255,59,48,0.06)" strokeWidth="1" />
+        </pattern>
+      </defs>
+
+      <circle cx="24" cy="24" r="18" fill={`url(#${scanId})`} opacity="0.22" />
       <circle
         cx="24"
         cy="24"
@@ -63,15 +73,29 @@ function YearsIcon() {
         cy="24"
         r="16"
         className={`${styles.accentStroke} ${styles.dash}`}
-        strokeDasharray="14 160"
-        style={{ opacity: 0.55 }}
+        strokeDasharray="16 160"
+        style={{ opacity: 0.4 }}
       />
       <circle cx="24" cy="24" r="12.5" className={styles.strokeFaint} strokeDasharray="0.8 4.1" />
+
+      {/* Corner brackets */}
+      <path
+        d="M12 17v-5h5 M31 12h5v5 M36 31v5h-5 M17 36h-5v-5"
+        className={styles.strokeFaint}
+        opacity="0.5"
+      />
+
+      {/* Crosshair ticks */}
+      <path d="M24 9v3 M24 36v3 M9 24h3 M36 24h3" className={styles.strokeFaint} opacity="0.35" />
+    </>
+  );
+}
+
+function YearsIcon() {
+  return (
+    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <HudBase id="years" />
       <path d="M24 13.5v10.8l7.4 4.3" className={styles.stroke} />
-      <path d="M24 10.5v2.5" className={styles.strokeFaint} />
-      <path d="M24 35v2.5" className={styles.strokeFaint} />
-      <path d="M10.5 24h2.5" className={styles.strokeFaint} />
-      <path d="M35 24h2.5" className={styles.strokeFaint} />
       <g className={styles.orbit}>
         <circle cx="24" cy="6.5" r="2" className={styles.accentFill} />
         <circle cx="24" cy="41.5" r="1.3" className={styles.accentFill} style={{ opacity: 0.55 }} />
@@ -83,13 +107,7 @@ function YearsIcon() {
 function BrandsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <circle
-        cx="24"
-        cy="24"
-        r="19"
-        className={`${styles.strokeFaint} ${styles.dash}`}
-        strokeDasharray="1.2 4.8"
-      />
+      <HudBase id="brands" />
       <rect x="12" y="12" width="24" height="24" rx="8" className={styles.strokeSoft} />
       <rect x="15" y="15" width="18" height="18" rx="6" className={styles.strokeFaint} strokeDasharray="1.1 3.2" />
       <path d="M16 18h16" className={styles.strokeFaint} strokeDasharray="2.4 3.4" />
@@ -141,6 +159,7 @@ function BrandsIcon() {
 function ViewsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
+      <HudBase id="views" />
       <rect x="10" y="14" width="28" height="20" rx="6" className={styles.strokeSoft} />
       <path d="M14 18v12" className={styles.strokeFaint} />
       <path d="M34 18v12" className={styles.strokeFaint} />
@@ -167,13 +186,7 @@ function ViewsIcon() {
 function CollaborationIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <circle
-        cx="24"
-        cy="24"
-        r="19"
-        className={`${styles.strokeFaint} ${styles.dash}`}
-        strokeDasharray="1.2 4.8"
-      />
+      <HudBase id="collaboration" />
       <path d="M15.5 29l8.5-11 8.5 11" className={styles.strokeSoft} />
       <path d="M15.5 29h17" className={styles.strokeSoft} />
       <path d="M18 22c3.2-4 8.8-4 12 0" className={styles.strokeFaint} strokeDasharray="1.2 2.4" />
@@ -215,13 +228,7 @@ function CollaborationIcon() {
 function AssetsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <circle
-        cx="24"
-        cy="24"
-        r="19"
-        className={`${styles.strokeFaint} ${styles.dash}`}
-        strokeDasharray="1.2 4.8"
-      />
+      <HudBase id="assets" />
       <rect x="12" y="10" width="20" height="24" rx="6" className={styles.strokeFaint} />
       <rect x="16" y="12.5" width="20" height="25.5" rx="7" className={styles.strokeSoft} />
       <path d="M20 18.5h12" className={styles.stroke} />
@@ -240,13 +247,7 @@ function AssetsIcon() {
 function MarketsIcon() {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <circle
-        cx="24"
-        cy="24"
-        r="19"
-        className={`${styles.strokeFaint} ${styles.dash}`}
-        strokeDasharray="1.2 4.8"
-      />
+      <HudBase id="markets" />
       <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
       <path d="M8 24h32" className={styles.strokeSoft} />
       <path d="M24 8c6 6 6 26 0 32" className={styles.strokeSoft} />
