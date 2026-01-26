@@ -236,8 +236,8 @@ export function BioSection() {
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid grid-cols-12 gap-y-10 md:gap-y-0 md:gap-x-10 items-start md:items-center">
           <div className={`col-span-12 md:col-span-10 md:col-start-2 ${styles.body}`}>
-            <div className="relative mx-auto text-center">
-              <div className="mx-auto max-w-[60ch]">
+            <div className="relative mx-auto text-center md:text-left">
+              <div className="mx-auto max-w-[60ch] md:mx-0">
                 <h2 id="home-bio-title" className="sr-only">
                   About
                 </h2>
@@ -257,7 +257,7 @@ export function BioSection() {
 
 	              <ul
 	                aria-label="Highlights"
-	                className={`mt-14 mx-auto grid w-full max-w-5xl grid-cols-2 items-start justify-items-center gap-x-10 gap-y-10 text-center sm:mt-16 sm:gap-x-14 sm:gap-y-12 md:grid-cols-3 md:justify-items-start md:gap-x-16 md:gap-y-14 md:text-left lg:gap-x-20 lg:gap-y-16 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
+	                className={`mt-14 mx-auto grid w-full max-w-5xl grid-cols-2 items-start justify-items-center gap-x-10 gap-y-10 text-center sm:mt-16 sm:gap-x-14 sm:gap-y-12 md:mx-0 md:grid-cols-3 md:justify-items-start md:gap-x-16 md:gap-y-14 md:text-left lg:gap-x-20 lg:gap-y-16 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
 	              >
                 {HIGHLIGHTS.map(({ key, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
