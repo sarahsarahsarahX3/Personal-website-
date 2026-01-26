@@ -60,6 +60,7 @@ export function ProjectCard({
     const shouldItalicizeDiscoverySubtitle =
         slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet";
     const discoveryTitleParts = shouldItalicizeDiscoverySubtitle ? title.split(":") : null;
+    const discoveryCommaParts = shouldItalicizeDiscoverySubtitle && !title.includes(":") ? title.split(",") : null;
     const italicizeWholeTitle =
         (slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet") && !title.includes(":");
     const displayCategory = formatCategoryLabel(category);
@@ -123,7 +124,7 @@ export function ProjectCard({
 
                 <div className="relative min-h-0 overflow-hidden border-t border-white/10 bg-surface/15 p-5 md:p-6">
                     <div className="flex h-full min-h-0 flex-col gap-2">
-                        <div className="flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/85">
+                        <div className="shrink-0 flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/90">
                             <span className="shrink-0 text-accent">Project {displayIndex}</span>
                             <span aria-hidden="true" className="shrink-0 text-text-secondary/50">
                                 ᐧ
@@ -153,6 +154,11 @@ export function ProjectCard({
                                     <span>{discoveryTitleParts[0].trim()}:</span>{" "}
                                     <em className="italic">{discoveryTitleParts.slice(1).join(":").trim()}</em>
                                 </>
+                            ) : discoveryCommaParts && discoveryCommaParts.length >= 2 ? (
+                                <>
+                                    <em className="italic">{discoveryCommaParts[0].trim()}</em>,{" "}
+                                    {discoveryCommaParts.slice(1).join(",").trimStart()}
+                                </>
                             ) : italicizeWholeTitle ? (
                                 <em className="italic">{title}</em>
                             ) : (
@@ -161,7 +167,9 @@ export function ProjectCard({
                         </h3>
 
                         {brand ? (
-                            <p className="text-base leading-snug tracking-tight text-text-secondary">{brand}</p>
+                            <p className="shrink-0 text-[1.05rem] leading-snug tracking-tight text-text-secondary md:text-[1.1rem]">
+                                {brand}
+                            </p>
                         ) : null}
 
                         {description ? (
@@ -180,7 +188,7 @@ export function ProjectCard({
 
                         {displayTags ? (
                             <ul
-                                className="flex min-h-0 min-w-0 flex-nowrap items-center gap-2 overflow-x-auto pb-1 no-scrollbar"
+                                className="shrink-0 flex min-h-0 min-w-0 flex-wrap items-center gap-2"
                                 aria-label="Tags"
                             >
                                 {displayTags.slice(0, 6).map((tag) => (
@@ -193,7 +201,7 @@ export function ProjectCard({
                             </ul>
                         ) : null}
 
-                        <div className="mt-auto flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
+                        <div className="shrink-0 mt-auto flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
                             <span className="text-xs font-mono uppercase tracking-[0.2em] text-text-secondary/60 group-hover:text-text-secondary/80">
                                 View
                             </span>
