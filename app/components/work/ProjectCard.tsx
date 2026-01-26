@@ -123,24 +123,20 @@ export function ProjectCard({
 
                 <div className="relative min-h-0 overflow-hidden border-t border-white/10 bg-surface/15 p-5 md:p-6">
                     <div className="flex h-full min-h-0 flex-col gap-2">
-                        <div className="grid grid-cols-3 items-center text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/70">
-                            <span className="min-w-0 justify-self-start text-accent">Project {displayIndex}</span>
-                            <span className="min-w-0 justify-self-center text-text-secondary/70">
-                                <span className="text-text-secondary/30" aria-hidden="true">
-                                    ᐧ
-                                </span>{" "}
-                                {displayCategory}
+                        <div className="flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/85">
+                            <span className="shrink-0 text-accent">Project {displayIndex}</span>
+                            <span aria-hidden="true" className="shrink-0 text-text-secondary/50">
+                                ᐧ
                             </span>
+                            <span className="min-w-0 truncate text-text-secondary/90">{displayCategory}</span>
                             {year ? (
-                                <span className="min-w-0 justify-self-end text-text-secondary/60">
-                                    <span className="text-text-secondary/30" aria-hidden="true">
+                                <>
+                                    <span aria-hidden="true" className="shrink-0 text-text-secondary/50">
                                         ᐧ
-                                    </span>{" "}
-                                    {year}
-                                </span>
-                            ) : (
-                                <span />
-                            )}
+                                    </span>
+                                    <span className="shrink-0 text-text-secondary/80">{year}</span>
+                                </>
+                            ) : null}
                         </div>
 
                         <h3
