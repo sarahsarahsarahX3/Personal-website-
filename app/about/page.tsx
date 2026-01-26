@@ -54,14 +54,17 @@ export default function AboutPage() {
 
     return (
         <main ref={containerRef} className="relative min-h-screen bg-surface overflow-hidden">
-            {/* Full-bleed background (across both columns) */}
+            {/* Full-bleed background (footer-inspired) */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-                <div className="absolute inset-0 bg-black/80" />
+                <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_20%_10%,rgba(255,255,255,0.08),rgba(0,0,0,0))]" />
+                <div className="absolute inset-0 opacity-[0.35] bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:36px_36px]" />
+                <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/60" />
                 {/* Rotating bar visual anchored to headshot center */}
                 <motion.svg
                     aria-hidden="true"
                     viewBox="0 0 100 100"
-                    className="absolute h-[150vmax] w-[150vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.62] mix-blend-screen transform-gpu"
+                    className="absolute h-[150vmax] w-[150vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.36] mix-blend-screen transform-gpu"
                     animate={prefersReducedMotion ? undefined : { rotate: 360 }}
                     transition={prefersReducedMotion ? undefined : { duration: 42, repeat: Infinity, ease: "linear" }}
                     style={{
@@ -103,7 +106,7 @@ export default function AboutPage() {
                 <motion.svg
                     aria-hidden="true"
                     viewBox="0 0 100 100"
-                    className="absolute h-[170vmax] w-[170vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.36] mix-blend-screen transform-gpu"
+                    className="absolute h-[170vmax] w-[170vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.22] mix-blend-screen transform-gpu"
                     animate={prefersReducedMotion ? undefined : { rotate: -360 }}
                     transition={prefersReducedMotion ? undefined : { duration: 64, repeat: Infinity, ease: "linear" }}
                     style={{
@@ -132,56 +135,53 @@ export default function AboutPage() {
                         strokeLinecap="round"
                     />
                 </motion.svg>
-                <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/15 to-black/55" />
-                <div className="absolute inset-y-0 left-0 w-[70%] bg-[radial-gradient(60%_65%_at_30%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]" />
             </div>
 
             <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-20 pb-24 md:pt-22 md:pb-28 lg:pt-24 lg:pb-32">
-                <header className="max-w-2xl">
-                    <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
-                    <h1 className="mt-3 font-display text-4xl md:text-6xl tracking-tight leading-[1.03]">About</h1>
-                </header>
+                <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+                    <div className="min-w-0">
+                        <header className="max-w-2xl">
+                            <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
+                            <h1 className="mt-3 font-display text-4xl md:text-6xl tracking-tight leading-[1.03]">About</h1>
+                        </header>
 
-                <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16 items-start">
-                    <section aria-label="Portrait" className="relative">
-                        <figure className="relative">
-                            <div className="lg:-ml-4 xl:-ml-8">
-                                <div className="mx-auto w-full max-w-[292px] sm:max-w-[320px] md:max-w-[360px] lg:mx-0">
-                                    <div
-                                        ref={headshotRef}
-                                        className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
-                                    >
-                                        <Image
-                                            src="/images/IMG_8516_edited.jpg"
-                                            alt="Headshot of Sarah Dawson"
-                                            fill
-                                            sizes="(min-width: 1024px) 360px, 70vw"
-                                            className="object-cover saturate-[0.98] contrast-[1.02]"
-                                            priority
-                                        />
+                        <section aria-label="Portrait" className="relative mt-10">
+                            <figure className="relative">
+                                <div className="lg:-ml-4 xl:-ml-8">
+                                    <div className="mx-auto w-full max-w-[292px] sm:max-w-[320px] md:max-w-[360px] lg:mx-0">
                                         <div
-                                            aria-hidden="true"
-                                            className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_55%_at_50%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]"
-                                        />
-                                        <div
-                                            aria-hidden="true"
-                                            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.22]"
-                                        />
-                                        <div
-                                            aria-hidden="true"
-                                            className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
-                                        />
+                                            ref={headshotRef}
+                                            className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
+                                        >
+                                            <Image
+                                                src="/images/IMG_8516_edited.jpg"
+                                                alt="Headshot of Sarah Dawson"
+                                                fill
+                                                sizes="(min-width: 1024px) 360px, 70vw"
+                                                className="object-cover saturate-[0.98] contrast-[1.02]"
+                                                priority
+                                            />
+                                            <div
+                                                aria-hidden="true"
+                                                className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_55%_at_50%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]"
+                                            />
+                                            <div
+                                                aria-hidden="true"
+                                                className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.22]"
+                                            />
+                                            <div
+                                                aria-hidden="true"
+                                                className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <figcaption className="sr-only">Portrait</figcaption>
-                        </figure>
-                    </section>
+                                <figcaption className="sr-only">Portrait</figcaption>
+                            </figure>
+                        </section>
+                    </div>
 
-                    <section
-                        aria-label="Bio"
-                        className="lg:pt-6 lg:border-l lg:border-white/10 lg:pl-10"
-                    >
+                    <section aria-label="Bio" className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-7 lg:mt-11">
                         <div className="max-w-xl">
                             <div className="space-y-6 text-lg leading-relaxed text-text-secondary">
                                 <p>
