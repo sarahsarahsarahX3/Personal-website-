@@ -49,135 +49,82 @@ function easeOutCubic(t: number) {
 
 function YearsIcon() {
   return (
-    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
-      <path d="M24 14v10l7 4" className={styles.stroke} />
-      <g className={styles.orbit}>
-        <circle cx="24" cy="8" r="2.2" className={styles.accentFill} />
+    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
+      <circle cx="24" cy="24" r="16" className={styles.markSoft} />
+      <circle cx="24" cy="24" r="16" pathLength={1} className={styles.markAccent} />
+      <g className={styles.markNeedle} aria-hidden="true">
+        <circle cx="24" cy="8" r="2.1" className={styles.markDot} />
       </g>
+      <path d="M24 24 L24 14" className={styles.markStroke} />
     </svg>
   );
 }
 
 function BrandsIcon() {
   return (
-    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <rect x="12" y="12" width="24" height="24" rx="8" className={styles.strokeSoft} />
-      <rect
-        x="16"
-        y="20"
-        width="4"
-        height="14"
-        rx="2"
-        className={styles.drift}
-        style={{ ["--delay" as string]: "0s" }}
-        fill="currentColor"
-        opacity="0.55"
-      />
-      <rect
-        x="22"
-        y="16"
-        width="4"
-        height="18"
-        rx="2"
-        className={styles.drift}
-        style={{ ["--delay" as string]: "-0.6s" }}
-        fill="currentColor"
-        opacity="0.55"
-      />
-      <rect
-        x="28"
-        y="22"
-        width="4"
-        height="12"
-        rx="2"
-        className={styles.drift}
-        style={{ ["--delay" as string]: "-1.2s" }}
-        fill="currentColor"
-        opacity="0.55"
-      />
-      <path d="M18 36h12" className={styles.accentStroke} />
+    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
+      <rect x="12" y="12" width="24" height="24" rx="8" className={styles.markSoft} />
+      <g className={styles.markBars} aria-hidden="true">
+        <rect x="16" y="22" width="4" height="12" rx="2" className={styles.markFill} />
+        <rect x="22" y="18" width="4" height="16" rx="2" className={styles.markFill} />
+        <rect x="28" y="24" width="4" height="10" rx="2" className={styles.markFill} />
+      </g>
+      <path d="M18 36h12" className={styles.markAccentStroke} />
     </svg>
   );
 }
 
 function ViewsIcon() {
   return (
-    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <rect x="10" y="14" width="28" height="20" rx="6" className={styles.strokeSoft} />
-      <path d="M16 20h16" className={styles.stroke} />
-      <path d="M16 24h12" className={styles.strokeSoft} />
-      <path d="M16 28h14" className={styles.strokeSoft} />
-      <g className={styles.scan}>
-        <path d="M14 19h20" className={styles.accentStroke} />
-      </g>
+    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
+      <rect x="10" y="14" width="28" height="20" rx="6" className={styles.markSoft} />
+      <path
+        d="M14 28 C18 22, 22 30, 26 22 C30 16, 34 22, 36 18"
+        pathLength={1}
+        className={styles.markAccent}
+      />
+      <circle cx="36" cy="18" r="2" className={styles.markDot} />
     </svg>
   );
 }
 
 function CollaborationIcon() {
   return (
-    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <path d="M16 28l8-10 8 10" className={styles.strokeSoft} />
-      <path d="M16 28h16" className={styles.strokeSoft} />
-      <circle
-        cx="16"
-        cy="28"
-        r="2.6"
-        className={styles.pulse}
-        style={{ ["--delay" as string]: "0s" }}
-        fill="currentColor"
-        opacity="0.6"
-      />
-      <circle
-        cx="24"
-        cy="18"
-        r="2.6"
-        className={styles.pulse}
-        style={{ ["--delay" as string]: "-1.2s" }}
-        fill="currentColor"
-        opacity="0.6"
-      />
-      <circle
-        cx="32"
-        cy="28"
-        r="2.6"
-        className={styles.pulse}
-        style={{ ["--delay" as string]: "-2.4s" }}
-        fill="currentColor"
-        opacity="0.6"
-      />
-      <circle cx="24" cy="33" r="2.2" className={styles.accentFill} />
+    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
+      <path d="M16 28 L24 18 L32 28" pathLength={1} className={styles.markAccent} />
+      <path d="M16 28 H32" className={styles.markSoft} />
+      <circle cx="16" cy="28" r="2.4" className={styles.markNode} />
+      <circle cx="24" cy="18" r="2.4" className={styles.markNode} />
+      <circle cx="32" cy="28" r="2.4" className={styles.markNode} />
+      <circle cx="24" cy="33" r="2.1" className={styles.markDot} />
     </svg>
   );
 }
 
 function AssetsIcon() {
   return (
-    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <rect x="14" y="12" width="20" height="24" rx="6" className={styles.strokeSoft} />
-      <path d="M18 18h12" className={styles.stroke} />
-      <path d="M18 22h9" className={styles.strokeSoft} />
-      <path d="M18 26h12" className={styles.strokeSoft} />
-      <path d="M18 30h10" className={styles.strokeSoft} />
-      <g className={styles.scan}>
-        <path d="M16 16h16" className={styles.accentStroke} />
+    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
+      <rect x="14" y="12" width="20" height="24" rx="6" className={styles.markSoft} />
+      <g className={styles.markGrid} aria-hidden="true">
+        <rect x="18" y="18" width="4" height="4" rx="1.2" className={styles.markFill} />
+        <rect x="26" y="18" width="4" height="4" rx="1.2" className={styles.markFill} />
+        <rect x="18" y="26" width="4" height="4" rx="1.2" className={styles.markFill} />
+        <rect x="26" y="26" width="4" height="4" rx="1.2" className={styles.markFill} />
       </g>
+      <path d="M18 34h12" className={styles.markAccentStroke} />
     </svg>
   );
 }
 
 function MarketsIcon() {
   return (
-    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
-      <circle cx="24" cy="24" r="16" className={styles.strokeSoft} />
-      <path d="M8 24h32" className={styles.strokeSoft} />
-      <path d="M24 8c6 6 6 26 0 32" className={styles.strokeSoft} />
-      <path d="M24 8c-6 6-6 26 0 32" className={styles.strokeSoft} />
-      <g className={styles.orbit}>
-        <circle cx="24" cy="8" r="2.1" className={styles.accentFill} />
-      </g>
-      <path d="M16 31c2.2 2.2 5 3.4 8 3.4 3 0 5.8-1.2 8-3.4" className={styles.accentStroke} />
+    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
+      <circle cx="24" cy="24" r="16" className={styles.markSoft} />
+      <path d="M8 24h32" className={styles.markSoft} />
+      <path d="M24 8c6 6 6 26 0 32" className={styles.markSoft} />
+      <path d="M24 8c-6 6-6 26 0 32" className={styles.markSoft} />
+      <path d="M14 18 C20 16, 28 18, 34 15" pathLength={1} className={styles.markAccent} />
+      <circle cx="34" cy="15" r="2" className={styles.markDot} />
     </svg>
   );
 }
