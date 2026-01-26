@@ -13,6 +13,43 @@
   will-change: transform, filter;
 }
 
+.iconWrap {
+  --ix: 0.5;
+  --iy: 0.5;
+  --press: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.iconWrap::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 18px;
+  pointer-events: none;
+  opacity: calc(0.06 + (var(--press) * 0.12));
+  background: radial-gradient(
+    110px 90px at calc(var(--ix) * 100%) calc(var(--iy) * 100%),
+    rgba(255, 59, 48, 0.22),
+    rgba(255, 255, 255, 0.10) 30%,
+    rgba(255, 255, 255, 0.00) 62%
+  );
+  transition: opacity 200ms ease;
+  filter: blur(0.2px);
+}
+
+.iconWrap .icon {
+  transform: perspective(240px)
+    rotateX(calc((0.5 - var(--iy)) * 10deg))
+    rotateY(calc((var(--ix) - 0.5) * 10deg))
+    translateZ(calc(var(--press) * 2px));
+}
+
 .iconPanel {
   fill: rgba(255, 255, 255, 0.02);
 }
@@ -139,6 +176,10 @@
   transform: translate3d(0, -1px, 0);
 }
 
+.highlight:hover .iconWrap::before {
+  opacity: 0.12;
+}
+
 .highlight:hover .iconRing {
   animation: ring 1.8s linear infinite;
 }
@@ -179,6 +220,14 @@
   .subheading::after {
     opacity: 0 !important;
     transform: none !important;
+  }
+
+  .iconWrap .icon {
+    transform: none !important;
+  }
+
+  .iconWrap::before {
+    opacity: 0 !important;
   }
 
   .highlight:hover .iconRing {

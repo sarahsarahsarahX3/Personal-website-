@@ -47,6 +47,20 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
+function clamp01(value: number) {
+  return Math.min(1, Math.max(0, value));
+}
+
+function setIconVars(element: HTMLElement, x: number, y: number) {
+  element.style.setProperty("--ix", x.toFixed(3));
+  element.style.setProperty("--iy", y.toFixed(3));
+}
+
+function pulsePress(element: HTMLElement) {
+  element.style.setProperty("--press", "1");
+  window.setTimeout(() => element.style.setProperty("--press", "0"), 170);
+}
+
 function IconFrame({ children }: { children: React.ReactNode }) {
   return (
     <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true">
@@ -336,11 +350,24 @@ export function BioSection() {
                     style={{ ["--i" as string]: String(index) }}
                   >
                     <div className="flex flex-col items-center text-center gap-3 sm:gap-4">
-                      <Icon />
-                      <div className="min-w-0">
-                      <div className="font-display text-2xl leading-none text-text-primary sm:text-3xl">
-                        {displayValue}
+                      <div
+                        className={styles.iconWrap}
+                        onPointerMove={(event) => {
+                          if (event.pointerType !== "mouse") return;
+                          const rect = event.currentTarget.getBoundingClientRect();
+                          const x = clamp01((event.clientX - rect.left) / Math.max(1, rect.width));
+                          const y = clamp01((event.clientY - rect.top) / Math.max(1, rect.height));
+                          setIconVars(event.currentTarget, x, y);
+                        }}
+                        onPointerLeave={(event) => setIconVars(event.currentTarget, 0.5, 0.5)}
+                        onPointerDown={(event) => pulsePress(event.currentTarget)}
+                      >
+                        <Icon />
                       </div>
+                      <div className="min-w-0">
+                        <div className="font-display text-2xl leading-none text-text-primary sm:text-3xl">
+                          {displayValue}
+                        </div>
                       <div className="mt-2 text-[10px] font-mono uppercase leading-snug tracking-[0.16em] text-text-secondary/70 sm:text-xs sm:tracking-widest">
                         {label}
                       </div>
