@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -57,83 +57,75 @@ export default function AboutPage() {
             {/* Full-bleed background (across both columns) */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
                 <div className="absolute inset-0 bg-black/80" />
-                {/* Rotating bar visual anchored to headshot center */}
-                <motion.svg
+                <svg
                     aria-hidden="true"
-                    viewBox="0 0 100 100"
-                    className="absolute h-[150vmax] w-[150vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.62] mix-blend-screen transform-gpu"
-                    animate={prefersReducedMotion ? undefined : { rotate: 360 }}
-                    transition={prefersReducedMotion ? undefined : { duration: 42, repeat: Infinity, ease: "linear" }}
+                    viewBox="0 0 1200 800"
+                    preserveAspectRatio="xMidYMid slice"
+                    className={`absolute inset-0 h-full w-full opacity-[0.55] mix-blend-screen ${prefersReducedMotion ? "" : "wireDrift"}`}
+                >
+                    <defs>
+                        <pattern id="wireGrid" width="72" height="72" patternUnits="userSpaceOnUse">
+                            <path
+                                d="M 72 0 H 0 V 72"
+                                fill="none"
+                                stroke="rgba(255,255,255,0.08)"
+                                strokeWidth="1"
+                            />
+                        </pattern>
+                        <pattern id="wireDiag" width="72" height="72" patternUnits="userSpaceOnUse">
+                            <path
+                                d="M 0 72 L 72 0"
+                                fill="none"
+                                stroke="rgba(255,255,255,0.06)"
+                                strokeWidth="1"
+                            />
+                        </pattern>
+                    </defs>
+
+                    <rect width="1200" height="800" fill="url(#wireGrid)" opacity="0.6" />
+                    <rect width="1200" height="800" fill="url(#wireDiag)" opacity="0.55" />
+
+                    <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+                        <g stroke="rgba(255,255,255,0.14)" strokeWidth="1.2">
+                            <path d="M 110 190 L 380 110 L 620 180 L 900 120 L 1120 210" />
+                            <path d="M 80 520 L 330 420 L 600 510 L 860 440 L 1140 540" />
+                            <path d="M 210 740 L 420 610 L 710 720 L 980 640" />
+
+                            <path d="M 110 190 L 330 420 L 80 520 L 110 190" />
+                            <path d="M 380 110 L 600 510 L 330 420 L 380 110" />
+                            <path d="M 620 180 L 860 440 L 600 510 L 620 180" />
+                            <path d="M 900 120 L 1140 540 L 860 440 L 900 120" />
+                        </g>
+
+                        <g
+                            className={prefersReducedMotion ? undefined : "wireDash"}
+                            stroke="rgba(255,59,48,0.42)"
+                            strokeWidth="1.6"
+                            strokeDasharray="6 14"
+                        >
+                            <path d="M 110 190 L 620 180 L 1120 210" />
+                            <path d="M 80 520 L 600 510 L 1140 540" />
+                            <path d="M 210 740 L 710 720 L 980 640" />
+                        </g>
+                    </g>
+                </svg>
+
+                {/* Subtle focus halo anchored to headshot */}
+                <div
+                    className="absolute -translate-x-1/2 -translate-y-1/2 opacity-[0.55]"
                     style={{
                         left: anchor ? `${anchor.x}px` : "50%",
                         top: anchor ? `${anchor.y}px` : "50%",
-                        willChange: "transform",
+                        width: "720px",
+                        height: "720px",
+                        background:
+                            "radial-gradient(circle at center, rgba(255,59,48,0.16), rgba(255,255,255,0.08), rgba(0,0,0,0) 62%)",
+                        filter: "blur(1px)",
                     }}
-                >
-                    <circle
-                        cx="50"
-                        cy="50"
-                        r="36"
-                        fill="none"
-                        stroke="rgba(255,255,255,0.20)"
-                        strokeWidth="0.22"
-                        strokeDasharray="0.6 1.6"
-                    />
-                    <circle
-                        cx="50"
-                        cy="50"
-                        r="36"
-                        fill="none"
-                        stroke="rgba(255,59,48,0.70)"
-                        strokeWidth="0.34"
-                        strokeDasharray="8 28"
-                        strokeLinecap="round"
-                    />
-                    <circle
-                        cx="50"
-                        cy="50"
-                        r="22"
-                        fill="none"
-                        stroke="rgba(255,255,255,0.14)"
-                        strokeWidth="0.22"
-                        strokeDasharray="0.6 2.2"
-                    />
-                    <circle cx="50" cy="50" r="1.25" fill="rgba(255,255,255,0.16)" />
-                </motion.svg>
-                <motion.svg
-                    aria-hidden="true"
-                    viewBox="0 0 100 100"
-                    className="absolute h-[170vmax] w-[170vmax] -translate-x-1/2 -translate-y-1/2 opacity-[0.36] mix-blend-screen transform-gpu"
-                    animate={prefersReducedMotion ? undefined : { rotate: -360 }}
-                    transition={prefersReducedMotion ? undefined : { duration: 64, repeat: Infinity, ease: "linear" }}
-                    style={{
-                        left: anchor ? `${anchor.x}px` : "50%",
-                        top: anchor ? `${anchor.y}px` : "50%",
-                        willChange: "transform",
-                    }}
-                >
-                    <circle
-                        cx="50"
-                        cy="50"
-                        r="44"
-                        fill="none"
-                        stroke="rgba(255,255,255,0.10)"
-                        strokeWidth="0.20"
-                        strokeDasharray="0.6 2.6"
-                    />
-                    <circle
-                        cx="50"
-                        cy="50"
-                        r="44"
-                        fill="none"
-                        stroke="rgba(255,255,255,0.12)"
-                        strokeWidth="0.22"
-                        strokeDasharray="2 16"
-                        strokeLinecap="round"
-                    />
-                </motion.svg>
+                />
+
                 <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/15 to-black/55" />
-                <div className="absolute inset-y-0 left-0 w-[70%] bg-[radial-gradient(60%_65%_at_30%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]" />
+                <div className="absolute inset-0 bg-[radial-gradient(60%_65%_at_30%_35%,rgba(255,255,255,0.10),rgba(0,0,0,0))]" />
             </div>
 
             <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-20 pb-24 md:pt-22 md:pb-28 lg:pt-24 lg:pb-32">
@@ -205,6 +197,36 @@ export default function AboutPage() {
                     </section>
                 </div>
             </div>
+
+            <style jsx>{`
+                @keyframes wireDash {
+                    to {
+                        stroke-dashoffset: -1200;
+                    }
+                }
+                @keyframes wireDrift {
+                    0%,
+                    100% {
+                        transform: translate3d(0, 0, 0) scale(1);
+                    }
+                    50% {
+                        transform: translate3d(10px, -8px, 0) scale(1.01);
+                    }
+                }
+                .wireDash {
+                    animation: wireDash 110s linear infinite;
+                }
+                .wireDrift {
+                    animation: wireDrift 28s ease-in-out infinite;
+                    will-change: transform;
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    .wireDash,
+                    .wireDrift {
+                        animation: none !important;
+                    }
+                }
+            `}</style>
         </main>
     );
 }

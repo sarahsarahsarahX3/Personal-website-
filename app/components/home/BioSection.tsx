@@ -185,7 +185,7 @@ function MarketsIcon() {
 const HIGHLIGHTS: readonly Highlight[] = [
   { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
   { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 500 Brands" },
-  { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views Generated" },
+  { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views Generated Across Platforms" },
   { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand & Creator Partnerships" },
   { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets Produced Annually" },
   { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "U.S. & Canada" },
@@ -399,12 +399,9 @@ export function BioSection() {
 	                })}
 	              </ul>
 
-	              <p className="mt-8 md:mt-12 text-xs md:text-base leading-relaxed text-text-secondary/60">
-	                Metrics reflect cumulative impact across broadcast, digital, and editorial work.
-	              </p>
-	            </div>
-	          </div>
-	        </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

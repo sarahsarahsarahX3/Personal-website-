@@ -106,7 +106,7 @@ export default async function WorkPage() {
         size: "small",
         slug: "saloncentric-aanhpi",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
-        contentTags: ["Integrated Campaigns", "Cultural Storytelling", "Experiential Events", "Influencer Partnerships"],
+        contentTags: ["Integrated Campaigns", "Cultural Storytelling", "Experiential Events"],
         number: 5,
         filterCategory: "Campaign",
         year: "2024",

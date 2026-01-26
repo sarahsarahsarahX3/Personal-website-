@@ -28,6 +28,7 @@ export default async function InsightsPage() {
         "https://www.probeautycentral.saloncentric.com/maria-nila-bee-friendly-year",
         "https://www.probeautycentral.saloncentric.com/national-lipstick-day-2023",
         "https://www.probeautycentral.saloncentric.com/trevor-project-itsa10-partnership",
+        "https://www.probeautycentral.saloncentric.com/get-the-look-enchanting-glam",
     ]);
 
     const visibleArticles = formattedArticles.filter((article) => !hiddenLinks.has(article.link));
@@ -58,6 +59,7 @@ export default async function InsightsPage() {
     // Manual ordering adjustments (small nudges without fully resorting the page).
     const shiftDownRequests = [
         { link: "https://www.probeautycentral.saloncentric.com/artist-spotlight-philip-wolff", by: 5 },
+        { link: "https://www.probeautycentral.saloncentric.com/9-iconic-hair-moments-in-black-pop-culture-history", by: 3 },
     ] as const;
 
     function shiftDown<T extends { link?: string }>(items: T[], link: string, by: number) {
