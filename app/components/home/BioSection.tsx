@@ -5,7 +5,6 @@ import styles from "./BioSection.module.css";
 
 type Highlight = {
   key: string;
-  Icon: () => React.ReactNode;
   value: string;
   label: string;
 };
@@ -47,100 +46,19 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-function YearsIcon() {
-  return (
-    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
-      <circle cx="24" cy="24" r="16" className={styles.markSoft} />
-      <circle cx="24" cy="24" r="16" pathLength={1} className={styles.markAccent} />
-      <g className={styles.markNeedle} aria-hidden="true">
-        <circle cx="24" cy="8" r="2.1" className={styles.markDot} />
-      </g>
-      <path d="M24 24 L24 14" className={styles.markStroke} />
-    </svg>
-  );
-}
-
-function BrandsIcon() {
-  return (
-    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
-      <rect x="12" y="12" width="24" height="24" rx="8" className={styles.markSoft} />
-      <g className={styles.markBars} aria-hidden="true">
-        <rect x="16" y="22" width="4" height="12" rx="2" className={styles.markFill} />
-        <rect x="22" y="18" width="4" height="16" rx="2" className={styles.markFill} />
-        <rect x="28" y="24" width="4" height="10" rx="2" className={styles.markFill} />
-      </g>
-      <path d="M18 36h12" className={styles.markAccentStroke} />
-    </svg>
-  );
-}
-
-function ViewsIcon() {
-  return (
-    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
-      <rect x="10" y="14" width="28" height="20" rx="6" className={styles.markSoft} />
-      <path
-        d="M14 28 C18 22, 22 30, 26 22 C30 16, 34 22, 36 18"
-        pathLength={1}
-        className={styles.markAccent}
-      />
-      <circle cx="36" cy="18" r="2" className={styles.markDot} />
-    </svg>
-  );
-}
-
-function CollaborationIcon() {
-  return (
-    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
-      <path d="M16 28 L24 18 L32 28" pathLength={1} className={styles.markAccent} />
-      <path d="M16 28 H32" className={styles.markSoft} />
-      <circle cx="16" cy="28" r="2.4" className={styles.markNode} />
-      <circle cx="24" cy="18" r="2.4" className={styles.markNode} />
-      <circle cx="32" cy="28" r="2.4" className={styles.markNode} />
-      <circle cx="24" cy="33" r="2.1" className={styles.markDot} />
-    </svg>
-  );
-}
-
-function AssetsIcon() {
-  return (
-    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
-      <rect x="14" y="12" width="20" height="24" rx="6" className={styles.markSoft} />
-      <g className={styles.markGrid} aria-hidden="true">
-        <rect x="18" y="18" width="4" height="4" rx="1.2" className={styles.markFill} />
-        <rect x="26" y="18" width="4" height="4" rx="1.2" className={styles.markFill} />
-        <rect x="18" y="26" width="4" height="4" rx="1.2" className={styles.markFill} />
-        <rect x="26" y="26" width="4" height="4" rx="1.2" className={styles.markFill} />
-      </g>
-      <path d="M18 34h12" className={styles.markAccentStroke} />
-    </svg>
-  );
-}
-
-function MarketsIcon() {
-  return (
-    <svg viewBox="0 0 48 48" className={`${styles.icon} ${styles.mark}`} aria-hidden="true">
-      <circle cx="24" cy="24" r="16" className={styles.markSoft} />
-      <path d="M8 24h32" className={styles.markSoft} />
-      <path d="M24 8c6 6 6 26 0 32" className={styles.markSoft} />
-      <path d="M24 8c-6 6-6 26 0 32" className={styles.markSoft} />
-      <path d="M14 18 C20 16, 28 18, 34 15" pathLength={1} className={styles.markAccent} />
-      <circle cx="34" cy="15" r="2" className={styles.markDot} />
-    </svg>
-  );
-}
-
 const HIGHLIGHTS: readonly Highlight[] = [
-  { key: "years", Icon: YearsIcon, value: "7+", label: "Years of Experience" },
-  { key: "fortune", Icon: BrandsIcon, value: "3", label: "Fortune 500 Brands" },
-  { key: "views", Icon: ViewsIcon, value: "15M+", label: "Views Generated Across Platforms" },
-  { key: "partnerships", Icon: CollaborationIcon, value: "50+", label: "Brand & Creator Partnerships" },
-  { key: "assets", Icon: AssetsIcon, value: "1,000+", label: "Assets Produced Annually" },
-  { key: "markets", Icon: MarketsIcon, value: "Global Markets", label: "U.S. & Canada" },
+  { key: "years", value: "7+", label: "Years of Experience" },
+  { key: "fortune", value: "3", label: "Fortune 500 Brands" },
+  { key: "views", value: "15M+", label: "Views Generated Across Platforms" },
+  { key: "partnerships", value: "50+", label: "Brand & Creator Partnerships" },
+  { key: "assets", value: "1,000+", label: "Assets Produced Annually" },
+  { key: "markets", value: "Global Markets", label: "U.S. & Canada" },
 ] as const;
 
 export function BioSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [counters, setCounters] = useState<Record<string, number>>({});
+  const [metricsRevealed, setMetricsRevealed] = useState(false);
   const hasAnimated = useRef(false);
 
   const counterConfigs = useMemo(() => {
@@ -157,6 +75,7 @@ export function BioSection() {
 
     if (prefersReducedMotion) {
       element.style.setProperty("--bio-progress", "1");
+      setMetricsRevealed(true);
       return;
     }
 
@@ -219,6 +138,31 @@ export function BioSection() {
       observer.disconnect();
       window.removeEventListener("resize", onResize);
     };
+  }, []);
+
+  useEffect(() => {
+    const element = sectionRef.current;
+    if (!element) return;
+
+    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (media?.matches) {
+      setMetricsRevealed(true);
+      return;
+    }
+
+    let didReveal = false;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting || didReveal) return;
+        didReveal = true;
+        setMetricsRevealed(true);
+        observer.disconnect();
+      },
+      { threshold: 0.28 },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -313,9 +257,9 @@ export function BioSection() {
 
 	              <ul
 	                aria-label="Highlights"
-	                className="mt-10 mx-auto grid w-full max-w-6xl grid-cols-2 gap-4 sm:gap-5 md:mt-12 md:grid-cols-3 md:gap-6"
+	                className={`mt-12 mx-auto grid w-full max-w-5xl grid-cols-2 gap-x-10 gap-y-10 text-center sm:gap-x-14 sm:gap-y-12 md:grid-cols-3 md:gap-x-16 md:gap-y-14 md:text-left ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
 	              >
-                {HIGHLIGHTS.map(({ key, Icon, value, label }, index) => {
+                {HIGHLIGHTS.map(({ key, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
                   const displayValue =
                     counterConfig && typeof counters[key] === "number"
@@ -325,22 +269,15 @@ export function BioSection() {
                   return (
                   <li
                     key={key}
-                    className={`w-full text-text-secondary ${styles.highlight}`}
+                    className={`w-full ${styles.metric}`}
                     style={{ ["--i" as string]: String(index) }}
                   >
-                    <div className="group h-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-4 transition-colors hover:border-white/20 hover:bg-white/5 sm:px-5 sm:py-5">
-                      <div className="flex flex-col items-center text-center gap-3 sm:gap-4 md:flex-row md:items-center md:text-left">
-                        <div className={styles.metricIcon} aria-hidden="true">
-                          <Icon />
-                        </div>
-                        <div className="min-w-0">
-                          <div className="font-display text-2xl leading-none text-text-primary sm:text-3xl">
-                            {displayValue}
-                          </div>
-                          <div className="mt-2 min-h-[2.8em] text-[10px] font-mono uppercase leading-snug tracking-[0.14em] text-text-secondary/75 sm:text-[11px] sm:tracking-[0.18em] md:min-h-0 md:tracking-[0.2em]">
-                            {label}
-                          </div>
-                        </div>
+                    <div className="min-w-0">
+                      <div className="font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-none text-text-primary">
+                        {displayValue}
+                      </div>
+                      <div className="mt-3 text-[10px] sm:text-xs font-mono uppercase tracking-[0.22em] text-text-secondary/70">
+                        {label}
                       </div>
                     </div>
 	                  </li>
