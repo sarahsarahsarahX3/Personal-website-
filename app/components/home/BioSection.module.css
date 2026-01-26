@@ -1,9 +1,10 @@
 .icon {
-  --dur: 8s;
+  --iconDur: 8s;
+  --iconDelay: 0s;
   width: 56px;
   height: 56px;
   display: block;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.82);
   transition: filter 250ms ease, color 250ms ease, transform 250ms ease;
   transform: translate3d(0, 0, 0);
   will-change: transform, filter;
@@ -93,29 +94,17 @@
 }
 
 .highlight:hover .icon {
-  --dur: 6.25s;
   color: rgba(255, 255, 255, 0.9);
   filter: drop-shadow(0 0 18px rgba(255, 59, 48, 0.14));
   transform: translate3d(0, -1px, 0);
 }
 
-.liquidFloat {
-  transform-origin: 24px 24px;
-  animation: liquidFloat var(--dur) ease-in-out infinite;
-  will-change: transform;
+.panelBase {
+  opacity: 0.95;
 }
 
-.liquidSheen {
-  transform-origin: 24px 24px;
-  animation: liquidSheen calc(var(--dur) * 1.15) ease-in-out infinite;
-  opacity: 0.75;
-  will-change: transform, opacity;
-}
-
-.liquidPulse {
-  transform-origin: center;
-  animation: liquidPulse calc(var(--dur) * 0.9) ease-in-out infinite;
-  will-change: transform, opacity;
+.panelBorder {
+  opacity: 0.9;
 }
 
 @media (max-width: 640px) {
@@ -125,170 +114,99 @@
   }
 }
 
-.stroke {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.74;
+.glyphWrap {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: float calc(var(--iconDur) * 0.9) ease-in-out infinite;
+  animation-delay: var(--iconDelay);
 }
 
-.strokeSoft {
+.strokeMain {
   fill: none;
-  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.92;
+}
+
+.strokeMuted {
+  fill: none;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.22;
+}
+
+.traceRing,
+.tracePath {
+  fill: none;
+  stroke: rgba(255, 59, 48, 0.75);
   stroke-width: 1.55;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0.35;
-}
-
-.strokeFaint {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.18;
-}
-
-.accentStroke {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.75;
-  filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.25));
-}
-
-.accentFill {
-  fill: var(--color-accent);
-  opacity: 0.9;
-  filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.25));
-}
-
-.dash {
+  opacity: 0.5;
   stroke-dashoffset: 0;
-  animation: dash var(--dur) linear infinite;
+  animation: trace var(--iconDur) linear infinite;
+  animation-delay: var(--iconDelay);
 }
 
-.orbit {
-  transform-origin: 24px 24px;
-  animation: rotate var(--dur) linear infinite;
+.coreDot {
+  fill: rgba(255, 59, 48, 0.86);
+  filter: drop-shadow(0 0 8px rgba(255, 59, 48, 0.22));
 }
 
-.scan {
-  transform-origin: 24px 24px;
-  animation: scan var(--dur) cubic-bezier(0.16, 1, 0.3, 1) infinite;
+.accentDot {
+  fill: rgba(255, 59, 48, 0.9);
+  filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.25));
 }
 
-.pulse {
+.sheen {
+  opacity: 0.06;
   transform-origin: center;
-  animation: pulse var(--dur) cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  animation-delay: var(--delay, 0s);
+  transform-box: fill-box;
+  animation: sheen calc(var(--iconDur) * 1.15) ease-in-out infinite;
+  animation-delay: var(--iconDelay);
 }
 
-.drift {
-  transform-origin: center;
-  animation: drift var(--dur) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
+.highlight:hover .sheen {
+  opacity: 0.12;
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes scan {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  12% {
-    opacity: 1;
-  }
-  50% {
-    transform: translateY(10px);
-    opacity: 0.85;
-  }
-  88% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.55;
-  }
-  50% {
-    transform: scale(1.12);
-    opacity: 0.95;
-  }
-}
-
-@keyframes drift {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.55;
-  }
-  50% {
-    transform: translateY(-2px);
-    opacity: 0.9;
-  }
-}
-
-@keyframes dash {
+@keyframes trace {
   from {
     stroke-dashoffset: 0;
   }
   to {
-    stroke-dashoffset: -18;
+    stroke-dashoffset: -220;
   }
 }
 
-@keyframes liquidFloat {
+@keyframes float {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) rotate(-1.25deg) scale(1);
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate3d(0, -1.6px, 0) rotate(1.25deg) scale(1.02);
+    transform: translate3d(0, -0.8px, 0) rotate(-0.6deg);
   }
 }
 
-@keyframes liquidSheen {
+@keyframes sheen {
   0%,
   100% {
-    transform: translate3d(-1.2px, -0.8px, 0) scale(0.98);
-    opacity: 0.62;
+    transform: translate3d(-14px, 0, 0) rotate(12deg);
   }
   50% {
-    transform: translate3d(1.6px, 1px, 0) scale(1.04);
-    opacity: 0.82;
+    transform: translate3d(16px, 0, 0) rotate(12deg);
   }
 }
 
-@keyframes liquidPulse {
-  0%,
-  100% {
-    transform: scale(0.98);
-    opacity: 0.72;
-  }
-  50% {
-    transform: scale(1.06);
-    opacity: 0.98;
+@media (prefers-reduced-motion: reduce) {
+  .glyphWrap,
+  .traceRing,
+  .tracePath,
+  .sheen {
+    animation: none !important;
   }
 }
 
@@ -308,16 +226,5 @@
   .subheading::after {
     opacity: 0 !important;
     transform: none !important;
-  }
-
-  .orbit,
-  .scan,
-  .pulse,
-  .drift,
-  .dash,
-  .liquidFloat,
-  .liquidSheen,
-  .liquidPulse {
-    animation: none;
   }
 }

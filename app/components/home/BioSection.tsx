@@ -47,237 +47,182 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-type LiquidVariant = "years" | "fortune" | "views" | "partnerships" | "assets" | "markets";
-
-const LIQUID_SHAPES: Record<LiquidVariant, string> = {
-  years: "M24 7.2c7 0 13.8 3.2 15.9 9.1 2.1 5.9-0.5 14.2-5.8 18.3-5.3 4.1-14.2 5.4-20.4 2.4-6.2-3-10.1-10.6-8.9-17.2C5.9 13.6 11.8 7.2 24 7.2z",
-  fortune: "M24 8c6.3 0 12.5 2.2 15.3 6.9 2.8 4.7 2 11.6-0.9 17-2.9 5.4-7.9 8.9-14.4 8.9-6.5 0-12.6-3.5-15.6-9-3-5.5-3.7-12.5-0.8-17.1C10.5 10.1 17.7 8 24 8z",
-  views: "M24 9c8 0 16.2 2.8 18.2 8.8 2 6-1.7 14.5-7.8 18.2-6.1 3.7-15.6 3-22.1-0.8-6.5-3.8-10-10.8-8.2-16.8C6.1 12.4 16 9 24 9z",
-  partnerships:
-    "M24 7.8c7.4 0 12.4 3.6 15.2 8.4 2.8 4.8 3.2 11.1 0.5 16-2.7 4.9-8.7 8.6-15.7 8.6-7 0-13.4-3.8-16.2-8.8-2.8-5-1.6-11.3 1.2-16.1C12 11.1 16.7 7.8 24 7.8z",
-  assets:
-    "M24 7.5c6.4 0 11.1 2.7 13.9 7.1 2.8 4.4 3.7 10.6 1.5 16.1-2.2 5.5-7.6 9.8-15.4 9.8-7.8 0-13.6-4.3-15.8-9.9-2.2-5.6-0.6-12 2.1-16.3C13 10 17.6 7.5 24 7.5z",
-  markets:
-    "M24 7.6c7.5 0 14.8 4 16 11.2 1.2 7.2-3.7 15.7-10.9 19.2-7.2 3.5-16.6 1.9-22.1-3.4-5.5-5.3-6.9-14.4-2.9-20.6C8.1 7.8 16.5 7.6 24 7.6z",
-};
-
-function LiquidDetails({ variant, wireId }: { variant: LiquidVariant; wireId: string }) {
-  const wire = `url(#${wireId})`;
-
-  switch (variant) {
-    case "years":
-      return (
-        <>
-          <path d="M14 24a10 10 0 0 1 20 0" fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="1.1" />
-          <path d="M24 16.5v9.2l6.2 3.6" fill="none" stroke={wire} strokeWidth="1.3" strokeLinecap="round" />
-          <circle cx="24" cy="16.5" r="1.15" fill="rgba(255,255,255,0.24)" />
-          <circle cx="30.2" cy="29.3" r="1.2" fill="rgba(255,59,48,0.65)" />
-        </>
-      );
-    case "fortune":
-      return (
-        <>
-          <path d="M16 31h16" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.1" />
-          <path d="M18 31V19" fill="none" stroke={wire} strokeWidth="1.25" strokeLinecap="round" />
-          <path d="M24 31V16.5" fill="none" stroke={wire} strokeWidth="1.25" strokeLinecap="round" opacity="0.9" />
-          <path d="M30 31V22" fill="none" stroke={wire} strokeWidth="1.25" strokeLinecap="round" opacity="0.75" />
-          <circle cx="24" cy="16.5" r="1.2" fill="rgba(255,59,48,0.65)" />
-        </>
-      );
-    case "views":
-      return (
-        <>
-          <path
-            d="M14 28c3.2-6.6 6.4 2.6 8.6-0.6 2.2-3.2 5.8-9.4 11.4-3.2"
-            fill="none"
-            stroke={wire}
-            strokeWidth="1.25"
-            strokeLinecap="round"
-          />
-          <path d="M14 22h20" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.05" strokeDasharray="2 4" />
-          <circle cx="14" cy="28" r="1.15" fill="rgba(255,255,255,0.22)" />
-          <circle cx="22.6" cy="27.4" r="1.15" fill="rgba(255,59,48,0.6)" />
-          <circle cx="34" cy="24.2" r="1.15" fill="rgba(255,59,48,0.6)" />
-        </>
-      );
-    case "partnerships":
-      return (
-        <>
-          <path d="M16 30l8-10 8 10" fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="1.1" />
-          <path d="M16 30h16" fill="none" stroke={wire} strokeWidth="1.2" strokeLinecap="round" opacity="0.85" />
-          <circle cx="16" cy="30" r="1.35" fill="rgba(255,59,48,0.6)" />
-          <circle cx="24" cy="20" r="1.35" fill="rgba(255,255,255,0.22)" />
-          <circle cx="32" cy="30" r="1.35" fill="rgba(255,59,48,0.6)" />
-        </>
-      );
-    case "assets":
-      return (
-        <>
-          <path d="M17 20.5h14" fill="none" stroke={wire} strokeWidth="1.15" strokeLinecap="round" />
-          <path d="M17 24.6h12.5" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.05" strokeLinecap="round" />
-          <path d="M17 28.7h13.2" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.05" strokeLinecap="round" />
-          <path d="M17 32.8h10.6" fill="none" stroke={wire} strokeWidth="1.1" strokeLinecap="round" opacity="0.8" />
-          <circle cx="31" cy="20.5" r="1.1" fill="rgba(255,59,48,0.6)" />
-        </>
-      );
-    case "markets":
-      return (
-        <>
-          <path d="M14 24h20" fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="1.1" />
-          <path d="M24 14c5 5 5 15 0 20" fill="none" stroke={wire} strokeWidth="1.1" strokeLinecap="round" />
-          <path d="M24 14c-5 5-5 15 0 20" fill="none" stroke={wire} strokeWidth="1.1" strokeLinecap="round" opacity="0.75" />
-          <path d="M16 18c3.6-3.2 16.4-3.2 20 0" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.05" />
-          <circle cx="34" cy="24" r="1.25" fill="rgba(255,59,48,0.6)" />
-        </>
-      );
-    default:
-      return null;
-  }
+function useSvgId(prefix: string) {
+  const raw = useId();
+  return `${prefix}-${raw.replace(/[:]/g, "")}`;
 }
 
-function LiquidIcon({ variant }: { variant: LiquidVariant }) {
-  const rawId = useId();
-  const uid = `${variant}-${rawId.replace(/[:]/g, "")}`;
-
-  const shape = LIQUID_SHAPES[variant];
-
-  const dur =
-    variant === "markets"
-      ? "11s"
-      : variant === "assets"
-        ? "10.4s"
-        : variant === "fortune"
-          ? "10s"
-          : variant === "views"
-            ? "9s"
-            : variant === "partnerships"
-              ? "9.6s"
-              : "9.4s";
-
-  const phase =
-    variant === "markets"
-      ? "-2.1s"
-      : variant === "assets"
-        ? "-1.2s"
-        : variant === "fortune"
-          ? "-2.6s"
-          : variant === "views"
-            ? "-1.8s"
-            : variant === "partnerships"
-              ? "-2.2s"
-              : "-1.5s";
-
-  const wireId = `${uid}-wire`;
-
+function IconShell({
+  uid,
+  dur = "8s",
+  delay = "0s",
+  children,
+}: {
+  uid: string;
+  dur?: string;
+  delay?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <svg viewBox="0 0 48 48" className={styles.icon} aria-hidden="true" style={{ ["--dur" as string]: dur }}>
+    <svg
+      viewBox="0 0 48 48"
+      className={styles.icon}
+      aria-hidden="true"
+      style={{ ["--iconDur" as string]: dur, ["--iconDelay" as string]: delay }}
+    >
       <defs>
-        <radialGradient id={`${uid}-fill`} cx="32%" cy="24%" r="78%">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.36)" />
-          <stop offset="20%" stopColor="rgba(255,255,255,0.12)" />
-          <stop offset="58%" stopColor="rgba(255,59,48,0.18)" />
-          <stop offset="100%" stopColor="rgba(0,0,0,0.18)" />
+        <radialGradient id={`${uid}-panel`} cx="32%" cy="28%" r="84%">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.10)" />
+          <stop offset="40%" stopColor="rgba(255,255,255,0.05)" />
+          <stop offset="70%" stopColor="rgba(255,255,255,0.02)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0)" />
         </radialGradient>
 
-        <radialGradient id={`${uid}-sheen`} cx="38%" cy="26%" r="60%">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.78)" />
-          <stop offset="55%" stopColor="rgba(255,255,255,0.10)" />
-          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-        </radialGradient>
-
-        <linearGradient id={wireId} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-          <stop offset="42%" stopColor="rgba(255,255,255,0.22)" />
-          <stop offset="70%" stopColor="rgba(255,59,48,0.55)" />
-          <stop offset="100%" stopColor="rgba(255,59,48,0)" />
+        <linearGradient id={`${uid}-border`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.14)" />
+          <stop offset="55%" stopColor="rgba(255,255,255,0.06)" />
+          <stop offset="75%" stopColor="rgba(255,59,48,0.25)" />
+          <stop offset="100%" stopColor="rgba(255,59,48,0.06)" />
         </linearGradient>
 
-        <pattern id={`${uid}-scan`} width="6" height="6" patternUnits="userSpaceOnUse">
-          <path d="M0 0H6" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
-          <path d="M0 3H6" stroke="rgba(255,59,48,0.045)" strokeWidth="1" />
-        </pattern>
+        <linearGradient id={`${uid}-ink`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.88)" />
+          <stop offset="65%" stopColor="rgba(255,255,255,0.70)" />
+          <stop offset="100%" stopColor="rgba(255,59,48,0.72)" />
+        </linearGradient>
 
-        <filter id={`${uid}-soft`} x="-60%" y="-60%" width="220%" height="220%">
-          <feDropShadow dx="0" dy="6" stdDeviation="6" floodColor="rgba(0,0,0,0.55)" floodOpacity="1" />
-          <feDropShadow dx="0" dy="0" stdDeviation="8" floodColor="rgba(255,59,48,0.12)" floodOpacity="1" />
-        </filter>
-
-        <filter id={`${uid}-blur`} x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="1.35" />
+        <filter id={`${uid}-glow`} x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="2.5" stdDeviation="3" floodColor="rgba(0,0,0,0.55)" floodOpacity="1" />
+          <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="rgba(255,59,48,0.10)" floodOpacity="1" />
         </filter>
 
         <clipPath id={`${uid}-clip`}>
-          <path d={shape} />
+          <rect x="6" y="6" width="36" height="36" rx="12" />
         </clipPath>
       </defs>
 
-      <g className={styles.liquidFloat} style={{ animationDelay: phase }} filter={`url(#${uid}-soft)`}>
-        <path d={shape} fill={`url(#${uid}-fill)`} stroke="rgba(255,255,255,0.14)" strokeWidth="1" />
+      <g filter={`url(#${uid}-glow)`}>
+        <rect x="6" y="6" width="36" height="36" rx="12" fill={`url(#${uid}-panel)`} className={styles.panelBase} />
+        <rect
+          x="6"
+          y="6"
+          width="36"
+          height="36"
+          rx="12"
+          fill="none"
+          stroke={`url(#${uid}-border)`}
+          strokeWidth="1.2"
+          className={styles.panelBorder}
+        />
 
-        <g clipPath={`url(#${uid}-clip)`} opacity="0.98">
-          <rect x="0" y="0" width="48" height="48" fill={`url(#${uid}-scan)`} opacity="0.22" />
-          <LiquidDetails variant={variant} wireId={wireId} />
+        <g clipPath={`url(#${uid}-clip)`}>
+          <g className={styles.glyphWrap}>{children}</g>
+          <path
+            d="M-10 8 L20 -10 L60 30 L30 52 Z"
+            className={styles.sheen}
+            fill="rgba(255,255,255,0.08)"
+          />
         </g>
 
-        <ellipse
-          cx="19"
-          cy="15"
-          rx="14"
-          ry="10"
-          fill={`url(#${uid}-sheen)`}
-          filter={`url(#${uid}-blur)`}
-          className={styles.liquidSheen}
-        />
-
-        <path
-          d="M14 34c5 5 15 5 20 0"
-          fill="none"
-          stroke="rgba(255,255,255,0.10)"
-          strokeWidth="1.1"
-          opacity="0.45"
-          strokeLinecap="round"
-        />
-
-        <circle cx="35.2" cy="34.2" r="2.05" fill="rgba(255,59,48,0.55)" className={styles.liquidPulse} />
-        <circle cx="35.2" cy="34.2" r="4.7" fill="rgba(255,59,48,0.10)" className={styles.liquidPulse} />
+        <circle cx="14" cy="14" r="1.6" className={styles.accentDot} />
       </g>
     </svg>
   );
 }
 
 function YearsIcon() {
+  const uid = useSvgId("bio-years");
   return (
-    <LiquidIcon variant="years" />
+    <IconShell uid={uid} dur="9.5s" delay="-1.4s">
+      <circle cx="24" cy="24" r="10" className={styles.strokeMuted} />
+      <path d="M24 24V16.5" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
+      <path d="M24 24L30 27" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.86" />
+      <circle cx="24" cy="24" r="2.1" className={styles.coreDot} />
+      <circle
+        cx="24"
+        cy="24"
+        r="10"
+        className={styles.traceRing}
+        strokeLinecap="round"
+        strokeDasharray="6 52"
+      />
+    </IconShell>
   );
 }
 
 function BrandsIcon() {
+  const uid = useSvgId("bio-fortune");
   return (
-    <LiquidIcon variant="fortune" />
+    <IconShell uid={uid} dur="10.5s" delay="-2.1s">
+      <path
+        d="M24 14.5l9.2 5.3v9.1L24 33.4l-9.2-4.5v-9.1L24 14.5Z"
+        className={styles.strokeMuted}
+      />
+      <path d="M20 25.2v6.6" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
+      <path d="M24 22.2v9.6" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.95" />
+      <path d="M28 23.8v8" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.8" />
+      <path
+        d="M24 14.5l9.2 5.3v9.1L24 33.4l-9.2-4.5v-9.1L24 14.5Z"
+        className={styles.tracePath}
+        strokeDasharray="3 11"
+      />
+    </IconShell>
   );
 }
 
 function ViewsIcon() {
+  const uid = useSvgId("bio-views");
   return (
-    <LiquidIcon variant="views" />
+    <IconShell uid={uid} dur="8.6s" delay="-1.7s">
+      <path d="M16 28c3.6-7 7 2.6 9.2-0.6 2.2-3.2 5.8-9.2 11.8-3.2" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
+      <path d="M16 22h20" className={styles.strokeMuted} strokeDasharray="2 5" />
+      <path
+        d="M16 28c3.6-7 7 2.6 9.2-0.6 2.2-3.2 5.8-9.2 11.8-3.2"
+        className={styles.tracePath}
+        strokeDasharray="3 11"
+      />
+      <circle cx="16" cy="28" r="1.4" className={styles.coreDot} style={{ opacity: 0.55 }} />
+      <circle cx="25.2" cy="27.4" r="1.4" className={styles.coreDot} style={{ opacity: 0.35 }} />
+    </IconShell>
   );
 }
 
 function CollaborationIcon() {
+  const uid = useSvgId("bio-collab");
   return (
-    <LiquidIcon variant="partnerships" />
+    <IconShell uid={uid} dur="9.2s" delay="-2.4s">
+      <circle cx="20.5" cy="25" r="7" className={styles.strokeMuted} />
+      <circle cx="27.5" cy="23" r="7" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.92" />
+      <path d="M23.8 20.2c2.2 0 4 1.8 4 4" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.7" />
+      <circle cx="27.5" cy="23" r="7" className={styles.traceRing} strokeDasharray="7 60" strokeLinecap="round" />
+    </IconShell>
   );
 }
 
 function AssetsIcon() {
+  const uid = useSvgId("bio-assets");
   return (
-    <LiquidIcon variant="assets" />
+    <IconShell uid={uid} dur="10.8s" delay="-1.1s">
+      <rect x="15" y="16" width="18" height="15" rx="4" className={styles.strokeMuted} />
+      <rect x="17.5" y="18.5" width="18" height="15" rx="4" className={styles.strokeMuted} opacity="0.55" />
+      <rect x="20" y="21" width="18" height="15" rx="4" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
+      <path d="M23.5 27h10" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} opacity="0.72" />
+      <rect x="20" y="21" width="18" height="15" rx="4" className={styles.tracePath} strokeDasharray="3 11" />
+    </IconShell>
   );
 }
 
 function MarketsIcon() {
+  const uid = useSvgId("bio-markets");
   return (
-    <LiquidIcon variant="markets" />
+    <IconShell uid={uid} dur="11.6s" delay="-2.8s">
+      <circle cx="24" cy="24" r="10" className={styles.strokeMain} stroke={`url(#${uid}-ink)`} />
+      <path d="M14 24h20" className={styles.strokeMuted} />
+      <path d="M24 14c4.4 4.7 4.4 14.3 0 20" className={styles.strokeMuted} />
+      <path d="M24 14c-4.4 4.7-4.4 14.3 0 20" className={styles.strokeMuted} opacity="0.65" />
+      <path d="M16.5 18.3c3.2-2.7 12.8-2.7 15 0" className={styles.strokeMuted} strokeDasharray="1.5 3.6" />
+      <circle cx="24" cy="24" r="10" className={styles.traceRing} strokeDasharray="5 54" strokeLinecap="round" />
+    </IconShell>
   );
 }
 
