@@ -257,7 +257,7 @@ export function BioSection() {
 
 	              <ul
 	                aria-label="Highlights"
-	                className={`mt-14 mx-auto grid w-full max-w-5xl grid-cols-2 items-start justify-items-center gap-x-10 gap-y-10 text-center sm:mt-16 sm:gap-x-14 sm:gap-y-12 md:mx-0 md:grid-cols-3 md:justify-items-start md:gap-x-16 md:gap-y-14 md:text-left lg:gap-x-20 lg:gap-y-16 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
+	                className={`mt-14 mx-auto grid w-full max-w-5xl grid-cols-2 items-start justify-items-center gap-x-10 gap-y-10 text-center sm:mt-16 sm:gap-x-14 sm:gap-y-12 md:mx-0 md:grid-cols-3 md:justify-items-center md:gap-x-16 md:gap-y-14 lg:gap-x-20 lg:gap-y-16 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
 	              >
                 {HIGHLIGHTS.map(({ key, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
