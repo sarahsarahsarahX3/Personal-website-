@@ -99,6 +99,25 @@
   transform: translate3d(0, -1px, 0);
 }
 
+.liquidFloat {
+  transform-origin: 24px 24px;
+  animation: liquidFloat var(--dur) ease-in-out infinite;
+  will-change: transform;
+}
+
+.liquidSheen {
+  transform-origin: 24px 24px;
+  animation: liquidSheen calc(var(--dur) * 1.15) ease-in-out infinite;
+  opacity: 0.75;
+  will-change: transform, opacity;
+}
+
+.liquidPulse {
+  transform-origin: center;
+  animation: liquidPulse calc(var(--dur) * 0.9) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
 @media (max-width: 640px) {
   .icon {
     width: 46px;
@@ -239,6 +258,40 @@
   }
 }
 
+@keyframes liquidFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-1.25deg) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -1.6px, 0) rotate(1.25deg) scale(1.02);
+  }
+}
+
+@keyframes liquidSheen {
+  0%,
+  100% {
+    transform: translate3d(-1.2px, -0.8px, 0) scale(0.98);
+    opacity: 0.62;
+  }
+  50% {
+    transform: translate3d(1.6px, 1px, 0) scale(1.04);
+    opacity: 0.82;
+  }
+}
+
+@keyframes liquidPulse {
+  0%,
+  100% {
+    transform: scale(0.98);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.98;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .headshot,
   .body,
@@ -261,7 +314,10 @@
   .scan,
   .pulse,
   .drift,
-  .dash {
+  .dash,
+  .liquidFloat,
+  .liquidSheen,
+  .liquidPulse {
     animation: none;
   }
 }
