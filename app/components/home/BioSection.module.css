@@ -3,6 +3,58 @@
   --bio-progress: 0;
 }
 
+.icon {
+  width: 56px;
+  height: 56px;
+  display: block;
+  color: rgba(255, 255, 255, 0.82);
+  transition: transform 220ms ease, filter 220ms ease, color 220ms ease;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, filter;
+}
+
+.iconPanel {
+  fill: rgba(255, 255, 255, 0.02);
+}
+
+.iconBorder {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.10);
+  stroke-width: 1.1;
+}
+
+.iconGlyph {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.9;
+}
+
+.iconTick {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.42);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.7;
+}
+
+.iconAccentDot {
+  fill: rgba(255, 59, 48, 0.92);
+  filter: drop-shadow(0 0 8px rgba(255, 59, 48, 0.22));
+}
+
+.iconRing {
+  fill: none;
+  stroke: rgba(255, 59, 48, 0.55);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-dasharray: 5 54;
+  opacity: 0.45;
+}
+
 .headshot,
 .body {
   opacity: calc(0.42 + (var(--bio-progress) * 0.58));
@@ -81,6 +133,36 @@
   will-change: transform, opacity;
 }
 
+.highlight:hover .icon {
+  color: rgba(255, 255, 255, 0.92);
+  filter: drop-shadow(0 0 16px rgba(255, 59, 48, 0.14));
+  transform: translate3d(0, -1px, 0);
+}
+
+.highlight:hover .iconRing {
+  animation: ring 1.8s linear infinite;
+}
+
+.highlight:hover .iconBorder {
+  stroke: rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 640px) {
+  .icon {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+@keyframes ring {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -64;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .headshot,
   .body,
@@ -97,5 +179,9 @@
   .subheading::after {
     opacity: 0 !important;
     transform: none !important;
+  }
+
+  .highlight:hover .iconRing {
+    animation: none !important;
   }
 }
