@@ -75,7 +75,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
 
             <motion.div
                 layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[520px] md:auto-rows-[560px] lg:auto-rows-[600px] items-stretch"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:auto-rows-[560px] lg:auto-rows-[600px] items-stretch"
             >
                 <AnimatePresence mode="popLayout">
                     {filteredProjects.map((project, index) => (
@@ -86,7 +86,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.4 }}
-                            className="h-full"
+                            className="md:h-full"
                         >
                             <ProjectCard
                                 index={index}
@@ -99,7 +99,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                                 year={project.year}
                                 description={project.description}
                                 contentTags={project.contentTags ?? project.tags}
-                                className="h-full"
+                                className="md:h-full"
                             />
                         </motion.div>
                     ))}
