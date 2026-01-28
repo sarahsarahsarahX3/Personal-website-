@@ -205,10 +205,6 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                                             ) : null}
                                         </div>
 
-                                        <div className="mt-3 text-xs font-mono text-text-secondary/80 truncate">
-                                            <span className="sr-only">Link: </span>
-                                            <span className="select-text">{href}</span>
-                                        </div>
                                     </div>
 
                                     <div className="relative z-30 flex items-center justify-start md:justify-center md:pl-5">

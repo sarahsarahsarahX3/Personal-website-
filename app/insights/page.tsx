@@ -29,6 +29,7 @@ export default async function InsightsPage() {
         "https://www.probeautycentral.saloncentric.com/national-lipstick-day-2023",
         "https://www.probeautycentral.saloncentric.com/trevor-project-itsa10-partnership",
         "https://www.probeautycentral.saloncentric.com/get-the-look-enchanting-glam",
+        "https://www.probeautycentral.saloncentric.com/kazmaleje-latoya-stirrup",
     ]);
 
     const visibleArticles = formattedArticles.filter((article) => !hiddenLinks.has(article.link));
@@ -42,6 +43,7 @@ export default async function InsightsPage() {
         "https://www.probeautycentral.saloncentric.com/best-practices-for-serving-deaf-clients",
         "https://www.probeautycentral.saloncentric.com/the-9-best-sunscreens-for-your-clients-skin-concerns",
         "https://www.probeautycentral.saloncentric.com/get-to-know-tonisha-scott",
+        "https://www.probeautycentral.saloncentric.com/9-iconic-hair-moments-in-black-pop-culture-history",
     ] as const;
 
     const moveIndex = new Map<string, number>(moveToBottomLinks.map((link, idx) => [link, idx]));
@@ -57,17 +59,19 @@ export default async function InsightsPage() {
     });
 
     // Manual ordering adjustments (small nudges without fully resorting the page).
-    const shiftDownRequests = [
+    const shiftRequests = [
+        { link: "https://www.probeautycentral.saloncentric.com/saloncentric-introduces-services-glammatic", by: -8 },
+        { link: "https://www.probeautycentral.saloncentric.com/beauty-with-a-purpose-foundation", by: 5 },
+        { link: "https://www.probeautycentral.saloncentric.com/beautex-launches-sustainable-salon-workwear", by: 7 },
         { link: "https://www.probeautycentral.saloncentric.com/artist-spotlight-philip-wolff", by: 5 },
-        { link: "https://www.probeautycentral.saloncentric.com/9-iconic-hair-moments-in-black-pop-culture-history", by: 3 },
     ] as const;
 
-    function shiftDown<T extends { link?: string }>(items: T[], link: string, by: number) {
-        if (by <= 0) return items;
+    function shiftBy<T extends { link?: string }>(items: T[], link: string, by: number) {
+        if (by === 0) return items;
         const index = items.findIndex((item) => item.link === link);
         if (index === -1) return items;
 
-        const nextIndex = Math.min(index + by, items.length - 1);
+        const nextIndex = Math.min(Math.max(index + by, 0), items.length - 1);
         if (nextIndex === index) return items;
 
         const clone = [...items];
@@ -76,8 +80,8 @@ export default async function InsightsPage() {
         return clone;
     }
 
-    const adjustedKept = shiftDownRequests.reduce(
-        (items, request) => shiftDown(items, request.link, request.by),
+    const adjustedKept = shiftRequests.reduce(
+        (items, request) => shiftBy(items, request.link, request.by),
         kept
     );
 
