@@ -198,6 +198,16 @@ const dailyPlanetClips = [
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1650908161625016%2F&width=720&show_text=false&height=405&appId",
   },
+  {
+    title: "Segment ID 1672214072827758",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1672214072827758%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Segment ID 1666295866752912",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1666295866752912%2F&width=720&show_text=false&height=405&appId",
+  },
 ] satisfies VideoClip[];
 
 const dailyPlanetFacebookPosts = [
