@@ -268,6 +268,7 @@ export function BioSection() {
                     counterConfig && typeof counters[key] === "number"
                       ? formatCounterValue(counters[key], counterConfig)
                       : value;
+                  const valueSizeClass = key === "markets" ? "md:text-[2.75rem]" : "md:text-5xl";
 
                   return (
                   <li
@@ -276,7 +277,9 @@ export function BioSection() {
                     style={{ ["--i" as string]: String(index) }}
                   >
                     <div className="min-w-0">
-                      <div className="font-display tabular-nums text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[0.98] text-text-primary">
+                      <div
+                        className={`font-display tabular-nums text-3xl sm:text-4xl ${valueSizeClass} tracking-tight leading-[0.98] text-text-primary`}
+                      >
                         {displayValue}
                       </div>
                       <div className="mx-auto mt-3.5 max-w-[20ch] text-[10px] sm:text-xs font-mono uppercase tracking-[0.18em] text-text-secondary/70 leading-relaxed min-h-[2.6em]">
