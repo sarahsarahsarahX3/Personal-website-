@@ -8,7 +8,7 @@ export const PROJECT_NAV: ProjectNavItem[] = [
   {
     slug: "p-and-g-beauty-content-hub",
     title: "Procter & Gamble - HairCode",
-    thumbnail: "/HairCode%20thumbnail%204.png",
+    thumbnail: "/Haaaaircode%20Thumbnail.png?v=1",
   },
   {
     slug: "saloncentric-nyfw",
