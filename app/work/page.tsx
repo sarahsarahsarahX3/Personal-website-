@@ -102,7 +102,7 @@ export default async function WorkPage() {
         title: "SalonCentric x AANHPI Heritage Month",
         brand: "L’Oréal USA",
         category: "Campaigns",
-        image: "/images/Thumbnail_New_AANHPI.png",
+        image: "/AANHPI%20NEW%20Thumbnail%201.png",
         size: "small",
         slug: "saloncentric-aanhpi",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
