@@ -86,7 +86,7 @@ export default async function WorkPage() {
         title: "HairCode Content Hub",
         brand: "Procter & Gamble",
         category: "Content Strategy",
-        image: "/Haaaaircode%20Thumbnail.png?v=1",
+        image: "/New%20Thumbnail%20for%20HairCode%20Project%20tile.png",
         size: "large",
         slug: "p-and-g-beauty-content-hub",
         tags: ["Content Strategy", "Copywriting", "Brand Storytelling"],
