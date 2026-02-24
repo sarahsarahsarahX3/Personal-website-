@@ -102,8 +102,8 @@ export default function AboutPage() {
                                             src="/Sarah_Headshot.jpeg"
                                             alt="Headshot of Sarah Dawson"
                                             fill
-                                            sizes="(min-width: 1024px) 360px, 70vw"
-                                            quality={95}
+                                            sizes="(min-width: 1024px) 560px, (min-width: 640px) 420px, 92vw"
+                                            unoptimized
                                             className="object-cover saturate-[1.08] contrast-[1.14] brightness-[1.03]"
                                             priority
                                         />
