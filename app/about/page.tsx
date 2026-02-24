@@ -96,14 +96,14 @@ export default function AboutPage() {
                                 <div className="mx-auto w-full max-w-[292px] sm:max-w-[320px] md:max-w-[360px] lg:mx-0">
                                     <div
                                         ref={headshotRef}
-                                        className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
+                                        className="relative aspect-[2/3] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
                                     >
                                         <Image
                                             src="/Sarah_Headshot.jpeg"
                                             alt="Headshot of Sarah Dawson"
                                             fill
                                             sizes="(min-width: 1024px) 360px, 70vw"
-                                            className="object-cover saturate-[0.98] contrast-[1.02]"
+                                            className="object-cover saturate-[1.06] contrast-[1.1] brightness-[1.02]"
                                             priority
                                         />
                                         <div
