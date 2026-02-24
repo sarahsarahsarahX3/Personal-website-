@@ -96,7 +96,9 @@ export default function AboutPage() {
                                 <div className="mx-auto w-full max-w-[292px] sm:max-w-[320px] md:max-w-[360px] lg:mx-0">
                                     <div
                                         ref={headshotRef}
-                                        className="relative aspect-[2/3] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
+                                        className="about-headshot relative aspect-[2/3] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
+                                        onContextMenu={(event) => event.preventDefault()}
+                                        onDragStart={(event) => event.preventDefault()}
                                     >
                                         <Image
                                             src="/Sarah_Headshot.jpeg"
@@ -105,6 +107,7 @@ export default function AboutPage() {
                                             sizes="(min-width: 1024px) 560px, (min-width: 640px) 420px, 92vw"
                                             unoptimized
                                             className="object-cover saturate-[1.08] contrast-[1.14] brightness-[1.03]"
+                                            draggable={false}
                                             priority
                                         />
                                         <div
@@ -153,6 +156,14 @@ export default function AboutPage() {
                     </section>
                 </div>
             </div>
+
+            <style jsx>{`
+                .about-headshot {
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    user-select: none;
+                }
+            `}</style>
         </main>
     );
 }
