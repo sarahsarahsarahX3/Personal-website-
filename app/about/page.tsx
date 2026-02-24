@@ -103,16 +103,17 @@ export default function AboutPage() {
                                             alt="Headshot of Sarah Dawson"
                                             fill
                                             sizes="(min-width: 1024px) 360px, 70vw"
-                                            className="object-cover saturate-[1.06] contrast-[1.1] brightness-[1.02]"
+                                            quality={95}
+                                            className="object-cover saturate-[1.08] contrast-[1.14] brightness-[1.03]"
                                             priority
                                         />
                                         <div
                                             aria-hidden="true"
-                                            className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_55%_at_50%_35%,rgba(255,255,255,0.12),rgba(0,0,0,0))]"
+                                            className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_55%_at_50%_35%,rgba(255,255,255,0.08),rgba(0,0,0,0))]"
                                         />
                                         <div
                                             aria-hidden="true"
-                                            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.06] to-black/[0.22]"
+                                            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/[0.03] to-black/[0.12]"
                                         />
                                         <div
                                             aria-hidden="true"
