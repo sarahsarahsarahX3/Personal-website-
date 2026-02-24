@@ -99,7 +99,7 @@ export default function AboutPage() {
                                         className="relative aspect-[4/5] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
                                     >
                                         <Image
-                                            src="/images/IMG_8516_edited.jpg"
+                                            src="/Sarah_Headshot.jpeg"
                                             alt="Headshot of Sarah Dawson"
                                             fill
                                             sizes="(min-width: 1024px) 360px, 70vw"
