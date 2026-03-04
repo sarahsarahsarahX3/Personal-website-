@@ -146,7 +146,13 @@ function matchesArticleFilter(article: Article, activeFilter: ArticleFilter) {
     return patterns[activeFilter].test(haystack);
 }
 
-export function ArticleList({ articles }: { articles: Article[] }) {
+export function ArticleList({
+    articles,
+    subtitle,
+}: {
+    articles: Article[];
+    subtitle?: string;
+}) {
     const [showBackToTop, setShowBackToTop] = useState(false);
     const [activeFilter, setActiveFilter] = useState<ArticleFilter>("All");
 
@@ -164,9 +170,18 @@ export function ArticleList({ articles }: { articles: Article[] }) {
 
     return (
         <>
-            <div className="mb-6 flex items-center justify-end">
-                <div className="w-full max-w-[320px]">
-                    <label htmlFor="article-filter" className="mb-2 block text-xs font-mono uppercase tracking-[0.22em] text-text-secondary/70">
+            <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                {subtitle ? (
+                    <p className="text-text-secondary text-xl md:whitespace-nowrap animate-fade-in-up delay-200">
+                        {subtitle}
+                    </p>
+                ) : null}
+
+                <div className="w-full max-w-[220px] sm:max-w-[240px] md:max-w-[280px] mx-auto md:mx-0">
+                    <label
+                        htmlFor="article-filter"
+                        className="mb-2 block text-center md:text-left text-[10px] sm:text-xs font-mono uppercase tracking-[0.22em] text-text-secondary/70"
+                    >
                         Filter
                     </label>
                     <div className="relative">
@@ -174,7 +189,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                             id="article-filter"
                             value={activeFilter}
                             onChange={(event) => setActiveFilter(event.target.value as ArticleFilter)}
-                            className="w-full appearance-none rounded-2xl border border-white/10 bg-surface/40 px-4 py-3 pr-10 text-sm tracking-tight text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                            className="w-full appearance-none rounded-2xl border border-white/10 bg-surface/40 px-3 py-2.5 md:px-4 md:py-3 pr-9 md:pr-10 text-xs sm:text-sm tracking-tight text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
                             aria-label="Filter articles by topic"
                         >
                             {ARTICLE_FILTERS.map((filter) => (

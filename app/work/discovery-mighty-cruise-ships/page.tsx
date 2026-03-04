@@ -922,7 +922,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
         <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             <section id="overview" className="scroll-mt-16">
-              <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #3</p>
+              <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #5</p>
               <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">
                 <em className="italic">Mighty Cruise Ships</em>
               </h1>

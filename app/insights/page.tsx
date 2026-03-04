@@ -103,12 +103,12 @@ export default async function InsightsPage() {
                     <h1 className="text-5xl sm:text-6xl md:text-7xl font-display mb-6 animate-fade-in-up">
                         Articles
                     </h1>
-                    <p className="text-text-secondary text-xl max-w-xl md:max-w-none md:whitespace-nowrap animate-fade-in-up delay-200">
-                        Explore my published articles across brand and editorial platforms.
-                    </p>
                 </header>
 
-                <ArticleList articles={orderedArticles} />
+                <ArticleList
+                    articles={orderedArticles}
+                    subtitle="Explore my published articles across brand and editorial platforms."
+                />
             </div>
         </main>
     );
