@@ -96,7 +96,7 @@ export default function AboutPage() {
 
             <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pt-[4.5rem] pb-[5.5rem] md:pt-20 md:pb-24 lg:pt-[5.5rem] lg:pb-28">
                 <div className="mt-2 grid gap-9 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-12 items-start lg:items-center">
-                    <section aria-label="Portrait" className="relative lg:pt-1 lg:flex lg:flex-col lg:justify-center lg:self-center">
+                    <section aria-label="Portrait" className="relative lg:pt-1 lg:flex lg:flex-col lg:justify-start lg:self-start lg:-mt-8">
                         <div className="w-full max-w-[352px] lg:mx-auto">
                             <header className="mb-6 sm:mb-7 text-left">
                                 <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
