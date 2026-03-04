@@ -56,11 +56,6 @@ function ArticleThumbnail({ src, alt }: { src: string; alt: string }) {
     );
 }
 
-function isHiddenTag(tag: string) {
-    const normalized = tag.trim().toLowerCase();
-    return normalized === "thought leadership" || normalized === "though leadership";
-}
-
 function clampWords(text: string, maxWords: number) {
     const normalized = text.trim().replace(/\s+/g, " ");
     if (!normalized) return "";
@@ -170,7 +165,7 @@ export function ArticleList({
 
     return (
         <>
-            <div className="mb-5 md:mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div className="mb-5 md:mb-6 flex flex-col gap-3 md:gap-1 md:flex-row md:items-end md:justify-between">
                 {subtitle ? (
                     <p className="text-text-secondary text-lg sm:text-xl md:whitespace-nowrap animate-fade-in-up delay-200">
                         {subtitle}
@@ -275,18 +270,6 @@ export function ArticleList({
                                         ) : null}
 
                                         <div className="mt-5 flex flex-wrap items-center gap-3">
-                                            {(article.tags ?? [])
-                                                .filter((tag) => !isHiddenTag(tag))
-                                                .map((tag) => (
-                                                <span
-                                                    key={tag}
-                                                    className="pointer-events-none px-3 py-1 rounded-full border border-dashed border-white/15 text-[11px] uppercase tracking-widest text-text-secondary/80 bg-transparent"
-                                                    data-analytics="article_tag_pill"
-                                                    data-tag={tag}
-                                                >
-                                                    {tag}
-                                                </span>
-                                            ))}
                                             {article.readTime ? (
                                                 <span className="text-sm text-text-secondary">{article.readTime}</span>
                                             ) : null}
