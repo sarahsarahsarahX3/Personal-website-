@@ -2,11 +2,20 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 export default function AboutPage() {
     const containerRef = useRef<HTMLElement | null>(null);
     const headshotRef = useRef<HTMLDivElement | null>(null);
     const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
+    const reduceMotion = useReducedMotion();
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"],
+    });
+    const portraitY = useTransform(scrollYProgress, [0, 0.5, 1], [28, 0, -22]);
+    const portraitRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-1.5, 0, 1.2]);
+    const portraitScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.985, 1, 1.018]);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -42,10 +51,12 @@ export default function AboutPage() {
         resizeObserver.observe(node);
         resizeObserver.observe(container);
         window.addEventListener("resize", schedule);
+        window.addEventListener("scroll", schedule, { passive: true });
 
         return () => {
             resizeObserver.disconnect();
             window.removeEventListener("resize", schedule);
+            window.removeEventListener("scroll", schedule);
             cancelAnimationFrame(raf);
         };
     }, []);
@@ -89,10 +100,21 @@ export default function AboutPage() {
                     <h1 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.03]">About</h1>
                 </header>
 
-                <div className="mt-8 grid gap-9 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-12 items-start">
+                <div className="mt-8 grid gap-9 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-12 items-start">
                     <section aria-label="Portrait" className="relative lg:pt-1">
                         <figure className="relative">
-                            <div className="lg:-ml-2 xl:-ml-4">
+                            <motion.div
+                                className="lg:-ml-2 xl:-ml-4"
+                                style={
+                                    reduceMotion
+                                        ? undefined
+                                        : {
+                                              y: portraitY,
+                                              rotate: portraitRotate,
+                                              scale: portraitScale,
+                                          }
+                                }
+                            >
                                 <div className="mx-auto w-full max-w-[276px] sm:max-w-[304px] md:max-w-[336px] lg:max-w-[352px] lg:mx-0">
                                     <div
                                         ref={headshotRef}
@@ -124,7 +146,7 @@ export default function AboutPage() {
                                         />
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                             <figcaption className="sr-only">Portrait</figcaption>
                         </figure>
                     </section>
