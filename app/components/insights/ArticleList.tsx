@@ -172,7 +172,7 @@ export function ArticleList({
                     </p>
                 ) : null}
 
-                <div className="w-full max-w-[208px] sm:max-w-[224px] md:max-w-[280px] self-start">
+                <div className="w-full md:max-w-[280px] self-start">
                     <label
                         htmlFor="article-filter"
                         className="mb-1.5 block text-left text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.22em] text-text-secondary/70"

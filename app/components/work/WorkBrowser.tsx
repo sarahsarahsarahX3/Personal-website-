@@ -51,7 +51,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
         <>
             {/* Mobile Filter Dropdown */}
             <div className="mb-8 md:hidden">
-                <div className="w-full max-w-[220px]">
+                <div className="w-full">
                     <label
                         htmlFor="work-category-filter"
                         className="mb-1.5 block text-left text-[10px] font-mono uppercase tracking-[0.22em] text-text-secondary/70"
