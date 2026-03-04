@@ -96,9 +96,9 @@ export default function AboutPage() {
 
             <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pt-[4.5rem] pb-[5.5rem] md:pt-20 md:pb-24 lg:pt-[5.5rem] lg:pb-28">
                 <div className="mt-2 grid gap-9 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-12 items-start lg:items-center">
-                    <section aria-label="Portrait" className="relative lg:pt-1 lg:flex lg:flex-col lg:items-center">
-                        <div className="w-full max-w-[352px]">
-                            <header className="mb-6 sm:mb-7 text-center">
+                    <section aria-label="Portrait" className="relative lg:pt-1 lg:flex lg:flex-col lg:justify-center lg:self-center">
+                        <div className="w-full max-w-[352px] lg:mx-auto">
+                            <header className="mb-6 sm:mb-7 text-left">
                                 <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
                                 <h1 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.03]">About</h1>
                             </header>
@@ -155,7 +155,7 @@ export default function AboutPage() {
 
                     <section
                         aria-label="Bio"
-                        className="lg:pt-1 lg:border-l lg:border-white/10 lg:pl-10"
+                        className="lg:pt-1 lg:self-center lg:border-l lg:border-white/10 lg:pl-10"
                     >
                         <div className="max-w-[60ch] lg:max-w-[72ch]">
                             <div className="space-y-6 md:space-y-7 text-[0.94rem] sm:text-[0.97rem] lg:text-[1rem] leading-[1.74] text-text-secondary/95">
