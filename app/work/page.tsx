@@ -11,7 +11,7 @@ type WorkProject = {
     contentTags?: string[];
     brand?: string;
     number?: number;
-    filterCategory?: "Campaign" | "Editorial" | "Production" | "Strategy";
+    filterCategory?: "Campaigns" | "Editorial" | "Production" | "Strategy";
     year?: string;
     description?: string;
 };
@@ -43,7 +43,7 @@ export default async function WorkPage() {
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
         contentTags: ["Editorial", "Brand Journalism", "Cultural Storytelling"],
         number: 2,
-        filterCategory: "Campaign",
+        filterCategory: "Campaigns",
         year: "2024",
         description:
             "An integrated brand campaign covering a trailblazing cultural event for SalonCentric at NYFW.",
@@ -75,7 +75,7 @@ export default async function WorkPage() {
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
         contentTags: ["Integrated Campaigns", "Cultural Storytelling", "Experiential Events"],
         number: 3,
-        filterCategory: "Campaign",
+        filterCategory: "Campaigns",
         year: "2024",
         description:
             "A cultural storytelling campaign integrating influencer voices, brand partnerships, and experiential activation.",
@@ -114,13 +114,13 @@ export default async function WorkPage() {
     });
 
     return (
-        <main className="min-h-screen pt-32 pb-40 px-6">
+        <main className="min-h-screen pt-24 md:pt-32 pb-40 px-6">
             <div className="container mx-auto">
-                <header className="mb-12">
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-display mb-6 animate-fade-in-up">
+                <header className="mb-8 md:mb-12">
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-display mb-1 md:mb-6 animate-fade-in-up">
                         Selected Work
                     </h1>
-                    <p className="text-text-secondary text-xl max-w-xl md:max-w-none md:whitespace-nowrap animate-fade-in-up delay-200">
+                    <p className="text-text-secondary text-lg sm:text-xl md:text-xl max-w-xl md:max-w-none md:whitespace-nowrap animate-fade-in-up delay-200">
                         Explore a selection of my work across campaigns, content, and digital platforms.
                     </p>
                 </header>

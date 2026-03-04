@@ -15,21 +15,23 @@ interface Project {
     contentTags?: string[];
     brand?: string;
     number?: number;
-    filterCategory?: "Campaign" | "Editorial" | "Production" | "Strategy";
+    filterCategory?: "Campaigns" | "Editorial" | "Production" | "Strategy";
     year?: string;
     description?: string;
 }
 
 const categories = [
     "All",
-    "Campaign",
+    "Campaigns",
     "Editorial",
     "Production",
     "Strategy",
-];
+] as const;
+
+type Category = (typeof categories)[number];
 
 export function WorkBrowser({ projects }: { projects: Project[] }) {
-    const [activeCategory, setActiveCategory] = useState("All");
+    const [activeCategory, setActiveCategory] = useState<Category>("All");
 
     const filteredProjects = projects.filter((project) => {
         if (activeCategory === "All") return true;
@@ -37,7 +39,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
         const filterCategory = project.filterCategory;
         if (filterCategory) return filterCategory === activeCategory;
 
-        if (activeCategory === "Campaign") return project.category === "Campaigns";
+        if (activeCategory === "Campaigns") return project.category === "Campaigns";
         if (activeCategory === "Editorial") return project.category === "Editorial Operations";
         if (activeCategory === "Production") return project.category === "Multimedia Production";
         if (activeCategory === "Strategy") return project.category === "Content Strategy";
@@ -47,8 +49,38 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
 
     return (
         <>
-            {/* Filter Bar */}
-            <div className="mb-12 flex gap-8 overflow-x-auto pb-3 no-scrollbar md:flex-wrap md:overflow-visible md:pb-0 border-b border-white/10">
+            {/* Mobile Filter Dropdown */}
+            <div className="mb-8 md:hidden">
+                <div className="w-full max-w-[220px]">
+                    <label
+                        htmlFor="work-category-filter"
+                        className="mb-1.5 block text-left text-[10px] font-mono uppercase tracking-[0.22em] text-text-secondary/70"
+                    >
+                        Filter
+                    </label>
+                    <div className="relative">
+                        <select
+                            id="work-category-filter"
+                            value={activeCategory}
+                            onChange={(event) => setActiveCategory(event.target.value as Category)}
+                            className="w-full appearance-none rounded-2xl border border-white/10 bg-surface/40 px-3 py-2 pr-8 text-[11px] tracking-tight text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                            aria-label="Filter work by category"
+                        >
+                            {categories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                        <span aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary">
+                            ▾
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Desktop Filter Bar */}
+            <div className="mb-12 hidden md:flex gap-8 overflow-x-auto pb-3 no-scrollbar md:flex-wrap md:overflow-visible md:pb-0 border-b border-white/10">
                 {categories.map((category) => (
                     <button
                         key={category}

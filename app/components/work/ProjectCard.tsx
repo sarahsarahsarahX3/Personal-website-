@@ -25,7 +25,7 @@ function formatIndex(value: number) {
 
 function formatCategoryLabel(category: string) {
     const normalized = category.trim().toLowerCase();
-    if (normalized === "campaigns") return "Campaign";
+    if (normalized === "campaigns") return "Campaigns";
     if (normalized === "content strategy") return "Strategy";
     if (normalized === "editorial operations") return "Editorial";
     if (normalized === "multimedia production") return "Production";
