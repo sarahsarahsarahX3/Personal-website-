@@ -131,7 +131,7 @@ export default function AboutPage() {
 
                     <section
                         aria-label="Bio"
-                        className="lg:pt-0 lg:-mt-2 lg:border-l lg:border-white/10 lg:pl-12"
+                        className="lg:pt-0 lg:-mt-6 lg:border-l lg:border-white/10 lg:pl-12"
                     >
                         <div className="max-w-[68ch]">
                             <div className="space-y-7 md:space-y-8 text-[1rem] sm:text-[1.03rem] lg:text-[1.06rem] leading-[1.82] text-text-secondary/95">
