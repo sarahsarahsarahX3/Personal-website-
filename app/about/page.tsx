@@ -8,7 +8,6 @@ export default function AboutPage() {
     const containerRef = useRef<HTMLElement | null>(null);
     const headshotRef = useRef<HTMLDivElement | null>(null);
     const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
-    const [isBioExpanded, setIsBioExpanded] = useState(false);
     const reduceMotion = useReducedMotion();
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -101,7 +100,7 @@ export default function AboutPage() {
                     <h1 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.03]">About</h1>
                 </header>
 
-                <div className="mt-8 grid gap-9 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:gap-12 items-start">
+                <div className="mt-8 grid gap-9 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-12 items-start">
                     <section aria-label="Portrait" className="relative lg:pt-1">
                         <figure className="relative">
                             <motion.div
@@ -156,7 +155,7 @@ export default function AboutPage() {
                         aria-label="Bio"
                         className="lg:pt-1 lg:border-l lg:border-white/10 lg:pl-10"
                     >
-                        <div className="max-w-[60ch] lg:max-w-[66ch]">
+                        <div className="max-w-[60ch] lg:max-w-[72ch]">
                             <div className="space-y-6 md:space-y-7 text-[0.94rem] sm:text-[0.97rem] lg:text-[1rem] leading-[1.74] text-text-secondary/95">
                                 <p>
                                     Hello! I’m a Senior Copywriter and Content Strategist with more than seven years of experience working with Fortune 500 beauty, fashion, and lifestyle brands to build captivating content and grow organic audiences.
@@ -164,26 +163,10 @@ export default function AboutPage() {
                                 <p>
                                     My experience is rooted in the beauty and fashion industry, one of the most competitive and content-saturated fields in digital media. Earning and sustaining organic visibility in this space requires strategic precision and a deep understanding of consumer needs. For example, at P&G Beauty, I led content for HairCode.com, creating articles and guides that helped readers understand hair care while improving search visibility and engagement. At SalonCentric, I managed the Pro Beauty Central editorial platform and oversaw content across major beauty categories for more than 80 brand partners. My work has appeared across websites, social media, email campaigns, retail materials, and live events, including directing L’Oréal USA’s editorial coverage at New York Fashion Week.
                                 </p>
-
-                                {isBioExpanded ? (
-                                    <>
-                                        <p>
-                                            My career has taken me from filming a Discovery Channel documentary in Antarctica to directing editorial coverage at New York Fashion Week for L’Oréal USA. Some might call it an unconventional path. I see it as a broad creative background that shapes how I approach storytelling today. The common thread throughout my work is genuine curiosity and a drive to find the story worth telling in any environment, for any audience.
-                                        </p>
-                                        <p>If you’re looking for someone who brings thoughtful storytelling and data-driven strategy to branded content, let’s connect.</p>
-                                    </>
-                                ) : null}
-                            </div>
-
-                            <div className="mt-6">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsBioExpanded((prev) => !prev)}
-                                    className="inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2 text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
-                                    aria-expanded={isBioExpanded}
-                                >
-                                    {isBioExpanded ? "Show Less" : "Read More"}
-                                </button>
+                                <p>
+                                    My career has taken me from filming a Discovery Channel documentary in Antarctica to directing editorial coverage at New York Fashion Week for L’Oréal USA. Some might call it an unconventional path. I see it as a broad creative background that shapes how I approach storytelling today. The common thread throughout my work is genuine curiosity and a drive to find the story worth telling in any environment, for any audience.
+                                </p>
+                                <p>If you’re looking for someone who brings thoughtful storytelling and data-driven strategy to branded content, let’s connect.</p>
                             </div>
 
                             <div className="mt-10 flex flex-wrap items-center gap-3">
