@@ -34,39 +34,6 @@ export default async function WorkPage() {
     }));
 
     projects.unshift({
-        title: "Mighty Cruise Ships, “MS Roald Amundsen”",
-        brand: "Discovery Channel",
-        category: "Multimedia Production",
-        image: "/Mighty%20Cruise%20Ships%20Project%20Thumbnail.png",
-        size: "small",
-        slug: "discovery-mighty-cruise-ships",
-        tags: ["Multimedia Production", "Brand Storytelling"],
-        contentTags: ["Documentary Production", "Travel Journalism", "Global Audience"],
-        number: 3,
-        filterCategory: "Production",
-        year: "2020",
-        description:
-            "A documentary featuring the world’s first hybrid-powered cruise ship and its voyage across Antarctica.",
-    });
-
-    projects.splice(3, 0, {
-        title: "Daily Planet, Season 23",
-        brand: "Discovery Channel",
-        category: "Multimedia Production",
-        image: "/Daily%20Planet%20-%20Future%20Tech%20Week.jpeg",
-        size: "small",
-        slug: "discovery-daily-planet",
-        tags: ["Multimedia Production", "Brand Storytelling"],
-        contentTags: ["Science Journalism", "Broadcast Production", "Editorial"],
-        number: 4,
-        filterCategory: "Production",
-        year: "2018",
-        description:
-            "A television series delivering news and features on science, technology, innovation, wildlife, and environmental discovery.",
-    });
-
-
-    projects.unshift({
         title: "SalonCentric x New York Fashion Week",
         brand: "L’Oréal USA",
         category: "Campaigns",
@@ -98,7 +65,7 @@ export default async function WorkPage() {
             "An editorial content hub focused on hair science and product education.",
     });
 
-    projects.push({
+    projects.splice(2, 0, {
         title: "SalonCentric x AANHPI Heritage Month",
         brand: "L’Oréal USA",
         category: "Campaigns",
@@ -107,11 +74,43 @@ export default async function WorkPage() {
         slug: "saloncentric-aanhpi",
         tags: ["Campaigns", "Copywriting", "Brand Storytelling"],
         contentTags: ["Integrated Campaigns", "Cultural Storytelling", "Experiential Events"],
-        number: 5,
+        number: 3,
         filterCategory: "Campaign",
         year: "2024",
         description:
             "A cultural storytelling campaign integrating influencer voices, brand partnerships, and experiential activation.",
+    });
+
+    projects.push({
+        title: "Daily Planet, Season 23",
+        brand: "Discovery Channel",
+        category: "Multimedia Production",
+        image: "/Daily%20Planet%20-%20Future%20Tech%20Week.jpeg",
+        size: "small",
+        slug: "discovery-daily-planet",
+        tags: ["Multimedia Production", "Brand Storytelling"],
+        contentTags: ["Science Journalism", "Broadcast Production", "Editorial"],
+        number: 4,
+        filterCategory: "Production",
+        year: "2018",
+        description:
+            "A television series delivering news and features on science, technology, innovation, wildlife, and environmental discovery.",
+    });
+
+    projects.push({
+        title: "Mighty Cruise Ships, “MS Roald Amundsen”",
+        brand: "Discovery Channel",
+        category: "Multimedia Production",
+        image: "/Mighty%20Cruise%20Ships%20Project%20Thumbnail.png",
+        size: "small",
+        slug: "discovery-mighty-cruise-ships",
+        tags: ["Multimedia Production", "Brand Storytelling"],
+        contentTags: ["Documentary Production", "Travel Journalism", "Global Audience"],
+        number: 5,
+        filterCategory: "Production",
+        year: "2020",
+        description:
+            "A documentary featuring the world’s first hybrid-powered cruise ship and its voyage across Antarctica.",
     });
 
     return (

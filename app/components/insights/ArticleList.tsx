@@ -22,6 +22,19 @@ interface Article {
     performance?: string[];
 }
 
+const ARTICLE_FILTERS = [
+    "All",
+    "Beauty",
+    "Fashion",
+    "Wellness",
+    "Science",
+    "Industry News",
+    "Profiles",
+    "Brands",
+] as const;
+
+type ArticleFilter = (typeof ARTICLE_FILTERS)[number];
+
 function ArticleThumbnail({ src, alt }: { src: string; alt: string }) {
     const fallbackSrc = "/images/IMG_5668_edited.jpg";
     const [currentSrc, setCurrentSrc] = useState(src);
@@ -106,8 +119,36 @@ function emitAnalytics(event: string, payload: Record<string, unknown>) {
     }
 }
 
+function matchesArticleFilter(article: Article, activeFilter: ArticleFilter) {
+    if (activeFilter === "All") return true;
+
+    const haystack = [
+        article.title,
+        article.category,
+        article.publication,
+        ...(article.tags ?? []),
+        ...(article.formats ?? []),
+    ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+    const patterns: Record<Exclude<ArticleFilter, "All">, RegExp> = {
+        Beauty: /(beauty|hair|nail|salon|stylist|makeup|skincare|color|cutting|styling)/i,
+        Fashion: /(fashion|runway|nyfw|style|glam)/i,
+        Wellness: /(wellness|health|sunscreen|detox|scalp|condition|repair|care)/i,
+        Science: /(science|technology|research|ai|environment|hybrid)/i,
+        "Industry News": /(news|launch|introduc|announc|law|legislation|fund|partnership|edition|blazers|change|finalist)/i,
+        Profiles: /(artist spotlight|get to know|spotlight|profile|interview|team artist|founder|owner)/i,
+        Brands: /(brand|l[’']?or[eé]al|p&g|saloncentric|essations|briogeo|gelish|unite|glammatic|nioxin|ghd|sebastian)/i,
+    };
+
+    return patterns[activeFilter].test(haystack);
+}
+
 export function ArticleList({ articles }: { articles: Article[] }) {
     const [showBackToTop, setShowBackToTop] = useState(false);
+    const [activeFilter, setActiveFilter] = useState<ArticleFilter>("All");
 
     useEffect(() => {
         const onScroll = () => setShowBackToTop(window.scrollY > 600);
@@ -116,10 +157,41 @@ export function ArticleList({ articles }: { articles: Article[] }) {
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
+    const filteredArticles = useMemo(
+        () => articles.filter((article) => matchesArticleFilter(article, activeFilter)),
+        [articles, activeFilter]
+    );
+
     return (
         <>
+            <div className="mb-6 flex items-center justify-end">
+                <div className="w-full max-w-[320px]">
+                    <label htmlFor="article-filter" className="mb-2 block text-xs font-mono uppercase tracking-[0.22em] text-text-secondary/70">
+                        Filter
+                    </label>
+                    <div className="relative">
+                        <select
+                            id="article-filter"
+                            value={activeFilter}
+                            onChange={(event) => setActiveFilter(event.target.value as ArticleFilter)}
+                            className="w-full appearance-none rounded-2xl border border-white/10 bg-surface/40 px-4 py-3 pr-10 text-sm tracking-tight text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                            aria-label="Filter articles by topic"
+                        >
+                            {ARTICLE_FILTERS.map((filter) => (
+                                <option key={filter} value={filter}>
+                                    {filter}
+                                </option>
+                            ))}
+                        </select>
+                        <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary">
+                            ▾
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <div className="border-t border-white/10">
-                {articles.map((article, i) => {
+                {filteredArticles.map((article, i) => {
                     const internalHref = `/insights/${article.slug}`;
                     const href = article.link ?? internalHref;
                     const isExternal = href.startsWith("http://") || href.startsWith("https://");
