@@ -95,16 +95,17 @@ export default function AboutPage() {
             </div>
 
             <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pt-[4.5rem] pb-[5.5rem] md:pt-20 md:pb-24 lg:pt-[5.5rem] lg:pb-28">
-                <header className="max-w-2xl">
-                    <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
-                    <h1 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.03]">About</h1>
-                </header>
+                <div className="mt-2 grid gap-9 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-12 items-start lg:items-center">
+                    <section aria-label="Portrait" className="relative lg:pt-1 lg:flex lg:flex-col lg:items-center">
+                        <div className="w-full max-w-[352px]">
+                            <header className="mb-6 sm:mb-7 text-center">
+                                <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
+                                <h1 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.03]">About</h1>
+                            </header>
 
-                <div className="mt-8 grid gap-9 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-12 items-start">
-                    <section aria-label="Portrait" className="relative lg:pt-1">
-                        <figure className="relative">
+                            <figure className="relative">
                             <motion.div
-                                className="lg:-ml-2 xl:-ml-4"
+                                className="mx-auto"
                                 style={
                                     reduceMotion
                                         ? undefined
@@ -115,7 +116,7 @@ export default function AboutPage() {
                                           }
                                 }
                             >
-                                <div className="mx-auto w-full max-w-[276px] sm:max-w-[304px] md:max-w-[336px] lg:max-w-[352px] lg:mx-0">
+                                <div className="mx-auto w-full max-w-[276px] sm:max-w-[304px] md:max-w-[336px] lg:max-w-[352px]">
                                     <div
                                         ref={headshotRef}
                                         className="about-headshot relative aspect-[2/3] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
@@ -148,7 +149,8 @@ export default function AboutPage() {
                                 </div>
                             </motion.div>
                             <figcaption className="sr-only">Portrait</figcaption>
-                        </figure>
+                            </figure>
+                        </div>
                     </section>
 
                     <section
