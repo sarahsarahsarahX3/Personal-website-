@@ -7,10 +7,8 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 export default function AboutPage() {
     const containerRef = useRef<HTMLElement | null>(null);
     const headshotRef = useRef<HTMLDivElement | null>(null);
-    const bioScrollRef = useRef<HTMLDivElement | null>(null);
     const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
-    const [bioScrollProgress, setBioScrollProgress] = useState(1);
-    const [bioHasOverflow, setBioHasOverflow] = useState(false);
+    const [isBioExpanded, setIsBioExpanded] = useState(false);
     const reduceMotion = useReducedMotion();
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -60,44 +58,6 @@ export default function AboutPage() {
             resizeObserver.disconnect();
             window.removeEventListener("resize", schedule);
             window.removeEventListener("scroll", schedule);
-            cancelAnimationFrame(raf);
-        };
-    }, []);
-
-    useEffect(() => {
-        const node = bioScrollRef.current;
-        if (!node) return;
-
-        const update = () => {
-            const maxScroll = node.scrollHeight - node.clientHeight;
-            if (maxScroll <= 1) {
-                setBioHasOverflow(false);
-                setBioScrollProgress(1);
-                return;
-            }
-
-            setBioHasOverflow(true);
-            setBioScrollProgress(Math.min(1, Math.max(0, node.scrollTop / maxScroll)));
-        };
-
-        update();
-
-        let raf = 0;
-        const schedule = () => {
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(update);
-        };
-
-        node.addEventListener("scroll", schedule, { passive: true });
-        window.addEventListener("resize", schedule);
-
-        const observer = new ResizeObserver(() => schedule());
-        observer.observe(node);
-
-        return () => {
-            node.removeEventListener("scroll", schedule);
-            window.removeEventListener("resize", schedule);
-            observer.disconnect();
             cancelAnimationFrame(raf);
         };
     }, []);
@@ -197,44 +157,33 @@ export default function AboutPage() {
                         className="lg:pt-1 lg:border-l lg:border-white/10 lg:pl-10"
                     >
                         <div className="max-w-[60ch] lg:max-w-[66ch]">
-                            <div className="relative">
-                                <div className="mb-4 hidden lg:block">
-                                    <div className="h-px w-full bg-white/12" aria-hidden="true">
-                                        <div
-                                            className="h-full bg-accent/85 transition-[width] duration-150"
-                                            style={{ width: `${Math.max(8, bioScrollProgress * 100)}%` }}
-                                        />
-                                    </div>
-                                </div>
+                            <div className="space-y-6 md:space-y-7 text-[0.94rem] sm:text-[0.97rem] lg:text-[1rem] leading-[1.74] text-text-secondary/95">
+                                <p>
+                                    Hello! I’m a Senior Copywriter and Content Strategist with more than seven years of experience working with Fortune 500 beauty, fashion, and lifestyle brands to build captivating content and grow organic audiences.
+                                </p>
+                                <p>
+                                    My experience is rooted in the beauty and fashion industry, one of the most competitive and content-saturated fields in digital media. Earning and sustaining organic visibility in this space requires strategic precision and a deep understanding of consumer needs. For example, at P&G Beauty, I led content for HairCode.com, creating articles and guides that helped readers understand hair care while improving search visibility and engagement. At SalonCentric, I managed the Pro Beauty Central editorial platform and oversaw content across major beauty categories for more than 80 brand partners. My work has appeared across websites, social media, email campaigns, retail materials, and live events, including directing L’Oréal USA’s editorial coverage at New York Fashion Week.
+                                </p>
 
-                                <div
-                                    ref={bioScrollRef}
-                                    className="about-bio-scroll space-y-6 md:space-y-7 text-[0.94rem] sm:text-[0.97rem] lg:text-[1rem] leading-[1.74] text-text-secondary/95 lg:max-h-[calc(100vh-17.5rem)] lg:overflow-y-auto lg:pr-4"
-                                >
-                                    <p>
-                                        Hello! I’m a Senior Copywriter and Content Strategist with more than seven years of experience working with Fortune 500 beauty, fashion, and lifestyle brands to build captivating content and grow organic audiences.
-                                    </p>
-                                    <p>
-                                        My experience is rooted in the beauty and fashion industry, one of the most competitive and content-saturated fields in digital media. Earning and sustaining organic visibility in this space requires strategic precision and a deep understanding of consumer needs. For example, at P&G Beauty, I led content for HairCode.com, creating articles and guides that helped readers understand hair care while improving search visibility and engagement. At SalonCentric, I managed the Pro Beauty Central editorial platform and oversaw content across major beauty categories for more than 80 brand partners. My work has appeared across websites, social media, email campaigns, retail materials, and live events, including directing L’Oréal USA’s editorial coverage at New York Fashion Week.
-                                    </p>
-                                    <p>
-                                        My career has taken me from filming a Discovery Channel documentary in Antarctica to directing editorial coverage at New York Fashion Week for L’Oréal USA. Some might call it an unconventional path. I see it as a broad creative background that shapes how I approach storytelling today. The common thread throughout my work is genuine curiosity and a drive to find the story worth telling in any environment, for any audience.
-                                    </p>
-                                    <p>If you’re looking for someone who brings thoughtful storytelling and data-driven strategy to branded content, let’s connect.</p>
-                                </div>
-
-                                {bioHasOverflow ? (
+                                {isBioExpanded ? (
                                     <>
-                                        <div
-                                            aria-hidden="true"
-                                            className="pointer-events-none hidden lg:block absolute inset-x-0 top-0 h-6 bg-gradient-to-b from-surface/75 to-transparent"
-                                        />
-                                        <div
-                                            aria-hidden="true"
-                                            className="pointer-events-none hidden lg:block absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-surface/85 to-transparent"
-                                        />
+                                        <p>
+                                            My career has taken me from filming a Discovery Channel documentary in Antarctica to directing editorial coverage at New York Fashion Week for L’Oréal USA. Some might call it an unconventional path. I see it as a broad creative background that shapes how I approach storytelling today. The common thread throughout my work is genuine curiosity and a drive to find the story worth telling in any environment, for any audience.
+                                        </p>
+                                        <p>If you’re looking for someone who brings thoughtful storytelling and data-driven strategy to branded content, let’s connect.</p>
                                     </>
                                 ) : null}
+                            </div>
+
+                            <div className="mt-6">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsBioExpanded((prev) => !prev)}
+                                    className="inline-flex items-center justify-center rounded-full border border-white/10 bg-surface-alt/10 px-4 py-2 text-xs font-mono uppercase tracking-widest text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                                    aria-expanded={isBioExpanded}
+                                >
+                                    {isBioExpanded ? "Show Less" : "Read More"}
+                                </button>
                             </div>
 
                             <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -257,25 +206,6 @@ export default function AboutPage() {
                     user-select: none;
                 }
 
-                .about-bio-scroll {
-                    scrollbar-width: thin;
-                    scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
-                }
-
-                .about-bio-scroll::-webkit-scrollbar {
-                    width: 8px;
-                }
-
-                .about-bio-scroll::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-
-                .about-bio-scroll::-webkit-scrollbar-thumb {
-                    background: rgba(255, 255, 255, 0.3);
-                    border-radius: 9999px;
-                    border: 2px solid transparent;
-                    background-clip: content-box;
-                }
             `}</style>
         </main>
     );
