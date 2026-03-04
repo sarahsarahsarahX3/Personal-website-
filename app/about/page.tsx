@@ -131,10 +131,10 @@ export default function AboutPage() {
 
                     <section
                         aria-label="Bio"
-                        className="lg:pt-6 lg:border-l lg:border-white/10 lg:pl-10"
+                        className="lg:pt-4 lg:border-l lg:border-white/10 lg:pl-12"
                     >
-                        <div className="max-w-xl">
-                            <div className="space-y-6 text-lg leading-relaxed text-text-secondary">
+                        <div className="max-w-[68ch]">
+                            <div className="space-y-7 md:space-y-8 text-[1rem] sm:text-[1.03rem] lg:text-[1.06rem] leading-[1.82] text-text-secondary/95">
                                 <p>
                                     I am a Senior Copywriter and Content Strategist with more than seven years of experience partnering with Fortune 500 brands across beauty, fashion, and lifestyle categories to build authority, grow organic audiences, and produce content that performs at every stage of the funnel. I work at the intersection of editorial strategy, SEO, and brand storytelling, collaborating with marketing teams and brand leaders who need a senior creative who can think strategically and execute to a high standard without missing a beat.
                                 </p>
@@ -147,7 +147,7 @@ export default function AboutPage() {
                                 <p>If you are looking for someone who brings both creative rigor and strategic depth to branded content, I would love to connect.</p>
                             </div>
 
-                            <div className="mt-10 flex flex-wrap items-center gap-3">
+                            <div className="mt-12 flex flex-wrap items-center gap-3">
                                 <a
                                     href="/contact"
                                     className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest bg-text-primary text-surface hover:bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
