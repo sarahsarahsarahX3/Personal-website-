@@ -83,17 +83,17 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-[radial-gradient(60%_65%_at_30%_35%,rgba(255,255,255,0.10),rgba(0,0,0,0))]" />
             </div>
 
-            <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-20 pb-24 md:pt-22 md:pb-28 lg:pt-24 lg:pb-32">
+            <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pt-[4.5rem] pb-[5.5rem] md:pt-20 md:pb-24 lg:pt-[5.5rem] lg:pb-28">
                 <header className="max-w-2xl">
                     <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
-                    <h1 className="mt-3 font-display text-4xl md:text-6xl tracking-tight leading-[1.03]">About</h1>
+                    <h1 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.03]">About</h1>
                 </header>
 
-                <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,460px)_minmax(0,1fr)] lg:gap-14 items-start">
+                <div className="mt-8 grid gap-9 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-12 items-start">
                     <section aria-label="Portrait" className="relative lg:pt-1">
                         <figure className="relative">
                             <div className="lg:-ml-2 xl:-ml-4">
-                                <div className="mx-auto w-full max-w-[292px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[392px] lg:mx-0">
+                                <div className="mx-auto w-full max-w-[276px] sm:max-w-[304px] md:max-w-[336px] lg:max-w-[352px] lg:mx-0">
                                     <div
                                         ref={headshotRef}
                                         className="about-headshot relative aspect-[2/3] overflow-hidden rounded-[28px] ring-1 ring-inset ring-white/15 bg-black/20"
@@ -133,8 +133,8 @@ export default function AboutPage() {
                         aria-label="Bio"
                         className="lg:pt-1 lg:border-l lg:border-white/10 lg:pl-10"
                     >
-                        <div className="max-w-[64ch]">
-                            <div className="space-y-6 md:space-y-7 text-[0.98rem] sm:text-[1.02rem] lg:text-[1.04rem] leading-[1.78] text-text-secondary/95">
+                        <div className="max-w-[60ch]">
+                            <div className="space-y-6 md:space-y-7 text-[0.94rem] sm:text-[0.97rem] lg:text-[1rem] leading-[1.74] text-text-secondary/95">
                                 <p>
                                     I am a Senior Copywriter and Content Strategist with more than seven years of experience partnering with Fortune 500 brands across beauty, fashion, and lifestyle categories to build authority, grow organic audiences, and produce content that performs at every stage of the funnel. I work at the intersection of editorial strategy, SEO, and brand storytelling, collaborating with marketing teams and brand leaders who need a senior creative who can think strategically and execute to a high standard without missing a beat.
                                 </p>
