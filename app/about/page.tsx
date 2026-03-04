@@ -136,12 +136,15 @@ export default function AboutPage() {
                         <div className="max-w-xl">
                             <div className="space-y-6 text-lg leading-relaxed text-text-secondary">
                                 <p>
-                                    I am a marketing professional who spearheads content, campaign, and editorial initiatives for top global brands across integrated channels. My work focuses on building clear, consistent messaging and executing at scale across content systems, campaigns, and brand communications.
+                                    I am a Senior Copywriter and Content Strategist with more than seven years of experience partnering with Fortune 500 brands across beauty, fashion, and lifestyle categories to build authority, grow organic audiences, and produce content that performs at every stage of the funnel. I work at the intersection of editorial strategy, SEO, and brand storytelling, collaborating with marketing teams and brand leaders who need a senior creative who can think strategically and execute to a high standard without missing a beat.
                                 </p>
                                 <p>
-                                    Over the past seven years, I’ve worked with Fortune 500 companies and established brands in beauty, retail, media, and science. I’ve delivered high-impact work across digital, social, editorial, broadcast, and experiential platforms. My background spans growth marketing, editorial operations, and integrated campaigns, which allows me to move between strategy and execution while staying focused on outcomes.
+                                    My experience is rooted in the beauty industry, one of the most competitive and content-saturated verticals in digital media, where earning and sustaining organic visibility requires both strategic precision and a genuine understanding of what consumers are looking for. At P&G Beauty, I led content strategy for HairCode.com, developing authoritative, consumer-first content that aligned search intent with brand expertise. At SalonCentric, I owned the Pro Beauty Central editorial platform, leading content strategy, franchise development, and full production lifecycles across Haircare, Color, Cutting, Styling, Nails, Beauty, Business, and Community categories for 80+ brand partners. My work spanned web, social, email, retail, and experiential channels, including directing editorial coverage at New York Fashion Week.
                                 </p>
-                                <p>If you’re interested in working together, you can reach me through the contact page via email or LinkedIn.</p>
+                                <p>
+                                    My career has taken me from the frozen landscapes of Antarctica, where I filmed a documentary series for Discovery Channel, to the front rows of New York Fashion Week, where I directed editorial coverage for L'Oréal USA. Some might call it an unconventional career path. I call it an unusually broad creative skillset that positively informs everything I bring to branded content today. Most notably, the common thread throughout all of my work is my genuine curiosity about the world and my ability to find the story worth telling in any environment, for any audience.
+                                </p>
+                                <p>If you are looking for someone who brings both creative rigor and strategic depth to branded content, I would love to connect.</p>
                             </div>
 
                             <div className="mt-10 flex flex-wrap items-center gap-3">
