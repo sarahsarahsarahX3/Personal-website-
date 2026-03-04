@@ -170,17 +170,17 @@ export function ArticleList({
 
     return (
         <>
-            <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="mb-5 md:mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 {subtitle ? (
-                    <p className="text-text-secondary text-xl md:whitespace-nowrap animate-fade-in-up delay-200">
+                    <p className="text-text-secondary text-lg sm:text-xl md:whitespace-nowrap animate-fade-in-up delay-200">
                         {subtitle}
                     </p>
                 ) : null}
 
-                <div className="w-full max-w-[220px] sm:max-w-[240px] md:max-w-[280px] mx-auto md:mx-0">
+                <div className="w-full max-w-[208px] sm:max-w-[224px] md:max-w-[280px] self-start">
                     <label
                         htmlFor="article-filter"
-                        className="mb-2 block text-center md:text-left text-[10px] sm:text-xs font-mono uppercase tracking-[0.22em] text-text-secondary/70"
+                        className="mb-1.5 block text-left text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.22em] text-text-secondary/70"
                     >
                         Filter
                     </label>
@@ -189,7 +189,7 @@ export function ArticleList({
                             id="article-filter"
                             value={activeFilter}
                             onChange={(event) => setActiveFilter(event.target.value as ArticleFilter)}
-                            className="w-full appearance-none rounded-2xl border border-white/10 bg-surface/40 px-3 py-2.5 md:px-4 md:py-3 pr-9 md:pr-10 text-xs sm:text-sm tracking-tight text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                            className="w-full appearance-none rounded-2xl border border-white/10 bg-surface/40 px-3 py-2 md:px-4 md:py-3 pr-8 md:pr-10 text-[11px] sm:text-xs md:text-sm tracking-tight text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
                             aria-label="Filter articles by topic"
                         >
                             {ARTICLE_FILTERS.map((filter) => (
@@ -198,7 +198,7 @@ export function ArticleList({
                                 </option>
                             ))}
                         </select>
-                        <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary">
+                        <span aria-hidden="true" className="pointer-events-none absolute right-3 md:right-4 top-1/2 -translate-y-1/2 text-text-secondary">
                             ▾
                         </span>
                     </div>

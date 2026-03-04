@@ -97,10 +97,10 @@ export default async function InsightsPage() {
     const orderedArticles = [...adjustedKept, ...moved];
 
     return (
-        <main className="min-h-screen pt-32 pb-40 px-6">
+        <main className="min-h-screen pt-24 md:pt-32 pb-40 px-6">
             <div className="container mx-auto">
-                <header className="mb-10">
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-display mb-6 animate-fade-in-up">
+                <header className="mb-4 md:mb-3">
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-display mb-2 md:mb-1 animate-fade-in-up">
                         Articles
                     </h1>
                 </header>
