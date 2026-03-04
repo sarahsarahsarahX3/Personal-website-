@@ -165,7 +165,7 @@ export function ArticleList({
 
     return (
         <>
-            <div className="mb-5 md:mb-6 flex flex-col gap-3 md:gap-1 md:flex-row md:items-end md:justify-between">
+            <div className="mb-5 md:mb-6 flex flex-col gap-4 md:gap-1 md:flex-row md:items-end md:justify-between">
                 {subtitle ? (
                     <p className="text-text-secondary text-lg sm:text-xl md:whitespace-nowrap animate-fade-in-up delay-200">
                         {subtitle}
