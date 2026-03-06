@@ -248,13 +248,13 @@ export function BioSection() {
 	                  Hi, I’m Sarah Dawson.
 	                </p>
                 <p className="mt-3 text-base md:text-lg tracking-tight text-text-secondary">
-                  My Track Record
+                  MY TRACK RECORD
                 </p>
                 <p
-                  data-text="Senior Copywriter, Content Strategy & Editorial"
-                  className={`mt-5 text-xs font-mono tracking-[0.26em] text-text-secondary/75 ${styles.subheading}`}
+                  data-text="SENIOR COPYWRITER, CONTENT STRATEGY & EDITORIAL"
+                  className={`mt-5 text-xs font-mono uppercase tracking-[0.26em] text-text-secondary/75 ${styles.subheading}`}
                 >
-                  Senior Copywriter, Content Strategy &amp; Editorial
+                  SENIOR COPYWRITER, CONTENT STRATEGY &amp; EDITORIAL
                 </p>
               </div>
 
