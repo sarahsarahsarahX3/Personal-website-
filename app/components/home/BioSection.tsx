@@ -248,7 +248,7 @@ export function BioSection() {
 	                  Hi, I’m Sarah Dawson.
 	                </p>
                 <p className="mt-3 text-base md:text-lg tracking-tight text-text-secondary">
-                  SENIOR COPYWRITER, CONTENT STRATEGY &amp; EDITORIAL
+                  Content marketer with expertise in brand voice, copywriting, and content strategy for B2B and B2C brands.
                 </p>
                 <p
                   data-text="MY TRACK RECORD"
