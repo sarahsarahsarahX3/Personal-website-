@@ -64,13 +64,13 @@ const project = {
       id: "weekly-delivery",
       title: "Consistent Weekly Delivery",
       description:
-        "Supported reliable, repeatable workflows that help a weekly program ship on time across multiple segments and production timelines.",
+        "Supported reliable, repeatable workflows that help ensure a weekly program ships on time across multiple segments and production timelines.",
     },
     {
       id: "multi-segment-throughput",
       title: "Multi-Segment Throughput",
       description:
-        "Supported fast-turn segment production by keeping moving parts organized, trackable, and ready for handoff across parallel storylines.",
+        "Supported fast-turnaround segment production by keeping moving parts organized, trackable, and ready for handoff across parallel storylines.",
     },
     {
       id: "editorial-credibility",
