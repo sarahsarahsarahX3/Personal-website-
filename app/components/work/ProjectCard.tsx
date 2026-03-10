@@ -140,7 +140,7 @@ export function ProjectCard({
                         </div>
 
                         <h3
-                            className="font-display text-[1.35rem] leading-[1.15] text-text-primary/90 transition-colors group-hover:text-text-primary sm:text-[1.5rem] md:text-[1.6rem]"
+                            className="min-h-[3rem] font-display text-[1.35rem] leading-[1.15] text-text-primary/90 transition-colors group-hover:text-text-primary sm:min-h-[3.3rem] sm:text-[1.5rem] md:min-h-[3.6rem] md:text-[1.6rem]"
                             style={{
                                 display: "-webkit-box",
                                 WebkitBoxOrient: "vertical",
@@ -166,14 +166,14 @@ export function ProjectCard({
                         </h3>
 
                         {brand ? (
-                            <p className="shrink-0 text-[1.12rem] leading-snug tracking-tight text-text-secondary md:text-[1.2rem]">
+                            <p className="shrink-0 min-h-[1.6rem] text-[1.12rem] leading-snug tracking-tight text-text-secondary md:text-[1.2rem]">
                                 {brand}
                             </p>
                         ) : null}
 
                         {description ? (
                             <p
-                                className="max-w-[60ch] text-sm leading-relaxed text-text-secondary"
+                                className="max-w-[60ch] min-h-[4.8rem] text-sm leading-relaxed text-text-secondary"
                                 style={{
                                     display: "-webkit-box",
                                     WebkitBoxOrient: "vertical",
@@ -185,7 +185,7 @@ export function ProjectCard({
                             </p>
                         ) : null}
 
-                        <div className="shrink-0 mt-auto flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
+                        <div className="shrink-0 mt-3 flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
                             <span className="text-xs font-mono uppercase tracking-[0.2em] text-text-secondary/60 group-hover:text-text-secondary/80">
                                 View
                             </span>
