@@ -65,7 +65,6 @@ export function ProjectCard({
         (slug === "discovery-mighty-cruise-ships" || slug === "discovery-daily-planet") && !title.includes(":");
     const displayCategory = formatCategoryLabel(category);
     const displayIndex = formatIndex(number ?? index + 1);
-    const displayTags = (contentTags ?? []).length > 0 ? contentTags : undefined;
 
     return (
         <motion.article
@@ -184,24 +183,6 @@ export function ProjectCard({
                             >
                                 {description}
                             </p>
-                        ) : null}
-
-                        {displayTags ? (
-                            <ul
-                                className="shrink-0 flex min-h-0 min-w-0 flex-wrap items-center gap-2"
-                                aria-label="Tags"
-                            >
-                                {displayTags.slice(0, 6).map((tag) => (
-                                    <li key={tag} className="min-w-0 max-w-full">
-                                        <span
-                                            title={tag}
-                                            className="inline-flex max-w-full items-center rounded-full border border-white/10 bg-surface/40 px-2 py-0.5 text-[8px] font-mono uppercase tracking-[0.18em] text-text-secondary/80 truncate"
-                                        >
-                                            {tag}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
                         ) : null}
 
                         <div className="shrink-0 mt-auto flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
