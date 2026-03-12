@@ -30,6 +30,7 @@ export default async function InsightsPage() {
         "https://www.probeautycentral.saloncentric.com/trevor-project-itsa10-partnership",
         "https://www.probeautycentral.saloncentric.com/get-the-look-enchanting-glam",
         "https://www.probeautycentral.saloncentric.com/kazmaleje-latoya-stirrup",
+        "https://www.probeautycentral.saloncentric.com/2023-naha-educator-of-the-year-finalist-keya-neal",
     ]);
 
     const visibleArticles = formattedArticles.filter((article) => !hiddenLinks.has(article.link));
