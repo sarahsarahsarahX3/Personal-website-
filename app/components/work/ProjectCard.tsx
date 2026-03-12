@@ -12,7 +12,6 @@ interface ProjectCardProps {
     index: number;
     number?: number;
     brand?: string;
-    contentTags?: string[];
     slug: string;
     year?: string;
     description?: string;
@@ -39,7 +38,6 @@ export function ProjectCard({
     index,
     number,
     brand,
-    contentTags,
     slug,
     year,
     description,
@@ -80,12 +78,12 @@ export function ProjectCard({
             <Link
                 href={`/work/${slug}`}
                 className={cn(
-                    "flex h-full w-full flex-col overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface md:grid md:grid-rows-[minmax(0,0.9fr)_minmax(0,1.1fr)]",
+                    "flex h-full w-full flex-col overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface",
                     className
                 )}
                 aria-label={`${title} project page`}
             >
-                <div className="relative overflow-hidden bg-surface-secondary aspect-[16/10] md:aspect-auto md:min-h-0">
+                <div className="relative shrink-0 overflow-hidden bg-surface-secondary aspect-[16/10] md:h-[46%] md:aspect-auto">
                     <div
                         className={cn(
                             "absolute inset-0 w-full h-full transition-transform duration-700",
@@ -121,7 +119,7 @@ export function ProjectCard({
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/35" />
                 </div>
 
-                <div className="relative min-h-0 border-t border-white/10 bg-surface/15 p-5 md:p-6">
+                <div className="relative flex-1 min-h-0 border-t border-white/10 bg-surface/15 p-5 md:p-6">
                     <div className="flex h-full min-h-0 flex-col">
                         <div className="shrink-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/90">
                             <span className="shrink-0 text-accent">Project {displayIndex}</span>
@@ -185,25 +183,12 @@ export function ProjectCard({
                             </p>
                         ) : null}
 
-                        {contentTags && contentTags.length > 0 ? (
-                            <div className="mt-3 flex flex-wrap gap-1.5">
-                                {contentTags.slice(0, 4).map((tag) => (
-                                    <span
-                                        key={tag}
-                                        className="inline-flex min-h-[1.5rem] items-center rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.14em] text-text-secondary/75"
-                                    >
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        ) : null}
-
-                        <div className="mt-auto pt-4">
-                            <span className="ml-auto inline-flex min-h-10 items-center gap-2 rounded-full border border-white/15 bg-surface/40 py-1 pl-3.5 pr-1.5 text-text-secondary/80 backdrop-blur-md transition-colors group-hover:text-text-primary">
-                                <span className="text-xs font-mono uppercase tracking-[0.2em] text-text-secondary/70 group-hover:text-text-secondary/90">
+                        <div className="mt-auto pt-5">
+                            <span className="ml-auto inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-white/15 bg-surface/40 px-3.5 py-2 text-text-secondary/80 backdrop-blur-md transition-colors group-hover:text-text-primary">
+                                <span className="text-xs font-mono uppercase tracking-[0.2em] leading-none text-text-secondary/70 group-hover:text-text-secondary/90">
                                     View
                                 </span>
-                                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-surface/60 transition-transform duration-300 group-hover:scale-105">
+                                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/15 bg-surface/60 transition-transform duration-300 group-hover:scale-105">
                                     <ArrowUpRight
                                         size={16}
                                         className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

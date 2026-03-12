@@ -12,7 +12,6 @@ interface Project {
     size?: "large" | "small" | "tall";
     slug: string;
     tags?: string[];
-    contentTags?: string[];
     brand?: string;
     number?: number;
     filterCategory?: "Campaigns" | "Editorial" | "Production" | "Strategy";
@@ -107,7 +106,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
 
             <motion.div
                 layout
-                className="grid grid-cols-1 gap-6 items-stretch md:grid-cols-2 md:auto-rows-[560px] xl:grid-cols-3 xl:auto-rows-[590px]"
+                className="grid grid-cols-1 gap-6 items-stretch md:grid-cols-2 md:auto-rows-[540px] xl:grid-cols-3 xl:auto-rows-[560px]"
             >
                 <AnimatePresence mode="popLayout">
                     {filteredProjects.map((project, index) => (
@@ -130,7 +129,6 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
                                 slug={project.slug}
                                 year={project.year}
                                 description={project.description}
-                                contentTags={project.contentTags ?? project.tags}
                                 className="h-full"
                             />
                         </motion.div>
