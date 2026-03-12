@@ -107,7 +107,7 @@ export function WorkBrowser({ projects }: { projects: Project[] }) {
 
             <motion.div
                 layout
-                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:auto-rows-[530px] xl:auto-rows-[560px] items-stretch"
+                className="grid grid-cols-1 gap-6 items-stretch md:grid-cols-2 md:auto-rows-[560px] xl:grid-cols-3 xl:auto-rows-[590px]"
             >
                 <AnimatePresence mode="popLayout">
                     {filteredProjects.map((project, index) => (
