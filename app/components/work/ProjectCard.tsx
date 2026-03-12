@@ -121,7 +121,7 @@ export function ProjectCard({
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/35" />
                 </div>
 
-                <div className="relative min-h-0 overflow-hidden border-t border-white/10 bg-surface/15 p-5 pb-4 md:p-6 md:pb-5">
+                <div className="relative min-h-0 border-t border-white/10 bg-surface/15 p-5 pb-4 md:p-6 md:pb-5">
                     <div className="flex h-full min-h-0 flex-col gap-2">
                         <div className="shrink-0 flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/90">
                             <span className="shrink-0 text-accent">Project {displayIndex}</span>
@@ -173,11 +173,11 @@ export function ProjectCard({
 
                         {description ? (
                             <p
-                                className="max-w-[60ch] min-h-[4.8rem] text-sm leading-relaxed text-text-secondary"
+                                className="max-w-[60ch] min-h-[3.8rem] text-sm leading-relaxed text-text-secondary"
                                 style={{
                                     display: "-webkit-box",
                                     WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 4,
+                                    WebkitLineClamp: 3,
                                     overflow: "hidden",
                                 }}
                             >
@@ -185,7 +185,7 @@ export function ProjectCard({
                             </p>
                         ) : null}
 
-                        <div className="shrink-0 mt-3 flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
+                        <div className="shrink-0 mt-auto pt-2 flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
                             <span className="text-xs font-mono uppercase tracking-[0.2em] text-text-secondary/60 group-hover:text-text-secondary/80">
                                 View
                             </span>
