@@ -80,7 +80,7 @@ export function ProjectCard({
             <Link
                 href={`/work/${slug}`}
                 className={cn(
-                    "flex w-full flex-col overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface md:grid md:h-full md:grid-rows-[minmax(0,0.85fr)_minmax(0,1.15fr)]",
+                    "flex w-full flex-col overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface md:grid md:h-full md:grid-rows-[minmax(0,1fr)_minmax(0,1fr)]",
                     className
                 )}
                 aria-label={`${title} project page`}
@@ -121,7 +121,7 @@ export function ProjectCard({
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/35" />
                 </div>
 
-                <div className="relative min-h-0 overflow-hidden border-t border-white/10 bg-surface/15 p-5 md:p-6">
+                <div className="relative min-h-0 overflow-hidden border-t border-white/10 bg-surface/15 p-5 pb-4 md:p-6 md:pb-5">
                     <div className="flex h-full min-h-0 flex-col gap-2">
                         <div className="shrink-0 flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-[0.24em] text-text-secondary/90">
                             <span className="shrink-0 text-accent">Project {displayIndex}</span>
