@@ -50,7 +50,7 @@ export default async function WorkPage() {
     });
 
     projects.unshift({
-        title: "HairCode Content Hub",
+        title: "P&G Beauty’s Content Platform: HairCode.com",
         brand: "Procter & Gamble",
         category: "Content Strategy",
         image: "/New%20Thumbnail%20for%20HairCode%20Project%20tile.png",
