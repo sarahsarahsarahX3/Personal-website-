@@ -80,7 +80,7 @@ export function ProjectCard({
             <Link
                 href={`/work/${slug}`}
                 className={cn(
-                    "flex w-full flex-col overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface md:grid md:h-full md:grid-rows-[minmax(0,0.82fr)_minmax(0,1.18fr)]",
+                    "flex w-full flex-col overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface md:grid md:h-full md:grid-rows-[minmax(0,0.9fr)_minmax(0,1.1fr)]",
                     className
                 )}
                 aria-label={`${title} project page`}
