@@ -185,7 +185,7 @@ export function ProjectCard({
                             </p>
                         ) : null}
 
-                        <div className="shrink-0 mt-auto mb-1 md:mb-1.5 pt-3 md:pt-4 flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
+                        <div className="shrink-0 mt-auto mb-2 md:mb-3 pt-3 md:pt-4 flex items-center justify-end gap-2 text-text-secondary/80 transition-colors group-hover:text-text-primary">
                             <span className="text-xs font-mono uppercase tracking-[0.2em] text-text-secondary/60 group-hover:text-text-secondary/80">
                                 View
                             </span>
