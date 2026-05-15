@@ -231,68 +231,60 @@ export function BioSection() {
       aria-labelledby="home-bio-title"
       className={`pt-24 pb-16 md:pt-32 md:pb-20 lg:pt-36 lg:pb-24 ${styles.section}`}
     >
-      <div className="mx-auto w-full max-w-6xl px-6">
-        <div className="grid gap-y-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-center md:gap-x-16">
-          <div className={`min-w-0 text-center md:text-left ${styles.body}`}>
-            <h2 id="home-bio-title" className="sr-only">
-              About
-            </h2>
-            <p
-              data-text="Hello, my name is Sarah Dawson."
-              className={`mx-auto max-w-[18ch] font-display text-3xl leading-[1.08] tracking-tight text-text-primary sm:max-w-none md:mx-0 md:text-4xl ${styles.headline}`}
-            >
-              Hello, my name is Sarah Dawson.
-            </p>
-            <p className="mx-auto mt-4 max-w-[62ch] text-base tracking-tight text-text-secondary md:mx-0 md:text-lg">
-              I'm a marketing and communications professional specializing in content production, management, and strategy.
-            </p>
-          </div>
+      <div className={`mx-auto w-full max-w-6xl px-6 ${styles.body}`}>
+        <h2 id="home-bio-title" className="sr-only">
+          About
+        </h2>
 
-          <div className={`min-w-0 ${styles.body}`}>
-            <p
-              data-text="MY TRACK RECORD"
-              className={`text-center text-sm font-display uppercase tracking-[0.14em] text-text-secondary/90 md:text-left md:text-base ${styles.subheading}`}
-            >
-              MY TRACK RECORD
-            </p>
-
-            <ul
-              aria-label="Highlights"
-              className={`mt-7 grid w-full grid-cols-1 gap-y-7 sm:grid-cols-3 sm:gap-x-8 sm:gap-y-8 md:grid-cols-1 md:gap-y-6 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
-            >
-              {HIGHLIGHTS.map(({ key, value, label }, index) => {
-                const counterConfig = counterConfigs[key];
-                const displayValue =
-                  counterConfig && typeof counters[key] === "number"
-                    ? formatCounterValue(counters[key], counterConfig)
-                    : value;
-                const Icon = key === "years" ? BriefcaseBusiness : key === "fortune" ? Building2 : Eye;
-
-                return (
-                  <li
-                    key={key}
-                    className={`w-full border-t border-white/10 pt-4 first:border-t-0 first:pt-0 ${styles.metric}`}
-                    style={{ ["--i" as string]: String(index) }}
-                  >
-                    <div className="min-w-0 text-center sm:text-left md:text-left">
-                      <div className="flex items-center justify-center gap-3 sm:justify-start md:justify-start">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/30 text-text-secondary/80">
-                          <Icon size={16} />
-                        </span>
-                        <div className="font-display tabular-nums text-3xl leading-[0.98] tracking-tight text-text-primary sm:text-4xl md:text-5xl">
-                          {displayValue}
-                        </div>
-                      </div>
-                      <div className="mt-3 max-w-[24ch] text-[10px] font-mono uppercase tracking-[0.18em] leading-relaxed text-text-secondary/70 sm:text-xs">
-                        {label}
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+        <div className="mx-auto max-w-4xl text-center">
+          <p
+            data-text="Hello, my name is Sarah Dawson."
+            className={`font-display text-3xl leading-[1.08] tracking-tight text-text-primary md:text-4xl lg:text-5xl ${styles.headline}`}
+          >
+            Hello, my name is Sarah Dawson.
+          </p>
+          <p className="mx-auto mt-5 max-w-3xl text-base tracking-tight text-text-secondary md:text-lg">
+            I'm a marketing and communications professional specializing in content production, management, and strategy.
+          </p>
+          <p
+            data-text="MY TRACK RECORD"
+            className={`mt-10 text-sm font-display uppercase tracking-[0.14em] text-text-secondary/90 md:text-base ${styles.subheading}`}
+          >
+            MY TRACK RECORD
+          </p>
         </div>
+
+        <ul
+          aria-label="Highlights"
+          className={`mx-auto mt-10 grid w-full max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8 md:gap-10 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
+        >
+          {HIGHLIGHTS.map(({ key, value, label }, index) => {
+            const counterConfig = counterConfigs[key];
+            const displayValue =
+              counterConfig && typeof counters[key] === "number"
+                ? formatCounterValue(counters[key], counterConfig)
+                : value;
+            const Icon = key === "years" ? BriefcaseBusiness : key === "fortune" ? Building2 : Eye;
+
+            return (
+              <li
+                key={key}
+                className={`w-full rounded-2xl border border-white/10 bg-surface/20 p-5 text-center md:p-6 ${styles.metric}`}
+                style={{ ["--i" as string]: String(index) }}
+              >
+                <span className="mx-auto inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-surface/30 text-text-secondary/80">
+                  <Icon size={17} />
+                </span>
+                <div className="mt-4 font-display tabular-nums text-4xl leading-[0.98] tracking-tight text-text-primary md:text-5xl">
+                  {displayValue}
+                </div>
+                <div className="mx-auto mt-3 max-w-[22ch] text-[10px] font-mono uppercase tracking-[0.18em] leading-relaxed text-text-secondary/70 sm:text-xs">
+                  {label}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );
