@@ -100,7 +100,7 @@ export default function AboutPage() {
                         <div className="w-full max-w-[352px] lg:mx-auto">
                             <header className="mb-6 sm:mb-7 text-left">
                                 <p className="text-xs font-mono uppercase tracking-widest text-accent">Sarah Dawson</p>
-                                <h1 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.03]">About</h1>
+                                <h1 className="mt-3 font-display text-4xl md:text-5xl tracking-tight leading-[1.03]">About Me</h1>
                             </header>
 
                             <figure className="relative">

@@ -50,13 +50,7 @@ export function HomeFooter() {
       />
 
       <div className="relative mx-auto w-full max-w-6xl px-6 pt-16 pb-28 md:pt-20 md:pb-20">
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-          <div className="max-w-2xl">
-            <h2 className="mt-3 font-display text-3xl md:text-4xl tracking-tight leading-[1.05]">
-              Thanks for scrolling.
-            </h2>
-          </div>
-
+        <div className="grid gap-10 lg:grid-cols-1 lg:items-start">
           <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-7">
             <div className="flex items-center justify-between gap-4">
               <button
