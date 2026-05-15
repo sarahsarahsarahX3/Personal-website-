@@ -48,27 +48,29 @@ export function KeyHighlightsSection() {
                 viewport={{ once: true, amount: 0.35 }}
                 transition={{ duration: 0.45, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={reduceMotion ? undefined : { y: -3 }}
-                className="rounded-2xl bg-surface/20 px-5 py-5 md:px-6 md:py-6 lg:min-h-[168px]"
+                className="rounded-2xl bg-surface/20 px-5 py-5 md:px-6 md:py-6 lg:min-h-[168px] text-center"
               >
-                <div className="flex items-center justify-center md:justify-start">
+                <div className="flex items-center justify-center">
                   <motion.span
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-surface/45 text-text-secondary/80"
+                    className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-surface/45 text-text-secondary/80"
                     animate={
                       reduceMotion
                         ? undefined
                         : {
-                            y: [0, -2, 0],
-                            rotate: [0, -3, 0, 3, 0],
+                            y: [0, -3, 0],
+                            rotate: [0, -5, 0, 5, 0],
+                            scale: [1, 1.04, 1],
                           }
                     }
                     transition={{
-                      duration: 4.8,
+                      duration: 4.2,
                       repeat: Number.POSITIVE_INFINITY,
                       ease: "easeInOut",
                       delay: index * 0.2,
                     }}
+                    whileHover={reduceMotion ? undefined : { scale: 1.08, rotate: 6 }}
                   >
-                    <Icon size={17} />
+                    <Icon size={22} />
                   </motion.span>
                 </div>
                 <p className="mt-5 font-display text-3xl md:text-4xl tracking-tight leading-none text-text-primary">{item.value}</p>
