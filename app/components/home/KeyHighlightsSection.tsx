@@ -52,25 +52,25 @@ export function KeyHighlightsSection() {
               >
                 <div className="flex items-center justify-center">
                   <motion.span
-                    className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-surface/45 text-text-secondary/80"
+                    className="inline-flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-surface/45 text-text-secondary/80"
                     animate={
                       reduceMotion
                         ? undefined
                         : {
-                            y: [0, -3, 0],
-                            rotate: [0, -5, 0, 5, 0],
-                            scale: [1, 1.04, 1],
+                            y: [0, -4, 0],
+                            rotate: [0, -7, 0, 7, 0],
+                            scale: [1, 1.06, 1],
                           }
                     }
                     transition={{
-                      duration: 4.2,
+                      duration: 3.8,
                       repeat: Number.POSITIVE_INFINITY,
                       ease: "easeInOut",
                       delay: index * 0.2,
                     }}
-                    whileHover={reduceMotion ? undefined : { scale: 1.08, rotate: 6 }}
+                    whileHover={reduceMotion ? undefined : { scale: 1.12, rotate: 8 }}
                   >
-                    <Icon size={22} />
+                    <Icon size={26} />
                   </motion.span>
                 </div>
                 <p className="mt-5 font-display text-3xl md:text-4xl tracking-tight leading-none text-text-primary">{item.value}</p>
