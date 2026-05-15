@@ -17,19 +17,19 @@ export function Hero() {
 
             {/* Main Content */}
             <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center items-center text-center pb-24 md:pb-0">
-                <motion.div style={{ y, opacity }} className="w-full max-w-6xl space-y-6">
-                    <div className="overflow-hidden">
+                <motion.div style={{ y, opacity }} className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6">
+                    <div className="flex w-full justify-center overflow-hidden">
                         <motion.p
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
                             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                            className="w-full text-center text-text-secondary text-lg md:text-base font-light tracking-wide"
+                            className="text-center text-text-secondary text-lg md:text-base font-light tracking-wide"
                         >
                             WELCOME TO MY
                         </motion.p>
                     </div>
 
-                    <div className="relative w-full">
+                    <div className="relative flex w-full justify-center">
                         <h1
                             className="w-full text-center text-[clamp(3.5rem,8vw,10rem)] leading-[0.9] font-display font-medium tracking-[-0.02em] cursor-default mix-blend-exclusion"
                         >
@@ -50,11 +50,11 @@ export function Hero() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1, duration: 1 }}
-                        className="text-text-secondary text-lg md:text-xl text-balance"
+                        className="w-full text-text-secondary text-lg md:text-xl"
                     >
-                        <div className="mt-6 inline-flex items-center justify-center text-white text-sm relative">
+                        <div className="flex w-full items-center justify-center text-white text-sm">
                             <span>SCROLL TO EXPLORE</span>
-                            <ArrowDownRight size={14} className="absolute -right-5 top-1/2 -translate-y-1/2" />
+                            <ArrowDownRight size={14} className="ml-2" />
                         </div>
                     </motion.div>
                 </motion.div>
