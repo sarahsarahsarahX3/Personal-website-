@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { BriefcaseBusiness, Building2, Eye } from "lucide-react";
 import styles from "./BioSection.module.css";
 
 type Highlight = {
@@ -231,7 +232,7 @@ export function BioSection() {
       className={`pt-24 pb-16 md:pt-32 md:pb-20 lg:pt-36 lg:pb-24 ${styles.section}`}
     >
       <div className="mx-auto w-full max-w-6xl px-6">
-        <div className="grid gap-y-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-end md:gap-x-16">
+        <div className="grid gap-y-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-center md:gap-x-16">
           <div className={`min-w-0 text-center md:text-left ${styles.body}`}>
             <h2 id="home-bio-title" className="sr-only">
               About
@@ -265,6 +266,7 @@ export function BioSection() {
                   counterConfig && typeof counters[key] === "number"
                     ? formatCounterValue(counters[key], counterConfig)
                     : value;
+                const Icon = key === "years" ? BriefcaseBusiness : key === "fortune" ? Building2 : Eye;
 
                 return (
                   <li
@@ -273,8 +275,13 @@ export function BioSection() {
                     style={{ ["--i" as string]: String(index) }}
                   >
                     <div className="min-w-0 text-center sm:text-left md:text-left">
-                      <div className="font-display tabular-nums text-3xl leading-[0.98] tracking-tight text-text-primary sm:text-4xl md:text-5xl">
-                        {displayValue}
+                      <div className="flex items-center justify-center gap-3 sm:justify-start md:justify-start">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/30 text-text-secondary/80">
+                          <Icon size={16} />
+                        </span>
+                        <div className="font-display tabular-nums text-3xl leading-[0.98] tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+                          {displayValue}
+                        </div>
                       </div>
                       <div className="mt-3 max-w-[24ch] text-[10px] font-mono uppercase tracking-[0.18em] leading-relaxed text-text-secondary/70 sm:text-xs">
                         {label}
