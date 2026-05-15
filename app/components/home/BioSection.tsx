@@ -246,45 +246,7 @@ export function BioSection() {
           <p className="mx-auto mt-5 max-w-3xl text-base tracking-tight text-text-secondary md:text-lg">
             I'm a marketing and communications professional specializing in content production, management, and strategy.
           </p>
-          <p
-            data-text="MY TRACK RECORD"
-            className={`mt-10 text-sm font-display uppercase tracking-[0.14em] text-text-secondary/90 md:text-base ${styles.subheading}`}
-          >
-            MY TRACK RECORD
-          </p>
         </div>
-
-        <ul
-          aria-label="Highlights"
-          className={`mx-auto mt-10 grid w-full max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8 md:gap-10 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
-        >
-          {HIGHLIGHTS.map(({ key, value, label }, index) => {
-            const counterConfig = counterConfigs[key];
-            const displayValue =
-              counterConfig && typeof counters[key] === "number"
-                ? formatCounterValue(counters[key], counterConfig)
-                : value;
-            const Icon = key === "years" ? BriefcaseBusiness : key === "fortune" ? Building2 : Eye;
-
-            return (
-              <li
-                key={key}
-                className={`w-full rounded-2xl border border-white/10 bg-surface/20 p-5 text-center md:p-6 ${styles.metric}`}
-                style={{ ["--i" as string]: String(index) }}
-              >
-                <span className="mx-auto inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-surface/30 text-text-secondary/80">
-                  <Icon size={17} />
-                </span>
-                <div className="mt-4 font-display tabular-nums text-3xl leading-[0.98] tracking-tight text-text-primary md:text-4xl">
-                  {displayValue}
-                </div>
-                <div className="mx-auto mt-3 max-w-[22ch] text-[10px] font-mono uppercase tracking-[0.18em] leading-relaxed text-text-secondary/70 sm:text-xs">
-                  {label}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
       </div>
     </section>
   );
