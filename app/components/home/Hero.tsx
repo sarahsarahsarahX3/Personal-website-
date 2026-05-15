@@ -52,8 +52,9 @@ export function Hero() {
                         transition={{ delay: 1, duration: 1 }}
                         className="text-text-secondary text-lg md:text-xl text-balance"
                     >
-                        <div className="mt-6 flex items-center justify-center gap-2 text-white text-sm">
-                            <span>SCROLL TO EXPLORE</span> <ArrowDownRight size={14} />
+                        <div className="mt-6 inline-flex items-center justify-center text-white text-sm relative">
+                            <span>SCROLL TO EXPLORE</span>
+                            <ArrowDownRight size={14} className="absolute -right-5 top-1/2 -translate-y-1/2" />
                         </div>
                     </motion.div>
                 </motion.div>
