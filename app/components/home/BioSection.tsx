@@ -275,7 +275,7 @@ export function BioSection() {
                 <span className="mx-auto inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-surface/30 text-text-secondary/80">
                   <Icon size={17} />
                 </span>
-                <div className="mt-4 font-display tabular-nums text-4xl leading-[0.98] tracking-tight text-text-primary md:text-5xl">
+                <div className="mt-4 font-display tabular-nums text-3xl leading-[0.98] tracking-tight text-text-primary md:text-4xl">
                   {displayValue}
                 </div>
                 <div className="mx-auto mt-3 max-w-[22ch] text-[10px] font-mono uppercase tracking-[0.18em] leading-relaxed text-text-secondary/70 sm:text-xs">
