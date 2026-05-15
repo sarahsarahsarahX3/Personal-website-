@@ -8,8 +8,8 @@ import { Home, Briefcase, BookOpen, Mail, User } from "lucide-react";
 
 const navItems = [
     { name: "Home", href: "/", icon: Home },
-    { name: "Work", href: "/work", icon: Briefcase },
-    { name: "Articles", href: "/insights", icon: BookOpen },
+    { name: "Projects", href: "/work", icon: Briefcase },
+    { name: "Editorials", href: "/insights", icon: BookOpen },
     { name: "About", href: "/about", icon: User },
     { name: "Contact", href: "/contact", icon: Mail },
 ];
