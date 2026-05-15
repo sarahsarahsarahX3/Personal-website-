@@ -53,7 +53,7 @@ export function Hero() {
                         className="text-text-secondary text-lg md:text-xl text-balance"
                     >
                         <div className="mt-6 flex items-center justify-center gap-2 text-white text-sm">
-                            <span>Scroll to explore</span> <ArrowDownRight size={14} />
+                            <span>SCROLL TO EXPLORE</span> <ArrowDownRight size={14} />
                         </div>
                     </motion.div>
                 </motion.div>
