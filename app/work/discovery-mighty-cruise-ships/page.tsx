@@ -107,8 +107,8 @@ const sectionLinks: SectionLink[] = [
 
 const episodeClips = [
   {
-    title: "Hurtigruten UK · Roald Amundsen clip",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHurtigrutenUK%2Fvideos%2F1772286852926623%2F&show_text=false&width=1280&height=720&t=0",
+    title: "YouTube video player",
+    src: "https://www.youtube.com/embed/0FcIHyw4tpI?si=Pj8iYYuKcf9Iyeaf",
   },
 ] as const;
 
@@ -998,7 +998,8 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                           title={clip.title}
                           className="absolute inset-0 h-full w-full"
                           loading="lazy"
-                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          referrerPolicy="strict-origin-when-cross-origin"
                           allowFullScreen
                         />
                       ))}
