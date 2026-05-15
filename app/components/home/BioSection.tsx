@@ -242,10 +242,10 @@ export function BioSection() {
                   About
                 </h2>
 	                <p
-	                  data-text="Hi, I’m Sarah Dawson."
+	                  data-text="Hello, my name is Sarah Dawson."
 	                  className={`font-display text-3xl md:text-3xl leading-[1.1] tracking-tight text-text-primary ${styles.headline}`}
 	                >
-	                  Hi, I’m Sarah Dawson.
+	                  Hello, my name is Sarah Dawson.
 	                </p>
                 <p
                   data-text="MY TRACK RECORD"
