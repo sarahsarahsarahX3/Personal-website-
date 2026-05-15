@@ -26,7 +26,7 @@ type TripPhoto = {
 
 const project = {
   title: "Mighty Cruise Ships",
-  subtitle: "Travel Documentary Series",
+  subtitle: "Television Documentary Series",
   role: "Production Assistant",
   overview:
     "Provided editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series. Contributed to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world tourism expeditions into compelling storytelling for a global audience.",
