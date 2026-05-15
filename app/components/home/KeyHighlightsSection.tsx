@@ -23,7 +23,7 @@ export function KeyHighlightsSection() {
               id="key-highlights-title"
               className="text-[13px] md:text-base font-display uppercase tracking-[0.16em] text-text-secondary/90"
             >
-              Key Highlights
+              Key Highlights:
             </h2>
           </header>
 
@@ -48,7 +48,7 @@ export function KeyHighlightsSection() {
                 viewport={{ once: true, amount: 0.35 }}
                 transition={{ duration: 0.45, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={reduceMotion ? undefined : { y: -2 }}
-                className="group rounded-2xl bg-surface/20 px-4 py-4 sm:px-5 sm:py-5 md:px-6 md:py-6 lg:min-h-[168px]"
+                className="group relative overflow-hidden rounded-2xl bg-surface/20 px-4 py-4 sm:px-5 sm:py-5 md:px-6 md:py-6 lg:min-h-[168px] before:pointer-events-none before:absolute before:inset-x-5 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-accent/55 before:to-transparent"
               >
                 <div className="flex items-start gap-3 sm:block sm:text-center">
                   <div className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center sm:h-14 sm:w-14 md:h-16 md:w-16">
@@ -82,7 +82,7 @@ export function KeyHighlightsSection() {
                       </>
                     )}
                     <motion.span
-                      className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface/45 text-text-secondary/80 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                      className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface/45 text-accent/85 sm:h-12 sm:w-12 md:h-14 md:w-14"
                       initial={reduceMotion ? undefined : { opacity: 0, scale: 0.88 }}
                       whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
                       viewport={{ once: true, amount: 0.5 }}
