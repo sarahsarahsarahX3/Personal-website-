@@ -247,6 +247,9 @@ export function BioSection() {
 	                >
 	                  Hello, my name is Sarah Dawson.
 	                </p>
+                <p className="mt-3 text-base md:text-lg tracking-tight text-text-secondary">
+                  I am a marketing and communications professional specializing in content production, management, and strategy.
+                </p>
                 <p
                   data-text="MY TRACK RECORD"
                   className={`mt-5 text-xs font-mono uppercase tracking-[0.26em] text-text-secondary/75 ${styles.subheading}`}
