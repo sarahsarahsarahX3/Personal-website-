@@ -82,7 +82,7 @@ export function KeyHighlightsSection() {
                       </>
                     )}
                     <motion.span
-                      className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface/45 text-accent/85 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                      className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface/45 text-white sm:h-12 sm:w-12 md:h-14 md:w-14"
                       initial={reduceMotion ? undefined : { opacity: 0, scale: 0.88 }}
                       whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
                       viewport={{ once: true, amount: 0.5 }}
