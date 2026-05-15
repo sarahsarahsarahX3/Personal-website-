@@ -50,9 +50,6 @@ const HIGHLIGHTS: readonly Highlight[] = [
   { key: "years", value: "7+", label: "Years of Experience" },
   { key: "fortune", value: "3", label: "Fortune 500 Brands" },
   { key: "views", value: "15M+", label: "Views Generated Across Platforms" },
-  { key: "partnerships", value: "50+", label: "Brand & Creator Partnerships" },
-  { key: "assets", value: "1,000+", label: "Assets Produced Annually" },
-  { key: "markets", value: "Global Markets", label: "U.S. & Canada" },
 ] as const;
 
 export function BioSection() {
@@ -252,7 +249,7 @@ export function BioSection() {
                 </p>
                 <p
                   data-text="MY TRACK RECORD"
-                  className={`mt-5 text-xs font-mono uppercase tracking-[0.26em] text-text-secondary/75 ${styles.subheading}`}
+                  className={`mt-9 md:mt-11 text-sm md:text-base font-display uppercase tracking-[0.14em] text-text-secondary/90 ${styles.subheading}`}
                 >
                   MY TRACK RECORD
                 </p>
@@ -260,7 +257,7 @@ export function BioSection() {
 
 	              <ul
 	                aria-label="Highlights"
-	                className={`mt-14 mx-auto grid w-full max-w-5xl grid-cols-2 items-start justify-items-center gap-x-10 gap-y-12 text-center sm:mt-16 sm:gap-x-14 sm:gap-y-14 md:mx-0 md:grid-cols-3 md:justify-items-center md:gap-x-16 md:gap-y-16 lg:gap-x-20 lg:gap-y-16 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
+	                className={`mt-12 mx-auto grid w-full max-w-5xl grid-cols-1 items-start justify-items-center gap-x-10 gap-y-12 text-center sm:mt-14 sm:grid-cols-3 sm:gap-x-14 sm:gap-y-14 md:mx-0 md:grid-cols-3 md:justify-items-center md:gap-x-16 md:gap-y-16 lg:gap-x-20 lg:gap-y-16 ${styles.metrics} ${metricsRevealed ? styles.metricsRevealed : ""}`}
 	              >
                 {HIGHLIGHTS.map(({ key, value, label }, index) => {
                   const counterConfig = counterConfigs[key];
