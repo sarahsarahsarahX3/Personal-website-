@@ -15,7 +15,7 @@ export function KeyHighlightsSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section aria-labelledby="key-highlights-title" className="pt-8 pb-10 md:pt-16 md:pb-16 lg:pt-20 lg:pb-20">
+    <section aria-labelledby="key-highlights-title" className="pt-14 pb-16 md:pt-20 md:pb-24 lg:pt-24 lg:pb-28">
       <div className="mx-auto w-full max-w-6xl px-6">
         <div className="rounded-3xl bg-surface-alt/10 px-2 py-2 md:px-3 md:py-3">
           <header className="mb-5 px-3 pt-3 md:mb-10 md:px-5 md:pt-5 lg:mb-12">
