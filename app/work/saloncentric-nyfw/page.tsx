@@ -18,21 +18,18 @@ const deliverables = {
 
 const project = {
   title: "SalonCentric × New York Fashion Week",
-  subtitle: "Integrated Campaign",
+  subtitle: "Marketing Campaign",
   overview:
     "Developed integrated campaign content for SalonCentric’s New York Fashion Week activation, which extended the live event into a cohesive, multi-channel brand campaign across digital, social, and email. This campaign positioned SalonCentric as a thought leader and industry insider by producing culturally relevant storytelling, including coverage of the Black Beauty Excellence Luncheon.",
   role: "Copywriter and Digital Content Producer",
   objective:
     "Anchored brand communications and campaign storytelling in the energy and cultural relevance of New York Fashion Week by highlighting professional artistry, backstage access, and inclusive industry moments. Positioned SalonCentric as an insider brand connected to fashion’s most influential stage, balancing prestige storytelling with performance-aware copy across experiential, social, and owned channels.",
-  messagingIntro:
-    "Defined a campaign narrative that transformed NYFW moments into multi-channel brand storytelling, including:",
   messagingBullets: [
     "Spotlighting professional artists through runway and backstage access.",
     "Positioning SalonCentric as a thought leader through clear, consistent brand communications during fashion’s most influential moment.",
     "Balancing prestige storytelling with performance-driven copy.",
     "Maintaining a unified narrative across live production and post-production event content.",
   ],
-  productionIntro: "Produced campaign content and live-event coverage across channels, including:",
   productionBullets: [
     "Wrote campaign copy for social, email, and supporting digital assets.",
     "Supported real-time and post-event content tied to runway and cultural moments.",
@@ -56,23 +53,12 @@ const project = {
     { title: "Spotlighting the beauty industry’s top talent.", value: "Influencer Collaborations" },
   ],
   channels: ["Experiential", "Social", "Email", "Digital", "Paid", "PR"],
-  tools: [
-    "Campaign Content Production",
-    "Integrated Marketing",
-    "Brand Communications",
-    "Social & Email Copywriting",
-    "Experiential Campaign Support",
-    "Cross-Functional Collaboration",
-    "Brand Messaging",
-  ],
 } as const;
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
-  { id: "messaging", label: "Strategy" },
-  { id: "production", label: "Execution" },
-  { id: "results", label: "Results" },
-  { id: "tools", label: "Tools" },
+  { id: "messaging", label: "Key Responsibilities" },
+  { id: "results", label: "Deliverables" },
 ];
 
 function usePrefersReducedMotion() {
@@ -171,21 +157,6 @@ function useIsMobileView() {
   }, []);
 
   return isMobileView;
-}
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className={cn(
-        "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
-        "px-3 py-2 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
-        "text-center leading-snug whitespace-normal",
-        "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest sm:leading-normal sm:text-left",
-      )}
-    >
-      {children}
-    </span>
-  );
 }
 
 function Section({
@@ -537,16 +508,11 @@ export default function SalonCentricNyfwProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="messaging" title="Campaign Messaging Strategy" contentClassName="mt-6">
-              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.messagingIntro}</p>
-              <RailList ariaLabel="Campaign messaging points" items={[...project.messagingBullets]} />
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="production" title="Campaign Execution" contentClassName="mt-6">
-              <p className="max-w-3xl text-base md:text-lg leading-relaxed text-text-secondary">{project.productionIntro}</p>
-              <RailList ariaLabel="Content production points" items={[...project.productionBullets]} />
+            <Section id="messaging" title="Key Responsibilities" contentClassName="mt-6">
+              <RailList
+                ariaLabel="Key responsibilities"
+                items={[...project.messagingBullets, ...project.productionBullets]}
+              />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -557,7 +523,7 @@ export default function SalonCentricNyfwProjectPage() {
                   id="results-title"
                   className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90"
                 >
-                  Results
+                  Final Deliverables
                 </h2>
               </div>
 
@@ -753,16 +719,6 @@ export default function SalonCentricNyfwProjectPage() {
                 </WindowFrame>
               </div>
             </section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
-                {project.tools.map((tool) => (
-                  <Pill key={tool}>{tool}</Pill>
-                ))}
-              </div>
-            </Section>
 
             <div className="mt-16 border-t border-white/10" />
 
