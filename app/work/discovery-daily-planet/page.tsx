@@ -28,7 +28,7 @@ type SocialEmbed = {
 };
 
 const project = {
-  title: "Daily Planet",
+  title: "Daily Planet (Season 23)",
   subtitle: "Science News Magazine Series",
   roleTitle: "Production Assistant (Internship)",
   overview:
@@ -182,6 +182,46 @@ const dailyPlanetClips = [
     title: "The Canadian Music Week Hackathon",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1666295866752912%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "NASA Mars Parachute Test",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1673005169415315%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Transforming Your Trash",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1672152179500614%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Surveying Hawaii’s Kilauea",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1669461459769686%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "UBC SpaceX Competition",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1663476680368164%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "The Lightsaber Maker",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1659715177410981%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "The Ghost Hunter Researcher",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1656752841040548%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "The Brain Bank",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1656671877715311%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Kids Love Science",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1649707425078423%2F&width=720&show_text=false&height=405&appId",
   },
 ] satisfies VideoClip[];
 
@@ -532,6 +572,10 @@ function TvFrame({ title, children }: { title: string; children: React.ReactNode
 function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const previewCount = 9;
+  const hasMoreThanPreview = clips.length > previewCount;
+  const visibleClips = isExpanded || !hasMoreThanPreview ? clips : clips.slice(0, previewCount);
   const activeClip = activeIndex === null ? null : clips[activeIndex];
 
   const segmentLabel = "Daily Planet Episode Segment";
@@ -610,8 +654,8 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
       <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Select any segment to expand.</p>
 
       <div className="relative mt-6">
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {clips.map((clip, index) => (
+        <div id="daily-planet-segments-grid" className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {visibleClips.map((clip, index) => (
             <button
               key={clip.src}
               type="button"
@@ -661,6 +705,25 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
           ))}
         </div>
       </div>
+
+      {hasMoreThanPreview ? (
+        <div className="mt-5 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setIsExpanded((value) => !value)}
+            className={cn(
+              "inline-flex items-center justify-center rounded-full border border-white/10 bg-surface/30 px-4 py-2",
+              "text-xs font-mono uppercase tracking-widest text-text-secondary",
+              "hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+            )}
+            aria-expanded={isExpanded}
+            aria-controls="daily-planet-segments-grid"
+          >
+            {isExpanded ? "Show Less" : `Show More (${clips.length - previewCount})`}
+          </button>
+        </div>
+      ) : null}
 
       {activeClip ? (
         <div
@@ -1171,7 +1234,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
             <section className="scroll-mt-16" id="overview">
               <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #4</p>
               <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">
-                <em className="italic">Daily Planet</em>
+                <em className="italic">{project.title}</em>
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
