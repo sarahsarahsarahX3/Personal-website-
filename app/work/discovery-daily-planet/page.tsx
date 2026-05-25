@@ -104,6 +104,46 @@ const headerImage = {
 
 const dailyPlanetClips = [
   {
+    title: "NASA Mars Parachute Test",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1673005169415315%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Transforming Your Trash",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1672152179500614%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Surveying Hawaii’s Kilauea",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1669461459769686%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "UBC SpaceX Competition",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1663476680368164%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "The Lightsaber Maker",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1659715177410981%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "The Ghost Hunter Researcher",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1656752841040548%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "The Brain Bank",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1656671877715311%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
+    title: "Kids Love Science",
+    kind: "embed",
+    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1649707425078423%2F&width=720&show_text=false&height=405&appId",
+  },
+  {
     title: "The Easter Bunny: Gigantic Edition",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1624452390937260%2F&width=720&show_text=false&height=405&appId",
@@ -182,46 +222,6 @@ const dailyPlanetClips = [
     title: "The Canadian Music Week Hackathon",
     kind: "embed",
     src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1666295866752912%2F&width=720&show_text=false&height=405&appId",
-  },
-  {
-    title: "NASA Mars Parachute Test",
-    kind: "embed",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1673005169415315%2F&width=720&show_text=false&height=405&appId",
-  },
-  {
-    title: "Transforming Your Trash",
-    kind: "embed",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1672152179500614%2F&width=720&show_text=false&height=405&appId",
-  },
-  {
-    title: "Surveying Hawaii’s Kilauea",
-    kind: "embed",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1669461459769686%2F&width=720&show_text=false&height=405&appId",
-  },
-  {
-    title: "UBC SpaceX Competition",
-    kind: "embed",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1663476680368164%2F&width=720&show_text=false&height=405&appId",
-  },
-  {
-    title: "The Lightsaber Maker",
-    kind: "embed",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1659715177410981%2F&width=720&show_text=false&height=405&appId",
-  },
-  {
-    title: "The Ghost Hunter Researcher",
-    kind: "embed",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1656752841040548%2F&width=720&show_text=false&height=405&appId",
-  },
-  {
-    title: "The Brain Bank",
-    kind: "embed",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1656671877715311%2F&width=720&show_text=false&height=405&appId",
-  },
-  {
-    title: "Kids Love Science",
-    kind: "embed",
-    src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FDailyPlanet%2Fvideos%2F1649707425078423%2F&width=720&show_text=false&height=405&appId",
   },
 ] satisfies VideoClip[];
 
