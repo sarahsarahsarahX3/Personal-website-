@@ -25,18 +25,13 @@ const project = {
   objective:
     "Anchored brand communications and campaign storytelling in the energy and cultural relevance of New York Fashion Week by highlighting professional artistry, backstage access, and inclusive industry moments. Positioned SalonCentric as an insider brand connected to fashion’s most influential stage, balancing prestige storytelling with performance-aware copy across experiential, social, and owned channels.",
   messagingBullets: [
-    "Spotlighting professional artists through runway and backstage access.",
-    "Positioning SalonCentric as a thought leader through clear, consistent brand communications during fashion’s most influential moment.",
-    "Balancing prestige storytelling with performance-driven copy.",
-    "Maintaining a unified narrative across live production and post-production event content.",
+    "Led editorial coverage and content production for SalonCentric’s New York Fashion Week campaigns across digital, social, and marketing channels.",
+    "Wrote editorial features, campaign copy, interviews, and event recaps covering beauty trends, fashion culture, and professional artistry.",
+    "Collaborated with VIP industry professionals and influencers, including lead makeup artist Sir John and lead hairstylist Yusef Williams, to support NYFW beauty storytelling and event coverage.",
+    "Supported cross-channel campaign execution with marketing, creative, social, and brand teams during NYFW activations and partnerships.",
+    "Assisted backstage and live-event content operations, including editorial planning, production coordination, and real-time content development.",
   ],
-  productionBullets: [
-    "Wrote campaign copy for social, email, and supporting digital assets.",
-    "Supported real-time and post-event content tied to runway and cultural moments.",
-    "Collaborated with experiential, social, brand, and email teams.",
-    "Ensured brand voice consistency across paid, organic, and owned channels.",
-    "Extended campaign lifespan through post-event amplification.",
-  ],
+  productionBullets: [],
   audience: [
     { label: "B2B", value: "Licensed beauty professionals and salon decision-makers" },
     { label: "DTC (Owned)", value: "SalonCentric web and email audiences" },
