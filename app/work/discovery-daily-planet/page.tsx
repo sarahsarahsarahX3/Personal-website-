@@ -470,10 +470,10 @@ function RailList({
             <div
               className={cn(
                 "w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3",
-                centered ? "px-5 py-4 md:px-6 md:py-5" : "",
+                centered ? "px-4 py-3 md:px-5 md:py-4" : "",
               )}
             >
-              <span className={cn("grid grid-cols-[28px_1fr] gap-4 items-center", centered ? "grid-cols-[28px_1fr] min-h-[76px] md:min-h-[88px]" : "")}>
+              <span className={cn("grid grid-cols-[28px_1fr] gap-4 items-center", centered ? "grid-cols-[28px_1fr] min-h-[60px] md:min-h-[68px]" : "")}>
                 <span className="relative justify-self-center self-center" aria-hidden="true">
                   <span className="absolute inset-0 -m-[7px] rounded-full border border-white/10" />
                   <span className="relative block h-2.5 w-2.5 rounded-full bg-accent/70" />
@@ -1215,7 +1215,9 @@ export default function DiscoveryDailyPlanetProjectPage() {
             <Section id="focus" title="Key Responsibilities">
               <RailList ariaLabel="Key responsibilities" items={[...project.keyResponsibilities]} centered />
               <div id="deliverables" className="scroll-mt-16 mt-10">
-                <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Final deliverables</p>
+                <h3 className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90">
+                  Final Deliverables
+                </h3>
                 <div className="mt-6">
                   <LegacyVideoClipsRail clips={dailyPlanetClips} />
                 </div>
