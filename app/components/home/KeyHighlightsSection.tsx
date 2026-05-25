@@ -23,7 +23,7 @@ export function KeyHighlightsSection() {
               id="key-highlights-title"
               className="text-[13px] md:text-base font-display uppercase tracking-[0.16em] text-text-secondary/90"
             >
-              Key Highlights:
+              Career Highlights:
             </h2>
           </header>
 
