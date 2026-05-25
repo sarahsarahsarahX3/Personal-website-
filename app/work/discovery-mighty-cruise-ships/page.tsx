@@ -934,6 +934,12 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
+            <div className="pt-10">
+              <TripPhotoGallery photos={tripPhotos} />
+            </div>
+
+            <div className="mt-16 border-t border-white/10" />
+
             <Section id="focus" title="Key Responsibilities">
               <RailList
                 ariaLabel="Key responsibilities"
@@ -943,9 +949,6 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                 <h3 className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90">
                   Final Deliverables
                 </h3>
-              </div>
-              <div className="mt-8">
-                <TripPhotoGallery photos={tripPhotos} />
               </div>
 
               <figure
