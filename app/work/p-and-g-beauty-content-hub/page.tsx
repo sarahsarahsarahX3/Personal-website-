@@ -23,8 +23,8 @@ type Metric = {
 };
 
 const project = {
-  title: "Procter & Gamble’s HairCode Content Hub",
-  subtitle: "Content Strategy",
+  title: "Procter & Gamble’s HairCode",
+  subtitle: "Branded Content Platform",
   overview:
     "Developed and optimized SEO-driven editorial content for HairCode, Procter & Gamble’s consumer-facing content hub, across beauty, health, and wellness topics. The work focused on driving sustainable organic growth and search visibility in highly competitive categories.",
   role: "Copywriter & Content Strategist",
@@ -136,8 +136,7 @@ const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
   { id: "strategy", label: "Strategy" },
   { id: "execution", label: "Execution" },
-  { id: "results", label: "Results" },
-  { id: "tools", label: "Tools" },
+  { id: "results", label: "Impact Metrics" },
 ];
 
 const articlePdfs: PdfItem[] = [
@@ -295,21 +294,6 @@ function scrollToId(id: string, behavior: ScrollBehavior) {
   const node = document.getElementById(id);
   if (!node) return;
   node.scrollIntoView({ behavior, block: "start" });
-}
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className={cn(
-        "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
-        "px-3 py-2 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
-        "text-center leading-snug whitespace-normal",
-        "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest sm:leading-normal sm:text-left",
-      )}
-    >
-      {children}
-    </span>
-  );
 }
 
 function SquiggleMark({ className }: { className?: string }) {
@@ -1841,19 +1825,9 @@ export default function PAndGBeautyContentHubProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="results" title="Results" subtitle="Select a KPI for details.">
+            <Section id="results" title="Impact Metrics" subtitle="Select a KPI for details.">
               <MetricTabs metrics={metrics} />
               <p className="mt-6 text-xs text-text-secondary/70">Source: SEMrush (U.S. &amp; Global data).</p>
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="tools" title="Tools & Skills">
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
-                {project.tools.map((tool) => (
-                  <Pill key={tool}>{tool}</Pill>
-                ))}
-              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
