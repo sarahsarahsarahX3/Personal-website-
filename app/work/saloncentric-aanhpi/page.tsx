@@ -7,8 +7,6 @@ import { ProjectPager } from "@/app/components/work/ProjectPager";
 
 type SectionLink = { id: string; label: string };
 
-type SnapshotCard = { title: string; value: string };
-
 type PdfItem = {
   id: string;
   title: string;
@@ -33,28 +31,10 @@ const artistSpotlightPdfs: PdfItem[] = [
 
 const project = {
   title: "SalonCentric x AANHPI Heritage Month",
-  subtitle: "Integrated Campaign",
+  subtitle: "Marketing Campaign",
   overview:
     "Developed editorial content to support SalonCentric’s Asian American, Native Hawaiian, and Pacific Islander (AANHPI) Heritage Month campaign. The campaign integrated influencer storytelling, brand partnerships, and multi-channel activation to drive cultural relevance and meaningful audience engagement. It included a live event, influencer interviews, and experiential activations, including a hands-on Ikebana workshop and a curated matcha bar.",
   role: "Copywriter",
-  snapshot: [
-    {
-      title: "Campaign Ownership",
-      value: "Owned the strategy and execution across experiential, influencer, and editorial components.",
-    },
-    {
-      title: "Experiential Event",
-      value: "Delivered a live, in-person event with moderated interviews and hands-on cultural programming.",
-    },
-    {
-      title: "Creator Partnerships",
-      value: "Selected and partnered with AANHPI creators to ensure authentic, brand-safe storytelling.",
-    },
-    {
-      title: "Community Engagement",
-      value: "Strengthened brand credibility and trust within the professional beauty community.",
-    },
-  ],
   strategyBullets: [
     "Selected creators based on audience relevance, cultural credibility, and brand alignment.",
     "Partnered with creators and brands that reflected AANHPI values and professional beauty expertise.",
@@ -71,24 +51,13 @@ const project = {
     "Strong engagement across creator and brand-owned content.",
     "Reinforced SalonCentric’s commitment to AANHPI representation and inclusive storytelling.",
   ],
-  tools: [
-    "Influencer Marketing",
-    "Integrated Campaigns",
-    "Brand & Campaign Copywriting",
-    "Creator Briefs",
-    "Messaging Governance",
-    "Cross-Functional Collaboration",
-    "Integrated Marketing",
-  ],
 } as const;
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
-  { id: "strategy", label: "Strategy" },
-  { id: "messaging", label: "Messaging" },
-  { id: "deliverables", label: "Final Deliverables" },
-  { id: "impact", label: "Impact" },
-  { id: "tools", label: "Tools" },
+  { id: "strategy", label: "Key Responsibilities" },
+  { id: "deliverables", label: "Deliverables" },
+  { id: "impact", label: "Impact Metrics" },
 ];
 
 function usePrefersReducedMotion() {
@@ -187,40 +156,6 @@ function useIsMobileView() {
   }, []);
 
   return isMobileView;
-}
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className={cn(
-        "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
-        "px-3 py-2 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
-        "text-center leading-snug whitespace-normal",
-        "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest sm:leading-normal sm:text-left",
-      )}
-    >
-      {children}
-    </span>
-  );
-}
-
-function SquiggleMark({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 10"
-      className={cn("h-2.5 w-5 shrink-0 text-accent/90", className)}
-    >
-      <path
-        d="M1 6 C4 1 8 9 12 4 C16 -1 20 9 23 4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
 }
 
 function Section({
@@ -541,10 +476,6 @@ export default function SalonCentricAanhpiProjectPage() {
   const scrollBehavior: ScrollBehavior = prefersReducedMotion ? "auto" : "smooth";
   const [activeArtistPdfId, setActiveArtistPdfId] = useState<string>(artistSpotlightPdfs[0]?.id ?? "");
 
-  const snapshotCards = useMemo<SnapshotCard[]>(
-    () => project.snapshot.map((item) => ({ title: item.title, value: item.value })),
-    [],
-  );
 
   const articlePdfHref = useMemo(() => {
     const fileName = deliverables.articlePdf.fileName;
@@ -589,7 +520,7 @@ export default function SalonCentricAanhpiProjectPage() {
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
-              <div className="mt-12 grid gap-6 lg:grid-cols-2">
+              <div className="mt-12">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
@@ -597,37 +528,6 @@ export default function SalonCentricAanhpiProjectPage() {
                   <div className="mt-8">
                     <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">My Role</p>
                     <p className="mt-2 text-base text-text-secondary">{project.role}</p>
-                  </div>
-                </div>
-
-                <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8 flex flex-col">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">
-                    Campaign snapshot
-                  </p>
-
-	                  <div className="mt-5 grid gap-5">
-	                    {snapshotCards.map((card) => (
-	                      <div key={card.title}>
-	                        <p className="font-display text-[22px] leading-none">{card.title}</p>
-	                        <p className="mt-2 text-xs sm:text-sm leading-relaxed text-text-secondary/80">
-	                          {card.value}
-	                        </p>
-	                      </div>
-	                    ))}
-	                  </div>
-
-                  <div className="mt-auto pt-8">
-                    <button
-                      type="button"
-                      onClick={() => scrollToId("impact", scrollBehavior)}
-                      className={cn(
-                        "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-mono uppercase tracking-widest",
-                        "bg-text-primary text-surface hover:bg-white transition-colors",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-                      )}
-                    >
-                      View Results
-                    </button>
                   </div>
                 </div>
               </div>
@@ -676,14 +576,11 @@ export default function SalonCentricAanhpiProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="strategy" title="Campaign Strategy" contentClassName="mt-6">
-              <RailList ariaLabel="Campaign strategy points" items={[...project.strategyBullets]} />
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="messaging" title="Campaign Messaging" contentClassName="mt-6">
-              <RailList ariaLabel="Campaign messaging points" items={[...project.messagingBullets]} />
+            <Section id="strategy" title="Key Responsibilities" contentClassName="mt-6">
+              <RailList
+                ariaLabel="Key responsibilities"
+                items={[...project.strategyBullets, ...project.messagingBullets]}
+              />
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
@@ -691,7 +588,6 @@ export default function SalonCentricAanhpiProjectPage() {
 	            <Section
 	              id="deliverables"
 	              title="Final Deliverables"
-	              subtitle="A snapshot of the experiential, editorial, and influencer content that brought the campaign to life."
 	              contentClassName="mt-6"
 	            >
               <WindowFrame
@@ -1053,18 +949,8 @@ export default function SalonCentricAanhpiProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Impact" contentClassName="mt-6">
+            <Section id="impact" title="Impact Metrics" contentClassName="mt-6">
               <RailList ariaLabel="Results and impact points" items={[...project.resultsBullets]} />
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
-                {project.tools.map((tool) => (
-                  <Pill key={tool}>{tool}</Pill>
-                ))}
-              </div>
             </Section>
 
             <div className="mt-16 border-t border-white/10" />
