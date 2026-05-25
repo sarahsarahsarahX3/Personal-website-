@@ -42,17 +42,13 @@ const project = {
     { label: "Distribution", value: "Aired in 150+ countries" },
   ] satisfies SnapshotRow[],
   storytellingFocus: [
-    "Translate complex systems into clear, audience-first narrative beats.",
-    "Balance technical accuracy with momentum, tension, and clarity.",
-    "Spotlight environmental innovation without losing the human story.",
-    "Shape a cohesive episode arc from live conditions and changing variables.",
+    "Managed international travel logistics, accommodations, crew schedules, and production documentation for on-location shoots across remote global destinations.",
+    "Maintained production tracking systems, release forms, permits, insurance documentation, and maritime compliance records to support field production operations.",
+    "Supported the production of the MS Roald Amundsen Antarctic expedition episode, documenting the inaugural voyage of the world’s first hybrid-powered expedition cruise ship.",
+    "Coordinated equipment logistics, shipment tracking, and cold-weather production gear for remote filming conditions across the Antarctic Peninsula and Falkland Islands.",
+    "Assisted with media management, production coordination, and post-production workflows to support broadcast delivery timelines.",
   ],
-  productionSupport: [
-    "Supported production and editorial coordination across field and post workflows.",
-    "Helped organize story inputs, notes, and select moments for episode assembly.",
-    "Assisted with production logistics and deliverables to keep the episode on track.",
-    "Maintained consistency with broadcast standards, tone, and documentary conventions.",
-  ],
+  productionSupport: [],
   impactKpis: [
     {
       id: "international-distribution",
