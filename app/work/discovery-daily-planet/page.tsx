@@ -464,13 +464,7 @@ function RailList({
   return (
     <div className={cn("relative mt-10", className)}>
       {!centered ? <span aria-hidden="true" className="absolute left-[30px] top-4 bottom-4 w-px bg-accent/25" /> : null}
-      <ol
-        className={cn(
-          "grid gap-2 text-sm md:text-base text-text-secondary",
-          centered ? "mx-auto max-w-5xl gap-3" : "",
-        )}
-        aria-label={ariaLabel}
-      >
+      <ol className={cn("grid gap-2 text-sm md:text-base text-text-secondary", centered ? "mx-auto max-w-5xl gap-3" : "")} aria-label={ariaLabel}>
         {items.map((item) => (
           <li key={item}>
             <div
@@ -479,12 +473,12 @@ function RailList({
                 centered ? "px-5 py-4 md:px-6 md:py-5" : "",
               )}
             >
-              <span className={cn("grid grid-cols-[28px_1fr] gap-4 items-center", centered ? "grid-cols-1 justify-items-center gap-3" : "")}>
+              <span className={cn("grid grid-cols-[28px_1fr] gap-4 items-center", centered ? "grid-cols-[28px_1fr] min-h-[76px] md:min-h-[88px]" : "")}>
                 <span className="relative justify-self-center self-center" aria-hidden="true">
                   <span className="absolute inset-0 -m-[7px] rounded-full border border-white/10" />
                   <span className="relative block h-2.5 w-2.5 rounded-full bg-accent/70" />
                 </span>
-                <span className={cn("leading-relaxed", centered ? "text-center md:text-[15px]" : "")}>{item}</span>
+                <span className={cn("leading-relaxed", centered ? "text-left md:text-[15px]" : "")}>{item}</span>
               </span>
             </div>
           </li>
