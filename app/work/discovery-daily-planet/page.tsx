@@ -37,7 +37,7 @@ const project = {
   subtitle: "Science News Magazine Series",
   roleTitle: "Production Assistant (Internship)",
   overview:
-    "Supported production and editorial workflows for Daily Planet, Discovery Channel’s flagship science and technology series. Contributed to fast-paced, high-volume broadcast production by helping translate complex scientific topics into clear, accurate, and engaging storytelling across multiple weekly segments.",
+    "Contributed to the production of Daily Planet, Discovery Channel Canada’s flagship science and technology television series, reaching 1.3 million weekly viewers. Supported editorial and production workflows across breaking news segments, interviews, field reports, and studio broadcasts covering science, technology, space, medical innovation, conservation, and wildlife.",
   roleScope: [] as string[],
   snapshot: [
     { label: "Format", value: "Television broadcast series" },
@@ -45,19 +45,14 @@ const project = {
     { label: "Viewership", value: "1.3M+ weekly viewers" },
     { label: "Editorial Focus", value: "Science · Technology · Innovation · Animal · Wildlife · Environment" },
   ] satisfies SnapshotRow[],
-  editorialFocus: [
-    "Contributed story ideas during daily editorial pitch meetings, shaping segment direction within a fast-paced broadcast newsroom.",
-    "Supported high-volume story segment development under tight, 24-hour production cycles and same-day delivery timelines.",
-    "Translated complex scientific concepts into accessible, audience-friendly narratives.",
-    "Maintained editorial accuracy, clarity, and pacing across varied segment formats.",
-    "Supported consistent tone and storytelling standards week to week.",
-  ],
-  productionSupport: [
-    "Coordinated day-to-day production needs across multiple segments and timelines.",
-    "Provided research and scripting support, including source gathering and story inputs.",
-    "Managed assets, documentation, and handoffs to support post-production workflows.",
-    "Supported producers, editors, and hosts with schedules, notes, and deliverables.",
-    "Helped ensure reliable, on-time delivery in a high-volume broadcast environment.",
+  keyResponsibilities: [
+    "Supported full-cycle production workflows for Daily Planet, Discovery Channel Canada’s flagship science television series.",
+    "Contributed to the production of five original episodes per week for an audience averaging 1.3 million weekly viewers.",
+    "Produced and coordinated breaking news segments, interviews, demonstrations, and field reports covering science, technology, innovation, space, engineering, medical sciences, conservation, and wildlife.",
+    "Pitched up to ten new segment ideas per day during editorial meetings, achieving a 90% pitch acceptance rate.",
+    "Assisted producers with segment development, guest coordination, pre-interviews, script preparation, live studio broadcasting, teleprompting, and field production logistics.",
+    "Coordinated production schedules, studio logistics, release documentation, and daily broadcast deliverables within a fast-paced newsroom operating under strict 24-hour deadlines.",
+    "Logged footage, organized digital media assets, and supported post-production workflows for more than 100 broadcast segments throughout the season.",
   ],
   impactKpis: [
     {
@@ -115,8 +110,7 @@ const project = {
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
-  { id: "focus", label: "Editorial Approach" },
-  { id: "support", label: "Production Support" },
+  { id: "focus", label: "Key Responsibilities" },
   { id: "impact", label: "Impact" },
   { id: "tools", label: "Tools" },
 ];
@@ -1280,14 +1274,8 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="focus" title="Editorial Approach & Storytelling">
-              <RailList ariaLabel="Editorial and storytelling focus" items={[...project.editorialFocus]} />
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="support" title="Production Support">
-              <RailList ariaLabel="Production and editorial support" items={[...project.productionSupport]} />
+            <Section id="focus" title="Key Responsibilities">
+              <RailList ariaLabel="Key responsibilities" items={[...project.keyResponsibilities]} />
               <div className="mt-10">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Final deliverables</p>
                 <div className="mt-6">
