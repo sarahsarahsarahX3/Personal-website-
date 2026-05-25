@@ -26,7 +26,7 @@ type TripPhoto = {
 
 const project = {
   title: "Mighty Cruise Ships",
-  subtitle: "Television Documentary Series",
+  subtitle: "Documentary Series",
   role: "Production Assistant",
   overview:
     "Provided editorial and production support for Mighty Cruise Ships, a Discovery Channel documentary series. Contributed to the episode featuring the MS Roald Amundsen, the world’s first hybrid-powered expedition cruise ship. The project focused on translating complex engineering, environmental innovation, and real-world tourism expeditions into compelling storytelling for a global audience.",
@@ -85,24 +85,12 @@ const project = {
         "Protected tone and documentary integrity through detail-oriented support that reinforced trust in the series’ storytelling.",
     },
   ] satisfies ImpactKpi[],
-  tools: [
-    "Production Support",
-    "Editorial Coordination",
-    "Story Notes",
-    "Broadcast Standards",
-    "Cross-Functional Collaboration",
-    "Creative Production",
-    "Travel & Tourism Marketing",
-    "Storytelling",
-  ],
 } as const;
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
-  { id: "focus", label: "Storytelling Focus" },
-  { id: "support", label: "Production Support" },
-  { id: "impact", label: "Impact" },
-  { id: "tools", label: "Tools" },
+  { id: "focus", label: "Key Responsibilities" },
+  { id: "impact", label: "Impact Metrics" },
 ];
 
 const episodeClips = [
@@ -328,21 +316,6 @@ function DesktopRail({
         </div>
       </div>
     </aside>
-  );
-}
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className={cn(
-        "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
-        "px-3 py-2 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
-        "text-center leading-snug whitespace-normal",
-        "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest sm:leading-normal sm:text-left",
-      )}
-    >
-      {children}
-    </span>
   );
 }
 
@@ -1017,18 +990,14 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="focus" title="Storytelling Focus" subtitle="Editorial clarity · documentary pacing">
-              <RailList ariaLabel="Storytelling focus points" items={[...project.storytellingFocus]} />
-            </Section>
-
-            <div className="mt-10">
-              <TripPhotoGallery photos={tripPhotos} />
-            </div>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="support" title="Production & Editorial Support" subtitle="Support across production and editorial workflow">
-              <RailList ariaLabel="Production and editorial support points" items={[...project.productionSupport]} />
+            <Section id="focus" title="Key Responsibilities">
+              <RailList
+                ariaLabel="Key responsibilities"
+                items={[...project.storytellingFocus, ...project.productionSupport]}
+              />
+              <div className="mt-10">
+                <TripPhotoGallery photos={tripPhotos} />
+              </div>
               <div className="mt-10">
                 <MarketingMaterialsGallery items={marketingMaterials} />
               </div>
@@ -1036,7 +1005,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Impact" subtitle="Select a KPI for details.">
+            <Section id="impact" title="Impact Metrics" subtitle="Select a KPI for details.">
               <div>
                 <ImpactAccordion items={project.impactKpis as unknown as ImpactKpi[]} activeId={activeImpactId} onSelect={setActiveImpactId} />
               </div>
@@ -1072,21 +1041,11 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                 </div>
 
                 <div className="lg:col-span-7">
-                  <WindowFrame title="Impact & Broadcast Reach">
+                  <WindowFrame title="Impact Metrics">
                     <h3 className="font-display text-xl tracking-tight text-text-primary">{activeImpact?.title}</h3>
                     <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{activeImpact?.description}</p>
                   </WindowFrame>
                 </div>
-              </div>
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
-                {project.tools.map((tool) => (
-                  <Pill key={tool}>{tool}</Pill>
-                ))}
               </div>
             </Section>
 
