@@ -28,7 +28,8 @@ type SocialEmbed = {
 };
 
 const project = {
-  title: "Daily Planet (Season 23)",
+  title: "Daily Planet",
+  seasonLabel: "(Season 23)",
   subtitle: "Science News Magazine Series",
   roleTitle: "Production Assistant (Internship)",
   overview:
@@ -45,46 +46,49 @@ const project = {
   ],
   impactKpis: [
     {
-      id: "weekly-delivery",
-      title: "Consistent Weekly Delivery",
-      description:
-        "Supported reliable, repeatable workflows that help ensure a weekly program ships on time across multiple segments and production timelines.",
+      id: "weekly-reach",
+      title: "1.4M+ Weekly Reach",
+      description: "Reached more than 1.4 million viewers weekly across Canada.",
     },
     {
-      id: "multi-segment-throughput",
-      title: "Multi-Segment Throughput",
+      id: "episodes-produced",
+      title: "180 Episodes Produced (Season 23)",
       description:
-        "Supported fast-turnaround segment production by keeping moving parts organized, trackable, and ready for handoff across parallel storylines.",
+        "Reflected the high-volume production demands of a daily national broadcast schedule operating on rapid turnaround timelines.",
     },
     {
-      id: "editorial-credibility",
-      title: "Editorial Accuracy and Credibility",
+      id: "pitch-acceptance-rate",
+      title: "90% Pitch Acceptance Rate",
       description:
-        "Helped maintain science-first rigor through organized research inputs, careful documentation, and detail-oriented support during scripting and production.",
+        "Pitched 10+ science and technology story segments per day, achieving a 90% editorial approval rate.",
     },
     {
-      id: "broadcast-standards",
-      title: "Broadcast Standards Alignment",
+      id: "production-turnarounds",
+      title: "24-Hour Production Turnarounds",
       description:
-        "Supported clean delivery by maintaining documentation and asset organization that aligns with broadcast standards and post-production workflows.",
+        "Supported rapid broadcast production workflows while maintaining a 100% on-time delivery rate for production materials and daily broadcast assets.",
     },
     {
-      id: "production-reliability",
-      title: "Production Reliability at Scale",
+      id: "branded-theme-weeks",
+      title: "9 Branded Theme Weeks Produced",
       description:
-        "Contributed to smooth coordination in a high-volume environment by keeping schedules, notes, and assets clean, findable, and ready for handoff.",
+        "Included large-scale editorial programming initiatives such as Shark Week, Space Week, and environmental specials designed to drive audience engagement.",
     },
     {
-      id: "audience-accessibility",
-      title: "Accessible Science Storytelling",
-      description:
-        "Supported clarity and pacing so complex science and technology topics stayed approachable for broad audiences without losing accuracy.",
+      id: "household-footprint",
+      title: "8M+ Canadian Household Footprint",
+      description: "Broadcast nationally to more than eight million households.",
     },
     {
-      id: "tone-consistency",
-      title: "Consistent Editorial Tone",
+      id: "timeslot-leader",
+      title: "7 p.m. Timeslot Leader",
+      description: "Ranked as the top specialty program in its primetime timeslot.",
+    },
+    {
+      id: "award-winning-series",
+      title: "Industry Award-Winning Broadcast Series",
       description:
-        "Helped support a consistent narrative tone across segments by maintaining clear story inputs, notes, and documentation for producers and editors.",
+        "Recipient of a Silver World Medal at the New York Festivals TV & Film Awards and honoured by the Academy of Canadian Cinema & Television with a Canadian Screen Award for excellence in science and factual broadcast storytelling.",
     },
   ] satisfies ImpactKpi[],
 } as const;
@@ -97,7 +101,7 @@ const sectionLinks: SectionLink[] = [
 ];
 
 const headerImage = {
-  title: "DAILY PLANET SOUNDSTAGE",
+  title: "DAILY PLANET BROADCASTING STUDIO",
   src: "/Daily%20Planet%20Set.jpg",
   alt: "Daily Planet soundstage frame",
 } as const;
@@ -1234,7 +1238,8 @@ export default function DiscoveryDailyPlanetProjectPage() {
             <section className="scroll-mt-16" id="overview">
               <p className="text-xs font-mono uppercase tracking-widest text-accent">Project #4</p>
               <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.03]">
-                <em className="italic">{project.title}</em>
+                <em className="italic">{project.title}</em>{" "}
+                <span className="not-italic">{project.seasonLabel}</span>
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
