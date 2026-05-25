@@ -86,6 +86,7 @@ const project = {
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
   { id: "focus", label: "Key Responsibilities" },
+  { id: "deliverables", label: "Deliverables" },
   { id: "impact", label: "Impact Metrics" },
 ];
 
@@ -929,6 +930,24 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                 </div>
               </div>
 
+            </section>
+
+            <div className="mt-16 border-t border-white/10" />
+
+            <Section id="focus" title="Key Responsibilities">
+              <RailList
+                ariaLabel="Key responsibilities"
+                items={[...project.storytellingFocus, ...project.productionSupport]}
+              />
+              <div id="deliverables" className="scroll-mt-16 mt-12 border-t border-white/10 pt-10">
+                <h3 className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90">
+                  Final Deliverables
+                </h3>
+              </div>
+              <div className="mt-8">
+                <TripPhotoGallery photos={tripPhotos} />
+              </div>
+
               <figure
                 className={cn(
                   "mt-10 overflow-hidden rounded-[28px]",
@@ -982,18 +1001,7 @@ export default function DiscoveryMightyCruiseShipsProjectPage() {
                   <div aria-hidden="true" className="mx-auto mt-5 h-2 w-32 rounded-full bg-white/8" />
                 </div>
               </figure>
-            </section>
 
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="focus" title="Key Responsibilities">
-              <RailList
-                ariaLabel="Key responsibilities"
-                items={[...project.storytellingFocus, ...project.productionSupport]}
-              />
-              <div className="mt-10">
-                <TripPhotoGallery photos={tripPhotos} />
-              </div>
               <div className="mt-10">
                 <MarketingMaterialsGallery items={marketingMaterials} />
               </div>
