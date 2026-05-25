@@ -51,34 +51,46 @@ const project = {
   productionSupport: [],
   impactKpis: [
     {
-      id: "international-distribution",
-      title: "International Distribution",
+      id: "global-distribution",
+      title: "150+ Country Global Distribution",
       description:
-        "Supported editorial packaging and deliverables suitable for international broadcast distribution and localization workflows.",
+        "Broadcast internationally across more than 150 countries through Discovery Channel.",
     },
     {
-      id: "flagship-series",
-      title: "Flagship Series Contribution",
+      id: "hybrid-powered-expedition-ship",
+      title: "World’s First Hybrid-Powered Expedition Cruise Ship",
       description:
-        "Contributed to a Discovery Channel documentary franchise by supporting episode-level production and editorial coordination.",
+        "Featured the MS Roald Amundsen, a landmark innovation in sustainable maritime travel.",
     },
     {
-      id: "broadcast-delivery",
-      title: "Broadcast Delivery",
+      id: "remote-filming-locations",
+      title: "3 Remote International Filming Locations",
       description:
-        "Maintained reliable handoffs and supporting materials across production and post to keep delivery organized and standards-aligned.",
+        "Coordinated documentary production logistics across multiple remote expedition locations, including the Antarctic Peninsula, Vernadsky Research Base, and the Falkland Islands, requiring specialized cold-weather equipment, maritime coordination, and expedition logistics.",
     },
     {
-      id: "long-form-engagement",
-      title: "Long-Form Engagement",
+      id: "compliance-documents",
+      title: "400+ Compliance Documents",
       description:
-        "Helped keep complex engineering and expedition challenges clear and watchable through audience-first storytelling structure.",
+        "Coordinated production permits, safety records, insurance certificates, drone clearances, and appearance releases.",
     },
     {
-      id: "series-reputation",
-      title: "Series Reputation",
+      id: "production-budget",
+      title: "$650K+ Production Budget",
       description:
-        "Protected tone and documentary integrity through detail-oriented support that reinforced trust in the series’ storytelling.",
+        "Assisted operational tracking and financial coordination for large-scale international documentary productions.",
+    },
+    {
+      id: "expedition-crew",
+      title: "6-Person International Expedition Crew",
+      description:
+        "Managed travel logistics, scheduling, accommodations, and transportation for a six-person production crew operating in remote field environments.",
+    },
+    {
+      id: "raw-media-assets",
+      title: "12TB+ of Raw Media Assets",
+      description:
+        "Oversaw digital asset organization, ingest workflows, metadata tracking, and archival management using DAM systems and Frame.io.",
     },
   ] satisfies ImpactKpi[],
 } as const;
