@@ -7,11 +7,6 @@ import { ProjectPager } from "@/app/components/work/ProjectPager";
 
 type SectionLink = { id: string; label: string };
 
-type SnapshotRow = {
-  label: string;
-  value: string;
-};
-
 type ImpactKpi = {
   id: string;
   title: string;
@@ -39,12 +34,6 @@ const project = {
   overview:
     "Contributed to the production of Daily Planet, Discovery Channel Canada’s flagship science and technology television series, reaching 1.3 million weekly viewers. Supported editorial and production workflows across breaking news segments, interviews, field reports, and studio broadcasts covering science, technology, space, medical innovation, conservation, and wildlife.",
   roleScope: [] as string[],
-  snapshot: [
-    { label: "Format", value: "Television broadcast series" },
-    { label: "Production Model", value: "Five episodes per week" },
-    { label: "Viewership", value: "1.3M+ weekly viewers" },
-    { label: "Editorial Focus", value: "Science · Technology · Innovation · Animal · Wildlife · Environment" },
-  ] satisfies SnapshotRow[],
   keyResponsibilities: [
     "Supported full-cycle production workflows for Daily Planet, Discovery Channel Canada’s flagship science television series.",
     "Contributed to the production of five original episodes per week for an audience averaging 1.3 million weekly viewers.",
@@ -98,21 +87,13 @@ const project = {
         "Helped support a consistent narrative tone across segments by maintaining clear story inputs, notes, and documentation for producers and editors.",
     },
   ] satisfies ImpactKpi[],
-  tools: [
-    "Science storytelling",
-    "Broadcast production workflows",
-    "Editorial support",
-    "Research coordination",
-    "Asset management",
-    "Cross-functional collaboration",
-  ],
 } as const;
 
 const sectionLinks: SectionLink[] = [
   { id: "overview", label: "Overview" },
   { id: "focus", label: "Key Responsibilities" },
-  { id: "impact", label: "Impact" },
-  { id: "tools", label: "Tools" },
+  { id: "deliverables", label: "Deliverables" },
+  { id: "impact", label: "Impact Metrics" },
 ];
 
 const headerImage = {
@@ -473,24 +454,37 @@ function RailList({
   ariaLabel,
   items,
   className,
+  centered = false,
 }: {
   ariaLabel: string;
   items: string[];
   className?: string;
+  centered?: boolean;
 }) {
   return (
     <div className={cn("relative mt-10", className)}>
-      <span aria-hidden="true" className="absolute left-[30px] top-4 bottom-4 w-px bg-accent/25" />
-      <ol className="grid gap-2 text-sm md:text-base text-text-secondary" aria-label={ariaLabel}>
+      {!centered ? <span aria-hidden="true" className="absolute left-[30px] top-4 bottom-4 w-px bg-accent/25" /> : null}
+      <ol
+        className={cn(
+          "grid gap-2 text-sm md:text-base text-text-secondary",
+          centered ? "mx-auto max-w-5xl gap-3" : "",
+        )}
+        aria-label={ariaLabel}
+      >
         {items.map((item) => (
           <li key={item}>
-            <div className="w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3">
-              <span className="grid grid-cols-[28px_1fr] gap-4 items-center">
+            <div
+              className={cn(
+                "w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3",
+                centered ? "px-5 py-4 md:px-6 md:py-5" : "",
+              )}
+            >
+              <span className={cn("grid grid-cols-[28px_1fr] gap-4 items-center", centered ? "grid-cols-1 justify-items-center gap-3" : "")}>
                 <span className="relative justify-self-center self-center" aria-hidden="true">
                   <span className="absolute inset-0 -m-[7px] rounded-full border border-white/10" />
                   <span className="relative block h-2.5 w-2.5 rounded-full bg-accent/70" />
                 </span>
-                <span className="leading-relaxed">{item}</span>
+                <span className={cn("leading-relaxed", centered ? "text-center md:text-[15px]" : "")}>{item}</span>
               </span>
             </div>
           </li>
@@ -545,7 +539,6 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeClip = activeIndex === null ? null : clips[activeIndex];
-  const railRef = useRef<HTMLDivElement | null>(null);
 
   const segmentLabel = "Daily Planet Episode Segment";
   const getDisplayTitle = (title: string, index: number) => {
@@ -618,51 +611,18 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
     <div className="rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
       <div className="flex items-center justify-between gap-4">
         <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">EPISODE SEGMENTS</p>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => railRef.current?.scrollBy({ left: -360, behavior: prefersReducedMotion ? "auto" : "smooth" })}
-            className={cn(
-              "hidden md:inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/30",
-              "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-            )}
-            aria-label="Scroll segments left"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            onClick={() => railRef.current?.scrollBy({ left: 360, behavior: prefersReducedMotion ? "auto" : "smooth" })}
-            className={cn(
-              "hidden md:inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/30",
-              "text-text-secondary hover:text-text-primary hover:border-white/20 hover:bg-white/5 transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
-            )}
-            aria-label="Scroll segments right"
-          >
-            →
-          </button>
-          <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} segments</p>
-        </div>
+        <p className="text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">{clips.length} segments</p>
       </div>
-      <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Swipe or use arrows to browse →</p>
+      <p className="mt-3 text-[11px] font-mono uppercase tracking-widest text-text-secondary/60">Select any segment to expand.</p>
 
       <div className="relative mt-6">
-        <div
-          ref={railRef}
-          className={cn(
-            "flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory",
-            "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30",
-          )}
-        >
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {clips.map((clip, index) => (
             <button
               key={clip.src}
               type="button"
               onClick={() => setActiveIndex(index)}
               className={cn(
-                "snap-start shrink-0 w-[240px] sm:w-[280px] md:w-[320px]",
                 "group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 text-left",
                 "shadow-[0_0_0_1px_rgba(255,255,255,0.03)]",
                 "transition-colors hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
@@ -706,9 +666,6 @@ function LegacyVideoClipsRail({ clips }: { clips: VideoClip[] }) {
             </button>
           ))}
         </div>
-
-        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-surface-alt/10 to-transparent" />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-alt/10 to-transparent" />
       </div>
 
       {activeClip ? (
@@ -1190,7 +1147,6 @@ export default function DiscoveryDailyPlanetProjectPage() {
   const activeSection = useActiveSection(sectionLinks.map((s) => s.id));
   const roleScopeSummary = project.roleScope.at(0);
 
-  const snapshotCards = useMemo(() => project.snapshot, []);
   const [activeImpactId, setActiveImpactId] = useState(project.impactKpis[0]?.id ?? "");
   const activeImpact = useMemo(
     () => project.impactKpis.find((item) => item.id === activeImpactId) ?? project.impactKpis[0],
@@ -1225,7 +1181,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
               </h1>
               <p className="mt-4 text-xl md:text-2xl tracking-tight text-text-secondary">{project.subtitle}</p>
 
-              <div className="mt-12 grid gap-6 lg:grid-cols-2">
+              <div className="mt-12">
                 <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
                   <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Overview</p>
                   <p className="mt-4 text-base md:text-lg leading-relaxed text-text-secondary">{project.overview}</p>
@@ -1237,18 +1193,6 @@ export default function DiscoveryDailyPlanetProjectPage() {
 	                    ) : null}
 	                  </div>
 	                </div>
-
-                <div className="h-full rounded-3xl border border-white/10 bg-surface-alt/10 p-6 md:p-8">
-                  <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Project snapshot</p>
-                  <div className="mt-5 grid gap-5">
-                    {snapshotCards.map((row) => (
-                      <div key={row.label} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
-                        <p className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-text-secondary/70">{row.label}</p>
-                        <p className="mt-2 text-base md:text-lg tracking-tight text-text-primary/90">{row.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
             </section>
 
@@ -1275,8 +1219,8 @@ export default function DiscoveryDailyPlanetProjectPage() {
             <div className="mt-16 border-t border-white/10" />
 
             <Section id="focus" title="Key Responsibilities">
-              <RailList ariaLabel="Key responsibilities" items={[...project.keyResponsibilities]} />
-              <div className="mt-10">
+              <RailList ariaLabel="Key responsibilities" items={[...project.keyResponsibilities]} centered />
+              <div id="deliverables" className="scroll-mt-16 mt-10">
                 <p className="text-xs font-mono uppercase tracking-widest text-text-secondary/70">Final deliverables</p>
                 <div className="mt-6">
                   <LegacyVideoClipsRail clips={dailyPlanetClips} />
@@ -1289,7 +1233,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <div className="mt-16 border-t border-white/10" />
 
-            <Section id="impact" title="Impact" subtitle="Select a KPI for details.">
+            <Section id="impact" title="Impact Metrics" subtitle="Select a KPI for details.">
               <div>
                 <ImpactAccordion items={project.impactKpis as unknown as ImpactKpi[]} activeId={activeImpactId} onSelect={setActiveImpactId} />
               </div>
@@ -1323,31 +1267,11 @@ export default function DiscoveryDailyPlanetProjectPage() {
                 </div>
 
                 <div className="lg:col-span-7">
-                  <WindowFrame title="Impact">
+                  <WindowFrame title="Impact Metrics">
                     <h3 className="font-display text-xl tracking-tight text-text-primary">{activeImpact?.title}</h3>
                     <p className="mt-3 text-[13px] leading-relaxed text-text-secondary">{activeImpact?.description}</p>
                   </WindowFrame>
                 </div>
-              </div>
-            </Section>
-
-            <div className="mt-16 border-t border-white/10" />
-
-            <Section id="tools" title="Tools & Skills" contentClassName="mt-6">
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-2">
-                {project.tools.map((tool) => (
-                  <span
-                    key={tool}
-                    className={cn(
-                      "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-surface-alt/10",
-                      "px-3 py-2 text-[10px] font-mono uppercase tracking-wider text-text-secondary",
-                      "text-center leading-snug whitespace-normal",
-                      "sm:w-auto sm:justify-start sm:px-3 sm:py-1 sm:text-[11px] sm:tracking-widest sm:leading-normal sm:text-left",
-                    )}
-                  >
-                    {tool}
-                  </span>
-                ))}
               </div>
             </Section>
 
