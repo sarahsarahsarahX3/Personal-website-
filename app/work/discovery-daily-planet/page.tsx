@@ -36,8 +36,6 @@ const project = {
     "Contributed to the production of Daily Planet, Discovery Channel Canada’s flagship science and technology television series, reaching 1.3 million weekly viewers. Supported editorial and production workflows across breaking news segments, interviews, field reports, and studio broadcasts covering science, technology, space, medical innovation, conservation, and wildlife.",
   roleScope: [] as string[],
   keyResponsibilities: [
-    "Supported full-cycle production workflows for Daily Planet, Discovery Channel Canada’s flagship science television series.",
-    "Contributed to the production of five original episodes per week for an audience averaging 1.3 million weekly viewers.",
     "Produced and coordinated breaking news segments, interviews, demonstrations, and field reports covering science, technology, innovation, space, engineering, medical sciences, conservation, and wildlife.",
     "Pitched up to ten new segment ideas per day during editorial meetings, achieving a 90% pitch acceptance rate.",
     "Assisted producers with segment development, guest coordination, pre-interviews, script preparation, live studio broadcasting, teleprompting, and field production logistics.",
@@ -514,10 +512,10 @@ function RailList({
             <div
               className={cn(
                 "w-full rounded-2xl border border-white/10 bg-surface-alt/10 px-4 py-3",
-                centered ? "px-4 py-3 md:px-5 md:py-4" : "",
+                centered ? "px-4 py-2.5 md:px-5 md:py-3" : "",
               )}
             >
-              <span className={cn("grid grid-cols-[28px_1fr] gap-4 items-center", centered ? "grid-cols-[28px_1fr] min-h-[60px] md:min-h-[68px]" : "")}>
+              <span className={cn("grid grid-cols-[28px_1fr] gap-3 items-center", centered ? "grid-cols-[28px_1fr] min-h-[52px] md:min-h-[58px]" : "")}>
                 <span className="relative justify-self-center self-center" aria-hidden="true">
                   <span className="absolute inset-0 -m-[7px] rounded-full border border-white/10" />
                   <span className="relative block h-2.5 w-2.5 rounded-full bg-accent/70" />
