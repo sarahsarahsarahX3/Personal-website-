@@ -1214,6 +1214,7 @@ export default function DiscoveryDailyPlanetProjectPage() {
 
             <Section id="focus" title="Key Responsibilities">
               <RailList ariaLabel="Key responsibilities" items={[...project.keyResponsibilities]} centered />
+              <div className="mt-16 border-t border-white/10" />
               <div id="deliverables" className="scroll-mt-16 mt-10">
                 <h3 className="font-display text-[22px] sm:text-3xl md:text-2xl tracking-tight text-text-primary/90">
                   Final Deliverables
